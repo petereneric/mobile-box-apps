@@ -1,0 +1,27 @@
+<resources>
+
+    // App name
+    <string name="app_name">Bouncer</string>
+
+    // Activity_Selection
+    <string name="phone">Phone</string>
+    <string name="model">Model</string>
+    <string name="battery">Battery</string>
+    <string name="shape">Shape</string>
+    <string name="color">Color</string>
+    <string name="producer">Producer</string>
+    <string name="hint_scan">Scan..</string>
+    <string name="missing_input">Missing input</string>
+    <string name="selection_result">Result of selection</string>
+    <string name="reuse">Reuse</string>
+    <string name="recycling">Recycling</string>
+    <string name="lku">LKU</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="summary">Summary</string>
+    <string name="total">Total</string>
+    <string name="new_selection">Start new selection</string>
+    <string name="undo">Undo</string>
+
+
+</resources>
