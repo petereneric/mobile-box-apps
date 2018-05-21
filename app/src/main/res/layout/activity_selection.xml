@@ -5,7 +5,7 @@
     android:id="@+id/guideline_horizontal_one"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ericschumacher.bouncer.MainActivity"
+    tools:context="com.example.ericschumacher.bouncer.Activities.MainActivity"
     tools:layout_editor_absoluteY="81dp">
 
     <TextView
@@ -105,7 +105,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_phone_shape" />
 
     <FrameLayout
-        android:id="@+id/fl_missing_input"
+        android:id="@+id/fl_input_output"
         android:layout_width="399dp"
         android:layout_height="171dp"
         android:layout_marginTop="168dp"
@@ -124,7 +124,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/summary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fl_missing_input" />
+        app:layout_constraintTop_toBottomOf="@+id/fl_input_output" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
