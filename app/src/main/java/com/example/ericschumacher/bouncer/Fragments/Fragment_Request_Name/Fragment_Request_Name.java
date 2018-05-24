@@ -11,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
 /**
  * Created by Eric Schumacher on 22.05.2018.
@@ -25,6 +27,11 @@ public class Fragment_Request_Name extends Fragment implements View.OnClickListe
     EditText etModel;
     Button bCommit;
 
+    // Variables
+    int IdModel;
+    int Id;
+    Utility_Network uNetwork;
+
     // Interface
     Interface_Selection iSelection;
 
@@ -34,6 +41,11 @@ public class Fragment_Request_Name extends Fragment implements View.OnClickListe
         // Layout
         Layout = inflater.inflate(R.layout.fragment_request_name, container, false);
         setLayout();
+
+        // Variables
+        IdModel = getArguments().getInt(Constants_Intern.SELECTION_ID_MODEL);
+        uNetwork = new Utility_Network(getActivity());
+
 
         // Interface
         iSelection = (Interface_Selection)getActivity();

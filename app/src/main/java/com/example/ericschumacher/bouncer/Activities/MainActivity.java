@@ -148,6 +148,45 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     }
 
     @Override
+    public void checkManufacturer(String name) {
+        int idManufacturer = uNetwork.getIdManufacturer(name);
+        if (idManufacturer > 0) {
+            oModel.setIdManufacturer(idManufacturer);
+
+
+        } else {
+            idManufacturer = uNetwork.addManufacturer(name);
+            oModel.setIdManufacturer(idManufacturer);
+        }
+        uNetwork.addManufacturerToModel(oModel.getId(), oModel.getIdManufacturer());
+        checkDetails();
+    }
+
+    @Override
+    public void checkCharger(String name) {
+        int idModel = uNetwork.getIdModel_Name(name);
+        if (idModel > 0) {
+            oModel.setId(idModel);
+            checkModel();
+        } else {
+            oModel.setId(uNetwork.addModel(name, etScan.getText().toString()));
+            startFragmentExploitation();
+        }
+    }
+
+    @Override
+    public void checkBattery(String name) {
+        int idModel = uNetwork.getIdModel_Name(name);
+        if (idModel > 0) {
+            oModel.setId(idModel);
+            checkModel();
+        } else {
+            oModel.setId(uNetwork.addModel(name, etScan.getText().toString()));
+            startFragmentExploitation();
+        }
+    }
+
+    @Override
     public void checkDetails() {
         if (uNetwork.checkManufacturer(oModel.getId())) {
             if (uNetwork.checkCharger(oModel.getId())) {

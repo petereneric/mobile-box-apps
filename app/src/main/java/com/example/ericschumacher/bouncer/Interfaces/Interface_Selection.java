@@ -8,6 +8,9 @@ public interface Interface_Selection {
     public void addGreenList (int idModel);
     public void addBlackList (int idModel);
     void checkName (String name);
+    void checkManufacturer (String name);
+    void checkCharger (String name);
+    void checkBattery (String name);
     void checkDetails();
     void reset();
 }
