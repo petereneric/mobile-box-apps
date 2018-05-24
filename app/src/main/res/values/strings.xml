@@ -22,6 +22,7 @@
     <string name="total">Total</string>
     <string name="new_selection">Start new selection</string>
     <string name="undo">Undo</string>
+    <string name="commit">Commit</string>
 
 
 </resources>

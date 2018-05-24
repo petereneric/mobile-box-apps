@@ -8,6 +8,10 @@ public class Object_Model {
     private int Id;
     private String Name;
 
+    public Object_Model() {
+
+    }
+
     public Object_Model(int id, String name) {
         Id = id;
         Name = name;
