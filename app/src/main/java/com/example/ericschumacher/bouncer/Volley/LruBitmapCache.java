@@ -3,6 +3,8 @@ package com.example.ericschumacher.bouncer.Volley;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 
+import com.android.volley.toolbox.ImageLoader;
+
 /**
  * Created by Eric Schumacher on 19.05.2018.
  */

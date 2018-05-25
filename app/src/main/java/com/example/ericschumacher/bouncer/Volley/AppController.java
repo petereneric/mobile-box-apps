@@ -3,6 +3,11 @@ package com.example.ericschumacher.bouncer.Volley;
 import android.app.Application;
 import android.text.TextUtils;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.Volley;
+
 /**
  * Created by Eric Schumacher on 19.05.2018.
  */
@@ -39,7 +44,7 @@ public class AppController extends Application {
         getRequestQueue();
         if (mImageLoader == null) {
             mImageLoader = new ImageLoader(this.mRequestQueue,
-                    new LruBitmapCache());
+                    (ImageLoader.ImageCache) new LruBitmapCache());
         }
         return this.mImageLoader;
     }

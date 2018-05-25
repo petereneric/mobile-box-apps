@@ -4,9 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Bouncer.iml" filepath="$PROJECT_DIR$/Bouncer.iml" />
       <module fileurl="file://C:\Users\Eric Schumacher\AndroidStudioProjects\Bouncer\.idea\Bouncer.iml" filepath="C:\Users\Eric Schumacher\AndroidStudioProjects\Bouncer\.idea\Bouncer.iml" />
-      <module fileurl="file://C:\Users\Eric\AndroidStudioProjects\Bouncer\Bouncer.iml" filepath="C:\Users\Eric\AndroidStudioProjects\Bouncer\Bouncer.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\Eric\AndroidStudioProjects\Bouncer\app\app.iml" filepath="C:\Users\Eric\AndroidStudioProjects\Bouncer\app\app.iml" />
     </modules>
   </component>
 </project>

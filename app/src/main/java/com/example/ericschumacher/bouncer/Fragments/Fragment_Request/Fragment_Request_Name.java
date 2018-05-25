@@ -1,4 +1,4 @@
-package com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Name;
+package com.example.ericschumacher.bouncer.Fragments.Fragment_Request;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,7 +14,6 @@ import android.widget.EditText;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.R;
-import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
 /**
  * Created by Eric Schumacher on 22.05.2018.

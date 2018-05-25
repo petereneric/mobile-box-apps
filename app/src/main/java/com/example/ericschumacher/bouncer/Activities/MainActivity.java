@@ -10,10 +10,10 @@ import android.widget.EditText;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Exploitation;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Name.Fragment_Request_Name_Battery;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Name.Fragment_Request_Name_Charger;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Name.Fragment_Request_Name_Manufacturer;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Name.Fragment_Request_Name_Model;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Battery;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Charger;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Manufacturer;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Model;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Objects.Object_Model;
