@@ -14,7 +14,7 @@ public class Fragment_Request_Name_Manufacturer extends Fragment_Request_Name {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.b_commit:
-                iSelection.checkDetails();
+                iSelection.checkManufacturer(etModel.getText().toString());
                 break;
         }
     }

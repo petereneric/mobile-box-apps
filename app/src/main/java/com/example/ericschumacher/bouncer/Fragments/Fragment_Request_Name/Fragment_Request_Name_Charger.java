@@ -14,7 +14,7 @@ public class Fragment_Request_Name_Charger extends Fragment_Request_Name {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.b_commit:
-                iSelection.checkDetails();
+                iSelection.checkCharger(etModel.getText().toString());
                 break;
         }
     }

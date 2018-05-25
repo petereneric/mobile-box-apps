@@ -152,8 +152,6 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         int idManufacturer = uNetwork.getIdManufacturer(name);
         if (idManufacturer > 0) {
             oModel.setIdManufacturer(idManufacturer);
-
-
         } else {
             idManufacturer = uNetwork.addManufacturer(name);
             oModel.setIdManufacturer(idManufacturer);

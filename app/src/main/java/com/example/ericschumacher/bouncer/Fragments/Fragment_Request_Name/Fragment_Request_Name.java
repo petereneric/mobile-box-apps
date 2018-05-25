@@ -29,8 +29,6 @@ public class Fragment_Request_Name extends Fragment implements View.OnClickListe
 
     // Variables
     int IdModel;
-    int Id;
-    Utility_Network uNetwork;
 
     // Interface
     Interface_Selection iSelection;
@@ -44,8 +42,6 @@ public class Fragment_Request_Name extends Fragment implements View.OnClickListe
 
         // Variables
         IdModel = getArguments().getInt(Constants_Intern.SELECTION_ID_MODEL);
-        uNetwork = new Utility_Network(getActivity());
-
 
         // Interface
         iSelection = (Interface_Selection)getActivity();
