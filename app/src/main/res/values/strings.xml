@@ -23,6 +23,10 @@
     <string name="new_selection">Start new selection</string>
     <string name="undo">Undo</string>
     <string name="commit">Commit</string>
+    <string name="added_to">Added to:</string>
+    <string name="black_list">BlackList</string>
+    <string name="green_list">GreenList</string>
+
 
 
 </resources>

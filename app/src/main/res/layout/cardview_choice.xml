@@ -10,10 +10,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/rl_cardview">
 
         <ImageView
-            android:id="@+id/ivImage"
+            android:id="@+id/iv_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_nokia"
@@ -22,7 +23,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tvName"
+            android:id="@+id/tv_name"
             android:layout_alignParentBottom="true"
             android:text="Nokia"
             android:gravity="center_horizontal"

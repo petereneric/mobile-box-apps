@@ -38,6 +38,7 @@ public class Fragment_Request_Name extends Fragment implements View.OnClickListe
         // Layout
         Layout = inflater.inflate(R.layout.fragment_request_name, container, false);
         setLayout();
+        handleInteraction();
 
         // Variables
         IdModel = getArguments().getInt(Constants_Intern.SELECTION_ID_MODEL);

@@ -5,11 +5,10 @@ package com.example.ericschumacher.bouncer.Interfaces;
  */
 
 public interface Interface_Selection {
-    public void addGreenList (int idModel);
-    public void addBlackList (int idModel);
+    public void exploitReuse(int idModel);
+    public void exploitRecycling(int idModel);
     void checkName (String name);
-    void checkManufacturer (String name);
-    void checkCharger (String name);
+    void callbackManufacturer (int id);
     void checkBattery (String name);
     void checkDetails();
     void reset();

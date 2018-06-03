@@ -26,6 +26,9 @@ public class Fragment_Result extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         layout = inflater.inflate(R.layout.fragment_result, container, false);
 
+        // Layout
+        setLayout();
+
         // Data
         tvResult.setText(getArguments().getString(Constants_Intern.SELECTION_RESULT));
         return layout;
