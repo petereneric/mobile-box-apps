@@ -14,10 +14,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Manufactures;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_String;
-import com.example.ericschumacher.bouncer.Objects.Object_Manufacturer;
+import com.example.ericschumacher.bouncer.Objects.Object_Choice;
+import com.example.ericschumacher.bouncer.Objects.Object_Choice_Manufacturer;
 import com.example.ericschumacher.bouncer.R;
 
 import org.json.JSONArray;
@@ -43,6 +44,7 @@ public class Utility_Network {
         RequestQueue queue;
         queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/id/tac/" + tac;
+        Log.i("Checking", "Yes");
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -257,10 +259,10 @@ public class Utility_Network {
         }
     }
 
-    public void getIdModel_Name(String name, final Interface_VolleyCallback_Int iCallback) {
+    public void getIdModel_Name(String name, String tac, final Interface_VolleyCallback_Int iCallback) {
         RequestQueue queue;
         queue = Volley.newRequestQueue(Context);
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/id/name" + name;
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/id/name/" + name+"/"+tac;
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -337,16 +339,101 @@ public class Utility_Network {
         }
     }
 
-    public void addManufacturer(String name) {
+    // Battery
+    public int addBattery(String name, int idManufacturer) {
         RequestQueue queue;
         queue = Volley.newRequestQueue(Context);
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/manufacturer/add/"+name;
+        final String url = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/add/"+name+"/"+Integer.toString(idManufacturer);
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("Response: ", response);
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        //iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_MODEL));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
 
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    if (response != null && response.statusCode == 200) {
+                        responseString = new String(response.data);
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+            queue.add(stringRequest);
+            queue.getCache().clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public boolean checkBattery(int idModel) {
+        RequestQueue queue;
+        queue = Volley.newRequestQueue(Context);
+        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/battery/check/"+Integer.toString(idModel);
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("Response: ", response);
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+
+                        } else {
+
+                        }
+                        //iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_MODEL));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    if (response != null && response.statusCode == 200) {
+                        responseString = new String(response.data);
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+            queue.add(stringRequest);
+            queue.getCache().clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void connectBatteryWithModel(int idModel, int idBattery) {
+        RequestQueue queue;
+        queue = Volley.newRequestQueue(Context);
+        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/battery/connect/"+Integer.toString(idBattery)+"/"+Integer.toString(idModel);
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("Response: ", response);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -370,11 +457,55 @@ public class Utility_Network {
         }
     }
 
-    // not finished
-    public int addBattery(String name, int idManufacturer) {
+    public int getIdBattery(int idModel, String name) {
         RequestQueue queue;
         queue = Volley.newRequestQueue(Context);
-        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/accounts";
+        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/battery/"+Integer.toString(idModel)+"/"+name;
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("Response: ", response);
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                            // get Id from json
+                        } else {
+
+                        }
+                        //iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_MODEL));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    if (response != null && response.statusCode == 200) {
+                        responseString = new String(response.data);
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+            queue.add(stringRequest);
+            queue.getCache().clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int getMatchingBatteries(int idModel, String namePart) {
+        RequestQueue queue;
+        queue = Volley.newRequestQueue(Context);
+        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/battery/all/"+Integer.toString(idModel)+"/"+namePart;
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -405,11 +536,78 @@ public class Utility_Network {
         return 0;
     }
 
-    // not finished
+    // Charger
     public boolean checkCharger(int idModel) {
         RequestQueue queue;
         queue = Volley.newRequestQueue(Context);
-        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/accounts";
+        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/charger/check/"+Integer.toString(idModel);
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("Response: ", response);
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    if (response != null && response.statusCode == 200) {
+                        responseString = new String(response.data);
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+            queue.add(stringRequest);
+            queue.getCache().clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void connectChargerWithModel(int idModel, int idCharger) {
+        RequestQueue queue;
+        queue = Volley.newRequestQueue(Context);
+        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/charger/connect/"+Integer.toString(idModel)+"/"+Integer.toString(idCharger);
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("Response: ", response);
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    if (response != null && response.statusCode == 200) {
+                        responseString = new String(response.data);
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+            queue.add(stringRequest);
+            queue.getCache().clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean getChargers(int idModel) {
+        RequestQueue queue;
+        queue = Volley.newRequestQueue(Context);
+        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/charger/all/"+Integer.toString(idModel);
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -483,72 +681,9 @@ public class Utility_Network {
         return false;
     }
 
-    public boolean checkBattery(int idModel) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
-        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/accounts";
-        try {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.i("Response: ", response);
 
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("VOLLEY", error.toString());
-                }
-            }) {
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                    String responseString = "";
-                    if (response != null && response.statusCode == 200) {
-                        responseString = new String(response.data);
-                    }
-                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                }
-            };
-            queue.add(stringRequest);
-            queue.getCache().clear();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 
-    public void addChargerToModel(int idModel, int idCharger) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
-        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/accounts";
-        try {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.i("Response: ", response);
 
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("VOLLEY", error.toString());
-                }
-            }) {
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                    String responseString = "";
-                    if (response != null && response.statusCode == 200) {
-                        responseString = new String(response.data);
-                    }
-                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                }
-            };
-            queue.add(stringRequest);
-            queue.getCache().clear();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     public void addManufacturerToModel(int idModel, int idManufacturer) {
         RequestQueue queue;
@@ -582,74 +717,9 @@ public class Utility_Network {
         }
     }
 
-    public void addBatteryToModel(int idModel, int idBattery) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
-        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/accounts";
-        try {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.i("Response: ", response);
 
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("VOLLEY", error.toString());
-                }
-            }) {
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                    String responseString = "";
-                    if (response != null && response.statusCode == 200) {
-                        responseString = new String(response.data);
-                    }
-                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                }
-            };
-            queue.add(stringRequest);
-            queue.getCache().clear();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
-    public int getIdBattery(String battery) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
-        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/accounts";
-        try {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.i("Response: ", response);
-
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("VOLLEY", error.toString());
-                }
-            }) {
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                    String responseString = "";
-                    if (response != null && response.statusCode == 200) {
-                        responseString = new String(response.data);
-                    }
-                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                }
-            };
-            queue.add(stringRequest);
-            queue.getCache().clear();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
-
-    public ArrayList<Object_Manufacturer> getManufactures(final Interface_VolleyCallback_ArrayList_Manufactures iCallback) {
+    public ArrayList<Object_Choice> getManufactures(final Interface_VolleyCallback_ArrayList_Choice iCallback) {
         RequestQueue queue;
         queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/manufacturers";
@@ -659,12 +729,12 @@ public class Utility_Network {
                 public void onResponse(String response) {
                     Log.i("Response_Manus: ", response);
                     try {
-                        ArrayList<Object_Manufacturer> manufacturers = new ArrayList<>();
+                        ArrayList<Object_Choice> manufacturers = new ArrayList<>();
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Log.i("Looping", "Array");
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            manufacturers.add(new Object_Manufacturer(jsonObject.getInt(Constants_Extern.ID), jsonObject.getString(Constants_Extern.NAME)));
+                            manufacturers.add(new Object_Choice_Manufacturer(jsonObject.getInt(Constants_Extern.ID), jsonObject.getString(Constants_Extern.NAME)));
                         }
                         iCallback.onSuccess(manufacturers);
                     } catch (JSONException e) {
