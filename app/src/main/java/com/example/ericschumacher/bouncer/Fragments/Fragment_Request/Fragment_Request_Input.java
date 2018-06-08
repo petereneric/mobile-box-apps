@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.R;
 
@@ -19,7 +18,7 @@ import com.example.ericschumacher.bouncer.R;
  * Created by Eric Schumacher on 22.05.2018.
  */
 
-public class Fragment_Request_Name extends Fragment implements View.OnClickListener {
+public class Fragment_Request_Input extends Fragment implements View.OnClickListener {
 
     // Layout
     View Layout;
@@ -33,7 +32,7 @@ public class Fragment_Request_Name extends Fragment implements View.OnClickListe
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Layout
-        Layout = inflater.inflate(R.layout.fragment_request_name, container, false);
+        Layout = inflater.inflate(R.layout.fragment_request_input, container, false);
         setLayout();
         handleInteraction();
 

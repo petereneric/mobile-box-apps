@@ -1,6 +1,7 @@
 package com.example.ericschumacher.bouncer.Activities;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                 if (editable.toString() != "" && editable.toString().length() > 8) {
                     Log.i("Working", "Yes");
                     // Hide keyboard
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(etScan.getWindowToken(), 0);
 
                     // Get Tac and work with it
@@ -111,55 +112,26 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         uNetwork.checkLku(oModel.getId(), new Interface_VolleyCallback() {
             @Override
             public void onSuccess() {
-                startFragmentResult(getString(R.string.reuse));
+                oModel.setExploitation(Constants_Intern.EXPLOITATION_REUSE);
+                checkDetails();
             }
 
             @Override
             public void onFailure() {
-                uNetwork.checkExploitation(oModel.getId(), new Interface_VolleyCallback_String() {
+                uNetwork.checkExploitation(oModel.getId(), new Interface_VolleyCallback_Int() {
                     @Override
-                    public void onSuccess(String s) {
-                            startFragmentResult(s);
+                    public void onSuccess(int i) {
+                        oModel.setExploitation(i);
+                        Log.i("Expo check", Integer.toString(i));
+                        checkDetails();
                     }
+
                     @Override
                     public void onFailure() {
                         startFragmentExploitation();
                     }
                 });
             }
-        /*
-        uNetwork.checkBlackList(oModel.getId(), new Interface_VolleyCallback() {
-            @Override
-            public void onSuccess() {
-                startFragmentResult(getString(R.string.recycling));
-            }
-
-            @Override
-            public void onFailure() {
-                uNetwork.checkLku(oModel.getId(), new Interface_VolleyCallback() {
-                    @Override
-                    public void onSuccess() {
-                        startFragmentResult(getString(R.string.reuse));
-                    }
-
-                    @Override
-                    public void onFailure() {
-                        uNetwork.checkGreenList(oModel.getId(), new Interface_VolleyCallback() {
-                            @Override
-                            public void onSuccess() {
-                                startFragmentResult(getString(R.string.reuse));
-                            }
-
-                            @Override
-                            public void onFailure() {
-                                startFragmentExploitation();
-                            }
-                        });
-                    }
-                });
-            }
-        });
-        */
         });
     }
 
@@ -241,7 +213,13 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     public void callbackManufacturer(int id) {
         oModel.setIdManufacturer(id);
         uNetwork.addManufacturerToModel(oModel.getId(), oModel.getIdManufacturer());
-        checkDetails();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                checkDetails();
+            }
+        }, 500);
+
     }
 
     @Override
@@ -276,15 +254,34 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         uNetwork.checkManufacturer(oModel.getId(), new Interface_VolleyCallback() {
             @Override
             public void onSuccess() {
-                if (uNetwork.checkCharger(oModel.getId()) || true) {
-                    if (uNetwork.checkBattery(oModel.getId()) || true) {
-                        reset();
-                    } else {
-                        startFragmentRequest(new Fragment_Request_Name_Battery());
+                uNetwork.checkCharger(oModel.getId(), new Interface_VolleyCallback() {
+                    @Override
+                    public void onSuccess() {
+                        uNetwork.checkBattery(oModel.getId(), new Interface_VolleyCallback() {
+                            @Override
+                            public void onSuccess() {
+                                Log.i("Result check", oModel.getExploitationForScreen(MainActivity.this));
+                                startFragmentResult(oModel.getExploitationForScreen(MainActivity.this));
+                            }
+                            @Override
+                            public void onFailure() {
+                                startFragmentRequest(new Fragment_Request_Name_Battery());
+                            }
+                        });
                     }
-                } else {
-                    //startFragmentRequest(new Fragment_Request_Name_Charger());
-                }
+
+                    @Override
+                    public void onFailure() {
+                        uNetwork.getChargers(oModel.getId(), new Interface_VolleyCallback_ArrayList_Choice() {
+                            @Override
+                            public void onSuccess(ArrayList<Object_Choice> list) {
+                                Bundle b = new Bundle();
+                                b.putParcelableArrayList(Constants_Intern.LIST_CHOICE_CHARGER, list);
+                                startFragmentChoice(b);
+                            }
+                        });
+                    }
+                });
             }
 
             @Override
@@ -305,7 +302,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     public void reset() {
         oModel = new Object_Model();
         etScan.setText("");
-        for (Fragment fragment:getSupportFragmentManager().getFragments()) {
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }
     }

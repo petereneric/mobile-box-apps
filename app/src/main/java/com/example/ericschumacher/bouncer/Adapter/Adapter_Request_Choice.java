@@ -59,7 +59,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
         h.tvName.setVisibility(View.GONE);
         Log.i("onBind", oManufacturer.getName());
 
-        ImageRequest request = new ImageRequest("http://svp-server.com/svp-gmbh/erp/files/"+Integer.toString(oManufacturer.getId())+".png",
+        ImageRequest request = new ImageRequest("http://svp-server.com/svp-gmbh/erp/files/icon_manufactures/"+Integer.toString(oManufacturer.getId())+".png",
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {
@@ -77,7 +77,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
         queue.add(request);
         queue.getCache().clear();
 
-        ImageRequest request2 = new ImageRequest("http://svp-server.com/svp-gmbh/erp/files/"+Integer.toString(oManufacturer.getId())+".jpg",
+        ImageRequest request2 = new ImageRequest("http://svp-server.com/svp-gmbh/erp/files/icon_manufactures/"+Integer.toString(oManufacturer.getId())+".jpg",
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {

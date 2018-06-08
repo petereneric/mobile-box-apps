@@ -9,4 +9,6 @@ public class Constants_Intern {
     public final static String SELECTION_ID_MODEL = "SELECTION_ID_MODEL";
     public final static String LIST_CHOICE_MANUFACTURES = "LIST_CHOICE_MANUFACTURES";
     public final static String LIST_CHOICE_CHARGER = "LIST_CHOICE_CHARGER";
+    public final static int EXPLOITATION_RECYCLING = 1;
+    public final static int EXPLOITATION_REUSE = 2;
 }
