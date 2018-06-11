@@ -11,6 +11,8 @@
     <string name="color">Color</string>
     <string name="producer">Producer</string>
     <string name="hint_scan">Scan..</string>
+    <string name="hint_model_name">Enter model name..</string>
+    <string name="hint_battery_name">Enter battery name..</string>
     <string name="missing_input">Missing input</string>
     <string name="selection_result">Result of selection</string>
     <string name="reuse">Reuse</string>

@@ -9,6 +9,7 @@ public interface Interface_Selection {
     public void exploitRecycling(int idModel);
     void checkName (String name);
     void callbackManufacturer (int id);
+    void callbackCharger(int id);
     void checkBattery (String name);
     void checkDetails();
     void reset();

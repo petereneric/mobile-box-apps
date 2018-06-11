@@ -59,7 +59,6 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
         });
     }
 
-
     @Override
     public void onClick(View view) {
 

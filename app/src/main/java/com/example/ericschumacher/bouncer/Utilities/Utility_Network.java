@@ -16,7 +16,6 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_String;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Charger;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Manufacturer;
@@ -392,11 +391,9 @@ public class Utility_Network {
                         } else {
                             iCallback.onSuccess();
                         }
-                        //iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_MODEL));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -546,6 +543,7 @@ public class Utility_Network {
                         if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
                             iCallback.onSuccess();
                         } else {
+                            //iCallback.onSuccess();
                             iCallback.onFailure();
                         }
                     } catch (JSONException e) {
@@ -616,7 +614,7 @@ public class Utility_Network {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Log.i("Response: ", response);
+                    Log.i("Response, Charger: ", response);
                     try {
                         ArrayList<Object_Choice> chargers = new ArrayList<>();
                         JSONArray jsonArray = new JSONArray(response);

@@ -11,6 +11,7 @@ import com.example.ericschumacher.bouncer.R;
 
 public class Object_Model {
     private int Id;
+    private String TAC;
     private String Name;
     private int IdManufacturer;
     private int IdCharger;
@@ -72,6 +73,14 @@ public class Object_Model {
 
     public void setExploitation(int exploitation) {
         Exploitation = exploitation;
+    }
+
+    public String getTAC() {
+        return TAC;
+    }
+
+    public void setTAC(String TAC) {
+        this.TAC = TAC;
     }
 
     public String getExploitationForScreen(Context context) {

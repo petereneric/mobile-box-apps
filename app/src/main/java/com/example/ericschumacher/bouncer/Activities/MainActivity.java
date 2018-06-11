@@ -1,11 +1,11 @@
 package com.example.ericschumacher.bouncer.Activities;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,15 +14,14 @@ import android.widget.EditText;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Exploitation;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Battery;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Model;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Exploitation;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_String;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.Objects.Object_Model;
 import com.example.ericschumacher.bouncer.R;
@@ -80,14 +79,14 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.toString() != "" && editable.toString().length() > 8) {
+                if (editable.toString() != "" && editable.toString().length() > 7) {
                     Log.i("Working", "Yes");
                     // Hide keyboard
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(etScan.getWindowToken(), 0);
 
                     // Get Tac and work with it
-                    String tac = editable.toString().substring(0, 9);
+                    String tac = editable.toString().substring(0, 8);
                     uNetwork.getIdModel_Tac(tac, new Interface_VolleyCallback_Int() {
                         @Override
                         public void onSuccess(int i) {
@@ -142,6 +141,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         b.putString(Constants_Intern.SELECTION_RESULT, result);
         f.setArguments(b);
         fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_result").commit();
+        reset();
     }
 
     private void startFragmentExploitation() {
@@ -173,17 +173,19 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     // Interface - Network
     @Override
     public void exploitReuse(int idModel) {
+        oModel.setExploitation(Constants_Intern.EXPLOITATION_REUSE);
         uNetwork.exploitReuse(idModel);
     }
 
     @Override
     public void exploitRecycling(int idModel) {
+        oModel.setExploitation(Constants_Intern.EXPLOITATION_RECYCLING);
         uNetwork.exploitRecycling(idModel);
     }
 
     @Override
     public void checkName(final String name) {
-        uNetwork.getIdModel_Name(name, etScan.getText().toString(), new Interface_VolleyCallback_Int() {
+        uNetwork.getIdModel_Name(name, etScan.getText().toString().substring(0, 8), new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
                 oModel.setId(i);
@@ -192,7 +194,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
             @Override
             public void onFailure() {
-                uNetwork.addModel(name, etScan.getText().toString(), new Interface_VolleyCallback_Int() {
+                uNetwork.addModel(name, etScan.getText().toString().substring(0, 8), new Interface_VolleyCallback_Int() {
                     @Override
                     public void onSuccess(int i) {
                         oModel.setId(i);
@@ -223,8 +225,20 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     }
 
     @Override
+    public void callbackCharger(int id) {
+        oModel.setIdCharger(id);
+        uNetwork.connectChargerWithModel(oModel.getId(), oModel.getIdCharger());
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                checkDetails();
+            }
+        }, 500);
+    }
+
+    @Override
     public void checkBattery(final String name) {
-        uNetwork.getIdModel_Name(name, etScan.getText().toString(), new Interface_VolleyCallback_Int() {
+        uNetwork.getIdModel_Name(name, etScan.getText().toString().substring(0, 8), new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
                 oModel.setId(i);
@@ -233,7 +247,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
             @Override
             public void onFailure() {
-                uNetwork.addModel(name, etScan.getText().toString(), new Interface_VolleyCallback_Int() {
+                uNetwork.addModel(name, etScan.getText().toString().substring(0, 8), new Interface_VolleyCallback_Int() {
                     @Override
                     public void onSuccess(int i) {
                         oModel.setId(i);
@@ -263,6 +277,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                                 Log.i("Result check", oModel.getExploitationForScreen(MainActivity.this));
                                 startFragmentResult(oModel.getExploitationForScreen(MainActivity.this));
                             }
+
                             @Override
                             public void onFailure() {
                                 startFragmentRequest(new Fragment_Request_Name_Battery());
@@ -276,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                             @Override
                             public void onSuccess(ArrayList<Object_Choice> list) {
                                 Bundle b = new Bundle();
-                                b.putParcelableArrayList(Constants_Intern.LIST_CHOICE_CHARGER, list);
+                                b.putParcelableArrayList(Constants_Intern.LIST_CHOICE, list);
                                 startFragmentChoice(b);
                             }
                         });
@@ -290,7 +305,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                     @Override
                     public void onSuccess(ArrayList<Object_Choice> list) {
                         Bundle b = new Bundle();
-                        b.putParcelableArrayList(Constants_Intern.LIST_CHOICE_MANUFACTURES, list);
+                        b.putParcelableArrayList(Constants_Intern.LIST_CHOICE, list);
                         startFragmentChoice(b);
                     }
                 });
@@ -302,8 +317,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     public void reset() {
         oModel = new Object_Model();
         etScan.setText("");
-        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+        /*for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-        }
+        }*/
     }
 }

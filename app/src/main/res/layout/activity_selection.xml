@@ -146,7 +146,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="68dp"
         android:hint="@string/hint_scan"
-        android:text="Scan"
         app:layout_constraintEnd_toStartOf="@+id/guideline_vertical"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
