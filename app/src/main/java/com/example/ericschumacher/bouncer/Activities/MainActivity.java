@@ -1,14 +1,17 @@
 package com.example.ericschumacher.bouncer.Activities;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -21,9 +24,11 @@ import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Input;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.Objects.Object_Model;
+import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
@@ -59,6 +64,13 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         // Layout
         setLayout();
         handleInteraction();
+
+        etScan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.i("Hier", "läuft");
+            }
+        });
     }
 
     // Layout
@@ -111,6 +123,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         uNetwork.checkLku(oModel.getId(), new Interface_VolleyCallback() {
             @Override
             public void onSuccess() {
+                Log.i("checkModel()", "Found LKU");
                 oModel.setExploitation(Constants_Intern.EXPLOITATION_REUSE);
                 checkDetails();
             }
@@ -121,8 +134,13 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                     @Override
                     public void onSuccess(int i) {
                         oModel.setExploitation(i);
+                        if (oModel.getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
+                            startFragmentResult(getString(R.string.recycling));
+                        } else {
+                            checkDetails();
+                        }
                         Log.i("Expo check", Integer.toString(i));
-                        checkDetails();
+
                     }
 
                     @Override
@@ -135,7 +153,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     }
 
     // Fragments
-    private void startFragmentResult(String result) {
+    @Override
+    public void startFragmentResult(String result) {
         Fragment_Result f = new Fragment_Result();
         Bundle b = new Bundle();
         b.putString(Constants_Intern.SELECTION_RESULT, result);
@@ -143,6 +162,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_result").commit();
         reset();
     }
+
+
 
     private void startFragmentExploitation() {
         Fragment_Request_Exploitation f = new Fragment_Request_Exploitation();
@@ -238,27 +259,54 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     @Override
     public void checkBattery(final String name) {
-        uNetwork.getIdModel_Name(name, etScan.getText().toString().substring(0, 8), new Interface_VolleyCallback_Int() {
+        uNetwork.getIdBattery(oModel.getId(), name, new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
-                oModel.setId(i);
-                checkModel();
+                oModel.setIdBattery(i);
+                uNetwork.connectBatteryWithModel(oModel.getId(), oModel.getIdBattery());
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    public void run() {
+                        checkDetails();
+                    }
+                }, 500);
             }
 
             @Override
             public void onFailure() {
-                uNetwork.addModel(name, etScan.getText().toString().substring(0, 8), new Interface_VolleyCallback_Int() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle(getString(R.string.add_battery, name));
+                builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onSuccess(int i) {
-                        oModel.setId(i);
-                        startFragmentExploitation();
-                    }
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        uNetwork.addBattery(name, oModel.getIdManufacturer(), new Interface_VolleyCallback_Int() {
+                            @Override
+                            public void onSuccess(int i) {
+                                oModel.setIdBattery(i);
+                                uNetwork.connectBatteryWithModel(oModel.getId(), oModel.getIdBattery());
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    public void run() {
+                                        checkDetails();
+                                    }
+                                }, 500);
+                            }
 
-                    @Override
-                    public void onFailure() {
+                            @Override
+                            public void onFailure() {
 
+                            }
+                        });
                     }
                 });
+                builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        startFragmentResult(oModel.getExploitationForScreen(MainActivity.this));
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
             }
         });
     }
@@ -320,5 +368,10 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         /*for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }*/
+    }
+
+    @Override
+    public Object_Model getModel() {
+        return oModel;
     }
 }

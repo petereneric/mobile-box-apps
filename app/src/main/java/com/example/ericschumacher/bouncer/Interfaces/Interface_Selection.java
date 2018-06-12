@@ -1,5 +1,10 @@
 package com.example.ericschumacher.bouncer.Interfaces;
 
+import com.example.ericschumacher.bouncer.Objects.Object_Model;
+import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
+
+import java.util.ArrayList;
+
 /**
  * Created by Eric Schumacher on 21.05.2018.
  */
@@ -13,4 +18,6 @@ public interface Interface_Selection {
     void checkBattery (String name);
     void checkDetails();
     void reset();
+    Object_Model getModel();
+    void startFragmentResult(String result);
 }

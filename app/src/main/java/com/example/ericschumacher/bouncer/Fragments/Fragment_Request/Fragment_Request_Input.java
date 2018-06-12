@@ -3,16 +3,27 @@ package com.example.ericschumacher.bouncer.Fragments.Fragment_Request;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.ericschumacher.bouncer.Adapter.Adapter_Request_Choice;
+import com.example.ericschumacher.bouncer.Adapter.Adapter_SearchResults;
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_SearchResults;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
+import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
+
+import java.util.ArrayList;
 
 /**
  * Created by Eric Schumacher on 22.05.2018.
@@ -22,11 +33,18 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
 
     // Layout
     View Layout;
-    EditText etModel;
+    EditText etInput;
     Button bCommit;
+    RecyclerView rSearchResults;
+
+    // Adapter
+    Adapter_SearchResults aSearchResults;
 
     // Interface
     Interface_Selection iSelection;
+
+    // Utility
+    Utility_Network uNetwork;
 
     @Nullable
     @Override
@@ -36,27 +54,34 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
         setLayout();
         handleInteraction();
 
+        // Utility
+        uNetwork = new Utility_Network(getActivity());
+
         // Interface
         iSelection = (Interface_Selection)getActivity();
+
+        // RecyclerView
+        rSearchResults.setLayoutManager(new LinearLayoutManager(getActivity()));
+        aSearchResults = new Adapter_SearchResults(getActivity(), new ArrayList<Object_SearchResult>(), new Interface_SearchResults() {
+            @Override
+            public void onResultClick(Object_SearchResult o) {
+                etInput.setText(o.getName());
+            }
+        });
+        rSearchResults.setAdapter(aSearchResults);
 
         return Layout;
     }
 
     // Layout
     private void setLayout() {
-        etModel = Layout.findViewById(R.id.et_name);
+        etInput = Layout.findViewById(R.id.et_name);
         bCommit = Layout.findViewById(R.id.b_commit);
+        rSearchResults = Layout.findViewById(R.id.recycler_view);
     }
 
     private void handleInteraction() {
         bCommit.setOnClickListener(this);
-        etModel.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-            @Override public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-            @Override public void afterTextChanged(Editable editable) {
-                // RecyclerView with suggestionss
-            }
-        });
     }
 
     @Override
