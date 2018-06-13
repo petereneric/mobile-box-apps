@@ -28,6 +28,14 @@
     <string name="added_to">Added to:</string>
     <string name="add_battery">Add %1$s to batteries?</string>
     <string name="hint_enter_battery_name">Enter battery name..</string>
+    <string name="shape_broken">Broken</string>
+    <string name="shape_repair">Repair</string>
+    <string name="shape_acceptable">Acceptable</string>
+    <string name="shape_good">Good</string>
+    <string name="shape_very_good">Very Good</string>
+    <string name="shape_cherry">Cherry</string>
+
+
 
 
 
