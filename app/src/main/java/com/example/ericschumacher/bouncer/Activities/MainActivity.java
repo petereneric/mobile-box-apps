@@ -161,7 +161,10 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         reset();
     }
 
+    @Override
+    public void setShape(int shape) {
 
+    }
 
     private void startFragmentExploitation() {
         Fragment_Request_Exploitation f = new Fragment_Request_Exploitation();

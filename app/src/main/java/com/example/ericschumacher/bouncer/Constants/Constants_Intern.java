@@ -12,4 +12,6 @@ public class Constants_Intern {
     public final static String LIST_CHOICE = "LIST_CHOICE";
     public final static int EXPLOITATION_RECYCLING = 1;
     public final static int EXPLOITATION_REUSE = 2;
+
+    // Shape
 }

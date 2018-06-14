@@ -18,6 +18,10 @@ public class Object_Model {
     private int IdBattery;
     private int Exploitation;
 
+    public enum Shape {
+
+    }
+
     public Object_Model() {
 
     }

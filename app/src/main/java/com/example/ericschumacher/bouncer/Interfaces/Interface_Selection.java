@@ -20,4 +20,5 @@ public interface Interface_Selection {
     void reset();
     Object_Model getModel();
     void startFragmentResult(String result);
+    void setShape(int shape);
 }
