@@ -12,6 +12,9 @@ public class Constants_Intern {
     public final static String LIST_CHOICE = "LIST_CHOICE";
     public final static int EXPLOITATION_RECYCLING = 1;
     public final static int EXPLOITATION_REUSE = 2;
+    public final static String OBJECT_MODEL = "OBJECT_MODEL";
 
-    // Shape
+    // Condition
+    public final static int CONDITION_BROKEN = 0;
+    public final static int CONDITION_OK = 1;
 }

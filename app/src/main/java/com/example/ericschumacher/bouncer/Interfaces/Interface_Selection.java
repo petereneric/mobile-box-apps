@@ -18,6 +18,7 @@ public interface Interface_Selection {
     void checkBattery (String name);
     void checkDetails();
     void reset();
+    void check();
     Object_Model getModel();
     void startFragmentResult(String result);
     void setShape(int shape);

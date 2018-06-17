@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     // App
-    <color name="color_primary">#3f51b5</color>
-    <color name="color_primary_dark">#303F9F</color>
-    <color name="color_secondary">#FF4081</color>
-    <color name="color_secondary_dark">#FF4081</color>
+    <color name="color_primary">#d64521</color>
+    <color name="color_primary_dark">#8b0929</color>
+    <color name="color_primary_light">#df9b8a</color>
+    <color name="color_secondary">#2c8927</color>
+    <color name="color_secondary_dark">#3a5e2b</color>
 
     // Text
     <color name="color_text">#3F51B5</color>

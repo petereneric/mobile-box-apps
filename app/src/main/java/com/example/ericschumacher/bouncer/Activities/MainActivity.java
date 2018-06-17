@@ -372,6 +372,11 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     }
 
     @Override
+    public void check() {
+
+    }
+
+    @Override
     public Object_Model getModel() {
         return oModel;
     }
