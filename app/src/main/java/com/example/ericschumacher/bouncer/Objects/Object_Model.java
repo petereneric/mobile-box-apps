@@ -13,17 +13,14 @@ import com.example.ericschumacher.bouncer.R;
 
 public class Object_Model implements Parcelable {
     private int Id;
-    private String TAC;
+    private String IMEI;
     private String Name;
     private int IdManufacturer;
     private int IdCharger;
     private int IdBattery;
     private int Exploitation;
     private int Condition;
-
-    public enum Shape {
-
-    }
+    private int Shape;
 
     public Object_Model() {
 
@@ -32,6 +29,8 @@ public class Object_Model implements Parcelable {
     public Object_Model(int id, String name) {
         Id = id;
         Name = name;
+        Condition = Constants_Intern.CONDITION_NOT_SET;
+        Condition = Constants_Intern.SHAPE_NOT_SET;
     }
 
     public int getId() {
@@ -82,12 +81,12 @@ public class Object_Model implements Parcelable {
         Exploitation = exploitation;
     }
 
-    public String getTAC() {
-        return TAC;
+    public String getIMEI() {
+        return IMEI;
     }
 
-    public void setTAC(String TAC) {
-        this.TAC = TAC;
+    public void setIMEI(String IMEI) {
+        this.IMEI = IMEI;
     }
 
     public int getCondition() {
@@ -96,6 +95,14 @@ public class Object_Model implements Parcelable {
 
     public void setCondition(int condition) {
         Condition = condition;
+    }
+
+    public int getShape() {
+        return Shape;
+    }
+
+    public void setShape(int shape) {
+        Shape = shape;
     }
 
     public String getExploitationForScreen(Context context) {
@@ -120,13 +127,14 @@ public class Object_Model implements Parcelable {
 
     public Object_Model(Parcel in){
         this.Id = in.readInt();
-        this.TAC = in.readString();
+        this.IMEI = in.readString();
         this.Name = in.readString();
         this.IdManufacturer = in.readInt();
         this.IdCharger = in.readInt();
         this.IdBattery = in.readInt();
         this.Exploitation = in.readInt();
         this.Condition = in.readInt();
+        this.Shape = in.readInt();
     }
 
 
@@ -138,20 +146,21 @@ public class Object_Model implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(this.Id);
-        parcel.writeString(this.TAC);
+        parcel.writeString(this.IMEI);
         parcel.writeString(this.Name);
         parcel.writeInt(this.IdManufacturer);
         parcel.writeInt(this.IdCharger);
         parcel.writeInt(this.IdBattery);
         parcel.writeInt(this.Exploitation);
         parcel.writeInt(this.Condition);
+        parcel.writeInt(this.Shape);
     }
 
     @Override
     public String toString() {
         return "Object_Choice{" +
                 "id='" + Id + '\'' +
-                ", TAC='" + TAC + '\'' +
+                ", IMEI='" + IMEI + '\'' +
                 ", Name='" + Name + '\'' +
                 ", IdManufacturer='" + IdManufacturer + '\'' +
                 ", IdCharger='" + IdCharger + '\'' +
@@ -159,6 +168,7 @@ public class Object_Model implements Parcelable {
                 ", IdBattery='" + IdBattery + '\'' +
                 ", Exploitation='" + Exploitation + '\'' +
                 ", Condition='" + Condition + '\'' +
+                ", Shape='" + Shape + '\'' +
                 '}';
     }
 }

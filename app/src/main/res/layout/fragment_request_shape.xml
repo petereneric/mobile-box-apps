@@ -14,26 +14,6 @@
         android:layout_weight="1">
 
         <TextView
-            android:id="@+id/tvBroken"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/shape_broken"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/tvRepair"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/shape_repair"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <TextView
             android:id="@+id/tvAcceptable"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -42,15 +22,6 @@
             android:text="@string/shape_acceptable"
             android:textSize="19sp"
             android:textStyle="bold" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="1">
 
         <TextView
             android:id="@+id/tvGood"
@@ -61,6 +32,14 @@
             android:text="@string/shape_good"
             android:textSize="20sp"
             android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:layout_weight="1">
 
         <TextView
             android:id="@+id/tvVeryGood"

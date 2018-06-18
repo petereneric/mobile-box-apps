@@ -19,7 +19,9 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Battery;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Model;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Condition;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Exploitation;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Shape;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
@@ -163,7 +165,18 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     @Override
     public void setShape(int shape) {
+        oModel.setShape(shape);
+        // Check mindest shape in DB
+        checkConditionAndShape();
+    }
 
+    @Override
+    public void setCondition(int condition) {
+        oModel.setCondition(condition);
+        if (oModel.getCondition() == Constants_Intern.CONDITION_BROKEN) {
+            oModel.setExploitation(Constants_Intern.EXPLOITATION_RECYCLING);
+        }
+        checkConditionAndShape();
     }
 
     private void startFragmentExploitation() {
@@ -324,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                             @Override
                             public void onSuccess() {
                                 Log.i("Result check", oModel.getExploitationForScreen(MainActivity.this));
-                                startFragmentResult(oModel.getExploitationForScreen(MainActivity.this));
+                                checkConditionAndShape();
                             }
 
                             @Override
@@ -362,6 +375,26 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         });
     }
 
+    void checkConditionAndShape() {
+        if (oModel.getCondition() == Constants_Intern.CONDITION_NOT_SET && oModel.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
+            Fragment_Request_Condition f = new Fragment_Request_Condition();
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Constants_Intern.OBJECT_MODEL, oModel);
+            f.setArguments(bundle);
+            fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_request_condition").commit();
+        } else {
+            if(oModel.getShape() == Constants_Intern.SHAPE_NOT_SET && oModel.getExploitation() == Constants_Intern.EXPLOITATION_REUSE && false) {
+                Fragment_Request_Shape f = new Fragment_Request_Shape();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constants_Intern.OBJECT_MODEL, oModel);
+                f.setArguments(bundle);
+                fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_request_shape").commit();
+            } else {
+                startFragmentResult(oModel.getExploitationForScreen(MainActivity.this));
+            }
+        }
+    }
+
     @Override
     public void reset() {
         oModel = new Object_Model();
@@ -369,11 +402,6 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         /*for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
         }*/
-    }
-
-    @Override
-    public void check() {
-
     }
 
     @Override

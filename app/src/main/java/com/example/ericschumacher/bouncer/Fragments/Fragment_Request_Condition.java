@@ -52,17 +52,12 @@ public class Fragment_Request_Condition extends Fragment implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBroken:
-                oModel.setCondition(Constants_Intern.CONDITION_BROKEN);
-
+                iSelection.setCondition(Constants_Intern.CONDITION_BROKEN);
                 break;
             case R.id.tvOk:
-                oModel.setCondition(Constants_Intern.CONDITION_OK);
+                iSelection.setCondition(Constants_Intern.CONDITION_OK);
                 break;
         }
     }
 
-    void setCondition(int condition) {
-        oModel.setCondition(condition);
-        iSelection.check();
-    }
 }
