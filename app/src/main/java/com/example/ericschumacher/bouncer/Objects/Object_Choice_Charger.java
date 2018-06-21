@@ -8,6 +8,6 @@ public class Object_Choice_Charger extends Object_Choice {
 
     public Object_Choice_Charger(int id, String name) {
         super(id, name);
-        urlName = "charger";
+        urlName = "images_chargers";
     }
 }

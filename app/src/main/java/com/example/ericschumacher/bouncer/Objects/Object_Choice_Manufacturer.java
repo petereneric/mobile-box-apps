@@ -8,6 +8,6 @@ public class Object_Choice_Manufacturer extends Object_Choice {
 
     public Object_Choice_Manufacturer(int id, String name) {
         super(id, name);
-        urlName = "manufacturer";
+        urlName = "icon_manufactures";
     }
 }
