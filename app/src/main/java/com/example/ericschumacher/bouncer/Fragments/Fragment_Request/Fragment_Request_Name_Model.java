@@ -63,8 +63,7 @@ public class Fragment_Request_Name_Model extends Fragment_Request_Input {
         switch (view.getId()) {
             case R.id.b_commit:
                 iSelection.checkName(etInput.getText().toString());
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(etInput.getWindowToken(), 0);
+                closeKeyboard();
                 break;
             case R.id.et_name:
                 Log.i("Wenigstens", "das");

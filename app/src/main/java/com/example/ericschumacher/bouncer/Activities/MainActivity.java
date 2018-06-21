@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
@@ -14,7 +15,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Battery;
@@ -27,14 +30,18 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.Objects.Object_Model;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements Interface_Selection {
+public class MainActivity extends AppCompatActivity implements Interface_Selection, View.OnClickListener {
 
     // Utilities
     Utility_Network uNetwork;
@@ -44,13 +51,32 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     // Layout
     EditText etScan;
+    TextView tvCollector;
+    TextView tvCounterReuse;
+    TextView tvCounterRecycling;
+    TextView tvCounterTotal;
+    TextView tvName;
+    TextView tvManufacturer;
+    TextView tvCharger;
+    TextView tvBattery;
+    FloatingActionButton fab;
 
     // Fragments
     FragmentManager fManager;
 
+    // Counter
+    private int cRecycling = 0;
+    private int cReuse = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Counter
+        if (savedInstanceState != null) {
+            cRecycling = savedInstanceState.getInt(Constants_Intern.COUNTER_RECYCLING, 0);
+            cReuse = savedInstanceState.getInt(Constants_Intern.COUNTER_REUSE, 0);
+        }
 
         // Utilities
         uNetwork = new Utility_Network(this);
@@ -64,19 +90,31 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         // Layout
         setLayout();
         handleInteraction();
+        updateUI();
+    }
 
-        etScan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.i("Hier", "läuft");
-            }
-        });
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(Constants_Intern.COUNTER_RECYCLING, cRecycling);
+        outState.putInt(Constants_Intern.COUNTER_REUSE, cReuse);
     }
 
     // Layout
     private void setLayout() {
         setContentView(R.layout.activity_selection);
         etScan = findViewById(R.id.et_scan);
+        tvCollector = findViewById(R.id.tvCollector);
+        tvCounterReuse = findViewById(R.id.tvCounterReuse);
+        tvCounterRecycling = findViewById(R.id.tvCounterRecycling);
+        tvCounterTotal = findViewById(R.id.tvCounterTotal);
+        tvName = findViewById(R.id.tvName);
+        tvManufacturer = findViewById(R.id.tvManufacturer);
+        tvCharger = findViewById(R.id.tvCharger);
+        tvBattery = findViewById(R.id.tvBattery);
+        fab = findViewById(R.id.fab);
+
+        fab.setOnClickListener(this);
     }
 
     private void handleInteraction() {
@@ -91,24 +129,29 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.toString() != "" && editable.toString().length() == 15) {
-                    Log.i("Working", "Yes");
+                if (editable.toString() != "" && editable.toString().length() == 8) {
+
                     // Hide keyboard
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(etScan.getWindowToken(), 0);
 
-                    // Get Tac and work with it
+                    // Get TAC
                     String tac = editable.toString().substring(0, 8);
-                    uNetwork.getIdModel_Tac(tac, new Interface_VolleyCallback_Int() {
+                    uNetwork.getModelByTac(tac, new Interface_VolleyCallback_JSON() {
                         @Override
-                        public void onSuccess(int i) {
-                            int idModel = i;
-                            oModel.setId(idModel);
-                            checkModel();
+                        public void onSuccess(JSONObject json) {
+                            try {
+                                oModel.setId(json.getInt(Constants_Extern.ID_MODEL));
+                                oModel.setName(json.getString(Constants_Extern.NAME));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            updateUI();
+                            checkExploitation();
                         }
 
                         @Override
-                        public void onFailure() {
+                        public void onFailure(JSONObject json) {
                             startFragmentRequest();
                         }
                     });
@@ -119,11 +162,11 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     // Class Methods
 
-    private void checkModel() {
+    private void checkExploitation() {
         uNetwork.checkLku(oModel.getId(), new Interface_VolleyCallback() {
             @Override
             public void onSuccess() {
-                Log.i("checkModel()", "Found LKU");
+                Log.i("checkExploitation()", "Found LKU");
                 oModel.setExploitation(Constants_Intern.EXPLOITATION_REUSE);
                 checkDetails();
             }
@@ -135,12 +178,10 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                     public void onSuccess(int i) {
                         oModel.setExploitation(i);
                         if (oModel.getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
-                            startFragmentResult(getString(R.string.recycling));
+                            startFragmentResult();
                         } else {
                             checkDetails();
                         }
-                        Log.i("Expo check", Integer.toString(i));
-
                     }
 
                     @Override
@@ -154,13 +195,19 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     // Fragments
     @Override
-    public void startFragmentResult(String result) {
+    public void startFragmentResult() {
         Fragment_Result f = new Fragment_Result();
         Bundle b = new Bundle();
-        b.putString(Constants_Intern.SELECTION_RESULT, result);
+        b.putParcelable(Constants_Intern.OBJECT_MODEL, oModel);
         f.setArguments(b);
         fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_result").commit();
-        reset();
+
+        if (oModel.getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
+            cRecycling++;
+        } else {
+            cReuse++;
+        }
+        updateUI();
     }
 
     @Override
@@ -177,6 +224,11 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
             oModel.setExploitation(Constants_Intern.EXPLOITATION_RECYCLING);
         }
         checkConditionAndShape();
+    }
+
+    @Override
+    public void setModel(int id, int name) {
+
     }
 
     private void startFragmentExploitation() {
@@ -224,7 +276,9 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
             @Override
             public void onSuccess(int i) {
                 oModel.setId(i);
-                checkModel();
+                oModel.setName(name);
+                checkExploitation();
+                updateUI();
             }
 
             @Override
@@ -247,8 +301,9 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     }
 
     @Override
-    public void callbackManufacturer(int id) {
+    public void callbackManufacturer(int id, String name) {
         oModel.setIdManufacturer(id);
+        oModel.setNameManufacturer(name);
         uNetwork.addManufacturerToModel(oModel.getId(), oModel.getIdManufacturer());
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -256,12 +311,12 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                 checkDetails();
             }
         }, 500);
-
     }
 
     @Override
-    public void callbackCharger(int id) {
+    public void callbackCharger(int id, String name) {
         oModel.setIdCharger(id);
+        oModel.setNameCharger(name);
         uNetwork.connectChargerWithModel(oModel.getId(), oModel.getIdCharger());
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -316,7 +371,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                 builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        startFragmentResult(oModel.getExploitationForScreen(MainActivity.this));
+                        startFragmentResult();
                     }
                 });
                 AlertDialog alert = builder.create();
@@ -327,28 +382,49 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     @Override
     public void checkDetails() {
-        uNetwork.checkManufacturer(oModel.getId(), new Interface_VolleyCallback() {
+        uNetwork.getManufacturer(oModel.getId(), new Interface_VolleyCallback_JSON() {
             @Override
-            public void onSuccess() {
-                uNetwork.checkCharger(oModel.getId(), new Interface_VolleyCallback() {
+            public void onSuccess(JSONObject json) {
+                try {
+                    oModel.setIdManufacturer(json.getInt(Constants_Extern.ID_MANUFACTURER));
+                    oModel.setNameManufacturer(json.getString(Constants_Extern.NAME_MANUFACTURER));
+                    updateUI();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                updateUI();
+                uNetwork.getCharger(oModel.getId(), new Interface_VolleyCallback_JSON() {
                     @Override
-                    public void onSuccess() {
-                        uNetwork.checkBattery(oModel.getId(), new Interface_VolleyCallback() {
+                    public void onSuccess(JSONObject json) {
+                        try {
+                            oModel.setIdCharger(json.getInt(Constants_Extern.ID_CHARGER));
+                            oModel.setNameCharger(json.getString(Constants_Extern.NAME_CHARGER));
+                            updateUI();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        uNetwork.getBattery(oModel.getId(), new Interface_VolleyCallback_JSON() {
                             @Override
-                            public void onSuccess() {
-                                Log.i("Result check", oModel.getExploitationForScreen(MainActivity.this));
+                            public void onSuccess(JSONObject json) {
+                                try {
+                                    oModel.setIdBattery(json.getInt(Constants_Extern.ID_BATTERY));
+                                    oModel.setNameBattery(json.getString(Constants_Extern.NAME_BATTERY));
+                                    updateUI();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                                 checkConditionAndShape();
                             }
 
                             @Override
-                            public void onFailure() {
+                            public void onFailure(JSONObject json) {
                                 startFragmentRequest(new Fragment_Request_Name_Battery());
                             }
                         });
                     }
 
                     @Override
-                    public void onFailure() {
+                    public void onFailure(JSONObject json) {
                         uNetwork.getChargers(oModel.getId(), new Interface_VolleyCallback_ArrayList_Choice() {
                             @Override
                             public void onSuccess(ArrayList<Object_Choice> list) {
@@ -362,7 +438,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
             }
 
             @Override
-            public void onFailure() {
+            public void onFailure(JSONObject json) {
                 uNetwork.getManufactures(new Interface_VolleyCallback_ArrayList_Choice() {
                     @Override
                     public void onSuccess(ArrayList<Object_Choice> list) {
@@ -383,14 +459,14 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
             f.setArguments(bundle);
             fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_request_condition").commit();
         } else {
-            if(oModel.getShape() == Constants_Intern.SHAPE_NOT_SET && oModel.getExploitation() == Constants_Intern.EXPLOITATION_REUSE && false) {
+            if (oModel.getShape() == Constants_Intern.SHAPE_NOT_SET && oModel.getExploitation() == Constants_Intern.EXPLOITATION_REUSE && false) {
                 Fragment_Request_Shape f = new Fragment_Request_Shape();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Constants_Intern.OBJECT_MODEL, oModel);
                 f.setArguments(bundle);
                 fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_request_shape").commit();
             } else {
-                startFragmentResult(oModel.getExploitationForScreen(MainActivity.this));
+                startFragmentResult();
             }
         }
     }
@@ -399,13 +475,40 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     public void reset() {
         oModel = new Object_Model();
         etScan.setText("");
-        /*for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+        etScan.requestFocus();
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
             getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-        }*/
+        }
+        updateUI();
+    }
+
+    private void totalReset() {
+        cReuse = 0;
+        cRecycling = 0;
+        reset();
+    }
+
+    private void updateUI() {
+        tvName.setText(oModel.getName());
+        tvManufacturer.setText(oModel.getNameManufacturer());
+        tvCharger.setText(oModel.getNameCharger());
+        tvBattery.setText(oModel.getNameBattery());
+
+        tvCounterRecycling.setText(Integer.toString(cRecycling));
+        tvCounterReuse.setText(Integer.toString(cReuse));
+        tvCounterTotal.setText(Integer.toString(cRecycling + cReuse));
     }
 
     @Override
     public Object_Model getModel() {
         return oModel;
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fab:
+                reset();
+        }
     }
 }

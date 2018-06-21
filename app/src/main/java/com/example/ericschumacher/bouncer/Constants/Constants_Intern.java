@@ -23,4 +23,8 @@ public class Constants_Intern {
     public final static int SHAPE_CHERRY = 3;
     public final static int CONDITION_NOT_SET = -1;
     public final static int SHAPE_NOT_SET = -1;
+
+    // Counter
+    public final static String COUNTER_RECYCLING = "COUNTER_RECYCLING";
+    public final static String COUNTER_REUSE = "COUNTER_REUSE";
 }

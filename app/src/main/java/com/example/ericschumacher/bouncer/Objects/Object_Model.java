@@ -21,9 +21,13 @@ public class Object_Model implements Parcelable {
     private int Exploitation;
     private int Condition;
     private int Shape;
+    private String nameManufacturer;
+    private String nameCharger;
+    private String nameBattery;
 
     public Object_Model() {
-
+        Condition = Constants_Intern.CONDITION_NOT_SET;
+        Condition = Constants_Intern.SHAPE_NOT_SET;
     }
 
     public Object_Model(int id, String name) {
@@ -105,6 +109,30 @@ public class Object_Model implements Parcelable {
         Shape = shape;
     }
 
+    public String getNameManufacturer() {
+        return nameManufacturer;
+    }
+
+    public void setNameManufacturer(String nameManufacturer) {
+        this.nameManufacturer = nameManufacturer;
+    }
+
+    public String getNameCharger() {
+        return nameCharger;
+    }
+
+    public void setNameCharger(String nameCharger) {
+        this.nameCharger = nameCharger;
+    }
+
+    public String getNameBattery() {
+        return nameBattery;
+    }
+
+    public void setNameBattery(String nameBattery) {
+        this.nameBattery = nameBattery;
+    }
+
     public String getExploitationForScreen(Context context) {
         if (Exploitation == Constants_Intern.EXPLOITATION_RECYCLING) {
             return context.getString(R.string.recycling);
@@ -135,6 +163,9 @@ public class Object_Model implements Parcelable {
         this.Exploitation = in.readInt();
         this.Condition = in.readInt();
         this.Shape = in.readInt();
+        this.nameManufacturer = in.readString();
+        this.nameCharger = in.readString();
+        this.nameBattery = in.readString();
     }
 
 
@@ -154,6 +185,9 @@ public class Object_Model implements Parcelable {
         parcel.writeInt(this.Exploitation);
         parcel.writeInt(this.Condition);
         parcel.writeInt(this.Shape);
+        parcel.writeString(this.nameManufacturer);
+        parcel.writeString(this.nameCharger);
+        parcel.writeString(this.nameBattery);
     }
 
     @Override
@@ -169,6 +203,9 @@ public class Object_Model implements Parcelable {
                 ", Exploitation='" + Exploitation + '\'' +
                 ", Condition='" + Condition + '\'' +
                 ", Shape='" + Shape + '\'' +
+                ", nameManufacturer='" + nameManufacturer + '\'' +
+                ", nameCharger='" + nameCharger + '\'' +
+                ", nameBattery='" + nameBattery + '\'' +
                 '}';
     }
 }

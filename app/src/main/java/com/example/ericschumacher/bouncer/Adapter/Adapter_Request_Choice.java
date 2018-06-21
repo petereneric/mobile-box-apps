@@ -51,7 +51,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
             ViewHolder_Request_Choice vh = new ViewHolder_Request_Choice(layout, new Interface_Click() {
                 @Override
                 public void onClick(int position) {
-                    iSelection.callbackManufacturer(lChoice.get(position).getId());
+                    iSelection.callbackManufacturer(lChoice.get(position).getId(), lChoice.get(position).getName());
                 }
             });
             return vh;
@@ -60,7 +60,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
             ViewHolder_Request_Choice vh = new ViewHolder_Request_Choice_Charger(layout, new Interface_Click() {
                 @Override
                 public void onClick(int position) {
-                    iSelection.callbackCharger(lChoice.get(position).getId());
+                    iSelection.callbackCharger(lChoice.get(position).getId(), lChoice.get(position).getName());
                 }
             });
             return vh;

@@ -15,6 +15,11 @@ public class Constants_Extern {
     // Response
     public final static String ID_MODEL = "ID_MODEL";
     public final static String ID_BATTERY = "ID_BATTERY";
+    public final static String NAME_BATTERY = "NAME_BATTERY";
+    public final static String ID_MANUFACTURER = "ID_MANUFACTURER";
+    public final static String NAME_MANUFACTURER = "NAME_MANUFACTURER";
+    public final static String ID_CHARGER = "ID_CHARGER";
+    public final static String NAME_CHARGER = "NAME_CHARGER";
     public final static String ID = "ID";
     public final static String NAME = "NAME";
     public final static String EXPLOITATION = "EXPLOITATION";

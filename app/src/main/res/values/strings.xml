@@ -21,7 +21,6 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="summary">Summary</string>
-    <string name="total">Total</string>
     <string name="new_selection">Start new selection</string>
     <string name="undo">Undo</string>
     <string name="commit">Commit</string>
@@ -36,5 +35,10 @@
     <string name="shape_good">Good</string>
     <string name="shape_very_good">Very Good</string>
     <string name="shape_cherry">Cherry</string>
+    <string name="collector">Collector</string>
+    <string name="total">Total</string>
+    <string name="name">Name</string>
+    <string name="manufacturer">Manufacturer</string>
+    <string name="charger">Charger</string>
 
 </resources>

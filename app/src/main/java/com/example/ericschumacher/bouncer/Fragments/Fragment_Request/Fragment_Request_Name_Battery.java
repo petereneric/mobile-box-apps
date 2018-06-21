@@ -59,8 +59,7 @@ public class Fragment_Request_Name_Battery extends Fragment_Request_Input {
         switch (view.getId()) {
             case R.id.b_commit:
                 iSelection.checkBattery(etInput.getText().toString());
-                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(etInput.getWindowToken(), 0);
+                closeKeyboard();
                 break;
         }
     }

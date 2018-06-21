@@ -8,16 +8,7 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/tvRecycling"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:text="@string/recycling"
-        android:textSize="32sp"
-        android:gravity="center"/>
-
-    <TextView
-        android:id="@+id/tvReuse"
+        android:id="@+id/tvResult"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Objects.Object_Model;
 import com.example.ericschumacher.bouncer.R;
 
@@ -21,11 +22,13 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
 
     // Layout
     View Layout;
-    TextView tvRecycling;
-    TextView tvReuse;
+    TextView tvResult;
 
     // Data
     Object_Model oModel;
+
+    // Interface
+    Interface_Selection iSelection;
 
     @Nullable
     @Override
@@ -37,29 +40,26 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
 
         // Data
         oModel = getArguments().getParcelable(Constants_Intern.OBJECT_MODEL);
-        if (oModel.getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
-            tvRecycling.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.color_primary, null));
-        } else {
-            tvRecycling.setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.color_primary, null));
-        }
+        tvResult.setText(oModel.getExploitationForScreen(getActivity()));
+
+        // Interface
+        iSelection = (Interface_Selection) getActivity();
 
         return Layout;
     }
 
     // Layout
     private void setLayout() {
-       tvRecycling = Layout.findViewById(R.id.tvRecycling);
-       tvReuse = Layout.findViewById(R.id.tvReuse);
+        tvResult = Layout.findViewById(R.id.tvResult);
+
+        tvResult.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.tvRecycling:
-
-                break;
-            case R.id.tvReuse:
-
+            case R.id.tvResult:
+                iSelection.reset();
                 break;
         }
     }

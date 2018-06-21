@@ -1,5 +1,6 @@
 package com.example.ericschumacher.bouncer.Fragments.Fragment_Request;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -65,6 +67,8 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
         aSearchResults = new Adapter_SearchResults(getActivity(), new ArrayList<Object_SearchResult>(), new Interface_SearchResults() {
             @Override
             public void onResultClick(Object_SearchResult o) {
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(etInput.getWindowToken(), 0);
                 etInput.setText(o.getName());
             }
         });
@@ -88,4 +92,10 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
     public void onClick(View view) {
 
     }
+
+    public void closeKeyboard() {
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(etInput.getWindowToken(), 0);
+    }
+
 }
