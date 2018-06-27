@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.toString() != "" && editable.toString().length() == 8) {
+                if (editable.toString() != "" && editable.toString().length() == 15) {
 
                     // Hide keyboard
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -287,6 +287,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                     @Override
                     public void onSuccess(int i) {
                         oModel.setId(i);
+                        oModel.setName(name);
+                        updateUI();
                         startFragmentExploitation();
                     }
 
@@ -508,7 +510,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
-                reset();
+                totalReset();
         }
     }
 }

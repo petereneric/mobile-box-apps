@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.RequestQueue;
@@ -129,7 +129,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
 
     private class ViewHolder_Request_Choice extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        RelativeLayout rlCardview;
+        LinearLayout llCardview;
         ImageView ivIcon;
         TextView tvName;
 
@@ -138,13 +138,13 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
         public ViewHolder_Request_Choice(View itemView, Interface_Click i) {
             super(itemView);
 
-            rlCardview = itemView.findViewById(R.id.rl_cardview);
+            llCardview = itemView.findViewById(R.id.ll_cardview);
             ivIcon = itemView.findViewById(R.id.iv_icon);
             tvName = itemView.findViewById(R.id.tv_name);
 
             tvName.setVisibility(View.GONE);
 
-            rlCardview.setOnClickListener(this);
+            llCardview.setOnClickListener(this);
 
             iClick = i;
         }
@@ -152,7 +152,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
         @Override
         public void onClick(View view) {
             switch (view.getId()) {
-                case R.id.rl_cardview:
+                case R.id.ll_cardview:
                     iClick.onClick(getAdapterPosition());
             }
         }
