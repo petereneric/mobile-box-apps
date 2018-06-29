@@ -1,63 +1,44 @@
 package com.example.ericschumacher.bouncer.Objects;
 
-import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
- * Created by Eric Schumacher on 26.05.2018.
+ * Created by Eric Schumacher on 27.06.2018.
  */
 
-public class Object_Choice implements Parcelable {
+public class Object_Choice_Color extends Object_Choice {
 
-    int id;
-    String name;
-    String urlName;
+    private String hexCode;
 
-    public Object_Choice() {
+    public Object_Choice_Color(int id, String name, String hexCode) {
+        super(id, name);
+        this.hexCode = hexCode;
     }
 
-    public Object_Choice(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public String getHexCode() {
+        return hexCode;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getUrlName() {
-        return urlName;
+    public void setHexCode(String hexCode) {
+        this.hexCode = hexCode;
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public Object_Choice createFromParcel(Parcel in) {
-            return new Object_Choice(in);
+        public Object_Choice_Color createFromParcel(Parcel in) {
+            return new Object_Choice_Color(in);
         }
 
-        public Object_Choice[] newArray(int size) {
-            return new Object_Choice[size];
+        public Object_Choice_Color[] newArray(int size) {
+            return new Object_Choice_Color[size];
         }
     };
 
-    public Object_Choice(Parcel in){
+    public Object_Choice_Color(Parcel in){
         this.id = in.readInt();
         this.name = in.readString();
         this.urlName =  in.readString();
+        this.hexCode =  in.readString();
     }
 
 
@@ -71,6 +52,7 @@ public class Object_Choice implements Parcelable {
         parcel.writeInt(this.id);
         parcel.writeString(this.name);
         parcel.writeString(this.urlName);
+        parcel.writeString(this.hexCode);
     }
 
     @Override
@@ -79,6 +61,7 @@ public class Object_Choice implements Parcelable {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", urlName='" + urlName + '\'' +
+                ", hexCode='" + hexCode + '\'' +
                 '}';
     }
 }

@@ -18,6 +18,9 @@ public class Object_Model implements Parcelable {
     private int IdManufacturer;
     private int IdCharger;
     private int IdBattery;
+    private int IdColor;
+    private int IdModelColor;
+    private String nameColor;
     private int Exploitation;
     private int Condition;
     private int Shape;
@@ -133,6 +136,30 @@ public class Object_Model implements Parcelable {
         this.nameBattery = nameBattery;
     }
 
+    public int getIdColor() {
+        return IdColor;
+    }
+
+    public void setIdColor(int idColor) {
+        IdColor = idColor;
+    }
+
+    public String getNameColor() {
+        return nameColor;
+    }
+
+    public void setNameColor(String nameColor) {
+        this.nameColor = nameColor;
+    }
+
+    public int getIdModelColor() {
+        return IdModelColor;
+    }
+
+    public void setIdModelColor(int idModelColor) {
+        IdModelColor = idModelColor;
+    }
+
     public String getExploitationForScreen(Context context) {
         if (Exploitation == Constants_Intern.EXPLOITATION_RECYCLING) {
             return context.getString(R.string.recycling);
@@ -160,12 +187,15 @@ public class Object_Model implements Parcelable {
         this.IdManufacturer = in.readInt();
         this.IdCharger = in.readInt();
         this.IdBattery = in.readInt();
+        this.IdColor = in.readInt();
+        this.IdModelColor = in.readInt();
         this.Exploitation = in.readInt();
         this.Condition = in.readInt();
         this.Shape = in.readInt();
         this.nameManufacturer = in.readString();
         this.nameCharger = in.readString();
         this.nameBattery = in.readString();
+        this.nameColor = in.readString();
     }
 
 
@@ -182,12 +212,15 @@ public class Object_Model implements Parcelable {
         parcel.writeInt(this.IdManufacturer);
         parcel.writeInt(this.IdCharger);
         parcel.writeInt(this.IdBattery);
+        parcel.writeInt(this.IdColor);
+        parcel.writeInt(this.IdModelColor);
         parcel.writeInt(this.Exploitation);
         parcel.writeInt(this.Condition);
         parcel.writeInt(this.Shape);
         parcel.writeString(this.nameManufacturer);
         parcel.writeString(this.nameCharger);
         parcel.writeString(this.nameBattery);
+        parcel.writeString(this.nameColor);
     }
 
     @Override
@@ -200,12 +233,14 @@ public class Object_Model implements Parcelable {
                 ", IdCharger='" + IdCharger + '\'' +
                 ", IdCharger='" + IdCharger + '\'' +
                 ", IdBattery='" + IdBattery + '\'' +
+                ", IdColor='" + IdColor + '\'' +
+                ", IdModelColor='" + IdModelColor + '\'' +
                 ", Exploitation='" + Exploitation + '\'' +
                 ", Condition='" + Condition + '\'' +
                 ", Shape='" + Shape + '\'' +
                 ", nameManufacturer='" + nameManufacturer + '\'' +
                 ", nameCharger='" + nameCharger + '\'' +
-                ", nameBattery='" + nameBattery + '\'' +
+                ", nameColor='" + nameColor + '\'' +
                 '}';
     }
 }

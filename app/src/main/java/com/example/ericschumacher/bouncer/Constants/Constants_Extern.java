@@ -19,6 +19,10 @@ public class Constants_Extern {
     public final static String ID_MANUFACTURER = "ID_MANUFACTURER";
     public final static String NAME_MANUFACTURER = "NAME_MANUFACTURER";
     public final static String ID_CHARGER = "ID_CHARGER";
+    public final static String ID_COLOR = "ID_COLOR";
+    public final static String NAME_COLOR = "NAME_COLOR";
+    public final static String CODE_HEX = "CODE_HEX";
+    public final static String ID_MODEL_COLOR = "ID_MODEL_COLOR";
     public final static String NAME_CHARGER = "NAME_CHARGER";
     public final static String ID = "ID";
     public final static String NAME = "NAME";

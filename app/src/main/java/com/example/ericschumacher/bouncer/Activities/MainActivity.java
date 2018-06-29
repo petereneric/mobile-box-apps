@@ -329,6 +329,35 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     }
 
     @Override
+    public void callbackColor(int id, String name) {
+        oModel.setIdColor(id);
+        oModel.setNameColor(name);
+        uNetwork.getIdModelColor(oModel.getId(), oModel.getIdColor(), new Interface_VolleyCallback_Int() {
+            @Override
+            public void onSuccess(int i) {
+                oModel.setIdModelColor(i);
+                startFragmentResult();
+            }
+
+            @Override
+            public void onFailure() {
+                uNetwork.addModelColor(oModel.getId(), oModel.getIdColor(), new Interface_VolleyCallback_Int() {
+                    @Override
+                    public void onSuccess(int i) {
+                        oModel.setIdModelColor(i);
+                        startFragmentResult();
+                    }
+
+                    @Override
+                    public void onFailure() {
+
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
     public void checkBattery(final String name) {
         uNetwork.getIdBattery(oModel.getId(), name, new Interface_VolleyCallback_Int() {
             @Override
@@ -468,9 +497,21 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                 f.setArguments(bundle);
                 fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_request_shape").commit();
             } else {
-                startFragmentResult();
+                requestColor();
             }
         }
+    }
+
+    void requestColor() {
+        Log.i("Hey", "Honey");
+        uNetwork.getColors(oModel.getId(), new Interface_VolleyCallback_ArrayList_Choice() {
+            @Override
+            public void onSuccess(ArrayList<Object_Choice> list) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList(Constants_Intern.LIST_CHOICE, list);
+                startFragmentChoice(bundle);
+            }
+        });
     }
 
     @Override

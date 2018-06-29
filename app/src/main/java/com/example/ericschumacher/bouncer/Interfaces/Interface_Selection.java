@@ -15,6 +15,7 @@ public interface Interface_Selection {
     void checkName (String name);
     void callbackManufacturer (int id, String name);
     void callbackCharger(int id, String name);
+    void callbackColor(int id, String name);
     void checkBattery (String name);
     void checkDetails();
     void reset();

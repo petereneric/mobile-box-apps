@@ -2,6 +2,8 @@ package com.example.ericschumacher.bouncer.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +20,8 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
+import com.example.ericschumacher.bouncer.Objects.Object_Choice_Charger;
+import com.example.ericschumacher.bouncer.Objects.Object_Choice_Color;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Manufacturer;
 import com.example.ericschumacher.bouncer.R;
 
@@ -32,6 +36,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
     // Types
     private final static int TYPE_CHARGER = 0;
     private final static int TYPE_MANUFACTURER = 1;
+    private final static int TYPE_COLOR = 2;
 
     // Variables
     Context Context;
@@ -65,51 +70,65 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
             });
             return vh;
         }
+        if (viewType == TYPE_COLOR) {
+            ViewHolder_Request_Choice_Color vh = new ViewHolder_Request_Choice_Color(layout, new Interface_Click() {
+                @Override
+                public void onClick(int position) {
+                    iSelection.callbackCharger(lChoice.get(position).getId(), lChoice.get(position).getName());
+                }
+            });
+            return vh;
+        }
+
         return null;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final ViewHolder_Request_Choice h = (ViewHolder_Request_Choice) holder;
-        Object_Choice oManufacturer = lChoice.get(position);
-        h.tvName.setText(oManufacturer.getName());
-        Log.i("onBind", oManufacturer.getName());
+        Object_Choice oChoice = lChoice.get(position);
+        h.tvName.setText(oChoice.getName());
+        Log.i("onBind", oChoice.getName());
 
-        ImageRequest request = new ImageRequest("http://svp-server.com/svp-gmbh/erp/files/"+oManufacturer.getUrlName()+"/" + Integer.toString(oManufacturer.getId()) + ".png",
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap bitmap) {
-                        h.ivIcon.setImageBitmap(bitmap);
-                    }
-                }, 0, 0, ImageView.ScaleType.FIT_CENTER, null,
-                new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
+        if (oChoice instanceof Object_Choice_Color) {
+            h.ivIcon.setBackgroundColor(Color.parseColor(((Object_Choice_Color) oChoice).getHexCode()));
+        } else {
+            ImageRequest request = new ImageRequest("http://svp-server.com/svp-gmbh/erp/files/"+oChoice.getUrlName()+"/" + Integer.toString(oChoice.getId()) + ".png",
+                    new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap bitmap) {
+                            h.ivIcon.setImageBitmap(bitmap);
+                        }
+                    }, 0, 0, ImageView.ScaleType.FIT_CENTER, null,
+                    new Response.ErrorListener() {
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                        }
+                    });
 
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
-        queue.add(request);
-        queue.getCache().clear();
+            RequestQueue queue;
+            queue = Volley.newRequestQueue(Context);
+            queue.add(request);
+            queue.getCache().clear();
 
-        ImageRequest request2 = new ImageRequest("http://svp-server.com/svp-gmbh/erp/files/"+oManufacturer.getUrlName()+"/" + Integer.toString(oManufacturer.getId()) + ".jpg",
-                new Response.Listener<Bitmap>() {
-                    @Override
-                    public void onResponse(Bitmap bitmap) {
-                        h.ivIcon.setImageBitmap(bitmap);
-                    }
-                }, 0, 0, ImageView.ScaleType.FIT_CENTER, null,
-                new Response.ErrorListener() {
-                    public void onErrorResponse(VolleyError error) {
-                        error.printStackTrace();
-                    }
-                });
+            ImageRequest request2 = new ImageRequest("http://svp-server.com/svp-gmbh/erp/files/"+oChoice.getUrlName()+"/" + Integer.toString(oChoice.getId()) + ".jpg",
+                    new Response.Listener<Bitmap>() {
+                        @Override
+                        public void onResponse(Bitmap bitmap) {
+                            h.ivIcon.setImageBitmap(bitmap);
+                        }
+                    }, 0, 0, ImageView.ScaleType.FIT_CENTER, null,
+                    new Response.ErrorListener() {
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+                        }
+                    });
 
-        RequestQueue queue2;
-        queue2 = Volley.newRequestQueue(Context);
-        queue2.add(request2);
-        queue2.getCache().clear();
+            RequestQueue queue2;
+            queue2 = Volley.newRequestQueue(Context);
+            queue2.add(request2);
+            queue2.getCache().clear();
+        }
         // It's suggested to work with singleton class
     }
 
@@ -123,7 +142,11 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
         if (lChoice.get(position) instanceof Object_Choice_Manufacturer) {
             return TYPE_MANUFACTURER;
         } else {
-            return TYPE_CHARGER;
+            if (lChoice.get(position) instanceof Object_Choice_Charger) {
+                return TYPE_CHARGER;
+            } else {
+                return TYPE_COLOR;
+            }
         }
     }
 
@@ -169,7 +192,11 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
             tvName.setVisibility(View.VISIBLE);
             ivIcon.setVisibility(View.VISIBLE);
         }
+    }
+    private class ViewHolder_Request_Choice_Color extends ViewHolder_Request_Choice {
 
-
+        public ViewHolder_Request_Choice_Color(View itemView, Interface_Click i) {
+            super(itemView, i);
+        }
     }
 }
