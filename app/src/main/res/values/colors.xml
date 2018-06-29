@@ -8,8 +8,9 @@
     <color name="color_secondary_dark">#3a5e2b</color>
 
     // Text
-    <color name="color_text">#3F51B5</color>
-    <color name="color_text_additional">#3F51B5</color>
+    <color name="color_text">#1a1a1d</color>
+    <color name="color_text_header">#777983</color>
+    <color name="color_text_minor">#c5c7d2</color>
 
     // Common
     <color name="color_whtie">#ffffff</color>

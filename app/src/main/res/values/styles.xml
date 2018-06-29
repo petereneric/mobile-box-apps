@@ -8,4 +8,9 @@
         <item name="colorAccent">@color/color_secondary</item>
     </style>
 
+    <style name="tv_default">
+        <item name="android:textSize">@dimen/size_text_default</item>
+        <item name="android:textColor">@color/color_text</item>
+    </style>
+
 </resources>

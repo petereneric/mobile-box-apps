@@ -1,0 +1,67 @@
+xml version="1.0" encoding="utf-8"?>
+<DieCutLabel Units="twips" Version="8.0">
+    <PaperOrientation>Landscape</PaperOrientation>
+    <Id>Address</Id>
+
+    <PaperName>30252 Address</PaperName>
+
+    <DrawCommands>
+
+        <RoundRectangle Height="5040" Rx="270" Ry="270" Width="1581" X="0" Y="0" />
+
+    </DrawCommands>
+
+    <ObjectInfo>
+
+        <TextObject>
+
+            <Name>Text</Name>
+
+            <ForeColor Alpha="255" Blue="0" Green="0" Red="0" />
+
+            <BackColor Alpha="0" Blue="255" Green="255" Red="255" />
+
+            <LinkedObjectName></LinkedObjectName>
+
+            <Rotation>Rotation0</Rotation>
+
+            <IsMirrored>False</IsMirrored>
+
+            <IsVariable>True</IsVariable>
+
+            <HorizontalAlignment>Center</HorizontalAlignment>
+
+            <VerticalAlignment>Middle</VerticalAlignment>
+
+            <TextFitMode>ShrinkToFit</TextFitMode>
+
+            <UseFullFontHeight>True</UseFullFontHeight>
+
+            <Verticalized>False</Verticalized>
+
+            <StyledText>
+
+                <Element>
+
+                    <String>Click here to enter text</String>
+
+                    <Attributes>
+
+                        <Font Bold="False" Family="Arial" Italic="False" Size="20" Strikeout="False"
+                            Underline="False" />
+
+                        <ForeColor Alpha="255" Blue="0" Green="0" Red="0" />
+
+                    </Attributes>
+
+                </Element>
+
+            </StyledText>
+
+        </TextObject>
+
+        <Bounds Height="1343" Width="4560" X="331" Y="150" />
+
+    </ObjectInfo>
+
+</DieCutLabel>
