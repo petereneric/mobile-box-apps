@@ -178,6 +178,49 @@ public class Utility_Network {
         return false;
     }
 
+    public boolean connectWithLku(int idModel, final Interface_VolleyCallback_Int iCallback) {
+        RequestQueue queue;
+        queue = Volley.newRequestQueue(Context);
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/lku/connect/" + Integer.toString(idModel);
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("Response: ", response);
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                            iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_LKU));
+                        } else {
+                            iCallback.onFailure();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    if (response != null && response.statusCode == 200) {
+                        responseString = new String(response.data);
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+            queue.add(stringRequest);
+            queue.getCache().clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public boolean checkExploitation(int idModel, final Interface_VolleyCallback_Int iCallback) {
         RequestQueue queue;
         queue = Volley.newRequestQueue(Context);
@@ -851,7 +894,7 @@ public class Utility_Network {
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            list.add(new Object_Choice_Color(jsonObject.getInt(Constants_Extern.ID_COLOR), jsonObject.getString(Constants_Extern.NAME_COLOR), jsonObject.getString(Constants_Extern.CODE_HEX)));
+                            list.add(new Object_Choice_Color(jsonObject.getInt(Constants_Extern.ID_COLOR), jsonObject.getString(Constants_Extern.NAME_COLOR), jsonObject.getString(Constants_Extern.HEX_CODE)));
                         }
                         iCallback.onSuccess(list);
                     } catch (Exception e) {

@@ -12,13 +12,15 @@
     <FrameLayout
         android:id="@+id/fl_input_output"
         android:layout_width="0dp"
-        android:layout_height="303dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="296dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout">
 
     </FrameLayout>
 
@@ -54,7 +56,7 @@
 
     <TableLayout
         android:id="@+id/tableLayout"
-        android:layout_width="0dp"
+        android:layout_width="189dp"
         android:layout_height="126dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
@@ -125,6 +127,7 @@
     </TableLayout>
 
     <TableLayout
+        android:id="@+id/tableLayout2"
         android:layout_width="307dp"
         android:layout_height="137dp"
         android:layout_marginBottom="8dp"
@@ -204,5 +207,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_clear_24dp" />
+
+    <TableLayout
+        android:layout_width="171dp"
+        android:layout_height="118dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="52dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:id="@+id/trLKU">
+
+            <TextView
+                style="@style/tv_default"
+                android:text="@string/lku" />
+
+            <TextView
+                style="@style/tv_default"
+                android:id="@+id/tvLKU"
+                android:layout_marginLeft="16dp"
+                android:text="132" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trColor">
+
+            <TextView
+                style="@style/tv_default"
+                android:text="@string/color" />
+
+            <TextView
+                style="@style/tv_default"
+                android:id="@+id/tvColor"
+                android:layout_marginLeft="16dp"
+                android:text="Blue" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </TableLayout>
 
 </android.support.constraint.ConstraintLayout>

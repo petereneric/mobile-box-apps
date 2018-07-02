@@ -21,12 +21,13 @@ public class Constants_Extern {
     public final static String ID_CHARGER = "ID_CHARGER";
     public final static String ID_COLOR = "ID_COLOR";
     public final static String NAME_COLOR = "NAME_COLOR";
-    public final static String CODE_HEX = "CODE_HEX";
+    public final static String HEX_CODE = "HEX_CODE";
     public final static String ID_MODEL_COLOR = "ID_MODEL_COLOR";
     public final static String NAME_CHARGER = "NAME_CHARGER";
     public final static String ID = "ID";
     public final static String NAME = "NAME";
     public final static String EXPLOITATION = "EXPLOITATION";
+    public final static String ID_LKU = "ID_LKU";
 
     // Details
     public final static String TAC_KNOWN = "TAC_KNOWN";

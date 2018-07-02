@@ -47,7 +47,6 @@ public class Fragment_Request_Choice extends Fragment {
         RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         RecyclerView.setAdapter(adapter);
 
-
         return Layout;
     }
 

@@ -74,7 +74,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
             ViewHolder_Request_Choice_Color vh = new ViewHolder_Request_Choice_Color(layout, new Interface_Click() {
                 @Override
                 public void onClick(int position) {
-                    iSelection.callbackCharger(lChoice.get(position).getId(), lChoice.get(position).getName());
+                    iSelection.callbackColor(lChoice.get(position).getId(), lChoice.get(position).getName());
                 }
             });
             return vh;
@@ -197,6 +197,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
 
         public ViewHolder_Request_Choice_Color(View itemView, Interface_Click i) {
             super(itemView, i);
+            tvName.setVisibility(View.VISIBLE);
         }
     }
 }

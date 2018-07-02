@@ -16,17 +16,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.dymo.label.framework.Framework;
-import com.dymo.label.framework.Label;
-import com.dymo.label.framework.LabelSet;
-import com.dymo.label.framework.LabelSetRecord;
-import com.dymo.label.framework.NewPrintersFoundEvent;
-import com.dymo.label.framework.Printer;
-import com.dymo.label.framework.PrinterLookupFailureEvent;
-import com.dymo.label.framework.PrintersListener;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
@@ -45,19 +37,16 @@ import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.Objects.Object_Model;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
-import com.example.ericschumacher.bouncer.Utilities.Utility_Printer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements Interface_Selection, View.OnClickListener {
 
     // Utilities
     Utility_Network uNetwork;
-    Framework uPrinterFramework;
 
     // Objects
     Object_Model oModel;
@@ -73,6 +62,10 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     TextView tvManufacturer;
     TextView tvCharger;
     TextView tvBattery;
+    TextView tvLKU;
+    TextView tvColor;
+    TableRow trLKU;
+    TableRow trColor;
     FloatingActionButton fab;
 
     // Fragments
@@ -94,7 +87,6 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
         // Utilities
         uNetwork = new Utility_Network(this);
-        setupFrameWork();
 
 
         // Objects
@@ -129,10 +121,16 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         tvManufacturer = findViewById(R.id.tvManufacturer);
         tvCharger = findViewById(R.id.tvCharger);
         tvBattery = findViewById(R.id.tvBattery);
+        tvLKU = findViewById(R.id.tvLKU);
+        tvColor = findViewById(R.id.tvColor);
+        trColor = findViewById(R.id.trColor);
+        trLKU = findViewById(R.id.trLKU);
         fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(this);
         ivClearScan.setOnClickListener(this);
+        trColor.setOnClickListener(this);
+        trLKU.setOnClickListener(this);
     }
 
     private void handleInteraction() {
@@ -179,167 +177,6 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     }
 
     // Class Methods
-
-    private void setupFrameWork() {
-        uPrinterFramework = Utility_Printer.instance(this).getFramework();
-        uPrinterFramework.setPrintersListener(new PrintersListener()
-        {
-            @Override
-            public void printerLookupFailure(PrinterLookupFailureEvent event)
-            {
-                final String message = String.format("Unable to contact '%s' (%s)", event.getPrinterUri(),
-                        event.getLocation());
-                Log.e("Print Label", message);
-
-                MainActivity.this.runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
-                    }
-                });
-            }
-
-            @Override
-            public void newPrintersFound(final NewPrintersFoundEvent event)
-            {
-                Log.i("Printer, ", "Founde");
-                runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        // output all discovered printers to the log
-                        Iterable<Printer> printers = event.getPrinters();
-                        for (Printer p : printers) {
-                            Log.i("Printer: ", p.getName());
-                            printWithLabelSet(p);
-                        }
-                    }
-                });
-            }
-        });
-    }
-
-    /*
-    private void refreshPrinters()
-    {
-
-        uPrinterFramework.startRefreshPrinters();
-
-        // / stop refreshing in 5 seconds
-        labelContentEditText_.postDelayed(new CheckedRunnable()
-        {
-            @Override
-            public void run2()
-            {
-                Log.i("PrintLabel", "----------- Stopping printers lookup after 5 seconds");
-                uPrinterFramework.stopRefreshPrinters();
-
-                // usually this is called from newPrintersFound() handler
-                // newPrintersFound will not be called if all printers are gone
-                updateCurrentPrinter(framework_.getPrinters());
-            }
-        }, 5000);
-    }
-    */
-
-    void printWithLabelSet(Printer printer)
-    {
-        // open a label
-        Label label = null;
-        try {
-            label = uPrinterFramework.openLabel(this, "Phone.label");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // create a label set
-        LabelSet labelSet = uPrinterFramework.createLabelSet();
-
-        // label #1
-        LabelSetRecord record = labelSet.addRecord();
-        record.setText("TEXT", "6x7=42");
-
-        //label #2
-        record = labelSet.addRecord();
-        record.setTextMarkup("TEXT", "font family='Arial' size='36'>6x7=<b>42</b></font>");
-
-        // print label
-        label.print(printer, labelSet);
-    }
-
-    /*
-    private void printButtonClick()
-    {
-        try
-        {
-            //... open label, assemble print data, etc
-
-            // print with default parameters
-            final PrintJob job = label.print(currentPrinter);
-
-            final Runnable getStatus = new CheckedRunnable()
-            {
-                @Override
-                public void run2()
-                {
-                    job.getStatus();
-                }
-            };
-
-            // an executor service to ask for the status in the background
-            final ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-
-            // set the listener to be called when the status received
-            job.setOnStatusListener(new PrintJobListener()
-            {
-
-                @Override
-                public void statusReceived(PrintJobStatusReceivedEvent event)
-                {
-                    try
-                    {
-                        final PrintJobStatus jobStatus = event.getPrintJobStatus();
-                        final JobStatusId statusId = jobStatus.getStatusId();
-                        final String statusMessage = jobStatus.getStatusMessage();
-                        Log.i("job status", statusMessage);
-
-                        switch (statusId)
-                        {
-                            case ProcessingError:
-                                // bad - unrecoverable printing error, do not ask status again
-                                break;
-
-                            case Finished:
-                                // done - printing is done, do not ask status again
-                                break;
-
-                            default:
-                                // OK - printing is in progress, ask the status after one second delay
-                                scheduler.schedule(getStatus, 1, TimeUnit.SECONDS);
-                                break;
-                        }
-
-                    }
-                    catch (Exception e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-            // schedule first status request in a second
-            scheduler.schedule(getStatus, 1, TimeUnit.SECONDS);
-
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-    */
-
 
     private void checkExploitation() {
         uNetwork.checkLku(oModel.getId(), new Interface_VolleyCallback() {
@@ -676,8 +513,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                 f.setArguments(bundle);
                 fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_request_shape").commit();
             } else {
-                //requestColor();
-                startFragmentResult();
+                requestColor();
+                //startFragmentResult();
             }
         }
     }
@@ -716,6 +553,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         tvManufacturer.setText(oModel.getNameManufacturer());
         tvCharger.setText(oModel.getNameCharger());
         tvBattery.setText(oModel.getNameBattery());
+        tvLKU.setText(Integer.toString(oModel.getId()));
 
         tvCounterRecycling.setText(Integer.toString(cRecycling));
         tvCounterReuse.setText(Integer.toString(cReuse));
@@ -735,6 +573,30 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                 break;
             case R.id.ivClearScan:
                 reset();
+                break;
+            case R.id.trLKU:
+                if (oModel.getId() > 0) {
+                    if (oModel.getLKU() == 0) {
+                        uNetwork.connectWithLku(oModel.getId(), new Interface_VolleyCallback_Int() {
+                            @Override
+                            public void onSuccess(int i) {
+                                oModel.setLKU(i);
+                                updateUI();
+                            }
+
+                            @Override
+                            public void onFailure() {
+
+                            }
+                        });
+                    } else {
+                        // Change LKU
+                    }
+
+                }
+                break;
+            case R.id.trColor:
+                requestColor();
         }
     }
 }

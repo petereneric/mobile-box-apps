@@ -27,8 +27,10 @@ public class Object_Model implements Parcelable {
     private String nameManufacturer;
     private String nameCharger;
     private String nameBattery;
+    private int LKU;
 
     public Object_Model() {
+        Id = 0;
         Condition = Constants_Intern.CONDITION_NOT_SET;
         Condition = Constants_Intern.SHAPE_NOT_SET;
     }
@@ -160,6 +162,14 @@ public class Object_Model implements Parcelable {
         IdModelColor = idModelColor;
     }
 
+    public int getLKU() {
+        return LKU;
+    }
+
+    public void setLKU(int LKU) {
+        this.LKU = LKU;
+    }
+
     public String getExploitationForScreen(Context context) {
         if (Exploitation == Constants_Intern.EXPLOITATION_RECYCLING) {
             return context.getString(R.string.recycling);
@@ -196,6 +206,7 @@ public class Object_Model implements Parcelable {
         this.nameCharger = in.readString();
         this.nameBattery = in.readString();
         this.nameColor = in.readString();
+        this.LKU = in.readInt();
     }
 
 
@@ -221,6 +232,7 @@ public class Object_Model implements Parcelable {
         parcel.writeString(this.nameCharger);
         parcel.writeString(this.nameBattery);
         parcel.writeString(this.nameColor);
+        parcel.writeInt(this.LKU);
     }
 
     @Override
@@ -241,6 +253,7 @@ public class Object_Model implements Parcelable {
                 ", nameManufacturer='" + nameManufacturer + '\'' +
                 ", nameCharger='" + nameCharger + '\'' +
                 ", nameColor='" + nameColor + '\'' +
+                ", LKU='" + LKU + '\'' +
                 '}';
     }
 }
