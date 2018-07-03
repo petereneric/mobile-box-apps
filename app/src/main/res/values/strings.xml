@@ -40,5 +40,6 @@
     <string name="name">Name</string>
     <string name="manufacturer">Manufacturer</string>
     <string name="charger">Charger</string>
+    <string name="toast_model_has_lku">Wolfram was machst du da? Das Model hat doch schon eine LKU. </string>
 
 </resources>

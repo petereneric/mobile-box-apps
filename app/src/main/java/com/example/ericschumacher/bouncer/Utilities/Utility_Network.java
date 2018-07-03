@@ -135,10 +135,10 @@ public class Utility_Network {
         }
     }
 
-    public boolean checkLku(int idModel, final Interface_VolleyCallback iCallback) {
+    public boolean getLKU(int idModel, final Interface_VolleyCallback_Int iCallback) {
         RequestQueue queue;
         queue = Volley.newRequestQueue(Context);
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/lku/check/" + Integer.toString(idModel);
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/lku/" + Integer.toString(idModel);
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -147,7 +147,7 @@ public class Utility_Network {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                            iCallback.onSuccess();
+                            iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_LKU));
                         } else {
                             iCallback.onFailure();
                         }

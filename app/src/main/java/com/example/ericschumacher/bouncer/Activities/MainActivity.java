@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
@@ -179,11 +180,13 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     // Class Methods
 
     private void checkExploitation() {
-        uNetwork.checkLku(oModel.getId(), new Interface_VolleyCallback() {
+        uNetwork.getLKU(oModel.getId(), new Interface_VolleyCallback_Int() {
             @Override
-            public void onSuccess() {
+            public void onSuccess(int i) {
                 Log.i("checkExploitation()", "Found LKU");
+                oModel.setLKU(i);
                 oModel.setExploitation(Constants_Intern.EXPLOITATION_REUSE);
+                updateUI();
                 checkDetails();
             }
 
@@ -553,7 +556,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         tvManufacturer.setText(oModel.getNameManufacturer());
         tvCharger.setText(oModel.getNameCharger());
         tvBattery.setText(oModel.getNameBattery());
-        tvLKU.setText(Integer.toString(oModel.getId()));
+        tvLKU.setText(Integer.toString(oModel.getLKU()));
 
         tvCounterRecycling.setText(Integer.toString(cRecycling));
         tvCounterReuse.setText(Integer.toString(cReuse));
@@ -576,23 +579,17 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                 break;
             case R.id.trLKU:
                 if (oModel.getId() > 0) {
-                    if (oModel.getLKU() == 0) {
                         uNetwork.connectWithLku(oModel.getId(), new Interface_VolleyCallback_Int() {
                             @Override
                             public void onSuccess(int i) {
                                 oModel.setLKU(i);
                                 updateUI();
                             }
-
                             @Override
                             public void onFailure() {
-
+                                Toast.makeText(MainActivity.this, getString(R.string.toast_model_has_lku), Toast.LENGTH_LONG).show();
                             }
                         });
-                    } else {
-                        // Change LKU
-                    }
-
                 }
                 break;
             case R.id.trColor:
