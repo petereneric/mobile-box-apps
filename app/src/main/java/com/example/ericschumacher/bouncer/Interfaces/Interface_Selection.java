@@ -1,9 +1,6 @@
 package com.example.ericschumacher.bouncer.Interfaces;
 
-import com.example.ericschumacher.bouncer.Objects.Object_Model;
-import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
-
-import java.util.ArrayList;
+import com.example.ericschumacher.bouncer.Objects.Object_Device;
 
 /**
  * Created by Eric Schumacher on 21.05.2018.
@@ -19,10 +16,11 @@ public interface Interface_Selection {
     void checkBattery (String name);
     void checkDetails();
     void reset();
-    Object_Model getModel();
+    Object_Device getModel();
     void startFragmentResult();
     void setShape(int shape);
     void setCondition(int condition);
     void setModel(int id, int name);
+    void finishDevice();
 
 }

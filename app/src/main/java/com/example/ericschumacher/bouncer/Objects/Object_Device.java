@@ -11,7 +11,7 @@ import com.example.ericschumacher.bouncer.R;
  * Created by Eric Schumacher on 21.05.2018.
  */
 
-public class Object_Model implements Parcelable {
+public class Object_Device implements Parcelable {
     private int Id;
     private String IMEI;
     private String Name;
@@ -29,13 +29,13 @@ public class Object_Model implements Parcelable {
     private String nameBattery;
     private int LKU;
 
-    public Object_Model() {
+    public Object_Device() {
         Id = 0;
         Condition = Constants_Intern.CONDITION_NOT_SET;
         Condition = Constants_Intern.SHAPE_NOT_SET;
     }
 
-    public Object_Model(int id, String name) {
+    public Object_Device(int id, String name) {
         Id = id;
         Name = name;
         Condition = Constants_Intern.CONDITION_NOT_SET;
@@ -190,7 +190,7 @@ public class Object_Model implements Parcelable {
         }
     };
 
-    public Object_Model(Parcel in){
+    public Object_Device(Parcel in){
         this.Id = in.readInt();
         this.IMEI = in.readString();
         this.Name = in.readString();

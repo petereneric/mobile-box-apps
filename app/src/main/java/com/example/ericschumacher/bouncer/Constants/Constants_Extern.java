@@ -12,7 +12,7 @@ public class Constants_Extern {
     public final static String SUCCESS = "SUCCESS";
     public final static String FAILURE = "FAILURE";
 
-    // Response
+    // Values
     public final static String ID_MODEL = "ID_MODEL";
     public final static String ID_BATTERY = "ID_BATTERY";
     public final static String NAME_BATTERY = "NAME_BATTERY";
@@ -27,7 +27,12 @@ public class Constants_Extern {
     public final static String ID = "ID";
     public final static String NAME = "NAME";
     public final static String EXPLOITATION = "EXPLOITATION";
+    public final static String IMEI = "IMEI";
+    public final static String CONDITION = "CONDITION";
+    public final static String SHAPE = "SHAPE";
     public final static String ID_LKU = "ID_LKU";
+    public final static String STATUS = "STATUS";
+    public final static String NOTES = "NOTES";
 
     // Details
     public final static String TAC_KNOWN = "TAC_KNOWN";

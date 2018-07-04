@@ -30,12 +30,11 @@ import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Exploitatio
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Shape;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
-import com.example.ericschumacher.bouncer.Objects.Object_Model;
+import com.example.ericschumacher.bouncer.Objects.Object_Device;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
@@ -50,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     Utility_Network uNetwork;
 
     // Objects
-    Object_Model oModel;
+    Object_Device oModel;
 
     // Layout
     EditText etScan;
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
 
         // Objects
-        oModel = new Object_Model();
+        oModel = new Object_Device();
 
         // Fragments
         fManager = getSupportFragmentManager();
@@ -247,6 +246,17 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     @Override
     public void setModel(int id, int name) {
+
+    }
+
+    @Override
+    public void finishDevice() {
+
+        printLabel();
+        reset();
+    }
+
+    private void printLabel() {
 
     }
 
@@ -509,7 +519,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
             f.setArguments(bundle);
             fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_request_condition").commit();
         } else {
-            if (oModel.getShape() == Constants_Intern.SHAPE_NOT_SET && oModel.getExploitation() == Constants_Intern.EXPLOITATION_REUSE && false) {
+            if (oModel.getShape() == Constants_Intern.SHAPE_NOT_SET && oModel.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
                 Fragment_Request_Shape f = new Fragment_Request_Shape();
                 Bundle bundle = new Bundle();
                 bundle.putParcelable(Constants_Intern.OBJECT_MODEL, oModel);
@@ -536,7 +546,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     @Override
     public void reset() {
-        oModel = new Object_Model();
+        oModel = new Object_Device();
         etScan.setText("");
         etScan.requestFocus();
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
@@ -564,7 +574,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     }
 
     @Override
-    public Object_Model getModel() {
+    public Object_Device getModel() {
         return oModel;
     }
 

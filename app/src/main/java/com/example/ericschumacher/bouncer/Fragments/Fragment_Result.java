@@ -3,7 +3,6 @@ package com.example.ericschumacher.bouncer.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.res.ResourcesCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
-import com.example.ericschumacher.bouncer.Objects.Object_Model;
+import com.example.ericschumacher.bouncer.Objects.Object_Device;
 import com.example.ericschumacher.bouncer.R;
 
 /**
@@ -25,7 +24,7 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
     TextView tvResult;
 
     // Data
-    Object_Model oModel;
+    Object_Device oModel;
 
     // Interface
     Interface_Selection iSelection;
