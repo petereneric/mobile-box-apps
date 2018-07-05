@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:idModel="@+idModel/guideline_horizontal_one"
+    android:id="@+id/guideline_horizontal_one"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.ericschumacher.bouncer.Activities.MainActivity"
@@ -10,22 +10,22 @@
 
 
     <FrameLayout
-        android:idModel="@+idModel/fl_input_output"
+        android:id="@+id/fl_input_output"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+idModel/tableLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+idModel/tableLayout">
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout">
 
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
-        android:idModel="@+idModel/fab"
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
@@ -42,20 +42,20 @@
         app:srcCompat="@drawable/ic_add_24dp" />
 
     <EditText
-        android:idModel="@+idModel/et_scan"
+        android:id="@+id/et_scan"
         android:layout_width="443dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:hint="@string/hint_scan"
         android:textSize="13sp"
-        app:layout_constraintEnd_toStartOf="@+idModel/imageView"
+        app:layout_constraintEnd_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
-        android:idModel="@+idModel/tableLayout"
+        android:id="@+id/tableLayout"
         android:layout_width="189dp"
         android:layout_height="126dp"
         android:layout_marginBottom="8dp"
@@ -79,7 +79,7 @@
                 android:text="@string/name" />
 
             <TextView
-                android:idModel="@+idModel/tvName"
+                android:id="@+id/tvName"
                 android:gravity="right"
                 android:padding="4dp"
                 android:text="6310i" />
@@ -92,7 +92,7 @@
                 android:text="@string/manufacturer" />
 
             <TextView
-                android:idModel="@+idModel/tvManufacturer"
+                android:id="@+id/tvManufacturer"
                 android:gravity="right"
                 android:padding="4dp"
                 android:text="Nokia" />
@@ -105,7 +105,7 @@
                 android:text="@string/charger" />
 
             <TextView
-                android:idModel="@+idModel/tvCharger"
+                android:id="@+id/tvCharger"
                 android:gravity="right"
                 android:padding="4dp"
                 android:text="Dick" />
@@ -118,7 +118,7 @@
                 android:text="@string/battery" />
 
             <TextView
-                android:idModel="@+idModel/tvBattery"
+                android:id="@+id/tvBattery"
                 android:gravity="right"
                 android:padding="4dp"
                 android:text="BL-4C" />
@@ -127,7 +127,7 @@
     </TableLayout>
 
     <TableLayout
-        android:idModel="@+idModel/tableLayout2"
+        android:id="@+id/tableLayout2"
         android:layout_width="307dp"
         android:layout_height="137dp"
         android:layout_marginBottom="8dp"
@@ -152,7 +152,7 @@
                 android:text="@string/collector" />
 
             <TextView
-                android:idModel="@+idModel/tvCollector"
+                android:id="@+id/tvCollector"
                 android:gravity="right"
                 android:padding="4dp"
                 android:text="BUND Cuxhaven" />
@@ -165,7 +165,7 @@
                 android:text="@string/recycling" />
 
             <TextView
-                android:idModel="@+idModel/tvCounterRecycling"
+                android:id="@+id/tvCounterRecycling"
                 android:gravity="right"
                 android:padding="4dp"
                 android:text="94" />
@@ -178,7 +178,7 @@
                 android:text="@string/reuse" />
 
             <TextView
-                android:idModel="@+idModel/tvCounterReuse"
+                android:id="@+id/tvCounterReuse"
                 android:gravity="right"
                 android:padding="4dp"
                 android:text="30" />
@@ -191,7 +191,7 @@
                 android:text="@string/total" />
 
             <TextView
-                android:idModel="@+idModel/tvCounterTotal"
+                android:id="@+id/tvCounterTotal"
                 android:gravity="right"
                 android:padding="4dp"
                 android:text="124" />
@@ -199,7 +199,7 @@
     </TableLayout>
 
     <ImageView
-        android:idModel="@+idModel/ivClearScan"
+        android:id="@+id/ivClearScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -217,7 +217,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
-            android:idModel="@+idModel/trLKU">
+            android:id="@+id/trLKU">
 
             <TextView
                 style="@style/tv_default"
@@ -225,13 +225,13 @@
 
             <TextView
                 style="@style/tv_default"
-                android:idModel="@+idModel/tvLKU"
+                android:id="@+id/tvLKU"
                 android:layout_marginLeft="16dp"
                 android:text="132" />
         </TableRow>
 
         <TableRow
-            android:idModel="@+idModel/trColor">
+            android:id="@+id/trColor">
 
             <TextView
                 style="@style/tv_default"
@@ -239,7 +239,7 @@
 
             <TextView
                 style="@style/tv_default"
-                android:idModel="@+idModel/tvColor"
+                android:id="@+id/tvColor"
                 android:layout_marginLeft="16dp"
                 android:text="Blue" />
 

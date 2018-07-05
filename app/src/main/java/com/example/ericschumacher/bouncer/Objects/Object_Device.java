@@ -181,7 +181,7 @@ public class Object_Device implements Parcelable {
     }
 
     public String getTAC() {
-        return IMEI.substring(0,7);
+        return IMEI.substring(0,8);
     }
 
     public boolean testMode() {

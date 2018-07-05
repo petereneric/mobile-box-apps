@@ -39,7 +39,7 @@ public class Fragment_Request_Name_Battery extends Fragment_Request_Input {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                uNetwork.getMatchingBatteries(iSelection.getModel().getIdModel(), editable.toString(), new Interface_VolleyCallback_ArrayList_Input() {
+                uNetwork.getMatchingBatteries(iSelection.getModel(), editable.toString(), new Interface_VolleyCallback_ArrayList_Input() {
                     @Override
                     public void onSuccess(ArrayList<Object_SearchResult> list) {
                         aSearchResults.update(list);

@@ -2,7 +2,7 @@
 <android.support.v7.widget.CardView
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:idModel="@+idModel/card_view"
+    android:id="@+id/card_view"
     android:layout_width="100dp"
     android:layout_height="40dp"
     card_view:cardUseCompatPadding="true"
@@ -11,12 +11,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:idModel="@+idModel/rl_cardview">
+        android:id="@+id/rl_cardview">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:idModel="@+idModel/tv_name"
+            android:id="@+id/tv_name"
             android:layout_alignParentBottom="true"
             android:text="BL-4C"
             android:gravity="center"
