@@ -12,7 +12,7 @@ import com.example.ericschumacher.bouncer.R;
  */
 
 public class Object_Device implements Parcelable {
-    private int Id;
+    private int IdModel;
     private String IMEI;
     private String Name;
     private int IdManufacturer;
@@ -30,24 +30,24 @@ public class Object_Device implements Parcelable {
     private int LKU;
 
     public Object_Device() {
-        Id = 0;
+        IdModel = 0;
         Condition = Constants_Intern.CONDITION_NOT_SET;
         Condition = Constants_Intern.SHAPE_NOT_SET;
     }
 
     public Object_Device(int id, String name) {
-        Id = id;
+        IdModel = id;
         Name = name;
         Condition = Constants_Intern.CONDITION_NOT_SET;
         Condition = Constants_Intern.SHAPE_NOT_SET;
     }
 
-    public int getId() {
-        return Id;
+    public int getIdModel() {
+        return IdModel;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public void setIdModel(int idModel) {
+        IdModel = idModel;
     }
 
     public String getName() {
@@ -180,6 +180,14 @@ public class Object_Device implements Parcelable {
         return null;
     }
 
+    public String getTAC() {
+        return IMEI.substring(0,7);
+    }
+
+    public boolean testMode() {
+        return IMEI.equals("000000000000000");
+    }
+
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public Object_Choice createFromParcel(Parcel in) {
             return new Object_Choice(in);
@@ -191,7 +199,7 @@ public class Object_Device implements Parcelable {
     };
 
     public Object_Device(Parcel in){
-        this.Id = in.readInt();
+        this.IdModel = in.readInt();
         this.IMEI = in.readString();
         this.Name = in.readString();
         this.IdManufacturer = in.readInt();
@@ -217,7 +225,7 @@ public class Object_Device implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(this.Id);
+        parcel.writeInt(this.IdModel);
         parcel.writeString(this.IMEI);
         parcel.writeString(this.Name);
         parcel.writeInt(this.IdManufacturer);
@@ -238,7 +246,7 @@ public class Object_Device implements Parcelable {
     @Override
     public String toString() {
         return "Object_Choice{" +
-                "id='" + Id + '\'' +
+                "id='" + IdModel + '\'' +
                 ", IMEI='" + IMEI + '\'' +
                 ", Name='" + Name + '\'' +
                 ", IdManufacturer='" + IdManufacturer + '\'' +

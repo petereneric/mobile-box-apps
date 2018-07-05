@@ -7,20 +7,20 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/et_name"
+        android:idModel="@+idModel/et_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:hint="@string/hint_model_name"
-        app:layout_constraintEnd_toStartOf="@+id/guideline_vertical"
+        app:layout_constraintEnd_toStartOf="@+idModel/guideline_vertical"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/b_commit"
+        android:idModel="@+idModel/b_commit"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -29,18 +29,18 @@
         android:text="@string/commit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/et_name"
+        app:layout_constraintStart_toEndOf="@+idModel/et_name"
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline_vertical"
+        android:idModel="@+idModel/guideline_vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_end="192dp" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:idModel="@+idModel/recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="8dp"
@@ -50,6 +50,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/b_commit" />
+        app:layout_constraintTop_toBottomOf="@+idModel/b_commit" />
 
 </android.support.constraint.ConstraintLayout>

@@ -1,6 +1,5 @@
 package com.example.ericschumacher.bouncer.Fragments.Fragment_Request;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -8,7 +7,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Input;
 import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
@@ -41,7 +39,7 @@ public class Fragment_Request_Name_Battery extends Fragment_Request_Input {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                uNetwork.getMatchingBatteries(iSelection.getModel().getId(), editable.toString(), new Interface_VolleyCallback_ArrayList_Input() {
+                uNetwork.getMatchingBatteries(iSelection.getModel().getIdModel(), editable.toString(), new Interface_VolleyCallback_ArrayList_Input() {
                     @Override
                     public void onSuccess(ArrayList<Object_SearchResult> list) {
                         aSearchResults.update(list);

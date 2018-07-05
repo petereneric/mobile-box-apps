@@ -145,7 +145,11 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
             @Override
             public void afterTextChanged(Editable editable) {
+                if (editable.toString() =="0000") {
+                    oModel.setIMEI("000000000000000");
+                }
                 if (editable.toString() != "" && editable.toString().length() == 15) {
+                    oModel.setIMEI(editable.toString());
 
                     // Hide keyboard
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -157,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                         @Override
                         public void onSuccess(JSONObject json) {
                             try {
-                                oModel.setId(json.getInt(Constants_Extern.ID_MODEL));
+                                oModel.setIdModel(json.getInt(Constants_Extern.ID_MODEL));
                                 oModel.setName(json.getString(Constants_Extern.NAME));
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -179,7 +183,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     // Class Methods
 
     private void checkExploitation() {
-        uNetwork.getLKU(oModel.getId(), new Interface_VolleyCallback_Int() {
+        uNetwork.getLKU(oModel.getIdModel(), new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
                 Log.i("checkExploitation()", "Found LKU");
@@ -191,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
             @Override
             public void onFailure() {
-                uNetwork.checkExploitation(oModel.getId(), new Interface_VolleyCallback_Int() {
+                uNetwork.checkExploitation(oModel.getIdModel(), new Interface_VolleyCallback_Int() {
                     @Override
                     public void onSuccess(int i) {
                         oModel.setExploitation(i);
@@ -263,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     private void startFragmentExploitation() {
         Fragment_Request_Exploitation f = new Fragment_Request_Exploitation();
         Bundle b = new Bundle();
-        b.putInt(Constants_Intern.SELECTION_ID_MODEL, oModel.getId());
+        b.putInt(Constants_Intern.SELECTION_ID_MODEL, oModel.getIdModel());
         f.setArguments(b);
         fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_exploitation").commit();
     }
@@ -275,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     private void startFragmentRequest(Fragment f) {
         Bundle b = new Bundle();
-        b.putInt(Constants_Intern.SELECTION_ID_MODEL, oModel.getId());
+        b.putInt(Constants_Intern.SELECTION_ID_MODEL, oModel.getIdModel());
         f.setArguments(b);
         fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_name").commit();
     }
@@ -304,7 +308,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
         uNetwork.getIdModel_Name(name, etScan.getText().toString().substring(0, 8), new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
-                oModel.setId(i);
+                oModel.setIdModel(i);
                 oModel.setName(name);
                 checkExploitation();
                 updateUI();
@@ -315,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                 uNetwork.addModel(name, etScan.getText().toString().substring(0, 8), new Interface_VolleyCallback_Int() {
                     @Override
                     public void onSuccess(int i) {
-                        oModel.setId(i);
+                        oModel.setIdModel(i);
                         oModel.setName(name);
                         updateUI();
                         startFragmentExploitation();
@@ -335,7 +339,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     public void callbackManufacturer(int id, String name) {
         oModel.setIdManufacturer(id);
         oModel.setNameManufacturer(name);
-        uNetwork.addManufacturerToModel(oModel.getId(), oModel.getIdManufacturer());
+        uNetwork.addManufacturerToModel(oModel.getIdModel(), oModel.getIdManufacturer());
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -348,7 +352,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     public void callbackCharger(int id, String name) {
         oModel.setIdCharger(id);
         oModel.setNameCharger(name);
-        uNetwork.connectChargerWithModel(oModel.getId(), oModel.getIdCharger());
+            uNetwork.connectChargerWithModel(oModel.getIdModel(), oModel.getIdCharger());
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -361,7 +365,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
     public void callbackColor(int id, String name) {
         oModel.setIdColor(id);
         oModel.setNameColor(name);
-        uNetwork.getIdModelColor(oModel.getId(), oModel.getIdColor(), new Interface_VolleyCallback_Int() {
+        uNetwork.getIdModelColor(oModel.getIdModel(), oModel.getIdColor(), new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
                 oModel.setIdModelColor(i);
@@ -370,11 +374,12 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
             @Override
             public void onFailure() {
-                uNetwork.addModelColor(oModel.getId(), oModel.getIdColor(), new Interface_VolleyCallback_Int() {
+                uNetwork.addModelColor(oModel.getIdModel(), oModel.getIdColor(), new Interface_VolleyCallback_Int() {
                     @Override
                     public void onSuccess(int i) {
                         oModel.setIdModelColor(i);
-                        startFragmentResult();
+
+                        //startFragmentResult();
                     }
 
                     @Override
@@ -388,11 +393,11 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     @Override
     public void checkBattery(final String name) {
-        uNetwork.getIdBattery(oModel.getId(), name, new Interface_VolleyCallback_Int() {
+        uNetwork.getIdBattery(oModel.getIdModel(), name, new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
                 oModel.setIdBattery(i);
-                uNetwork.connectBatteryWithModel(oModel.getId(), oModel.getIdBattery());
+                uNetwork.connectBatteryWithModel(oModel.getIdModel(), oModel.getIdBattery());
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     public void run() {
@@ -412,7 +417,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                             @Override
                             public void onSuccess(int i) {
                                 oModel.setIdBattery(i);
-                                uNetwork.connectBatteryWithModel(oModel.getId(), oModel.getIdBattery());
+                                uNetwork.connectBatteryWithModel(oModel.getIdModel(), oModel.getIdBattery());
                                 Handler handler = new Handler();
                                 handler.postDelayed(new Runnable() {
                                     public void run() {
@@ -442,7 +447,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     @Override
     public void checkDetails() {
-        uNetwork.getManufacturer(oModel.getId(), new Interface_VolleyCallback_JSON() {
+        uNetwork.getManufacturer(oModel.getIdModel(), new Interface_VolleyCallback_JSON() {
             @Override
             public void onSuccess(JSONObject json) {
                 try {
@@ -453,7 +458,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                     e.printStackTrace();
                 }
                 updateUI();
-                uNetwork.getCharger(oModel.getId(), new Interface_VolleyCallback_JSON() {
+                uNetwork.getCharger(oModel.getIdModel(), new Interface_VolleyCallback_JSON() {
                     @Override
                     public void onSuccess(JSONObject json) {
                         try {
@@ -463,7 +468,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        uNetwork.getBattery(oModel.getId(), new Interface_VolleyCallback_JSON() {
+                        uNetwork.getBattery(oModel.getIdModel(), new Interface_VolleyCallback_JSON() {
                             @Override
                             public void onSuccess(JSONObject json) {
                                 try {
@@ -485,7 +490,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
                     @Override
                     public void onFailure(JSONObject json) {
-                        uNetwork.getChargers(oModel.getId(), new Interface_VolleyCallback_ArrayList_Choice() {
+                        uNetwork.getChargers(oModel.getIdModel(), new Interface_VolleyCallback_ArrayList_Choice() {
                             @Override
                             public void onSuccess(ArrayList<Object_Choice> list) {
                                 Bundle b = new Bundle();
@@ -534,7 +539,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     void requestColor() {
         Log.i("Hey", "Honey");
-        uNetwork.getColors(oModel.getId(), new Interface_VolleyCallback_ArrayList_Choice() {
+        uNetwork.getColors(oModel.getIdModel(), new Interface_VolleyCallback_ArrayList_Choice() {
             @Override
             public void onSuccess(ArrayList<Object_Choice> list) {
                 Bundle bundle = new Bundle();
@@ -588,8 +593,8 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                 reset();
                 break;
             case R.id.trLKU:
-                if (oModel.getId() > 0) {
-                        uNetwork.connectWithLku(oModel.getId(), new Interface_VolleyCallback_Int() {
+                if (oModel.getIdModel() > 0) {
+                        uNetwork.connectWithLku(oModel.getIdModel(), new Interface_VolleyCallback_Int() {
                             @Override
                             public void onSuccess(int i) {
                                 oModel.setLKU(i);

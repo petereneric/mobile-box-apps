@@ -14,7 +14,7 @@
         android:layout_weight="1">
 
         <TextView
-            android:id="@+id/tvAcceptable"
+            android:idModel="@+idModel/tvAcceptable"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -24,7 +24,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvGood"
+            android:idModel="@+idModel/tvGood"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -42,7 +42,7 @@
         android:layout_weight="1">
 
         <TextView
-            android:id="@+id/tvVeryGood"
+            android:idModel="@+idModel/tvVeryGood"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -52,7 +52,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tvCherry"
+            android:idModel="@+idModel/tvCherry"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
