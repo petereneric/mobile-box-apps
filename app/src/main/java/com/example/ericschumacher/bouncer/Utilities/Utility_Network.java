@@ -13,7 +13,6 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
-import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Input;
@@ -41,6 +40,7 @@ public class Utility_Network {
 
     // Variables
     Context Context;
+    RequestQueue queue;
 
     // Interfaces
     Interface_Selection iSelection;
@@ -48,11 +48,10 @@ public class Utility_Network {
     public Utility_Network(Context context) {
         Context = context;
         iSelection = (Interface_Selection) context;
+       queue = Volley.newRequestQueue(Context);
     }
 
     public void getMatchingModels(String namePart, final Interface_VolleyCallback_ArrayList_Input iCallback) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/all/" + namePart;
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -94,8 +93,6 @@ public class Utility_Network {
     }
 
     public void getModelByTac(String tac, final Interface_VolleyCallback_JSON iCallback) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/tac/" + tac;
         Log.i("Checking", "Yes");
         try {
@@ -137,8 +134,6 @@ public class Utility_Network {
     }
 
     public void getLKU(Object_Device o, final Interface_VolleyCallback_Int iCallback) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/lku/" + Integer.toString(o.getIdModel());
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -182,8 +177,6 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(0);
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/lku/connect/" + Integer.toString(o.getIdModel());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -228,8 +221,6 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(2);
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/check/exploitation/" + Integer.toString(o.getIdModel());
             Log.i("urlCheck", url);
             try {
@@ -276,8 +267,6 @@ public class Utility_Network {
         if (o.testMode()) {
 
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/exploitation/reuse/" + Integer.toString(o.getIdModel());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
@@ -321,8 +310,6 @@ public class Utility_Network {
 
         } else {
             Log.i("exploitRecycling", "started");
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/exploitation/recycling/" + Integer.toString(o.getIdModel());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
@@ -365,8 +352,6 @@ public class Utility_Network {
     }
 
     public void getIdModel_Name(Object_Device o, final Interface_VolleyCallback_Int iCallback) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/id/name/" + o.getName() + "/" + o.getTAC();
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -410,8 +395,6 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(0);
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/add/" + o.getName() + "/" + o.getTAC();
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -453,8 +436,6 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(0);
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/add/" + o.getNameBattery() + "/" + Integer.toString(o.getIdManufacturer());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -505,8 +486,6 @@ public class Utility_Network {
             }
             iCallback.onSuccess(json);
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/" + Integer.toString(o.getIdModel());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -551,8 +530,6 @@ public class Utility_Network {
         if (o.testMode()) {
 
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/connect/" + Integer.toString(o.getIdBattery()) + "/" + Integer.toString(o.getIdModel());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -585,8 +562,6 @@ public class Utility_Network {
     }
 
     public void getIdBattery(Object_Device o, String name, final Interface_VolleyCallback_Int iCallback) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/id/" + Integer.toString(o.getIdModel()) + "/" + name;
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -628,8 +603,6 @@ public class Utility_Network {
     }
 
     public void getMatchingBatteries(Object_Device o, String namePart, final Interface_VolleyCallback_ArrayList_Input iCallback) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/all/" + Integer.toString(o.getIdModel()) + "/" + namePart;
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -683,8 +656,6 @@ public class Utility_Network {
             }
             iCallback.onSuccess(json);
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/" + Integer.toString(o.getIdModel());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -730,8 +701,6 @@ public class Utility_Network {
         if (o.testMode()) {
 
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/connect/" + Integer.toString(o.getIdModel()) + "/" + Integer.toString(o.getIdCharger());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -765,8 +734,6 @@ public class Utility_Network {
     }
 
     public void getChargers(Object_Device o, final Interface_VolleyCallback_ArrayList_Choice iCallback) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/all/" + Integer.toString(o.getIdModel());
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -820,8 +787,6 @@ public class Utility_Network {
             }
             iCallback.onSuccess(json);
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/manufacturer/" + Integer.toString(o.getIdModel());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -865,8 +830,6 @@ public class Utility_Network {
 
     public void addManufacturerToModel(Object_Device o) {
         if (!o.testMode()) {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/add/manufacturer/" + Integer.toString(o.getIdModel()) + "/" + Integer.toString(o.getIdManufacturer());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -899,8 +862,6 @@ public class Utility_Network {
 
 
     public ArrayList<Object_Choice> getManufactures(final Interface_VolleyCallback_ArrayList_Choice iCallback) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/manufacturers";
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -945,8 +906,6 @@ public class Utility_Network {
     }
 
     public void getColors(Object_Device o, final Interface_VolleyCallback_ArrayList_Choice iCallback) {
-        RequestQueue queue;
-        queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/all/" + Integer.toString(o.getIdModel());
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -992,8 +951,6 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(0);
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/" + Integer.toString(o.getIdModel()) + "/" + Integer.toString(o.getIdColor());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -1039,8 +996,6 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(0);
         } else {
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/" + Integer.toString(o.getIdModel()) + "/" + Integer.toString(o.getIdColor());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
