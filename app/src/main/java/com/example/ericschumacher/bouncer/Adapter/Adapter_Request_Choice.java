@@ -3,7 +3,6 @@ package com.example.ericschumacher.bouncer.Adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,11 +41,13 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
     Context Context;
     ArrayList<Object_Choice> lChoice;
     Interface_Selection iSelection;
+    RequestQueue queue;
 
     public Adapter_Request_Choice(Context context, ArrayList<Object_Choice> list, Interface_Selection i) {
         Context = context;
         lChoice = list;
         iSelection = i;
+        queue = Volley.newRequestQueue(Context);
     }
 
     @Override
@@ -106,8 +107,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
                         }
                     });
 
-            RequestQueue queue;
-            queue = Volley.newRequestQueue(Context);
+
             queue.add(request);
             queue.getCache().clear();
 
@@ -124,10 +124,9 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
                         }
                     });
 
-            RequestQueue queue2;
-            queue2 = Volley.newRequestQueue(Context);
-            queue2.add(request2);
-            queue2.getCache().clear();
+
+            queue.add(request2);
+            queue.getCache().clear();
         }
         // It's suggested to work with singleton class
     }

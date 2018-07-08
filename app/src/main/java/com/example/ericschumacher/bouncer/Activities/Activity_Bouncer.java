@@ -346,7 +346,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
             public void run() {
                 checkDetails();
             }
-        }, 500);
+        }, 700);
     }
 
     @Override
@@ -359,7 +359,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
             public void run() {
                 checkDetails();
             }
-        }, 500);
+        }, 700);
     }
 
     @Override
@@ -533,8 +533,9 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
                 f.setArguments(bundle);
                 fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_request_shape").commit();
             } else {
-                requestColor();
-                //startFragmentResult();
+                // Fehler weil requestColor immer abgefragt wird
+                //requestColor();
+                startFragmentResult();
             }
         }
     }
