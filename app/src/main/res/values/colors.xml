@@ -13,7 +13,7 @@
     <color name="color_text_minor">#c5c7d2</color>
 
     // Common
-    <color name="color_whtie">#ffffff</color>
+    <color name="color_white">#ffffff</color>
     <color name="color_transparent">#00ffffff</color>
     <color name="color_divider">#FF4081</color>
 </resources>

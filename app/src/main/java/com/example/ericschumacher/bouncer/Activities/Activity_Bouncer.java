@@ -43,7 +43,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements Interface_Selection, View.OnClickListener {
+public class Activity_Bouncer extends AppCompatActivity implements Interface_Selection, View.OnClickListener {
 
     // Utilities
     Utility_Network uNetwork;
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
     // Layout
     private void setLayout() {
-        setContentView(R.layout.activity_selection);
+        setContentView(R.layout.activity_bouncer);
         etScan = findViewById(R.id.et_scan);
         ivClearScan = findViewById(R.id.ivClearScan);
         tvCollector = findViewById(R.id.tvCollector);
@@ -409,7 +409,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
 
             @Override
             public void onFailure() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Activity_Bouncer.this);
                 builder.setTitle(getString(R.string.add_battery, name));
                 builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
@@ -604,7 +604,7 @@ public class MainActivity extends AppCompatActivity implements Interface_Selecti
                             }
                             @Override
                             public void onFailure() {
-                                Toast.makeText(MainActivity.this, getString(R.string.toast_model_has_lku), Toast.LENGTH_LONG).show();
+                                Toast.makeText(Activity_Bouncer.this, getString(R.string.toast_model_has_lku), Toast.LENGTH_LONG).show();
                             }
                         });
                 }

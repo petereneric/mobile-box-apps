@@ -3,6 +3,12 @@
     // App name
     <string name="app_name">Bouncer</string>
 
+    // Activity-Names
+    <string name="activity_name_menu">Menu</string>
+    <string name="activity_name_bouncer">Bouncer</string>
+    <string name="activity_name_manager">Manager</string>
+    <string name="activity_name_juicer">Juicer</string>
+
     // Activity_Selection
     <string name="phone">Phone</string>
     <string name="model">Model</string>
