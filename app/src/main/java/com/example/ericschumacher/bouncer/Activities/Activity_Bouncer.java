@@ -37,6 +37,8 @@ import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.Objects.Object_Device;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
+import com.zebra.sdk.comm.Connection;
+import com.zebra.sdk.printer.ZebraPrinter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,6 +77,8 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     private int cRecycling = 0;
     private int cReuse = 0;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +103,9 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         setLayout();
         handleInteraction();
         updateUI();
+
+        // Printer
+
     }
 
     @Override
@@ -614,4 +621,6 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
                 requestColor();
         }
     }
+
+
 }
