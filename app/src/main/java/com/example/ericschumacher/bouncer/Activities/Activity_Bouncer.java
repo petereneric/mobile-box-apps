@@ -37,8 +37,6 @@ import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.Objects.Object_Device;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
-import com.zebra.sdk.comm.Connection;
-import com.zebra.sdk.printer.ZebraPrinter;
 
 import org.json.JSONException;
 import org.json.JSONObject;

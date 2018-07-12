@@ -1,5 +1,6 @@
 package com.example.ericschumacher.bouncer.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,9 +14,12 @@ import com.example.ericschumacher.bouncer.Adapter.Adapter_Menu;
 import com.example.ericschumacher.bouncer.Objects.Object_Menu;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Zebra.DemoSleeper;
+import com.example.ericschumacher.bouncer.Zebra.SettingsHelper;
+import com.zebra.sdk.btleComm.BluetoothLeConnection;
 import com.zebra.sdk.comm.BluetoothConnection;
 import com.zebra.sdk.comm.Connection;
 import com.zebra.sdk.comm.ConnectionException;
+import com.zebra.sdk.comm.TcpConnection;
 import com.zebra.sdk.printer.PrinterLanguage;
 import com.zebra.sdk.printer.PrinterStatus;
 import com.zebra.sdk.printer.SGD;
@@ -24,6 +28,9 @@ import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 import com.zebra.sdk.printer.ZebraPrinterLinkOs;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -43,7 +50,6 @@ public class Activity_Menu extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
         // RecyclerView
@@ -72,10 +78,10 @@ public class Activity_Menu extends AppCompatActivity {
     public ZebraPrinter connect() {
         setStatus("Connecting...", Color.YELLOW);
         connection = null;
-        /*
+
         boolean isBluetoothSelected = true;
         if (isBluetoothSelected) {
-            connection = new BluetoothConnection(getMacAddressFieldText());
+            connection = new BluetoothLeConnection(getMacAddressFieldText(), this);
             SettingsHelper.saveBluetoothAddress(this, getMacAddressFieldText());
         } else {
             try {
@@ -88,9 +94,8 @@ public class Activity_Menu extends AppCompatActivity {
                 return null;
             }
         }
-        */
 
-        //connection = new UsbConnection((UsbManager) getSystemService(Context.USB_SERVICE), )
+        //connection = new UsbConnection((UsbManager) getSystemService(Context.USB_SERVICE), d);
 
         try {
             connection.open();
@@ -124,7 +129,47 @@ public class Activity_Menu extends AppCompatActivity {
         }
 
         return printer;
+
     }
+
+    private void sendToPrint(ZebraPrinter printer,String content) {
+        try {
+            File filepath = getFileStreamPath("TEMP.LBL");
+            createFile("TEMP.LBL", content);
+            printer.sendFileContents(filepath.getAbsolutePath());
+        } catch (ConnectionException e1) {
+            Log.d("Hey","Error sending file to printer");
+        } catch (IOException e) {
+            Log.d("Hey","Error creating file");
+        }
+    }
+
+    private void createFile(String fileName, String content) throws IOException {
+
+        FileOutputStream os = this.openFileOutput(fileName, Context.MODE_PRIVATE);
+
+        os.write(content.getBytes());
+        os.flush();
+        os.close();
+    }
+        /*
+        UsbManager manager = (UsbManager) getSystemService(Context.USB_SERVICE);
+
+        HashMap<String, UsbDevice> deviceList = manager.getDeviceList();
+        Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
+        UsbDevice d;
+
+        while (deviceIterator.hasNext()) {
+
+            d = deviceIterator.next();
+            if (d.getDeviceName().equals("/dev/bus/usb/001/002")) {
+                Toast.makeText(this, "Value of device :" + d.getDeviceName(), Toast.LENGTH_LONG).show();
+
+
+        }
+        Log.i("What the", "fridge");
+        return null;
+        */
 
     public void disconnect() {
         try {
@@ -160,6 +205,10 @@ public class Activity_Menu extends AppCompatActivity {
             if (printerStatus.isReadyToPrint) {
                 byte[] configLabel = getConfigLabel();
                 connection.write(configLabel);
+                String[] text  ={"peter", "rene"};
+                printer.printImage("^XA^^FO100, 200^^AD,50,25^^FH_^FD Hello world _7E ^FS^XZ", );
+                printer.printStoredFormat("^XA^^FO100, 200^^AD,50,25^^FH_^FD Hello world _7E ^FS^XZ");
+                //sendToPrint(printer, "Hey");
                 setStatus("Sending Data", Color.BLUE);
             } else if (printerStatus.isHeadOpen) {
                 setStatus("Printer Head Open", Color.RED);
@@ -216,10 +265,12 @@ public class Activity_Menu extends AppCompatActivity {
     private void doConnectionTest() {
         printer = connect();
 
+
         if (printer != null) {
             sendTestLabel();
         } else {
             disconnect();
         }
+
     }
 }
