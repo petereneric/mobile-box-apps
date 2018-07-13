@@ -13,4 +13,14 @@
         <item name="android:textColor">@color/color_text</item>
     </style>
 
+    <style name="et_default">
+        <item name="android:textSize">@dimen/size_text_default</item>
+        <item name="android:textColor">@color/color_text</item>
+    </style>
+
+    <style name="tv_tableRow" parent="tv_default">
+        <item name="android:padding">8dp</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
 </resources>

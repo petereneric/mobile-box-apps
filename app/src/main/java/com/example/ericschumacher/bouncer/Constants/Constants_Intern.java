@@ -10,9 +10,14 @@ public class Constants_Intern {
     public final static String LIST_CHOICE_MANUFACTURES = "LIST_CHOICE_MANUFACTURES";
     public final static String LIST_CHOICE_CHARGER = "LIST_CHOICE_CHARGER";
     public final static String LIST_CHOICE = "LIST_CHOICE";
+    public final static int EXPLOITATION_NULL = 0;
     public final static int EXPLOITATION_RECYCLING = 1;
     public final static int EXPLOITATION_REUSE = 2;
     public final static String OBJECT_MODEL = "OBJECT_MODEL";
+
+    public final static int DESTINATION_UNKNOWN = 0;
+
+    public final static int CURRENT_STATION_UNKNOWN = 0;
 
     // Condition & Shape
     public final static int CONDITION_BROKEN = 0;

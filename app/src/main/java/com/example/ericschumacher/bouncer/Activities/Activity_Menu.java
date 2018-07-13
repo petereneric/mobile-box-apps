@@ -59,7 +59,7 @@ public class Activity_Menu extends AppCompatActivity {
         rvMenu.setLayoutManager(new GridLayoutManager(this, 2));
 
         // Printer
-        doConnectionTest();
+        //doConnectionTest();
     }
 
     private void setLayout() {
@@ -206,8 +206,8 @@ public class Activity_Menu extends AppCompatActivity {
                 byte[] configLabel = getConfigLabel();
                 connection.write(configLabel);
                 String[] text  ={"peter", "rene"};
-                printer.printImage("^XA^^FO100, 200^^AD,50,25^^FH_^FD Hello world _7E ^FS^XZ", );
-                printer.printStoredFormat("^XA^^FO100, 200^^AD,50,25^^FH_^FD Hello world _7E ^FS^XZ");
+                //printer.printImage("^XA^^FO100, 200^^AD,50,25^^FH_^FD Hello world _7E ^FS^XZ", );
+                //printer.printStoredFormat("^XA^^FO100, 200^^AD,50,25^^FH_^FD Hello world _7E ^FS^XZ");
                 //sendToPrint(printer, "Hey");
                 setStatus("Sending Data", Color.BLUE);
             } else if (printerStatus.isHeadOpen) {

@@ -10,6 +10,7 @@
     <string name="activity_name_juicer">Juicer</string>
 
     // Activity_Selection
+    <string name="not_defined">Not defined</string>
     <string name="phone">Phone</string>
     <string name="model">Model</string>
     <string name="battery">Battery</string>
@@ -47,5 +48,8 @@
     <string name="manufacturer">Manufacturer</string>
     <string name="charger">Charger</string>
     <string name="toast_model_has_lku">Wolfram was machst du da? Das Model hat doch schon eine LKU. </string>
+    <string name="default_exploitation">Default Exploitation</string>
+    <string name="destination">Destination</string>
+    <string name="station">Station</string>
 
 </resources>

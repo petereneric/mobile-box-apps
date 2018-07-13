@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TableLayout
+        android:id="@+id/tableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:id="@+id/trName">
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/name" />
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="6310i" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trManufacturer">
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/manufacturer" />
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="Nokia" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trCharger">
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/charger" />
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="Dick" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trBattery">
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/battery" />
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="BL-4C" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trDefaultExploitation">
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/default_exploitation"/>
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/recycling" />
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <include
+        layout="@layout/fragment_model"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow android:id="@+id/trLLKU">
+
+                <TextView
+                    style="@style/tv_tableRow"
+                    android:text="@string/lku" />
+
+                <TextView
+                    style="@style/tv_tableRow"
+                    android:text="Nicht vergeben" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trDestination">
+
+                <TextView
+                    style="@style/tv_tableRow"
+                    android:text="@string/destination" />
+
+                <TextView
+                    style="@style/tv_tableRow"
+                    android:text="Reparatur" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trStation">
+
+                <TextView
+                    style="@style/tv_tableRow"
+                    android:text="@string/station" />
+
+                <TextView
+                    style="@style/tv_tableRow"
+                    android:text="Selektion" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trColor">
+
+                <TextView
+                    style="@style/tv_tableRow"
+                    android:text="@string/color" />
+
+                <TextView
+                    style="@style/tv_tableRow"
+                    android:text="Weiß" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trShape">
+
+                <TextView
+                    style="@style/tv_tableRow"
+                    android:text="@string/shape" />
+
+                <TextView
+                    style="@style/tv_tableRow"
+                    android:text="@string/shape_very_good" />
+            </TableRow>
+
+        </TableLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

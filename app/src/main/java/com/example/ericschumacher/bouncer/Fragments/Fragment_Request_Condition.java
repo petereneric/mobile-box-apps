@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
-import com.example.ericschumacher.bouncer.Objects.Object_Device;
+import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 
 /**
@@ -23,7 +23,7 @@ public class Fragment_Request_Condition extends Fragment implements View.OnClick
     TextView tvBroken;
     TextView tvOk;
 
-    Object_Device oModel;
+    Device oModel;
     Interface_Selection iSelection;
 
     @Nullable

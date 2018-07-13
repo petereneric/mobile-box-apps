@@ -1,257 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/guideline_horizontal_one"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.ericschumacher.bouncer.Activities.Activity_Bouncer"
-    tools:layout_editor_absoluteY="81dp">
+    android:layout_margin="16dp">
 
+    <RelativeLayout
+        android:id="@+id/rlScan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/ivClearScan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/ic_clear_24dp"
+            android:layout_alignParentRight="true"
+            android:padding="8dp"/>
+
+        <EditText
+            style="@style/et_default"
+            android:id="@+id/etScan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_scan"
+            android:layout_toLeftOf="@id/ivClearScan"/>
+
+    </RelativeLayout>
 
     <FrameLayout
-        android:id="@+id/fl_input_output"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tableLayout">
+        android:id="@+id/flFragmentDevice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rlScan"/>
 
+    <TableLayout
+        android:id="@+id/tlResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TableRow
+            android:id="@+id/trCounterRecycling">
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/recycling" />
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="94" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trCounterReuse">
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/reuse" />
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="30" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trCounterTotal">
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/total" />
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="124" />
+        </TableRow>
+
+    </TableLayout>
+
+    <FrameLayout
+        android:id="@+id/flFragmentChoiceAndSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/flFragmentDevice"
+        android:layout_above="@id/tlResult">
     </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="8dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
         android:clickable="true"
         android:tint="@color/color_white"
         app:backgroundTint="@color/color_primary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@color/color_white"
         app:srcCompat="@drawable/ic_add_24dp" />
 
-    <EditText
-        android:id="@+id/et_scan"
-        android:layout_width="443dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:hint="@string/hint_scan"
-        android:textSize="13sp"
-        app:layout_constraintEnd_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TableLayout
-        android:id="@+id/tableLayout"
-        android:layout_width="189dp"
-        android:layout_height="126dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.124">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_height="match_parent"
-                android:padding="4dp"
-                android:text="@string/name" />
-
-            <TextView
-                android:id="@+id/tvName"
-                android:gravity="right"
-                android:padding="4dp"
-                android:text="6310i" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:padding="4dp"
-                android:text="@string/manufacturer" />
-
-            <TextView
-                android:id="@+id/tvManufacturer"
-                android:gravity="right"
-                android:padding="4dp"
-                android:text="Nokia" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:padding="4dp"
-                android:text="@string/charger" />
-
-            <TextView
-                android:id="@+id/tvCharger"
-                android:gravity="right"
-                android:padding="4dp"
-                android:text="Dick" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:padding="4dp"
-                android:text="@string/battery" />
-
-            <TextView
-                android:id="@+id/tvBattery"
-                android:gravity="right"
-                android:padding="4dp"
-                android:text="BL-4C" />
-        </TableRow>
-
-    </TableLayout>
-
-    <TableLayout
-        android:id="@+id/tableLayout2"
-        android:layout_width="307dp"
-        android:layout_height="137dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.131"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.977">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_height="match_parent"
-                android:padding="4dp"
-                android:text="@string/collector" />
-
-            <TextView
-                android:id="@+id/tvCollector"
-                android:gravity="right"
-                android:padding="4dp"
-                android:text="BUND Cuxhaven" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:padding="4dp"
-                android:text="@string/recycling" />
-
-            <TextView
-                android:id="@+id/tvCounterRecycling"
-                android:gravity="right"
-                android:padding="4dp"
-                android:text="94" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:padding="4dp"
-                android:text="@string/reuse" />
-
-            <TextView
-                android:id="@+id/tvCounterReuse"
-                android:gravity="right"
-                android:padding="4dp"
-                android:text="30" />
-        </TableRow>
-
-        <TableRow>
-
-            <TextView
-                android:padding="4dp"
-                android:text="@string/total" />
-
-            <TextView
-                android:id="@+id/tvCounterTotal"
-                android:gravity="right"
-                android:padding="4dp"
-                android:text="124" />
-        </TableRow>
-    </TableLayout>
-
-    <ImageView
-        android:id="@+id/ivClearScan"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_clear_24dp" />
-
-    <TableLayout
-        android:layout_width="171dp"
-        android:layout_height="118dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="52dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TableRow
-            android:id="@+id/trLKU">
-
-            <TextView
-                style="@style/tv_default"
-                android:text="@string/lku" />
-
-            <TextView
-                style="@style/tv_default"
-                android:id="@+id/tvLKU"
-                android:layout_marginLeft="16dp"
-                android:text="132" />
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/trColor">
-
-            <TextView
-                style="@style/tv_default"
-                android:text="@string/color" />
-
-            <TextView
-                style="@style/tv_default"
-                android:id="@+id/tvColor"
-                android:layout_marginLeft="16dp"
-                android:text="Blue" />
-
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </TableLayout>
-
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
