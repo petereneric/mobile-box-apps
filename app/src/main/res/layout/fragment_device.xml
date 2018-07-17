@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <include
-        layout="@layout/fragment_model"
+    <FrameLayout
+        android:id="@+id/flModel"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1" />

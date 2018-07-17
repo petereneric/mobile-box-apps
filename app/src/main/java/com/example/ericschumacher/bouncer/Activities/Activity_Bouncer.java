@@ -24,11 +24,12 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Battery;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Model;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Model_Name;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Condition;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Exploitation;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Shape;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Model;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
@@ -43,7 +44,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Activity_Bouncer extends AppCompatActivity implements Interface_Selection, View.OnClickListener {
+public class Activity_Bouncer extends AppCompatActivity implements Interface_Selection, View.OnClickListener, Interface_Model {
 
     // Utilities
     Utility_Network uNetwork;
@@ -51,7 +52,14 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     // Objects
     Device oDevice;
 
-    // Layout
+    // Layout - Device
+    TableRow trLKU;
+    TableRow trDestination;
+    TableRow trStation;
+    TableRow trShape;
+    TableRow trColor;
+
+    // Layout -
     EditText etScan;
     ImageView ivClearScan;
     TextView tvCollector;
@@ -64,8 +72,6 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     TextView tvBattery;
     TextView tvLKU;
     TextView tvColor;
-    TableRow trLKU;
-    TableRow trColor;
     FloatingActionButton fab;
 
     // Fragments
@@ -278,7 +284,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     }
 
     private void startFragmentRequest() {
-        Fragment_Request_Name_Model f = new Fragment_Request_Name_Model();
+        Fragment_Request_Model_Name f = new Fragment_Request_Model_Name();
         fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_name_model").commit();
     }
 
@@ -589,6 +595,45 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     @Override
     public Device getModel() {
         return oDevice;
+    }
+
+    @Override
+    public void requestName() {
+        Fragment_Request_Model_Name f = new Fragment_Request_Model_Name();
+        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_request_name").commit();
+    }
+
+    @Override
+    public void returnName(String name) {
+        oDevice.setName(name);
+        uNetwork.getIdModel_Name(oDevice, new Interface_VolleyCallback_Int() {
+            @Override
+            public void onSuccess(int i) {
+                oDevice.setId(i);
+                oDevice.setName(name);
+                checkExploitation();
+                updateUI();
+            }
+
+            @Override
+            public void onFailure() {
+                uNetwork.addModel(oDevice, new Interface_VolleyCallback_Int() {
+                    @Override
+                    public void onSuccess(int i) {
+                        oDevice.setId(i);
+                        oDevice.setName(name);
+                        updateUI();
+                        startFragmentExploitation();
+                    }
+
+                    @Override
+                    public void onFailure() {
+
+                    }
+                });
+
+            }
+        });
     }
 
     @Override

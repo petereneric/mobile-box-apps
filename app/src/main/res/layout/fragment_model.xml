@@ -16,6 +16,7 @@
                 android:text="@string/name" />
 
             <TextView
+                android:id="@+id/tvName"
                 style="@style/tv_tableRow"
                 android:text="6310i" />
         </TableRow>
@@ -24,6 +25,7 @@
             android:id="@+id/trManufacturer">
 
             <TextView
+                android:id="@+id/tvManufacturer"
                 style="@style/tv_tableRow"
                 android:text="@string/manufacturer" />
 
@@ -36,6 +38,7 @@
             android:id="@+id/trCharger">
 
             <TextView
+                android:id="@+id/tvCharger"
                 style="@style/tv_tableRow"
                 android:text="@string/charger" />
 
@@ -48,6 +51,7 @@
             android:id="@+id/trBattery">
 
             <TextView
+                android:id="@+id/tvBattery"
                 style="@style/tv_tableRow"
                 android:text="@string/battery" />
 
@@ -60,6 +64,7 @@
             android:id="@+id/trDefaultExploitation">
 
             <TextView
+                android:id="@+id/tvDefaultExploitation"
                 style="@style/tv_tableRow"
                 android:text="@string/default_exploitation"/>
 

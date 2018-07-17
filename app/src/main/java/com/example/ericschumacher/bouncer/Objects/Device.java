@@ -9,7 +9,7 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
  * Created by Eric Schumacher on 21.05.2018.
  */
 
-public class Device extends Object_Model implements Parcelable {
+public class Device extends Model implements Parcelable {
 
     private String IMEI;
     private int LKU;

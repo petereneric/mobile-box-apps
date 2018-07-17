@@ -14,7 +14,7 @@ import com.example.ericschumacher.bouncer.R;
  * Created by Eric Schumacher on 08.07.2018.
  */
 
-public class Object_Model implements Parcelable {
+public class Model implements Parcelable {
     int Id;
     String Name;
 
@@ -24,11 +24,11 @@ public class Object_Model implements Parcelable {
 
     int DefaultExploitation;
 
-    public Object_Model() {
+    public Model() {
 
     }
 
-    public Object_Model(int id, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger) {
+    public Model(int id, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger) {
         Id = id;
         Name = name;
         DefaultExploitation = defaultExploitation;
@@ -61,6 +61,38 @@ public class Object_Model implements Parcelable {
         Name = name;
     }
 
+    public com.example.ericschumacher.bouncer.Objects.Supplement.Battery getBattery() {
+        return Battery;
+    }
+
+    public void setBattery(com.example.ericschumacher.bouncer.Objects.Supplement.Battery battery) {
+        Battery = battery;
+    }
+
+    public com.example.ericschumacher.bouncer.Objects.Supplement.Charger getCharger() {
+        return Charger;
+    }
+
+    public void setCharger(com.example.ericschumacher.bouncer.Objects.Supplement.Charger charger) {
+        Charger = charger;
+    }
+
+    public com.example.ericschumacher.bouncer.Objects.Supplement.Manufacturer getManufacturer() {
+        return Manufacturer;
+    }
+
+    public void setManufacturer(com.example.ericschumacher.bouncer.Objects.Supplement.Manufacturer manufacturer) {
+        Manufacturer = manufacturer;
+    }
+
+    public int getDefaultExploitation() {
+        return DefaultExploitation;
+    }
+
+    public void setDefaultExploitation(int defaultExploitation) {
+        DefaultExploitation = defaultExploitation;
+    }
+
     public int getExploitation() {
         return DefaultExploitation;
     }
@@ -82,16 +114,16 @@ public class Object_Model implements Parcelable {
     }
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public Object_Model createFromParcel(Parcel in) {
-            return new Object_Model(in);
+        public Model createFromParcel(Parcel in) {
+            return new Model(in);
         }
 
-        public Object_Model[] newArray(int size) {
-            return new Object_Model[size];
+        public Model[] newArray(int size) {
+            return new Model[size];
         }
     };
 
-    public Object_Model(Parcel in){
+    public Model(Parcel in){
         this.Id = in.readInt();
         this.Name = in.readString();
         this.DefaultExploitation = in.readInt();

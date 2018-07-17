@@ -23,4 +23,6 @@ public interface Interface_Selection {
     void setModel(int id, int name);
     void finishDevice();
 
+    void edit
+
 }
