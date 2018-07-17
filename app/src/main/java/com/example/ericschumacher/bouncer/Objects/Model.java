@@ -15,7 +15,7 @@ import com.example.ericschumacher.bouncer.R;
  */
 
 public class Model implements Parcelable {
-    int Id;
+    int Id = Constants_Intern.ID_UNKNOWN;
     String Name;
 
     Battery Battery = null;

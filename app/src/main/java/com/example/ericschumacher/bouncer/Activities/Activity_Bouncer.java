@@ -174,6 +174,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
                             try {
                                 oDevice.setId(json.getInt(Constants_Extern.ID_MODEL));
                                 oDevice.setName(json.getString(Constants_Extern.NAME));
+                                json.get
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

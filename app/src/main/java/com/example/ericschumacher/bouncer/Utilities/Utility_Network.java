@@ -103,6 +103,7 @@ public class Utility_Network {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                            // manufacturer, charger, battery and exploitation missing
                             iCallback.onSuccess(jsonObject);
                         } else {
                             iCallback.onFailure(jsonObject);
