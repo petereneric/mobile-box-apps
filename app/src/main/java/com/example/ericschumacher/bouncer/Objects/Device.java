@@ -13,6 +13,7 @@ public class Device extends Model implements Parcelable {
 
     private String IMEI;
     private int LKU;
+    private int Condition;
 
     private int Destination = Constants_Intern.DESTINATION_UNKNOWN;
     private int Station = Constants_Intern.CURRENT_STATION_UNKNOWN;
@@ -24,12 +25,13 @@ public class Device extends Model implements Parcelable {
         IMEI = imei;
     }
 
-    public Device (int id, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger, String imei, int lku,
+    public Device (int id, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger, String imei, int lku, int condition,
                    int destination, int station, int idVariationColor, String nameColor, String hexCode, int idVariationShape, int shape) {
         super(id, name, defaultExploitation, idManufacturer, nameManufacturer, idBattery, nameBattery, idCharger, nameCharger);
 
         IMEI = imei;
         LKU = lku;
+        Condition = condition;
 
         Destination = destination;
         Station = station;
@@ -61,6 +63,14 @@ public class Device extends Model implements Parcelable {
 
     public void setLKU(int LKU) {
         this.LKU = LKU;
+    }
+
+    public int getCondition() {
+        return Condition;
+    }
+
+    public void setCondition(int condition) {
+        Condition = condition;
     }
 
     public int getDestination() {

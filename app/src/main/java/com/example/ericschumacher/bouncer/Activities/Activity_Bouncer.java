@@ -275,12 +275,12 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         Bundle b = new Bundle();
         b.putInt(Constants_Intern.SELECTION_ID_MODEL, oDevice.getId());
         f.setArguments(b);
-        fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_exploitation").commit();
+        fManager.beginTransaction().replace(R.id.flFragmentChoiceAndSearch, f, "fragment_exploitation").commit();
     }
 
     private void startFragmentRequestName() {
         Fragment_Request_Model_Name f = new Fragment_Request_Model_Name();
-        fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_name_model").commit();
+        fManager.beginTransaction().replace(R.id.flFragmentChoiceAndSearch, f, "fragment_name_model").commit();
     }
 
     private void startFragmentRequest(Fragment f) {
@@ -455,6 +455,36 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     @Override
     public void checkDetails() {
+        if (oDevice.getManufacturer() != null) {
+            if (oDevice.getCharger() != null) {
+                if (oDevice.getBattery() != null) {
+                    checkConditionAndShape();
+                } else {
+                    startFragmentRequest(new Fragment_Request_Name_Battery());
+                }
+            } else {
+                uNetwork.getChargers(oDevice, new Interface_VolleyCallback_ArrayList_Choice() {
+                    @Override
+                    public void onSuccess(ArrayList<Object_Choice> list) {
+                        Bundle b = new Bundle();
+                        b.putParcelableArrayList(Constants_Intern.LIST_CHOICE, list);
+                        startFragmentChoice(b);
+                    }
+                });
+            }
+        } else {
+            uNetwork.getManufactures(new Interface_VolleyCallback_ArrayList_Choice() {
+                @Override
+                public void onSuccess(ArrayList<Object_Choice> list) {
+                    Bundle b = new Bundle();
+                    b.putParcelableArrayList(Constants_Intern.LIST_CHOICE, list);
+                    startFragmentChoice(b);
+                }
+            });
+        }
+
+
+        /*
         uNetwork.getManufacturer(oDevice, new Interface_VolleyCallback_JSON() {
             @Override
             public void onSuccess(JSONObject json) {
@@ -522,6 +552,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
                 });
             }
         });
+        */
     }
 
     void checkConditionAndShape() {
@@ -601,22 +632,18 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     @Override
     public void returnName(String name) {
         oDevice.setName(name);
-        uNetwork.getIdModel_Name(oDevice, new Interface_VolleyCallback_Int() {
+        uNetwork.getIdModel_Name(oDevice, new Interface_VolleyCallback() {
             @Override
-            public void onSuccess(int i) {
-                oDevice.setId(i);
-                oDevice.setName(name);
+            public void onSuccess() {
                 checkExploitation();
                 updateUI();
             }
 
             @Override
             public void onFailure() {
-                uNetwork.addModel(oDevice, new Interface_VolleyCallback_Int() {
+                uNetwork.addModel(oDevice, new Interface_VolleyCallback() {
                     @Override
-                    public void onSuccess(int i) {
-                        oDevice.setId(i);
-                        oDevice.setName(name);
+                    public void onSuccess() {
                         updateUI();
                         startFragmentExploitation();
                     }

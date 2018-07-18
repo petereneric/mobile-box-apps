@@ -369,8 +369,8 @@ public class Utility_Network {
 
     }
 
-    public void getIdModel_Name(Device o, final Interface_VolleyCallback_Int iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/id/name/" + o.getName() + "/" + o.getTAC();
+    public void getIdModel_Name(final Device device, final Interface_VolleyCallback iCallback) {
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/id/name/" + device.getName() + "/" + device.getTAC();
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -379,7 +379,19 @@ public class Utility_Network {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                            iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_MODEL));
+                            device.setId(jsonObject.getInt(Constants_Extern.ID_MODEL));
+                            device.setName(jsonObject.getString(Constants_Extern.NAME_MODEL));
+                            if (jsonObject.getInt(Constants_Extern.ID_BATTERY) != Constants_Intern.ID_UNKNOWN) {
+                                device.setBattery(new Battery(jsonObject.getInt(Constants_Extern.ID_BATTERY), jsonObject.getString(Constants_Extern.NAME_BATTERY)));
+                            }
+                            if (jsonObject.getInt(Constants_Extern.ID_CHARGER) != Constants_Intern.ID_UNKNOWN) {
+                                device.setCharger(new Charger(jsonObject.getInt(Constants_Extern.ID_CHARGER), jsonObject.getString(Constants_Extern.NAME_CHARGER)));
+                            }
+                            if (jsonObject.getInt(Constants_Extern.ID_MANUFACTURER) != Constants_Intern.ID_UNKNOWN) {
+                                device.setManufacturer(new Manufacturer(jsonObject.getInt(Constants_Extern.ID_MANUFACTURER), jsonObject.getString(Constants_Extern.NAME_MANUFACTURER)));
+                            }
+                            device.setExploitation(jsonObject.getInt(Constants_Extern.EXPLOITATION));
+                            iCallback.onSuccess();
                         } else {
                             iCallback.onFailure();
                         }
@@ -409,11 +421,11 @@ public class Utility_Network {
         }
     }
 
-    public void addModel(Device o, final Interface_VolleyCallback_Int iCallback) {
-        if (o.testMode()) {
-            iCallback.onSuccess(0);
+    public void addModel(final Device device, final Interface_VolleyCallback iCallback) {
+        if (device.testMode()) {
+            device.setId(0);
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/add/" + o.getName() + "/" + o.getTAC();
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/add/" + device.getName() + "/" + device.getTAC();
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -421,7 +433,7 @@ public class Utility_Network {
                         Log.i("Response: ", response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_MODEL));
+                            device.setId(jsonObject.getInt(Constants_Extern.ID_MODEL));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -794,8 +806,9 @@ public class Utility_Network {
         }
     }
 
-    public void getManufacturer(Device o, final Interface_VolleyCallback_JSON iCallback) {
-        if (o.testMode()) {
+    /*
+    public void getManufacturer(final Device device, final Interface_VolleyCallback iCallback) {
+        if (device.testMode()) {
             JSONObject json = new JSONObject();
             try {
                 json.put(Constants_Extern.ID_MANUFACTURER, 0);
@@ -805,7 +818,7 @@ public class Utility_Network {
             }
             iCallback.onSuccess(json);
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/manufacturer/" + Integer.toString(o.getId());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/manufacturer/" + Integer.toString(device.getId());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -814,9 +827,9 @@ public class Utility_Network {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                                iCallback.onSuccess(jsonObject);
+                                device.setManufacturer(new Manufacturer(jsonObject.getInt(Constants_Extern.ID_MANUFACTURER), jsonObject.getString(Constants_Extern.NAME_MANUFACTURER)));
                             } else {
-                                iCallback.onFailure(jsonObject);
+                                iCallback.onFailure();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -844,6 +857,7 @@ public class Utility_Network {
             }
         }
     }
+    */
 
 
     public void addManufacturerToModel(Device o) {
