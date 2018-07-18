@@ -31,6 +31,7 @@ import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Shape;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Model;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
@@ -168,23 +169,16 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
                     // Get TAC
                     String tac = editable.toString().substring(0, 8);
-                    uNetwork.getModelByTac(tac, new Interface_VolleyCallback_JSON() {
+                    uNetwork.getModelByTac(oDevice, new Interface_VolleyCallback() {
                         @Override
-                        public void onSuccess(JSONObject json) {
-                            try {
-                                oDevice.setId(json.getInt(Constants_Extern.ID_MODEL));
-                                oDevice.setName(json.getString(Constants_Extern.NAME));
-                                json.get
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        public void onSuccess() {
                             updateUI();
                             checkExploitation();
                         }
 
                         @Override
-                        public void onFailure(JSONObject json) {
-                            startFragmentRequest();
+                        public void onFailure() {
+                            startFragmentRequestName();
                         }
                     });
                 }
@@ -284,7 +278,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_exploitation").commit();
     }
 
-    private void startFragmentRequest() {
+    private void startFragmentRequestName() {
         Fragment_Request_Model_Name f = new Fragment_Request_Model_Name();
         fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_name_model").commit();
     }

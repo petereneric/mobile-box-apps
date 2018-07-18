@@ -13,17 +13,23 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Input;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
 import com.example.ericschumacher.bouncer.Objects.Device;
+import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Charger;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Color;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
+import com.example.ericschumacher.bouncer.Objects.Supplement.Battery;
+import com.example.ericschumacher.bouncer.Objects.Supplement.Charger;
+import com.example.ericschumacher.bouncer.Objects.Supplement.Manufacturer;
 import com.example.ericschumacher.bouncer.R;
 
 import org.json.JSONArray;
@@ -92,8 +98,8 @@ public class Utility_Network {
         }
     }
 
-    public void getModelByTac(String tac, final Interface_VolleyCallback_JSON iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/tac/" + tac;
+    public void getModelByTac(final Device device, final Interface_VolleyCallback iCallback) {
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/tac/" + device.getTAC();
         Log.i("Checking", "Yes");
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -103,10 +109,21 @@ public class Utility_Network {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                            // manufacturer, charger, battery and exploitation missing
-                            iCallback.onSuccess(jsonObject);
+                            device.setId(jsonObject.getInt(Constants_Extern.ID_MODEL));
+                            device.setName(jsonObject.getString(Constants_Extern.NAME_MODEL));
+                            if (jsonObject.getInt(Constants_Extern.ID_BATTERY) != Constants_Intern.ID_UNKNOWN) {
+                                device.setBattery(new Battery(jsonObject.getInt(Constants_Extern.ID_BATTERY), jsonObject.getString(Constants_Extern.NAME_BATTERY)));
+                            }
+                            if (jsonObject.getInt(Constants_Extern.ID_CHARGER) != Constants_Intern.ID_UNKNOWN) {
+                                device.setCharger(new Charger(jsonObject.getInt(Constants_Extern.ID_CHARGER), jsonObject.getString(Constants_Extern.NAME_CHARGER)));
+                            }
+                            if (jsonObject.getInt(Constants_Extern.ID_MANUFACTURER) != Constants_Intern.ID_UNKNOWN) {
+                                device.setManufacturer(new Manufacturer(jsonObject.getInt(Constants_Extern.ID_MANUFACTURER), jsonObject.getString(Constants_Extern.NAME_MANUFACTURER)));
+                            }
+                            device.setExploitation(jsonObject.getInt(Constants_Extern.EXPLOITATION));
+                            iCallback.onSuccess();
                         } else {
-                            iCallback.onFailure(jsonObject);
+                            iCallback.onFailure();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
