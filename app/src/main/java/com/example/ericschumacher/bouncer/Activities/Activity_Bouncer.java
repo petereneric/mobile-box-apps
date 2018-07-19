@@ -20,7 +20,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Battery;
@@ -34,14 +33,11 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
+import com.example.ericschumacher.bouncer.Objects.Supplement.Variation_Color;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -370,6 +366,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     @Override
     public void callbackColor(int id, String name) {
+        Variation_Color vColor = new Variation_Color(id, name);
         oDevice.setIdColor(id);
         oDevice.setNameColor(name);
         uNetwork.getIdModelColor(oDevice, new Interface_VolleyCallback_Int() {
@@ -558,21 +555,17 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     void checkConditionAndShape() {
         if (oDevice.getCondition() == Constants_Intern.CONDITION_NOT_SET && oDevice.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
             Fragment_Request_Condition f = new Fragment_Request_Condition();
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(Constants_Intern.OBJECT_MODEL, oDevice);
-            f.setArguments(bundle);
-            fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_request_condition").commit();
+            fManager.beginTransaction().replace(R.id.flFragmentChoiceAndSearch, f, "fragment_request_condition").commit();
         } else {
-            if (oDevice.getShape() == Constants_Intern.SHAPE_NOT_SET && oDevice.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
+            if (oDevice.getVariationShape() == null && oDevice.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
                 Fragment_Request_Shape f = new Fragment_Request_Shape();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(Constants_Intern.OBJECT_MODEL, oDevice);
-                f.setArguments(bundle);
-                fManager.beginTransaction().replace(R.id.fl_input_output, f, "fragment_request_shape").commit();
+                fManager.beginTransaction().replace(R.id.flFragmentChoiceAndSearch, f, "fragment_request_shape").commit();
             } else {
-                // Fehler weil requestColor immer abgefragt wird
-                //requestColor();
-                startFragmentResult();
+                if (oDevice.getVariationColor() == null && oDevice.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
+                    requestColor();
+                } else {
+                    startFragmentResult();
+                }
             }
         }
     }

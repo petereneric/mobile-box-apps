@@ -14,6 +14,7 @@ public class Constants_Intern {
     public final static int EXPLOITATION_RECYCLING = 1;
     public final static int EXPLOITATION_REUSE = 2;
     public final static String OBJECT_MODEL = "OBJECT_MODEL";
+    public final static String OBJECT_DEVICE = "OBJECT_DEVICE";
     public final static int ID_UNKNOWN = 0;
 
     public final static int DESTINATION_UNKNOWN = 0;

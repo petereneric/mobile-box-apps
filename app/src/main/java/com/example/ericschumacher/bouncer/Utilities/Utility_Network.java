@@ -16,6 +16,7 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Input;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
@@ -27,9 +28,11 @@ import com.example.ericschumacher.bouncer.Objects.Object_Choice_Charger;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Color;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
+import com.example.ericschumacher.bouncer.Objects.Supplement.Additive;
 import com.example.ericschumacher.bouncer.Objects.Supplement.Battery;
 import com.example.ericschumacher.bouncer.Objects.Supplement.Charger;
 import com.example.ericschumacher.bouncer.Objects.Supplement.Manufacturer;
+import com.example.ericschumacher.bouncer.Objects.Supplement.Variation_Color;
 import com.example.ericschumacher.bouncer.R;
 
 import org.json.JSONArray;
@@ -937,7 +940,7 @@ public class Utility_Network {
         return null;
     }
 
-    public void getColors(Device o, final Interface_VolleyCallback_ArrayList_Choice iCallback) {
+    public void getColors(Device o, final Interface_VolleyCallback_ArrayList_Additive iCallback) {
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/all/" + Integer.toString(o.getId());
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -945,11 +948,11 @@ public class Utility_Network {
                 public void onResponse(String response) {
                     Log.i("Response: ", response);
                     try {
-                        ArrayList<Object_Choice> list = new ArrayList<>();
+                        ArrayList<Additive> list = new ArrayList<>();
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            list.add(new Object_Choice_Color(jsonObject.getInt(Constants_Extern.ID_COLOR), jsonObject.getString(Constants_Extern.NAME_COLOR), jsonObject.getString(Constants_Extern.HEX_CODE)));
+                            list.add(new Variation_Color(jsonObject.getInt(Constants_Extern.ID_COLOR), jsonObject.getInt(Constants_Extern.ID_COLOR), jsonObject.getString(Constants_Extern.NAME_COLOR), jsonObject.getString(Constants_Extern.HEX_CODE)));
                         }
                         iCallback.onSuccess(list);
                     } catch (Exception e) {

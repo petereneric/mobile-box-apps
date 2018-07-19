@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
-import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 
 /**
@@ -23,7 +22,6 @@ public class Fragment_Request_Condition extends Fragment implements View.OnClick
     TextView tvBroken;
     TextView tvOk;
 
-    Device oModel;
     Interface_Selection iSelection;
 
     @Nullable
@@ -33,7 +31,6 @@ public class Fragment_Request_Condition extends Fragment implements View.OnClick
 
         setLayout();
 
-        oModel = getArguments().getParcelable(Constants_Intern.OBJECT_MODEL);
         iSelection = (Interface_Selection)getActivity();
 
         return Layout;
