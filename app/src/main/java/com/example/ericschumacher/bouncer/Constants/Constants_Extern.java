@@ -28,7 +28,7 @@ public class Constants_Extern {
     public final static String ID = "ID";
     public final static String NAME = "NAME";
     public final static String EXPLOITATION = "EXPLOITATION";
-    public final static String IMEI = "IMEI";
+    public final static String IMEI = "IMEI_UNKNOWN";
     public final static String CONDITION = "CONDITION";
     public final static String SHAPE = "SHAPE";
     public final static String ID_LKU = "ID_LKU";

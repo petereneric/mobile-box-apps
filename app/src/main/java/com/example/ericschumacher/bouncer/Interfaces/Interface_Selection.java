@@ -12,17 +12,14 @@ public interface Interface_Selection {
     void checkName (String name);
     void callbackManufacturer (int id, String name);
     void callbackCharger(int id, String name);
-    void callbackColor(int id, int idColor, String name, String hexCode);
+    void callbackColor(int idColor, String name, String hexCode);
     void checkBattery (String name);
     void checkDetails();
     void reset();
     Device getModel();
-    void startFragmentResult();
-    void setShape(int shape);
+    void showResult();
+    void setShape(int id, String name);
     void setCondition(int condition);
     void setModel(int id, int name);
     void finishDevice();
-
-    void edit
-
 }

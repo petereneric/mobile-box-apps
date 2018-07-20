@@ -46,6 +46,7 @@
             android:id="@+id/trCounterRecycling">
 
             <TextView
+                android:id="@+id/tvCounterRecycling"
                 style="@style/tv_tableRow"
                 android:text="@string/recycling" />
 
@@ -58,6 +59,7 @@
             android:id="@+id/trCounterReuse">
 
             <TextView
+                android:id="@+id/tvCounterReuse"
                 style="@style/tv_tableRow"
                 android:text="@string/reuse" />
 
@@ -70,6 +72,7 @@
             android:id="@+id/trCounterTotal">
 
             <TextView
+                android:id="@+id/tvCounterTotal"
                 style="@style/tv_tableRow"
                 android:text="@string/total" />
 

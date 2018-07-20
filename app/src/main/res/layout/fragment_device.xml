@@ -20,13 +20,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TableRow android:id="@+id/trLLKU">
+            <TableRow android:id="@+id/trLKU">
 
                 <TextView
                     style="@style/tv_tableRow"
                     android:text="@string/lku" />
 
                 <TextView
+                    android:id="@+id/tvLKU"
                     style="@style/tv_tableRow"
                     android:text="Nicht vergeben" />
             </TableRow>
@@ -38,6 +39,7 @@
                     android:text="@string/destination" />
 
                 <TextView
+                    android:id="@+id/tvDestination"
                     style="@style/tv_tableRow"
                     android:text="Reparatur" />
             </TableRow>
@@ -49,6 +51,7 @@
                     android:text="@string/station" />
 
                 <TextView
+                    android:id="@+id/tvStation"
                     style="@style/tv_tableRow"
                     android:text="Selektion" />
             </TableRow>
@@ -60,6 +63,7 @@
                     android:text="@string/color" />
 
                 <TextView
+                    android:id="@+id/tvColor"
                     style="@style/tv_tableRow"
                     android:text="Weiß" />
             </TableRow>
@@ -71,6 +75,7 @@
                     android:text="@string/shape" />
 
                 <TextView
+                    android:id="@+id/tvShape"
                     style="@style/tv_tableRow"
                     android:text="@string/shape_very_good" />
             </TableRow>

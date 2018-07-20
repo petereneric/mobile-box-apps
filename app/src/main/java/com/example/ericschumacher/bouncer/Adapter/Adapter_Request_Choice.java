@@ -18,12 +18,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
-import com.example.ericschumacher.bouncer.Objects.Object_Choice;
-import com.example.ericschumacher.bouncer.Objects.Object_Choice_Charger;
-import com.example.ericschumacher.bouncer.Objects.Object_Choice_Color;
-import com.example.ericschumacher.bouncer.Objects.Object_Choice_Manufacturer;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Additive;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Variation_Color;
+import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
+import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
+import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
+import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
 import com.example.ericschumacher.bouncer.R;
 
 import java.util.ArrayList;
@@ -78,7 +76,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
                 @Override
                 public void onClick(int position) {
                     Variation_Color vColor = (Variation_Color)lAdditive.get(position);
-                    iSelection.callbackColor(vColor.getId(), vColor.getIdColor(), vColor.getName(), vColor.getHexCode());
+                    iSelection.callbackColor(vColor.getIdColor(), vColor.getName(), vColor.getHexCode());
                 }
             });
             return vh;
@@ -141,10 +139,10 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
 
     @Override
     public int getItemViewType(int position) {
-        if (lAdditive.get(position) instanceof Object_Choice_Manufacturer) {
+        if (lAdditive.get(position) instanceof Manufacturer) {
             return TYPE_MANUFACTURER;
         } else {
-            if (lAdditive.get(position) instanceof Object_Choice_Charger) {
+            if (lAdditive.get(position) instanceof Charger) {
                 return TYPE_CHARGER;
             } else {
                 return TYPE_COLOR;

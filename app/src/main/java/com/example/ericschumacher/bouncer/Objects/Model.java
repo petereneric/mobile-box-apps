@@ -5,9 +5,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Battery;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Charger;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Manufacturer;
+import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
+import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
+import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.R;
 
 /**
@@ -61,27 +61,27 @@ public class Model implements Parcelable {
         Name = name;
     }
 
-    public com.example.ericschumacher.bouncer.Objects.Supplement.Battery getBattery() {
+    public com.example.ericschumacher.bouncer.Objects.Additive.Battery getBattery() {
         return Battery;
     }
 
-    public void setBattery(com.example.ericschumacher.bouncer.Objects.Supplement.Battery battery) {
+    public void setBattery(com.example.ericschumacher.bouncer.Objects.Additive.Battery battery) {
         Battery = battery;
     }
 
-    public com.example.ericschumacher.bouncer.Objects.Supplement.Charger getCharger() {
+    public com.example.ericschumacher.bouncer.Objects.Additive.Charger getCharger() {
         return Charger;
     }
 
-    public void setCharger(com.example.ericschumacher.bouncer.Objects.Supplement.Charger charger) {
+    public void setCharger(com.example.ericschumacher.bouncer.Objects.Additive.Charger charger) {
         Charger = charger;
     }
 
-    public com.example.ericschumacher.bouncer.Objects.Supplement.Manufacturer getManufacturer() {
+    public com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer getManufacturer() {
         return Manufacturer;
     }
 
-    public void setManufacturer(com.example.ericschumacher.bouncer.Objects.Supplement.Manufacturer manufacturer) {
+    public void setManufacturer(com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer manufacturer) {
         Manufacturer = manufacturer;
     }
 
@@ -126,6 +126,9 @@ public class Model implements Parcelable {
     public Model(Parcel in){
         this.Id = in.readInt();
         this.Name = in.readString();
+        this.Battery = in.readParcelable(Battery.class.getClassLoader());
+        this.Charger = in.readParcelable(Charger.class.getClassLoader());
+        this.Manufacturer = in.readParcelable(Manufacturer.class.getClassLoader());
         this.DefaultExploitation = in.readInt();
     }
 
@@ -139,6 +142,9 @@ public class Model implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(this.Id);
         parcel.writeString(this.Name);
+        parcel.writeParcelable(Battery, i);
+        parcel.writeParcelable(Charger, i);
+        parcel.writeParcelable(Manufacturer, i);
         parcel.writeInt(this.DefaultExploitation);
     }
 

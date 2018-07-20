@@ -30,9 +30,6 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
     TextView tvBattery;
     TextView tvDefaultExploitation;
 
-    // Data
-    Model oModel;
-
     // Interface
     Interface_Model iModel;
 
@@ -45,9 +42,6 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
 
         Layout = inflater.inflate(R.layout.fragment_model, container, false);
         setLayout();
-
-        iModel = (Interface_Model)getActivity();
-        oModel = iModel.getModel();
 
         uNetwork = new Utility_Network(getActivity());
 
@@ -73,12 +67,20 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
         trCharger.setOnClickListener(this);
         trBattery.setOnClickListener(this);
         trDefaultExploitation.setOnClickListener(this);
+    }
 
-        tvName.setText(oModel.getName());
-        tvManufacturer.setText(oModel.getManufacturer().getName());
-        tvCharger.setText(oModel.getCharger().getName());
-        tvBattery.setText(oModel.getBattery().getName());
-        tvDefaultExploitation.setText(oModel.getExploitation());
+    public void updateUI(Model model) {
+        tvName.setText(model.getName());
+        if (model.getManufacturer() != null) {
+            tvManufacturer.setText(model.getManufacturer().getName());
+        }
+        if (model.getCharger() != null) {
+            tvCharger.setText(model.getCharger().getName());
+        }
+        if (model.getBattery() != null) {
+            tvBattery.setText(model.getBattery().getName());
+        }
+        tvDefaultExploitation.setText(model.getExploitation());
     }
 
     @Override

@@ -22,17 +22,15 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Ar
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
 import com.example.ericschumacher.bouncer.Objects.Device;
-import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Charger;
-import com.example.ericschumacher.bouncer.Objects.Object_Choice_Color;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Additive;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Battery;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Charger;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Manufacturer;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Variation_Color;
+import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
+import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
+import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
+import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
+import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
 import com.example.ericschumacher.bouncer.R;
 
 import org.json.JSONArray;
@@ -424,7 +422,7 @@ public class Utility_Network {
         }
     }
 
-    public void addModel(final Device device, final Interface_VolleyCallback iCallback) {
+    public void addModel(final Device device, final Interface_VolleyCallback_Int iCallback) {
         if (device.testMode()) {
             device.setId(0);
         } else {
@@ -436,7 +434,7 @@ public class Utility_Network {
                         Log.i("Response: ", response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
-                            device.setId(jsonObject.getInt(Constants_Extern.ID_MODEL));
+                            iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_MODEL));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -469,7 +467,7 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(0);
         } else {
-            final String url = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/add/" + o.getNameBattery() + "/" + Integer.toString(o.getIdManufacturer());
+            final String url = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/add/" + o.getBattery().getName() + "/" + Integer.toString(o.getManufacturer().getId());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -563,7 +561,7 @@ public class Utility_Network {
         if (o.testMode()) {
 
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/connect/" + Integer.toString(o.getIdBattery()) + "/" + Integer.toString(o.getId());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/connect/" + Integer.toString(o.getBattery().getId()) + "/" + Integer.toString(o.getId());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -734,7 +732,7 @@ public class Utility_Network {
         if (o.testMode()) {
 
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/connect/" + Integer.toString(o.getId()) + "/" + Integer.toString(o.getIdCharger());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/connect/" + Integer.toString(o.getId()) + "/" + Integer.toString(o.getCharger().getId());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -865,7 +863,7 @@ public class Utility_Network {
 
     public void addManufacturerToModel(Device o) {
         if (!o.testMode()) {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/add/manufacturer/" + Integer.toString(o.getId()) + "/" + Integer.toString(o.getIdManufacturer());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/add/manufacturer/" + Integer.toString(o.getId()) + "/" + Integer.toString(o.getManufacturer().getId());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -952,7 +950,7 @@ public class Utility_Network {
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            list.add(new Variation_Color(jsonObject.getInt(Constants_Extern.ID_COLOR), jsonObject.getInt(Constants_Extern.ID_COLOR), jsonObject.getString(Constants_Extern.NAME_COLOR), jsonObject.getString(Constants_Extern.HEX_CODE)));
+                            list.add(new Variation_Color(jsonObject.getInt(Constants_Extern.ID_COLOR), jsonObject.getString(Constants_Extern.NAME_COLOR), jsonObject.getString(Constants_Extern.HEX_CODE)));
                         }
                         iCallback.onSuccess(list);
                     } catch (Exception e) {
@@ -986,7 +984,7 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(0);
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/" + Integer.toString(o.getId()) + "/" + Integer.toString(o.getIdColor());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/" + Integer.toString(o.getId()) + "/" + Integer.toString(o.getVariationColor().getIdColor());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -1031,7 +1029,7 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(0);
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/" + Integer.toString(o.getId()) + "/" + Integer.toString(o.getIdColor());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/" + Integer.toString(o.getId()) + "/" + Integer.toString(o.getVariationColor().getIdColor());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
                     @Override
@@ -1079,7 +1077,7 @@ public class Utility_Network {
         final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/device";
         final JSONObject jsonBody = new JSONObject();
         try {
-            jsonBody.put(Constants_Extern.IMEI, o.getIMEI());
+            jsonBody.put(Constants_Extern.IMEI_UNKNOWN, o.getIMEI());
             jsonBody.put(Constants_Extern.ID_MODEL_COLOR, o.getIdModelColor());
             jsonBody.put(, etType.getText().toString());
             jsonBody.put("detail_one", etDetailOne.getText().toString());

@@ -1,6 +1,6 @@
 package com.example.ericschumacher.bouncer.Interfaces;
 
-import com.example.ericschumacher.bouncer.Objects.Supplement.Additive;
+import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 
 import java.util.ArrayList;
 

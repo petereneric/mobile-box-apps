@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.example.ericschumacher.bouncer.Adapter.Adapter_Request_Choice;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
-import com.example.ericschumacher.bouncer.Objects.Object_Choice;
+import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
@@ -41,8 +41,8 @@ public class Fragment_Request_Choice extends Fragment {
         setLayout();
 
         Bundle arg = getArguments();
-        ArrayList<Object_Choice> list = new ArrayList<>();
-        list = arg.getParcelableArrayList(Constants_Intern.LIST_CHOICE);
+        ArrayList<Additive> list = new ArrayList<>();
+        list = arg.getParcelableArrayList(Constants_Intern.LIST_ADDITIVE);
         Adapter_Request_Choice adapter = new Adapter_Request_Choice(getActivity(), list, (Interface_Selection) getActivity());
         RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
         RecyclerView.setAdapter(adapter);

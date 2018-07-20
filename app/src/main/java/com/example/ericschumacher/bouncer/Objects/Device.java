@@ -4,8 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Variation_Color;
-import com.example.ericschumacher.bouncer.Objects.Supplement.Variation_Shape;
+import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
+import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Shape;
 
 /**
  * Created by Eric Schumacher on 21.05.2018.
@@ -13,9 +13,9 @@ import com.example.ericschumacher.bouncer.Objects.Supplement.Variation_Shape;
 
 public class Device extends Model implements Parcelable {
 
-    private String IMEI;
-    private int LKU;
-    private int Condition;
+    private String IMEI = Constants_Intern.IMEI_UNKNOWN;
+    private int LKU = Constants_Intern.LKU_UNKNOWN;
+    private int Condition = Constants_Intern.CONDITION_UNKNOWN;
 
     private int Destination = Constants_Intern.DESTINATION_UNKNOWN;
     private int Station = Constants_Intern.CURRENT_STATION_UNKNOWN;
@@ -23,12 +23,16 @@ public class Device extends Model implements Parcelable {
     private Variation_Color VariationColor = null;
     private Variation_Shape VariationShape = null;
 
+    public Device() {
+
+    }
+
     public Device (String imei) {
         IMEI = imei;
     }
 
     public Device (int id, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger, String imei, int lku, int condition,
-                   int destination, int station, int idVariationColor, String nameColor, String hexCode, int idVariationShape, int shape) {
+                   int destination, int station, int idVariationColor, String nameColor, String hexCode, int idVariationShape, String shape) {
         super(id, name, defaultExploitation, idManufacturer, nameManufacturer, idBattery, nameBattery, idCharger, nameCharger);
 
         IMEI = imei;
@@ -140,7 +144,7 @@ public class Device extends Model implements Parcelable {
     public String toString() {
         return "Object_Choice{" +
                 "id='" + Id + '\'' +
-                ", IMEI='" + IMEI + '\'' +
+                ", IMEI_UNKNOWN='" + IMEI + '\'' +
                 ", Name='" + Name + '\'' +
                 ", LKU='" + LKU + '\'' +
                 '}';
