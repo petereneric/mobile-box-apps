@@ -270,7 +270,8 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     }
 
-    private void requestDefaultExploitation() {
+    @Override
+    public void requestDefaultExploitation() {
         Fragment_Request_Exploitation f = new Fragment_Request_Exploitation();
         Bundle b = new Bundle();
         b.putInt(Constants_Intern.SELECTION_ID_MODEL, oDevice.getId());
