@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
+import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Shape;
 import com.example.ericschumacher.bouncer.R;
 
 /**
@@ -24,7 +26,7 @@ public class Fragment_Request_Shape extends Fragment implements View.OnClickList
     TextView tvVeryGood;
     TextView tvCherry;
 
-    Interface_Selection iSelection;
+    Interface_Manager iManager;
 
     @Nullable
     @Override
@@ -32,7 +34,7 @@ public class Fragment_Request_Shape extends Fragment implements View.OnClickList
         Layout = inflater.inflate(R.layout.fragment_request_shape, container, false);
         setLayout();
 
-        iSelection = (Interface_Selection)getActivity();
+        iManager = (Interface_Manager) getActivity();
 
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -49,16 +51,16 @@ public class Fragment_Request_Shape extends Fragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvAcceptable:
-                iSelection.setShape(Constants_Intern.SHAPE_ACCEPTABLE);
+                iManager.returnShap(new Variation_Shape(Constants_Intern.SHAPE_ACCEPTABLE, getString(R.string.shape_acceptable)));
                 break;
             case R.id.tvGood:
-                iSelection.setShape(Constants_Intern.SHAPE_GOOD);
+                iManager.returnShap(new Variation_Shape(Constants_Intern.SHAPE_GOOD, getString(R.string.shape_acceptable)));
                 break;
             case R.id.tvVeryGood:
-                iSelection.setShape(Constants_Intern.SHAPE_VERY_GOOD);
+                iManager.returnShap(new Variation_Shape(Constants_Intern.SHAPE_VERY_GOOD, getString(R.string.shape_acceptable)));
                 break;
             case R.id.tvCherry:
-                iSelection.setShape(Constants_Intern.SHAPE_CHERRY);
+                iManager.returnShap(new Variation_Shape(Constants_Intern.SHAPE_CHERRY, getString(R.string.shape_acceptable)));
                 break;
         }
     }

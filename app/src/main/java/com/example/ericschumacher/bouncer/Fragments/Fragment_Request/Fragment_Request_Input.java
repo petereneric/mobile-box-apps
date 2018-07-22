@@ -19,6 +19,7 @@ import android.widget.EditText;
 import com.example.ericschumacher.bouncer.Adapter.Adapter_Request_Choice;
 import com.example.ericschumacher.bouncer.Adapter.Adapter_SearchResults;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_SearchResults;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
@@ -43,7 +44,7 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
     Adapter_SearchResults aSearchResults;
 
     // Interface
-    Interface_Selection iSelection;
+    Interface_Manager iManager;
 
     // Utility
     Utility_Network uNetwork;
@@ -60,7 +61,7 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
         uNetwork = new Utility_Network(getActivity());
 
         // Interface
-        iSelection = (Interface_Selection)getActivity();
+        iManager = (Interface_Manager) getActivity();
 
         // RecyclerView
         rSearchResults.setLayoutManager(new LinearLayoutManager(getActivity()));

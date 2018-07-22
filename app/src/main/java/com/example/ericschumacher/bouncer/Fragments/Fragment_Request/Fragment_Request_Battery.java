@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * Created by Eric Schumacher on 23.05.2018.
  */
 
-public class Fragment_Request_Name_Battery extends Fragment_Request_Input {
+public class Fragment_Request_Battery extends Fragment_Request_Input {
 
     @Nullable
     @Override
@@ -39,7 +39,7 @@ public class Fragment_Request_Name_Battery extends Fragment_Request_Input {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                uNetwork.getMatchingBatteries(iSelection.getModel(), editable.toString(), new Interface_VolleyCallback_ArrayList_Input() {
+                uNetwork.getMatchingBatteries(iManager.getModel(), editable.toString(), new Interface_VolleyCallback_ArrayList_Input() {
                     @Override
                     public void onSuccess(ArrayList<Object_SearchResult> list) {
                         aSearchResults.update(list);
@@ -56,7 +56,7 @@ public class Fragment_Request_Name_Battery extends Fragment_Request_Input {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.b_commit:
-                iSelection.checkBattery(etInput.getText().toString());
+                iManager.returnBattery(etInput.getText().toString());
                 closeKeyboard();
                 break;
         }

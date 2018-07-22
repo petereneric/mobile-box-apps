@@ -17,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
@@ -40,13 +40,13 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
     // Variables
     Context Context;
     ArrayList<Additive> lAdditive;
-    Interface_Selection iSelection;
+    Interface_Manager iManager;
     RequestQueue queue;
 
-    public Adapter_Request_Choice(Context context, ArrayList<Additive> list, Interface_Selection i) {
+    public Adapter_Request_Choice(Context context, ArrayList<Additive> list, Interface_Manager i) {
         Context = context;
         lAdditive = list;
-        iSelection = i;
+        iManager = i;
         queue = Volley.newRequestQueue(Context);
     }
 
@@ -57,7 +57,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
             ViewHolder_Request_Choice vh = new ViewHolder_Request_Choice(layout, new Interface_Click() {
                 @Override
                 public void onClick(int position) {
-                    iSelection.callbackManufacturer(lAdditive.get(position).getId(), lAdditive.get(position).getName());
+                    iManager.returnManufacturer((Manufacturer)lAdditive.get(position));
                 }
             });
             return vh;
@@ -66,7 +66,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
             ViewHolder_Request_Choice vh = new ViewHolder_Request_Choice_Charger(layout, new Interface_Click() {
                 @Override
                 public void onClick(int position) {
-                    iSelection.callbackCharger(lAdditive.get(position).getId(), lAdditive.get(position).getName());
+                    iManager.returnCharger((Charger)lAdditive.get(position));
                 }
             });
             return vh;
@@ -75,8 +75,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
             ViewHolder_Request_Choice_Color vh = new ViewHolder_Request_Choice_Color(layout, new Interface_Click() {
                 @Override
                 public void onClick(int position) {
-                    Variation_Color vColor = (Variation_Color)lAdditive.get(position);
-                    iSelection.callbackColor(vColor.getIdColor(), vColor.getName(), vColor.getHexCode());
+                    iManager.returnColor((Variation_Color)lAdditive.get(position));
                 }
             });
             return vh;

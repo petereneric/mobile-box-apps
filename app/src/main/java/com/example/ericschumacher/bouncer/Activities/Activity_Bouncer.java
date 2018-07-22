@@ -2,6 +2,7 @@ package com.example.ericschumacher.bouncer.Activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -18,21 +19,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Model_Name;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Battery;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Condition;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Exploitation;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Shape;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Device;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
@@ -41,26 +40,19 @@ import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
 import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Shape;
 import com.example.ericschumacher.bouncer.Objects.Device;
-import com.example.ericschumacher.bouncer.Objects.Object_Choice;
+import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
 import java.util.ArrayList;
 
-public class Activity_Bouncer extends AppCompatActivity implements Interface_Selection, View.OnClickListener, Interface_Device {
+public class Activity_Bouncer extends AppCompatActivity implements Interface_Selection, View.OnClickListener, Interface_Manager {
 
     // Utilities
     Utility_Network uNetwork;
 
     // Objects
     Device oDevice;
-
-    // Layout - Device
-    TableRow trLKU;
-    TableRow trDestination;
-    TableRow trStation;
-    TableRow trShape;
-    TableRow trColor;
 
     // Layout -
     EditText etScan;
@@ -69,17 +61,14 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     TextView tvCounterReuse;
     TextView tvCounterRecycling;
     TextView tvCounterTotal;
-    TextView tvName;
-    TextView tvManufacturer;
-    TextView tvCharger;
-    TextView tvBattery;
-    TextView tvLKU;
-    TextView tvColor;
     FloatingActionButton fab;
 
     // Fragments
     FragmentManager fManager;
     private final static String FRAGMENT_DEVICE = "FRAGMENT_DEVICE";
+
+    // Interfaces
+    Interface_Device iDevice;
 
     // Counter
     private int cRecycling = 0;
@@ -107,15 +96,29 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         fManager = getSupportFragmentManager();
 
 
+
         // Layout
         setLayout();
         handleInteraction();
         Fragment fDevice = new Fragment_Device();
         fManager.beginTransaction().replace(R.id.flFragmentDevice, fDevice, FRAGMENT_DEVICE).commit();
-        updateUI();
+
+
 
         // Printer
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        iDevice = (Interface_Device) fManager.findFragmentByTag(FRAGMENT_DEVICE);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        updateUI();
     }
 
     @Override
@@ -133,17 +136,10 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         tvCounterReuse = findViewById(R.id.tvCounterReuse);
         tvCounterRecycling = findViewById(R.id.tvCounterRecycling);
         tvCounterTotal = findViewById(R.id.tvCounterTotal);
-        tvName = findViewById(R.id.tvName);
-        tvManufacturer = findViewById(R.id.tvManufacturer);
-        tvCharger = findViewById(R.id.tvCharger);
-        tvBattery = findViewById(R.id.tvBattery);
-        trColor = findViewById(R.id.trColor);
         fab = findViewById(R.id.fab);
 
         fab.setOnClickListener(this);
         ivClearScan.setOnClickListener(this);
-        trColor.setOnClickListener(this);
-        trLKU.setOnClickListener(this);
     }
 
     private void handleInteraction() {
@@ -179,7 +175,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
                         @Override
                         public void onFailure() {
-                            startFragmentRequestName();
+                            iDevice.requestName();
                         }
                     });
                 }
@@ -215,7 +211,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
                     @Override
                     public void onFailure() {
-                        requestDefaultExploitation();
+                        iDevice.requestDefaultExploitation(oDevice);
                     }
                 });
             }
@@ -270,20 +266,6 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     }
 
-    @Override
-    public void requestDefaultExploitation() {
-        Fragment_Request_Exploitation f = new Fragment_Request_Exploitation();
-        Bundle b = new Bundle();
-        b.putInt(Constants_Intern.SELECTION_ID_MODEL, oDevice.getId());
-        f.setArguments(b);
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_exploitation").commit();
-    }
-
-    private void startFragmentRequestName() {
-        Fragment_Request_Model_Name f = new Fragment_Request_Model_Name();
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_name_model").commit();
-    }
-
     private void startFragmentRequest(Fragment f) {
         Bundle b = new Bundle();
         b.putInt(Constants_Intern.SELECTION_ID_MODEL, oDevice.getId());
@@ -327,7 +309,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
                     public void onSuccess(int i) {
                         oDevice.setId(i);
                         updateUI();
-                        requestDefaultExploitation();
+                        iDevice.requestDefaultExploitation(oDevice);
                     }
 
                     @Override
@@ -341,8 +323,8 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     }
 
     @Override
-    public void callbackManufacturer(int id, String name) {
-        oDevice.setManufacturer(new Manufacturer(id, name));
+    public void returnManufacturer(Manufacturer manufacturer) {
+        oDevice.setManufacturer(manufacturer);
         uNetwork.addManufacturerToModel(oDevice);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -353,8 +335,8 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     }
 
     @Override
-    public void callbackCharger(int id, String name) {
-        oDevice.setCharger(new Charger(id, name));
+    public void returnCharger(Charger charger) {
+        oDevice.setCharger(charger);
         uNetwork.connectChargerWithModel(oDevice);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -365,8 +347,8 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     }
 
     @Override
-    public void callbackColor(int idColor, String name, String hexCode) {
-        oDevice.setVariationColor(new Variation_Color(idColor, name, hexCode));
+    public void returnColor(Variation_Color color) {
+        oDevice.setVariationColor(color);
         uNetwork.getIdModelColor(oDevice, new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
@@ -393,7 +375,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     }
 
     @Override
-    public void checkBattery(final String name) {
+    public void returnBattery(final String name) {
         uNetwork.getIdBattery(oDevice, name, new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
@@ -447,105 +429,26 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     }
 
     @Override
+    public void returnShap(Variation_Shape shape) {
+        oDevice.setVariationShape(shape);
+        checkConditionAndShape();
+    }
+
+    @Override
     public void checkDetails() {
         if (oDevice.getManufacturer() != null) {
             if (oDevice.getCharger() != null) {
                 if (oDevice.getBattery() != null) {
                     checkConditionAndShape();
                 } else {
-                    startFragmentRequest(new Fragment_Request_Name_Battery());
+                    iDevice.requestBattery(oDevice);
                 }
             } else {
-                uNetwork.getChargers(oDevice, new Interface_VolleyCallback_ArrayList_Choice() {
-                    @Override
-                    public void onSuccess(ArrayList<Object_Choice> list) {
-                        Bundle b = new Bundle();
-                        b.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
-                        startFragmentChoice(b);
-                    }
-                });
+                iDevice.requestCharger(oDevice);
             }
         } else {
-            uNetwork.getManufactures(new Interface_VolleyCallback_ArrayList_Choice() {
-                @Override
-                public void onSuccess(ArrayList<Object_Choice> list) {
-                    Bundle b = new Bundle();
-                    b.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
-                    startFragmentChoice(b);
-                }
-            });
+            iDevice.requestManufacturer();
         }
-
-
-        /*
-        uNetwork.getManufacturer(oDevice, new Interface_VolleyCallback_JSON() {
-            @Override
-            public void onSuccess(JSONObject json) {
-                try {
-                    oDevice.setIdManufacturer(json.getInt(Constants_Extern.ID_MANUFACTURER));
-                    oDevice.setNameManufacturer(json.getString(Constants_Extern.NAME_MANUFACTURER));
-                    updateUI();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                updateUI();
-                uNetwork.getCharger(oDevice, new Interface_VolleyCallback_JSON() {
-                    @Override
-                    public void onSuccess(JSONObject json) {
-                        try {
-                            oDevice.setIdCharger(json.getInt(Constants_Extern.ID_CHARGER));
-                            oDevice.setNameCharger(json.getString(Constants_Extern.NAME_CHARGER));
-                            updateUI();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        uNetwork.getBattery(oDevice, new Interface_VolleyCallback_JSON() {
-                            @Override
-                            public void onSuccess(JSONObject json) {
-                                try {
-                                    oDevice.setIdBattery(json.getInt(Constants_Extern.ID_BATTERY));
-                                    oDevice.setNameBattery(json.getString(Constants_Extern.NAME_BATTERY));
-                                    updateUI();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                                checkConditionAndShape();
-                            }
-
-                            @Override
-                            public void onFailure(JSONObject json) {
-                                startFragmentRequest(new Fragment_Request_Name_Battery());
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onFailure(JSONObject json) {
-                        uNetwork.getChargers(oDevice, new Interface_VolleyCallback_ArrayList_Choice() {
-                            @Override
-                            public void onSuccess(ArrayList<Object_Choice> list) {
-                                Bundle b = new Bundle();
-                                b.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
-                                startFragmentChoice(b);
-                            }
-                        });
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(JSONObject json) {
-                uNetwork.getManufactures(new Interface_VolleyCallback_ArrayList_Choice() {
-                    @Override
-                    public void onSuccess(ArrayList<Object_Choice> list) {
-                        Bundle b = new Bundle();
-                        b.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
-                        startFragmentChoice(b);
-                    }
-                });
-            }
-        });
-        */
     }
 
     void checkConditionAndShape() {
@@ -554,48 +457,15 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
             fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_request_condition").commit();
         } else {
             if (oDevice.getVariationShape() == null && oDevice.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
-                requestShape();
+                iDevice.requestShape();
             } else {
                 if (oDevice.getVariationColor() == null && oDevice.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
-                    requestColor();
+                    iDevice.requestColor(oDevice);
                 } else {
                     showResult();
                 }
             }
         }
-    }
-
-    @Override
-    public void requestLKU() {
-        
-    }
-
-    @Override
-    public void requestDestination() {
-
-    }
-
-    @Override
-    public void requestStation() {
-
-    }
-
-    @Override
-    public void requestShape() {
-        Fragment_Request_Shape f = new Fragment_Request_Shape();
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_request_shape").commit();
-    }
-
-    @Override
-    public void requestColor() {
-        uNetwork.getColors(oDevice, new Interface_VolleyCallback_ArrayList_Additive() {
-            @Override
-            public void onSuccess(ArrayList<Additive> list) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
-                startFragmentChoice(bundle);
-            }
-        });
     }
 
     @Override
@@ -615,7 +485,8 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         reset();
     }
 
-    private void updateUI() {
+    @Override
+    public void updateUI() {
         ((Fragment_Device)fManager.findFragmentByTag(FRAGMENT_DEVICE)).updateUI(oDevice);
         tvCounterRecycling.setText(Integer.toString(cRecycling));
         tvCounterReuse.setText(Integer.toString(cReuse));
@@ -623,14 +494,18 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     }
 
     @Override
-    public Device getModel() {
+    public Device getDevice() {
         return oDevice;
     }
 
     @Override
-    public void requestName() {
-        Fragment_Request_Model_Name f = new Fragment_Request_Model_Name();
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_request_name").commit();
+    public void returnDefaultExploitation(int exploitation) {
+
+    }
+
+    @Override
+    public Model getModel() {
+        return oDevice;
     }
 
     @Override
@@ -650,7 +525,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
                     public void onSuccess(int i) {
                         oDevice.setId(i);
                         updateUI();
-                        requestDefaultExploitation();
+                        iDevice.requestDefaultExploitation(oDevice);
                     }
 
                     @Override
@@ -664,31 +539,6 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     }
 
     @Override
-    public void requestNameModel() {
-        
-    }
-
-    @Override
-    public void requestManufacturer() {
-
-    }
-
-    @Override
-    public void requestCharger() {
-
-    }
-
-    @Override
-    public void requestBattery() {
-
-    }
-
-    @Override
-    public void reqeuestDefaultExploitation() {
-
-    }
-
-    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
@@ -697,26 +547,6 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
             case R.id.ivClearScan:
                 reset();
                 break;
-                /*
-            case R.id.trLKU:
-                if (oDevice.getId() > 0) {
-                    uNetwork.connectWithLku(oDevice, new Interface_VolleyCallback_Int() {
-                        @Override
-                        public void onSuccess(int i) {
-                            oDevice.setLKU(i);
-                            updateUI();
-                        }
-
-                        @Override
-                        public void onFailure() {
-                            Toast.makeText(Activity_Bouncer.this, getString(R.string.toast_model_has_lku), Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-                break;
-                */
-            case R.id.trColor:
-                requestColor();
         }
     }
 

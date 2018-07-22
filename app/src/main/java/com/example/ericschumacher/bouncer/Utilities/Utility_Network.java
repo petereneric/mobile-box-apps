@@ -22,6 +22,7 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Ar
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
 import com.example.ericschumacher.bouncer.Objects.Device;
+import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Charger;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice_Manufacturer;
@@ -633,8 +634,8 @@ public class Utility_Network {
         }
     }
 
-    public void getMatchingBatteries(Device o, String namePart, final Interface_VolleyCallback_ArrayList_Input iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/all/" + Integer.toString(o.getId()) + "/" + namePart;
+    public void getMatchingBatteries(Model model, String namePart, final Interface_VolleyCallback_ArrayList_Input iCallback) {
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/all/" + Integer.toString(model.getId()) + "/" + namePart;
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -676,8 +677,8 @@ public class Utility_Network {
     }
 
     // Charger
-    public void getCharger(Device o, final Interface_VolleyCallback_JSON iCallback) {
-        if (o.testMode()) {
+    public void getCharger(Model model, final Interface_VolleyCallback_JSON iCallback) {
+        if (model instanceof Device && ((Device)model).testMode()) {
             JSONObject json = new JSONObject();
             try {
                 json.put(Constants_Extern.ID_CHARGER, 0);
@@ -687,7 +688,7 @@ public class Utility_Network {
             }
             iCallback.onSuccess(json);
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/" + Integer.toString(o.getId());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/" + Integer.toString(model.getId());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -764,8 +765,8 @@ public class Utility_Network {
 
     }
 
-    public void getChargers(Device o, final Interface_VolleyCallback_ArrayList_Choice iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/all/" + Integer.toString(o.getId());
+    public void getChargers(Model model, final Interface_VolleyCallback_ArrayList_Choice iCallback) {
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/all/" + Integer.toString(model.getId());
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
