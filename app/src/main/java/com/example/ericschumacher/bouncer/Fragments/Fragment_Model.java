@@ -16,7 +16,9 @@ import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Re
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Battery;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Model;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
+import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.R;
@@ -122,13 +124,13 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
     @Override
     public void requestName() {
         Fragment_Request_Name f = new Fragment_Request_Name();
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_request_name").commit();
+        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
     }
 
     public void requestManufacturer() {
-        uNetwork.getManufactures(new Interface_VolleyCallback_ArrayList_Choice() {
+        uNetwork.getManufactures(new Interface_VolleyCallback_ArrayList_Additive() {
             @Override
-            public void onSuccess(ArrayList<Object_Choice> list) {
+            public void onSuccess(ArrayList<Additive> list) {
                 Bundle b = new Bundle();
                 b.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
                 startFragmentChoice(b);
@@ -138,9 +140,9 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
 
     @Override
     public void requestCharger(Model model) {
-        uNetwork.getChargers(model, new Interface_VolleyCallback_ArrayList_Choice() {
+        uNetwork.getChargers(model, new Interface_VolleyCallback_ArrayList_Additive() {
             @Override
-            public void onSuccess(ArrayList<Object_Choice> list) {
+            public void onSuccess(ArrayList<Additive> list) {
                 Bundle b = new Bundle();
                 b.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
                 startFragmentChoice(b);
@@ -154,7 +156,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
         Bundle b = new Bundle();
         b.putInt(Constants_Intern.SELECTION_ID_MODEL, model.getId());
         fragment.setArguments(b);
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, fragment, "fragment_name").commit();
+        fManager.beginTransaction().replace(R.id.flFragmentRequest, fragment, Constants_Intern.FRAGMENT_REQUEST).commit();
     }
 
     @Override
@@ -163,12 +165,12 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
         Bundle b = new Bundle();
         b.putInt(Constants_Intern.SELECTION_ID_MODEL, model.getId());
         f.setArguments(b);
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_exploitation").commit();
+        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
     }
 
     private void startFragmentChoice(Bundle bundle) {
         Fragment_Request_Choice f = new Fragment_Request_Choice();
         f.setArguments(bundle);
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_request_choice").commit();
+        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
     }
 }

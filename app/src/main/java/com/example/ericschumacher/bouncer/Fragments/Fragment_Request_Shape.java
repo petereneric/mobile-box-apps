@@ -36,7 +36,7 @@ public class Fragment_Request_Shape extends Fragment implements View.OnClickList
 
         iManager = (Interface_Manager) getActivity();
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return Layout;
     }
 
     void setLayout() {
@@ -44,6 +44,11 @@ public class Fragment_Request_Shape extends Fragment implements View.OnClickList
         tvGood = Layout.findViewById(R.id.tvGood);
         tvVeryGood = Layout.findViewById(R.id.tvVeryGood);
         tvCherry = Layout.findViewById(R.id.tvCherry);
+
+        tvAcceptable.setOnClickListener(this);
+        tvGood.setOnClickListener(this);
+        tvVeryGood.setOnClickListener(this);
+        tvCherry.setOnClickListener(this);
 
     }
 

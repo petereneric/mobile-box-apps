@@ -38,4 +38,7 @@ public class Constants_Intern {
     // Counter
     public final static String COUNTER_RECYCLING = "COUNTER_RECYCLING";
     public final static String COUNTER_REUSE = "COUNTER_REUSE";
+
+    // Fragment
+    public final static String FRAGMENT_REQUEST = "FRAGMENT_REQUEST";
 }

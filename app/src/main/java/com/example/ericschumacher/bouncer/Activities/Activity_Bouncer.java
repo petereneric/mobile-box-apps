@@ -67,6 +67,8 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     FragmentManager fManager;
     private final static String FRAGMENT_DEVICE = "FRAGMENT_DEVICE";
 
+
+
     // Interfaces
     Interface_Device iDevice;
 
@@ -225,7 +227,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         Bundle b = new Bundle();
         b.putParcelable(Constants_Intern.OBJECT_MODEL, oDevice);
         f.setArguments(b);
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_result").commit();
+        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
 
         if (oDevice.getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
             cRecycling++;
@@ -454,9 +456,10 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     void checkConditionAndShape() {
         if (oDevice.getCondition() == Constants_Intern.CONDITION_UNKNOWN && oDevice.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
             Fragment_Request_Condition f = new Fragment_Request_Condition();
-            fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_request_condition").commit();
+            fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
         } else {
             if (oDevice.getVariationShape() == null && oDevice.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
+                Log.i("RequestShape", "Yes");
                 iDevice.requestShape();
             } else {
                 if (oDevice.getVariationColor() == null && oDevice.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
@@ -473,9 +476,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         oDevice = new Device();
         etScan.setText("");
         etScan.requestFocus();
-        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-        }
+        fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST)).commit();
         updateUI();
     }
 

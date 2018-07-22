@@ -765,7 +765,7 @@ public class Utility_Network {
 
     }
 
-    public void getChargers(Model model, final Interface_VolleyCallback_ArrayList_Choice iCallback) {
+    public void getChargers(Model model, final Interface_VolleyCallback_ArrayList_Additive iCallback) {
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/all/" + Integer.toString(model.getId());
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -773,12 +773,12 @@ public class Utility_Network {
                 public void onResponse(String response) {
                     Log.i("Response, Charger: ", response);
                     try {
-                        ArrayList<Object_Choice> chargers = new ArrayList<>();
+                        ArrayList<Additive> chargers = new ArrayList<>();
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Log.i("Looping", "Array");
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            chargers.add(new Object_Choice_Charger(jsonObject.getInt(Constants_Extern.ID), jsonObject.getString(Constants_Extern.NAME)));
+                            chargers.add(new Charger(jsonObject.getInt(Constants_Extern.ID), jsonObject.getString(Constants_Extern.NAME)));
                         }
                         iCallback.onSuccess(chargers);
                     } catch (JSONException e) {
@@ -895,7 +895,7 @@ public class Utility_Network {
     }
 
 
-    public ArrayList<Object_Choice> getManufactures(final Interface_VolleyCallback_ArrayList_Choice iCallback) {
+    public ArrayList<Object_Choice> getManufactures(final Interface_VolleyCallback_ArrayList_Additive iCallback) {
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/manufacturers";
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -903,12 +903,12 @@ public class Utility_Network {
                 public void onResponse(String response) {
                     Log.i("Response_Manus: ", response);
                     try {
-                        ArrayList<Object_Choice> manufacturers = new ArrayList<>();
+                        ArrayList<Additive> manufacturers = new ArrayList<>();
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Log.i("Looping", "Array");
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
-                            manufacturers.add(new Object_Choice_Manufacturer(jsonObject.getInt(Constants_Extern.ID), jsonObject.getString(Constants_Extern.NAME)));
+                            manufacturers.add(new Manufacturer(jsonObject.getInt(Constants_Extern.ID), jsonObject.getString(Constants_Extern.NAME)));
                         }
                         iCallback.onSuccess(manufacturers);
                     } catch (JSONException e) {

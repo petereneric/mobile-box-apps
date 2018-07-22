@@ -159,7 +159,7 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
     @Override
     public void requestShape() {
         Fragment_Request_Shape f = new Fragment_Request_Shape();
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_request_shape").commit();
+        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
     }
 
     @Override
@@ -171,7 +171,7 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
                 bundle.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
                 Fragment_Request_Choice f = new Fragment_Request_Choice();
                 f.setArguments(bundle);
-                fManager.beginTransaction().replace(R.id.flFragmentRequest, f, "fragment_request_choice").commit();
+                fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
             }
         });
     }
