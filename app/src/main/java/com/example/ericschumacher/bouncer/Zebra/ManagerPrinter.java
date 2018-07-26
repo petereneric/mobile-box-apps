@@ -63,7 +63,7 @@ public class ManagerPrinter {
                 "^FT113,49^A0I,28,24^FH\\^FD"+device.getVariationShape().getId()+"^FS\n" +
                 "^FT160,15^A0I,25,26^FH\\^FD"+device.getName()+"^FS\n" +
                 "^FT189,11^A0I,28,28^FH\\^FD:^FS\n" +
-                "^FT389,16^A0I,21,28^FH\\^FD"+device.getManufacturer()+"^FS\n" +
+                "^FT389,16^A0I,21,28^FH\\^FD"+device.getManufacturer().getName()+"^FS\n" +
                 "^FT269,163^A0I,28,28^FH\\^FD"+device.getLKU()+"^FS\n" +
                 "^BY4,3,40^FT384,114^BCI,,Y,N\n" +
                 "^FD>:"+device.getIdDevice()+"^FS\n" +

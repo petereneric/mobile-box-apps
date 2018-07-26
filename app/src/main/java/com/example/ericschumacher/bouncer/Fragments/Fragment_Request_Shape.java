@@ -58,13 +58,13 @@ public class Fragment_Request_Shape extends Fragment implements View.OnClickList
                 iManager.returnShape(new Variation_Shape(Constants_Intern.SHAPE_ACCEPTABLE, getString(R.string.shape_acceptable)));
                 break;
             case R.id.tvGood:
-                iManager.returnShape(new Variation_Shape(Constants_Intern.SHAPE_GOOD, getString(R.string.shape_acceptable)));
+                iManager.returnShape(new Variation_Shape(Constants_Intern.SHAPE_GOOD, getString(R.string.shape_good)));
                 break;
             case R.id.tvVeryGood:
-                iManager.returnShape(new Variation_Shape(Constants_Intern.SHAPE_VERY_GOOD, getString(R.string.shape_acceptable)));
+                iManager.returnShape(new Variation_Shape(Constants_Intern.SHAPE_VERY_GOOD, getString(R.string.shape_very_good)));
                 break;
             case R.id.tvCherry:
-                iManager.returnShape(new Variation_Shape(Constants_Intern.SHAPE_CHERRY, getString(R.string.shape_acceptable)));
+                iManager.returnShape(new Variation_Shape(Constants_Intern.SHAPE_CHERRY, getString(R.string.shape_cherry)));
                 break;
         }
     }

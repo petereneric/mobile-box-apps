@@ -31,10 +31,10 @@ public class Constants_Intern {
     // Condition & Shape
     public final static int CONDITION_BROKEN = 0;
     public final static int CONDITION_OK = 1;
-    public final static int SHAPE_ACCEPTABLE = 0;
-    public final static int SHAPE_GOOD = 1;
+    public final static int SHAPE_ACCEPTABLE = 4;
+    public final static int SHAPE_GOOD = 3;
     public final static int SHAPE_VERY_GOOD = 2;
-    public final static int SHAPE_CHERRY = 3;
+    public final static int SHAPE_CHERRY = 1;
     public final static int CONDITION_UNKNOWN = -1;
     public final static int SHAPE_UNKNOWN = -1;
 

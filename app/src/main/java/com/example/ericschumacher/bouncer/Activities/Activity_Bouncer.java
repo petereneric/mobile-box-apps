@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device;
@@ -82,7 +83,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
         // Utilities
         uNetwork = new Utility_Network(this);
-        mPrinter = new ManagerPrinter(this);
+        //mPrinter = new ManagerPrinter(this);
 
 
         // Objects
@@ -104,7 +105,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     protected void onResume() {
         super.onResume();
         iDevice = (Interface_Device) fManager.findFragmentByTag(FRAGMENT_DEVICE);
-        mPrinter.connect();
+        //mPrinter.connect();
     }
 
     @Override
@@ -116,7 +117,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     @Override
     protected void onPause() {
         super.onPause();
-        mPrinter.disconnect();
+        //mPrinter.disconnect();
     }
 
 
@@ -248,16 +249,19 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     @Override
     public void saveDevice() {
-        mPrinter.printDevice(oDevice);
+        //mPrinter.printDevice(oDevice);
         uNetwork.addDevice(oDevice, new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
                 oDevice.setIdDevice(i);
+                Log.i("Yeqh", "got that");
                 uNetwork.assignLku(oDevice, new Interface_VolleyCallback_Int() {
                     @Override
                     public void onSuccess(int i) {
                         oDevice.setLKU(i);
-                        mPrinter.printDevice(oDevice);
+                        Toast.makeText(Activity_Bouncer.this, "LKU: "+Integer.toString(i), Toast.LENGTH_LONG).show();
+                        //mPrinter.printDevice(oDevice);
+                        reset();
                     }
 
                     @Override

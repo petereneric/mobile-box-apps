@@ -147,6 +147,8 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
 
     @Override
     public void requestLKU() {
+        Toast.makeText(getActivity(), "Noch checken", Toast.LENGTH_LONG).show();
+        /*
         if (iManager.getDevice().getIdModel() > 0) {
             uNetwork.connectWithLku(iManager.getDevice(), new Interface_VolleyCallback_Int() {
                 @Override
@@ -161,6 +163,7 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
                 }
             });
         }
+        */
     }
 
     @Override
