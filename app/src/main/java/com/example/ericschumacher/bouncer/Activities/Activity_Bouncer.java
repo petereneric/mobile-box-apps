@@ -2,7 +2,6 @@ package com.example.ericschumacher.bouncer.Activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -17,23 +16,18 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Condition;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Shape;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Device;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
-import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
@@ -43,8 +37,7 @@ import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
-
-import java.util.ArrayList;
+import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 
 public class Activity_Bouncer extends AppCompatActivity implements Interface_Selection, View.OnClickListener, Interface_Manager {
 
@@ -74,6 +67,9 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     private int cRecycling = 0;
     private int cReuse = 0;
 
+    // Printer
+    ManagerPrinter mPrinter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +82,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
         // Utilities
         uNetwork = new Utility_Network(this);
+        mPrinter = new ManagerPrinter(this);
 
 
         // Objects
@@ -101,14 +98,13 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         Fragment fDevice = new Fragment_Device();
         fManager.beginTransaction().replace(R.id.flFragmentDevice, fDevice, FRAGMENT_DEVICE).commit();
 
-        // Printer
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         iDevice = (Interface_Device) fManager.findFragmentByTag(FRAGMENT_DEVICE);
+        mPrinter.connect();
     }
 
     @Override
@@ -116,6 +112,14 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         super.onPostResume();
         updateUI();
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPrinter.disconnect();
+    }
+
+
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -244,8 +248,31 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     @Override
     public void saveDevice() {
-        // saveDevice
-        reset();
+        mPrinter.printDevice(oDevice);
+        uNetwork.addDevice(oDevice, new Interface_VolleyCallback_Int() {
+            @Override
+            public void onSuccess(int i) {
+                oDevice.setIdDevice(i);
+                uNetwork.assignLku(oDevice, new Interface_VolleyCallback_Int() {
+                    @Override
+                    public void onSuccess(int i) {
+                        oDevice.setLKU(i);
+                        mPrinter.printDevice(oDevice);
+                    }
+
+                    @Override
+                    public void onFailure() {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+
     }
 
     private void printLabel() {

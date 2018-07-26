@@ -52,4 +52,9 @@
     <string name="destination">Destination</string>
     <string name="station">Station</string>
 
+    // Printer
+    <string name="printer_head_open">Head of printer is open</string>
+    <string name="printer_paused">Printer is paused</string>
+    <string name="printer_paper_out">Printer paper is out</string>
+
 </resources>

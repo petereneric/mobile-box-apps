@@ -19,21 +19,18 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Input;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
-import com.example.ericschumacher.bouncer.Objects.Device;
-import com.example.ericschumacher.bouncer.Objects.Model;
-import com.example.ericschumacher.bouncer.Objects.Object_Choice;
-import com.example.ericschumacher.bouncer.Objects.Object_Choice_Charger;
-import com.example.ericschumacher.bouncer.Objects.Object_Choice_Manufacturer;
-import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
+import com.example.ericschumacher.bouncer.Objects.Device;
+import com.example.ericschumacher.bouncer.Objects.Model;
+import com.example.ericschumacher.bouncer.Objects.Object_Choice;
+import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
 import com.example.ericschumacher.bouncer.R;
 
 import org.json.JSONArray;
@@ -201,6 +198,50 @@ public class Utility_Network {
             iCallback.onSuccess(0);
         } else {
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/lku/connect/" + Integer.toString(o.getIdModel());
+            try {
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i("Response: ", response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                                iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_LKU));
+                            } else {
+                                iCallback.onFailure();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("VOLLEY", error.toString());
+                    }
+                }) {
+                    @Override
+                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                        String responseString = "";
+                        if (response != null && response.statusCode == 200) {
+                            responseString = new String(response.data);
+                        }
+                        return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                    }
+                };
+                queue.add(stringRequest);
+                queue.getCache().clear();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void assignLku(Device o, final Interface_VolleyCallback_Int iCallback) {
+        if (o.testMode()) {
+            iCallback.onSuccess(0);
+        } else {
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/lku/assign/" + Integer.toString(o.getIdDevice());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -1077,7 +1118,7 @@ public class Utility_Network {
     public void addDevice(Device o, final Interface_VolleyCallback_Int iCallback) {
         RequestQueue queue;
         queue = Volley.newRequestQueue(Context);
-        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/device";
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/device";
         final JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put(Constants_Extern.IMEI, o.getIMEI());
@@ -1087,6 +1128,7 @@ public class Utility_Network {
             jsonBody.put(Constants_Extern.STATION, o.getStation());
             jsonBody.put(Constants_Extern.DESTINATION, o.getDestination());
             final String requestBody = jsonBody.toString();
+            Log.i("Show me", requestBody);
             StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
@@ -1143,7 +1185,7 @@ public class Utility_Network {
     public void updateDevice(Device o, final Interface_VolleyCallback iCallback) {
         RequestQueue queue;
         queue = Volley.newRequestQueue(Context);
-        final String url = "http://www.svp-server.com/svp-gmbh/dagobert/src/routes/api.php/device";
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/device/update";
         final JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put(Constants_Extern.ID_DEVICE, o.getIdDevice());
@@ -1154,6 +1196,7 @@ public class Utility_Network {
             jsonBody.put(Constants_Extern.STATION, o.getStation());
             jsonBody.put(Constants_Extern.DESTINATION, o.getDestination());
             final String requestBody = jsonBody.toString();
+            Log.i("Show me", requestBody);
             StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
