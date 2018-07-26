@@ -22,6 +22,6 @@ public interface Interface_Manager {
     void returnCharger(Charger charger);
     void returnBattery(String name);
 
-    void returnShap(Variation_Shape shape);
+    void returnShape(Variation_Shape shape);
     void returnColor(Variation_Color color);
 }

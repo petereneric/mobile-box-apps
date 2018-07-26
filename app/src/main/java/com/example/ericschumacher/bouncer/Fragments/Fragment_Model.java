@@ -17,10 +17,8 @@ import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Re
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Model;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Choice;
 import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Model;
-import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
@@ -87,15 +85,25 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
     }
 
     public void updateUI(Model model) {
-        tvName.setText(model.getName());
+        if (model.getName() != null){
+            tvName.setText(model.getName());
+        } else {
+            tvName.setText(Constants_Intern.UNKOWN);
+        }
         if (model.getManufacturer() != null) {
             tvManufacturer.setText(model.getManufacturer().getName());
+        }else {
+            tvManufacturer.setText(Constants_Intern.UNKOWN);
         }
         if (model.getCharger() != null) {
             tvCharger.setText(model.getCharger().getName());
+        }else {
+            tvCharger.setText(Constants_Intern.UNKOWN);
         }
         if (model.getBattery() != null) {
             tvBattery.setText(model.getBattery().getName());
+        }else {
+            tvBattery.setText(Constants_Intern.UNKOWN);
         }
         tvDefaultExploitation.setText(model.getExploitationForScreen(getActivity()));
     }
@@ -154,7 +162,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
     public void requestBattery(Model model) {
         Fragment_Request_Battery fragment = new Fragment_Request_Battery();
         Bundle b = new Bundle();
-        b.putInt(Constants_Intern.SELECTION_ID_MODEL, model.getId());
+        b.putInt(Constants_Intern.SELECTION_ID_MODEL, model.getIdModel());
         fragment.setArguments(b);
         fManager.beginTransaction().replace(R.id.flFragmentRequest, fragment, Constants_Intern.FRAGMENT_REQUEST).commit();
     }
@@ -163,7 +171,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
     public void requestDefaultExploitation(Model model) {
         Fragment_Request_Exploitation f = new Fragment_Request_Exploitation();
         Bundle b = new Bundle();
-        b.putInt(Constants_Intern.SELECTION_ID_MODEL, model.getId());
+        b.putInt(Constants_Intern.SELECTION_ID_MODEL, model.getIdModel());
         f.setArguments(b);
         fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
     }

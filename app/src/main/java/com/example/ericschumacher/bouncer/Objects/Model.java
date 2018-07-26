@@ -15,7 +15,7 @@ import com.example.ericschumacher.bouncer.R;
  */
 
 public class Model implements Parcelable {
-    int Id = Constants_Intern.ID_UNKNOWN;
+    int IdModel = Constants_Intern.ID_UNKNOWN;
     String Name;
 
     Battery Battery = null;
@@ -25,11 +25,10 @@ public class Model implements Parcelable {
     int DefaultExploitation;
 
     public Model() {
-
     }
 
-    public Model(int id, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger) {
-        Id = id;
+    public Model(int idModel, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger) {
+        IdModel = idModel;
         Name = name;
         DefaultExploitation = defaultExploitation;
 
@@ -45,12 +44,12 @@ public class Model implements Parcelable {
 
     }
 
-    public int getId() {
-        return Id;
+    public int getIdModel() {
+        return IdModel;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public void setIdModel(int idModel) {
+        IdModel = idModel;
     }
 
     public String getName() {
@@ -104,7 +103,7 @@ public class Model implements Parcelable {
     public String getExploitationForScreen(Context context) {
         switch (DefaultExploitation) {
             case Constants_Intern.EXPLOITATION_NULL:
-                return context.getString(R.string.not_defined);
+                return Constants_Intern.UNKOWN;
             case Constants_Intern.EXPLOITATION_RECYCLING:
                 return context.getString(R.string.recycling);
             case Constants_Intern.EXPLOITATION_REUSE:
@@ -124,7 +123,7 @@ public class Model implements Parcelable {
     };
 
     public Model(Parcel in){
-        this.Id = in.readInt();
+        this.IdModel = in.readInt();
         this.Name = in.readString();
         this.Battery = in.readParcelable(Battery.class.getClassLoader());
         this.Charger = in.readParcelable(Charger.class.getClassLoader());
@@ -140,7 +139,7 @@ public class Model implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(this.Id);
+        parcel.writeInt(this.IdModel);
         parcel.writeString(this.Name);
         parcel.writeParcelable(Battery, i);
         parcel.writeParcelable(Charger, i);
@@ -151,7 +150,7 @@ public class Model implements Parcelable {
     @Override
     public String toString() {
         return "Object_Choice{" +
-                "id='" + Id + '\'' +
+                "IdModel='" + IdModel + '\'' +
                 ", Name='" + Name + '\'' +
                 ", Exploitation='" + DefaultExploitation + '\'' +
                 '}';

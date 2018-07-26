@@ -19,6 +19,9 @@ public class Additive implements Parcelable{
         Name = name;
     }
 
+    public Additive() {
+    }
+
     public int getId() {
         return Id;
     }

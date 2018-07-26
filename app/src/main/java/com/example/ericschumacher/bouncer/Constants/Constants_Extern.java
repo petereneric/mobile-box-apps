@@ -14,6 +14,7 @@ public class Constants_Extern {
 
     // Values
     public final static String ID_MODEL = "ID_MODEL";
+    public final static String ID_DEVICE = "ID_DEVICE";
     public final static String NAME_MODEL = "NAME_MODEL";
     public final static String ID_BATTERY = "ID_BATTERY";
     public final static String NAME_BATTERY = "NAME_BATTERY";
@@ -21,9 +22,13 @@ public class Constants_Extern {
     public final static String NAME_MANUFACTURER = "NAME_MANUFACTURER";
     public final static String ID_CHARGER = "ID_CHARGER";
     public final static String ID_COLOR = "ID_COLOR";
+    public final static String ID_SHAPE = "ID_SHAPE";
     public final static String NAME_COLOR = "NAME_COLOR";
     public final static String HEX_CODE = "HEX_CODE";
     public final static String ID_MODEL_COLOR = "ID_MODEL_COLOR";
+    public final static String ID_MODEL_COLOR_SHAPE = "ID_MODEL_COLOR_SHAPE";
+    public final static String STATION = "STATION";
+    public final static String DESTINATION = "DESTINATION";
     public final static String NAME_CHARGER = "NAME_CHARGER";
     public final static String ID = "ID";
     public final static String NAME = "NAME";

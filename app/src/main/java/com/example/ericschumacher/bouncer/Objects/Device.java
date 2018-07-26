@@ -13,6 +13,8 @@ import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Shape;
 
 public class Device extends Model implements Parcelable {
 
+    private int IdDevice;
+
     private String IMEI = Constants_Intern.IMEI_UNKNOWN;
     private int LKU = Constants_Intern.LKU_UNKNOWN;
     private int Condition = Constants_Intern.CONDITION_UNKNOWN;
@@ -24,16 +26,17 @@ public class Device extends Model implements Parcelable {
     private Variation_Shape VariationShape = null;
 
     public Device() {
-
+        super();
     }
 
     public Device (String imei) {
         IMEI = imei;
     }
 
-    public Device (int id, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger, String imei, int lku, int condition,
-                   int destination, int station, int idVariationColor, String nameColor, String hexCode, int idVariationShape, String shape) {
-        super(id, name, defaultExploitation, idManufacturer, nameManufacturer, idBattery, nameBattery, idCharger, nameCharger);
+    public Device (int idModel, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger,
+                   String imei, int lku, int condition,
+                   int destination, int station, int idVariationColor, String nameColor, String hexCode, int idVariationShape, String nameShape) {
+        super(idModel, name, defaultExploitation, idManufacturer, nameManufacturer, idBattery, nameBattery, idCharger, nameCharger);
 
         IMEI = imei;
         LKU = lku;
@@ -43,8 +46,16 @@ public class Device extends Model implements Parcelable {
         Station = station;
 
         VariationColor = new Variation_Color(idVariationColor, nameColor, hexCode);
-        VariationShape = new Variation_Shape(idVariationShape, shape);
+        VariationShape = new Variation_Shape(idVariationShape, nameShape);
 
+    }
+
+    public int getIdDevice() {
+        return IdDevice;
+    }
+
+    public void setIdDevice(int idDevice) {
+        IdDevice = idDevice;
     }
 
     public String getIMEI() {
@@ -143,7 +154,7 @@ public class Device extends Model implements Parcelable {
     @Override
     public String toString() {
         return "Object_Choice{" +
-                "id='" + Id + '\'' +
+                "IdModel='" + IdModel + '\'' +
                 ", IMEI_UNKNOWN='" + IMEI + '\'' +
                 ", Name='" + Name + '\'' +
                 ", LKU='" + LKU + '\'' +

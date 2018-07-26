@@ -95,14 +95,31 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
     }
 
     public void updateUI(Device device) {
-        tvLKU.setText(Integer.toString(device.getLKU()));
-        tvDestination.setText(Integer.toString(device.getDestination()));
-        tvStation.setText(Integer.toString(device.getStation()));
+
+        if (device.getLKU() > Constants_Intern.INT_UNKNOWN) {
+            tvLKU.setText(Integer.toString(device.getLKU()));
+        } else {
+            tvLKU.setText(Constants_Intern.UNKOWN);
+        }
         if (device.getVariationColor() != null) {
             tvColor.setText(device.getVariationColor().getName());
+        } else {
+            tvColor.setText(Constants_Intern.UNKOWN);
         }
-        if (device.getVariationShape()!= null) {
+        if (device.getVariationShape() != null) {
             tvShape.setText(device.getVariationShape().getName());
+        } else {
+            tvShape.setText(Constants_Intern.UNKOWN);
+        }
+        if (device.getDestination() > Constants_Intern.INT_UNKNOWN) {
+            tvDestination.setText(Integer.toString(device.getDestination()));
+        } else {
+            tvDestination.setText(Constants_Intern.UNKOWN);
+        }
+        if (device.getStation() > Constants_Intern.INT_UNKNOWN) {
+            tvStation.setText(Integer.toString(device.getStation()));
+        } else {
+            tvStation.setText(Constants_Intern.UNKOWN);
         }
         ((Fragment_Model)fManager.findFragmentByTag(FRAGMENT_MODEL)).updateUI(device);
     }
@@ -130,7 +147,7 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
 
     @Override
     public void requestLKU() {
-        if (iManager.getDevice().getId() > 0) {
+        if (iManager.getDevice().getIdModel() > 0) {
             uNetwork.connectWithLku(iManager.getDevice(), new Interface_VolleyCallback_Int() {
                 @Override
                 public void onSuccess(int i) {

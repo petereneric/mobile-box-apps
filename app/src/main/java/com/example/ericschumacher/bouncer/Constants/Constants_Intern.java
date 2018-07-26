@@ -25,6 +25,9 @@ public class Constants_Intern {
 
     public final static String IMEI_UNKNOWN = "IMEI_UNKNOWN";
 
+    public final static int INT_UNKNOWN = 0;
+    public final static String UNKOWN = "UNKNOWN";
+
     // Condition & Shape
     public final static int CONDITION_BROKEN = 0;
     public final static int CONDITION_OK = 1;

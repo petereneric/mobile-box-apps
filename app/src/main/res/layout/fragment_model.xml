@@ -64,11 +64,11 @@
             android:id="@+id/trDefaultExploitation">
 
             <TextView
-                android:id="@+id/tvDefaultExploitation"
                 style="@style/tv_tableRow"
                 android:text="@string/default_exploitation"/>
 
             <TextView
+                android:id="@+id/tvDefaultExploitation"
                 style="@style/tv_tableRow"
                 android:text="@string/recycling" />
         </TableRow>

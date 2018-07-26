@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Shape;
 import com.example.ericschumacher.bouncer.R;
 
@@ -56,16 +55,16 @@ public class Fragment_Request_Shape extends Fragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvAcceptable:
-                iManager.returnShap(new Variation_Shape(Constants_Intern.SHAPE_ACCEPTABLE, getString(R.string.shape_acceptable)));
+                iManager.returnShape(new Variation_Shape(Constants_Intern.SHAPE_ACCEPTABLE, getString(R.string.shape_acceptable)));
                 break;
             case R.id.tvGood:
-                iManager.returnShap(new Variation_Shape(Constants_Intern.SHAPE_GOOD, getString(R.string.shape_acceptable)));
+                iManager.returnShape(new Variation_Shape(Constants_Intern.SHAPE_GOOD, getString(R.string.shape_acceptable)));
                 break;
             case R.id.tvVeryGood:
-                iManager.returnShap(new Variation_Shape(Constants_Intern.SHAPE_VERY_GOOD, getString(R.string.shape_acceptable)));
+                iManager.returnShape(new Variation_Shape(Constants_Intern.SHAPE_VERY_GOOD, getString(R.string.shape_acceptable)));
                 break;
             case R.id.tvCherry:
-                iManager.returnShap(new Variation_Shape(Constants_Intern.SHAPE_CHERRY, getString(R.string.shape_acceptable)));
+                iManager.returnShape(new Variation_Shape(Constants_Intern.SHAPE_CHERRY, getString(R.string.shape_acceptable)));
                 break;
         }
     }
