@@ -83,7 +83,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
         // Utilities
         uNetwork = new Utility_Network(this);
-        //mPrinter = new ManagerPrinter(this);
+        mPrinter = new ManagerPrinter(this);
 
 
         // Objects
@@ -105,7 +105,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     protected void onResume() {
         super.onResume();
         iDevice = (Interface_Device) fManager.findFragmentByTag(FRAGMENT_DEVICE);
-        //mPrinter.connect();
+        mPrinter.connect();
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     @Override
     protected void onPause() {
         super.onPause();
-        //mPrinter.disconnect();
+        mPrinter.disconnect();
     }
 
 
@@ -250,6 +250,8 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     @Override
     public void saveDevice() {
         //mPrinter.printDevice(oDevice);
+        //oDevice.setDestination(2);
+        //oDevice.setStation(3);
         uNetwork.addDevice(oDevice, new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
@@ -260,8 +262,9 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
                     public void onSuccess(int i) {
                         oDevice.setLKU(i);
                         Toast.makeText(Activity_Bouncer.this, "LKU: "+Integer.toString(i), Toast.LENGTH_LONG).show();
-                        //mPrinter.printDevice(oDevice);
+                        mPrinter.printDevice(oDevice);
                         reset();
+
                     }
 
                     @Override

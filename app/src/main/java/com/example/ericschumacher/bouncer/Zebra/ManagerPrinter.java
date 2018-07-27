@@ -49,7 +49,8 @@ public class ManagerPrinter {
     }
 
     private byte[] getDeviceLabel(Device device) {
-        String label = "\u0010CT~~CD,~CC^~CT~\n" +
+        /*
+        String labelTest = "\u0010CT~~CD,~CC^~CT~\n" +
                 "^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR6,6~SD15^JUS^LRN^CI0^XZ\n" +
                 "^XA\n" +
                 "^MMT\n" +
@@ -58,15 +59,43 @@ public class ManagerPrinter {
                 "^LS0\n" +
                 "^FT392,47^A0I,28,28^FH\\^FD"+device.getIdModel()+"^FS\n" +
                 "^FT256,46^A0I,28,28^FH\\^FD-^FS\n" +
-                "^FT220,50^A0I,28,16^FH\\^FD"+device.getVariationColor().getId()+"^FS\n" +
+                "^FT220,50^A0I,28,16^FH\\^FD"+"FARBE"+"^FS\n" +
                 "^FT135,47^A0I,28,19^FH\\^FD-^FS\n" +
-                "^FT113,49^A0I,28,24^FH\\^FD"+device.getVariationShape().getId()+"^FS\n" +
+                "^FT113,49^A0I,28,24^FH\\^FD"+"ZUSTAND"+"^FS\n" +
                 "^FT160,15^A0I,25,26^FH\\^FD"+device.getName()+"^FS\n" +
                 "^FT189,11^A0I,28,28^FH\\^FD:^FS\n" +
                 "^FT389,16^A0I,21,28^FH\\^FD"+device.getManufacturer().getName()+"^FS\n" +
                 "^FT269,163^A0I,28,28^FH\\^FD"+device.getLKU()+"^FS\n" +
                 "^BY4,3,40^FT384,114^BCI,,Y,N\n" +
                 "^FD>:"+device.getIdDevice()+"^FS\n" +
+                "^PQ1,0,1,Y^XZ";
+
+                */
+
+        String label = "\u0010CT~~CD,~CC^~CT~\n" +
+                "^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR6,6~SD15^JUS^LRN^CI0^XZ\n" +
+                "^XA\n" +
+                "^MMT\n" +
+                "^PW448\n" +
+                "^LL0406\n" +
+                "^LS0\n" +
+                "^FO32,64^GFA,00512,00512,00008,:Z64:\n" +
+                "eJxjYBheQB6IBUC4AUofYGCYAKIdWCB8BSiteMxiIkiNkorOJBBfRUUETKct0QGLu7C4THBgYBBqUsuZBKTlGQ+bgMSHGwAAbUQPDQ==:EF28\n" +
+                "^FO136,146^GB165,49,4^FS\n" +
+                "^FO37,30^GB107,34,4^FS\n" +
+                "^BY2,3,62^FT157,96^BCN,,N,N\n" +
+                "^FD>:"+device.getIdDevice()+"^FS\n" +
+                "^FT94,53^A0N,20,19^FH\\^FD"+device.getLKU()+"^FS\n" +
+                "^FT314,125^A0N,23,21^FH\\^FD"+device.getName()+"^FS\n" +
+                "^FT187,124^A0N,23,19^FH\\^FD"+device.getManufacturer().getName()+"^FS\n" +
+                "^FT345,183^A0N,23,16^FH\\^FD"+device.getIdDevice()+"^FS\n" +
+                "^FT37,136^A0N,20,19^FH\\^FD"+device.getVariationColor().getName()+"^FS\n" +
+                "^FT37,161^A0N,17,16^FH\\^FD"+device.getVariationShape().getName()+"^FS\n" +
+                "^FO33,108^GB92,0,2^FS\n" +
+                "^FT146,181^A0N,28,28^FH\\^FD"+"LKU Lagerung"+"^FS\n" +
+                "^FT43,52^A0N,20,19^FH\\^FDLKU:^FS\n" +
+                "^FO312,134^GE93,64,4^FS\n" +
+                "^FT354,159^A0N,17,14^FH\\^FDID^FS\n" +
                 "^PQ1,0,1,Y^XZ";
         return label.getBytes();
     }
