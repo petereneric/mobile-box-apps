@@ -27,7 +27,7 @@ public class Constants_Extern {
     public final static String HEX_CODE = "HEX_CODE";
     public final static String ID_MODEL_COLOR = "ID_MODEL_COLOR";
     public final static String ID_MODEL_COLOR_SHAPE = "ID_MODEL_COLOR_SHAPE";
-    public final static String STATION = "STATION";
+    public final static String ID_STATION = "ID_STATION";
     public final static String DESTINATION = "DESTINATION";
     public final static String NAME_CHARGER = "NAME_CHARGER";
     public final static String ID = "ID";
@@ -39,6 +39,7 @@ public class Constants_Extern {
     public final static String ID_LKU = "ID_LKU";
     public final static String STATUS = "STATUS";
     public final static String NOTES = "NOTES";
+    public final static String DEVICES = "DEVICES";
 
     // Details
     public final static String TAC_KNOWN = "TAC_KNOWN";

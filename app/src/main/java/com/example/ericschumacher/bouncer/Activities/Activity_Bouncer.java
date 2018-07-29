@@ -32,6 +32,7 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_In
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
+import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
 import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Shape;
 import com.example.ericschumacher.bouncer.Objects.Device;
@@ -70,6 +71,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     // Printer
     ManagerPrinter mPrinter;
+    boolean usePrinter = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +85,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
         // Utilities
         uNetwork = new Utility_Network(this);
-        mPrinter = new ManagerPrinter(this);
+        if (usePrinter) mPrinter = new ManagerPrinter(this);
 
 
         // Objects
@@ -105,7 +107,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     protected void onResume() {
         super.onResume();
         iDevice = (Interface_Device) fManager.findFragmentByTag(FRAGMENT_DEVICE);
-        mPrinter.connect();
+        if (usePrinter) mPrinter.connect();
     }
 
     @Override
@@ -117,7 +119,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     @Override
     protected void onPause() {
         super.onPause();
-        mPrinter.disconnect();
+        if (usePrinter) mPrinter.disconnect();
     }
 
 
@@ -250,8 +252,8 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     @Override
     public void saveDevice() {
         //mPrinter.printDevice(oDevice);
-        //oDevice.setDestination(2);
-        //oDevice.setStation(3);
+        oDevice.setDestination(2);
+        oDevice.setStation(new Station(Constants_Intern.STATION_LKU_STOCKING));
         uNetwork.addDevice(oDevice, new Interface_VolleyCallback_Int() {
             @Override
             public void onSuccess(int i) {
@@ -262,9 +264,8 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
                     public void onSuccess(int i) {
                         oDevice.setLKU(i);
                         Toast.makeText(Activity_Bouncer.this, "LKU: "+Integer.toString(i), Toast.LENGTH_LONG).show();
-                        mPrinter.printDevice(oDevice);
+                        if (usePrinter) mPrinter.printDevice(oDevice);
                         reset();
-
                     }
 
                     @Override
@@ -387,7 +388,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
                 builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        uNetwork.addBattery(oDevice, new Interface_VolleyCallback_Int() {
+                        uNetwork.addBattery(name, oDevice, new Interface_VolleyCallback_Int() {
                             @Override
                             public void onSuccess(int i) {
                                 oDevice.setBattery(new Battery(i, name));

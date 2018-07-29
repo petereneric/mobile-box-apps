@@ -1,4 +1,4 @@
-package com.example.ericschumacher.bouncer.Adapter;
+package com.example.ericschumacher.bouncer.Adapter.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;

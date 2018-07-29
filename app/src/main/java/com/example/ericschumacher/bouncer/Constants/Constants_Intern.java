@@ -15,6 +15,7 @@ public class Constants_Intern {
     public final static int EXPLOITATION_REUSE = 2;
     public final static String OBJECT_MODEL = "OBJECT_MODEL";
     public final static String OBJECT_DEVICE = "OBJECT_DEVICE";
+    public final static String LKU = "LKU";
     public final static int ID_UNKNOWN = 0;
 
     public final static int DESTINATION_UNKNOWN = 0;
@@ -44,4 +45,12 @@ public class Constants_Intern {
 
     // Fragment
     public final static String FRAGMENT_REQUEST = "FRAGMENT_REQUEST";
+
+    // Stations
+    public final static String STATION_SCREENING = "STATION_SCREENING";
+    public final static String STATION_RECYCLING = "STATION_RECYCLING";
+    public final static String STATION_PRESORT = "STATION_PRESORT";
+    public final static String STATION_EXCESS_STOCKING = "STATION_EXCESS_STOCKING";
+    public final static String STATION_LKU_STOCKING = "STATION_LKU_STOCKING";
+    public final static String STATION_REUSE = "STATION_REUSE";
 }

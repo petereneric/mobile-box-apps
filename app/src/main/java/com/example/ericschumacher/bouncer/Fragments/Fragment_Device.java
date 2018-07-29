@@ -116,8 +116,8 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
         } else {
             tvDestination.setText(Constants_Intern.UNKOWN);
         }
-        if (device.getStation() > Constants_Intern.INT_UNKNOWN) {
-            tvStation.setText(Integer.toString(device.getStation()));
+        if (device.getStation().getId() > Constants_Intern.INT_UNKNOWN) {
+            tvStation.setText(Integer.toString(device.getStation().getId()));
         } else {
             tvStation.setText(Constants_Intern.UNKOWN);
         }

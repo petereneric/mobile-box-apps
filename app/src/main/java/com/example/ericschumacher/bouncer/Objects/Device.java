@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
 import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Shape;
 
@@ -20,7 +21,7 @@ public class Device extends Model implements Parcelable {
     private int Condition = Constants_Intern.CONDITION_UNKNOWN;
 
     private int Destination = Constants_Intern.DESTINATION_UNKNOWN;
-    private int Station = Constants_Intern.CURRENT_STATION_UNKNOWN;
+    private Station Station = null;
 
     private Variation_Color VariationColor = null;
     private Variation_Shape VariationShape = null;
@@ -35,7 +36,7 @@ public class Device extends Model implements Parcelable {
 
     public Device (int idModel, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger,
                    String imei, int lku, int condition,
-                   int destination, int station, int idVariationColor, String nameColor, String hexCode, int idVariationShape, String nameShape) {
+                   int destination, int id_station, String name_station, int idVariationColor, String nameColor, String hexCode, int idVariationShape, String nameShape) {
         super(idModel, name, defaultExploitation, idManufacturer, nameManufacturer, idBattery, nameBattery, idCharger, nameCharger);
 
         IMEI = imei;
@@ -43,7 +44,7 @@ public class Device extends Model implements Parcelable {
         Condition = condition;
 
         Destination = destination;
-        Station = station;
+        Station = new Station(id_station, name_station);
 
         VariationColor = new Variation_Color(idVariationColor, nameColor, hexCode);
         VariationShape = new Variation_Shape(idVariationShape, nameShape);
@@ -98,11 +99,11 @@ public class Device extends Model implements Parcelable {
         Destination = destination;
     }
 
-    public int getStation() {
+    public Station getStation() {
         return Station;
     }
 
-    public void setStation(int station) {
+    public void setStation(Station station) {
         Station = station;
     }
 
