@@ -7,14 +7,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Devices;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Device;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Devices;
 
-public class Adapter_Pager_LKUs extends FragmentPagerAdapter {
+import java.util.ArrayList;
 
-    private int[] Lkus;
+public class Adapter_Pager_ModelColorShape extends FragmentPagerAdapter {
 
-    public Adapter_Pager_LKUs(int[] lkus, FragmentManager fm) {
+    private ArrayList<Integer> Lkus;
+
+    public Adapter_Pager_ModelColorShape(ArrayList<Integer> lkus, FragmentManager fm) {
         super(fm);
         Lkus = lkus;
     }
@@ -23,13 +23,13 @@ public class Adapter_Pager_LKUs extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         Fragment_Devices fDevices = new Fragment_Devices();
         Bundle bundle = new Bundle();
-        bundle.putInt(Constants_Intern.LKU, Lkus[position]);
+        bundle.putInt(Constants_Intern.ID_MODEL_COLOR_SHAPE, Lkus.get(position));
         fDevices.setArguments(bundle);
         return fDevices;
     }
 
     @Override
     public int getCount() {
-        return Lkus.length;
+        return Lkus.size();
     }
 }

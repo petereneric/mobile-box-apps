@@ -13,8 +13,12 @@ import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Devices;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Devices;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_LKU;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Devices;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
+
+import java.util.ArrayList;
 
 public class Fragment_Devices extends Fragment implements Interface_Devices {
 
@@ -28,6 +32,9 @@ public class Fragment_Devices extends Fragment implements Interface_Devices {
     // Adapter
     Adapter_Devices aDevices;
 
+    // Utility
+    Utility_Network uNetwork;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -37,10 +44,24 @@ public class Fragment_Devices extends Fragment implements Interface_Devices {
         // Interface
         iLKU = (Interface_LKU)getActivity();
 
+        // Utility
+        uNetwork = new Utility_Network(getActivity());
+
         // RecyclerView
         rvDevices.setLayoutManager(new LinearLayoutManager(getActivity()));
-        aDevices = new Adapter_Devices(getActivity(), iLKU.getDevices(getArguments().getInt(Constants_Intern.LKU)), this);
-        rvDevices.setAdapter(aDevices);
+        uNetwork.getDevicesByIdModelColorShape(getArguments().getInt(Constants_Intern.ID_MODEL_COLOR_SHAPE), new Interface_VolleyCallback_ArrayList_Devices() {
+            @Override
+            public void onSuccess(ArrayList<Device> devices) {
+                aDevices = new Adapter_Devices(getActivity(), devices, Fragment_Devices.this);
+                rvDevices.setAdapter(aDevices);
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+
 
         return Layout;
     }

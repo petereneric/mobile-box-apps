@@ -15,11 +15,11 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
-import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Device;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Devices;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_ModelColorShapeIds;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Input;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
@@ -1251,8 +1251,55 @@ public class Utility_Network {
         }
     }
 
-    public void getJuicerDevicesByCharger(Charger charger, final Interface_VolleyCallback_ArrayList_Device iCallback) {
+    public void getModelColorShapeIdsForJuicerByCharger(Charger charger, final Interface_VolleyCallback_ArrayList_ModelColorShapeIds iCallback) {
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/devices/juicer" + Integer.toString(charger.getId());
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("Response: ", response);
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                            JSONArray jsonArray = jsonObject.getJSONArray(Constants_Extern.DEVICES);
+                            ArrayList<Integer> modelColorShapeIds = new ArrayList<>();
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                Log.i("Looping", "Array");
+                                JSONObject json = jsonArray.getJSONObject(i);
+                                modelColorShapeIds.add(json.getInt(Constants_Extern.ID_MODEL_COLOR_SHAPE));
+                            }
+                            iCallback.onSuccess(modelColorShapeIds);
+                        } else {
+                            iCallback.onFailure();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    if (response != null && response.statusCode == 200) {
+                        responseString = new String(response.data);
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+            queue.add(stringRequest);
+            queue.getCache().clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getDevicesByIdModelColorShape(int idModelColorShape, final Interface_VolleyCallback_ArrayList_Devices iCallback) {
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/devices/model/color/shape" + Integer.toString(idModelColorShape);
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -1266,7 +1313,7 @@ public class Utility_Network {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 Log.i("Looping", "Array");
                                 JSONObject json = jsonArray.getJSONObject(i);
-                                //devices.add(new Device();
+                                //devices.add(json.getInt(Constants_Extern.ID_MODEL_COLOR_SHAPE));
                             }
                             iCallback.onSuccess(devices);
                         } else {
