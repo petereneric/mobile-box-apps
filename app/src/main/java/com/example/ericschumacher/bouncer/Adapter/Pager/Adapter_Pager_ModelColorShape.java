@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Devices;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Fragment_Devices;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ public class Adapter_Pager_ModelColorShape extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Fragment_Devices fDevices = new Fragment_Devices();
+        Fragment_Fragment_Devices fDevices = new Fragment_Fragment_Devices();
         Bundle bundle = new Bundle();
         bundle.putInt(Constants_Intern.ID_MODEL_COLOR_SHAPE, Lkus.get(position));
         fDevices.setArguments(bundle);

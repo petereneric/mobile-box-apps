@@ -21,7 +21,7 @@ public class Device extends Model implements Parcelable {
     private int Condition = Constants_Intern.CONDITION_UNKNOWN;
 
     private int Destination = Constants_Intern.DESTINATION_UNKNOWN;
-    private Station Station = null;
+    private Station Station = new Station(0, "null");
 
     private Variation_Color VariationColor = null;
     private Variation_Shape VariationShape = null;
@@ -34,11 +34,12 @@ public class Device extends Model implements Parcelable {
         IMEI = imei;
     }
 
-    public Device (int idModel, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger,
+    public Device (int idModel, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger, int idDevice,
                    String imei, int lku, int condition,
                    int destination, int id_station, String name_station, int idVariationColor, String nameColor, String hexCode, int idVariationShape, String nameShape) {
         super(idModel, name, defaultExploitation, idManufacturer, nameManufacturer, idBattery, nameBattery, idCharger, nameCharger);
 
+        IdDevice = idDevice;
         IMEI = imei;
         LKU = lku;
         Condition = condition;

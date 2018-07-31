@@ -16,6 +16,16 @@ public class Station extends Additive {
         if (name.equals(Constants_Intern.STATION_EXCESS_STOCKING)) Id = 5;
         if (name.equals(Constants_Intern.STATION_LKU_STOCKING)) Id = 6;
         if (name.equals(Constants_Intern.STATION_REUSE)) Id = 7;
-
     }
+
+    public static int getId (String name) {
+        if (name.equals(Constants_Intern.STATION_SCREENING)) return 2;
+        if (name.equals(Constants_Intern.STATION_RECYCLING)) return 3;
+        if (name.equals(Constants_Intern.STATION_PRESORT)) return 4;
+        if (name.equals(Constants_Intern.STATION_EXCESS_STOCKING)) return 5;
+        if (name.equals(Constants_Intern.STATION_LKU_STOCKING)) return  6;
+        if (name.equals(Constants_Intern.STATION_REUSE)) return 7;
+        return 0;
+    }
+
 }

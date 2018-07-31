@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Devices;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_LKU;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Devices;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 
@@ -19,9 +18,9 @@ public class Adapter_Devices extends RecyclerView.Adapter<Adapter_Devices.ViewHo
 
     Context Context;
     ArrayList<Device> Devices;
-    Interface_Devices iDevices;
+    Interface_Fragment_Devices iDevices;
 
-    public Adapter_Devices(Context context, ArrayList<Device> devices, Interface_Devices iDevices) {
+    public Adapter_Devices(Context context, ArrayList<Device> devices, Interface_Fragment_Devices iDevices) {
         Context = context;
         Devices = devices;
         this.iDevices = iDevices;
@@ -32,7 +31,7 @@ public class Adapter_Devices extends RecyclerView.Adapter<Adapter_Devices.ViewHo
         ViewHolder_Device vhDevice = new ViewHolder_Device(LayoutInflater.from(Context).inflate(R.layout.item_device, parent, false), new Interface_Device() {
             @Override
             public void remove(int position) {
-                iDevices.remove(Devices.get(position));
+                iDevices.delete(Devices.get(position));
             }
         });
         return vhDevice;

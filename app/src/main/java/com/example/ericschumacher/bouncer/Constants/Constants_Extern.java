@@ -4,7 +4,7 @@ package com.example.ericschumacher.bouncer.Constants;
  * Created by Eric Schumacher on 02.06.2018.
  */
 
-public class Constants_Extern {
+public class Constants_Extern extends Constants_Intern {
 
     // General
     public final static String RESULT = "RESULT";
@@ -40,6 +40,12 @@ public class Constants_Extern {
     public final static String STATUS = "STATUS";
     public final static String NOTES = "NOTES";
     public final static String DEVICES = "DEVICES";
+    public final static String EXPLOITATION_DEFAULT = "EXPLOITATION_DEFAULT";
+    public final static String ID_VARIATION_COLOR = "ID_VARIATION_COLOR";
+    public final static String ID_VARIATION_SHAPE = "ID_VARIATION_SHAPE";
+    public final static String NAME_SHAPE = "NAME_SHAPE";
+    public final static String NAME_STATION = "NAME_STATION";
+    public final static String DEVICE = "DEVICE";
 
     // Details
     public final static String TAC_KNOWN = "TAC_KNOWN";

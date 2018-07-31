@@ -71,7 +71,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     // Printer
     ManagerPrinter mPrinter;
-    boolean usePrinter = false;
+    boolean usePrinter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,6 +190,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     private void checkExploitation() {
         if (oDevice.getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
+            oDevice.setDestination(Constants_Intern.EXPLOITATION_RECYCLING);
             showResult();
         }
         if (oDevice.getExploitation() == Constants_Intern.EXPLOITATION_REUSE){
@@ -198,21 +199,6 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         if (oDevice.getExploitation() == Constants_Intern.EXPLOITATION_NULL) {
             iDevice.requestDefaultExploitation(oDevice);
         }
-        /*
-        uNetwork.getLKU(oDevice, new Interface_VolleyCallback_Int() {
-            @Override
-            public void onSuccess(int i) {
-                Log.i("checkExploitation()", "Found LKU");
-                oDevice.setLKU(i);
-                oDevice.setExploitation(Constants_Intern.EXPLOITATION_REUSE);
-                updateUI();
-                checkDetails();
-            }
-            @Override
-            public void onFailure() {
-            }
-        });
-        */
     }
 
     // Fragments
@@ -238,6 +224,9 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         oDevice.setCondition(condition);
         if (oDevice.getCondition() == Constants_Intern.CONDITION_BROKEN) {
             oDevice.setExploitation(Constants_Intern.EXPLOITATION_RECYCLING);
+            oDevice.setDestination(Constants_Intern.EXPLOITATION_RECYCLING);
+        } else {
+            oDevice.setDestination(Constants_Intern.EXPLOITATION_REUSE);
         }
         checkConditionAndShape();
     }
@@ -251,36 +240,38 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     @Override
     public void saveDevice() {
-        //mPrinter.printDevice(oDevice);
-        oDevice.setDestination(2);
-        oDevice.setStation(new Station(Constants_Intern.STATION_LKU_STOCKING));
-        uNetwork.addDevice(oDevice, new Interface_VolleyCallback_Int() {
-            @Override
-            public void onSuccess(int i) {
-                oDevice.setIdDevice(i);
-                Log.i("Yeqh", "got that");
-                uNetwork.assignLku(oDevice, new Interface_VolleyCallback_Int() {
-                    @Override
-                    public void onSuccess(int i) {
-                        oDevice.setLKU(i);
-                        Toast.makeText(Activity_Bouncer.this, "LKU: "+Integer.toString(i), Toast.LENGTH_LONG).show();
-                        if (usePrinter) mPrinter.printDevice(oDevice);
-                        reset();
-                    }
+        if (oDevice.getDestination() == Constants_Intern.EXPLOITATION_RECYCLING) {
+            reset();
+        } else {
+            oDevice.setDestination(2);
+            oDevice.setStation(new Station(Constants_Intern.STATION_LKU_STOCKING));
+            uNetwork.addDevice(oDevice, new Interface_VolleyCallback_Int() {
+                @Override
+                public void onSuccess(int i) {
+                    oDevice.setIdDevice(i);
+                    Log.i("Yeqh", "got that");
+                    uNetwork.assignLku(oDevice, new Interface_VolleyCallback_Int() {
+                        @Override
+                        public void onSuccess(int i) {
+                            oDevice.setLKU(i);
+                            Toast.makeText(Activity_Bouncer.this, "LKU: "+Integer.toString(i), Toast.LENGTH_LONG).show();
+                            if (usePrinter) mPrinter.printDevice(oDevice);
+                            reset();
+                        }
 
-                    @Override
-                    public void onFailure() {
+                        @Override
+                        public void onFailure() {
 
-                    }
-                });
-            }
+                        }
+                    });
+                }
 
-            @Override
-            public void onFailure() {
+                @Override
+                public void onFailure() {
 
-            }
-        });
-
+                }
+            });
+        }
     }
 
     private void printLabel() {
@@ -497,9 +488,11 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         oDevice.setExploitation(exploitation);
         updateUI();
         if (oDevice.getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
+            oDevice.setDestination(Constants_Intern.EXPLOITATION_RECYCLING);
             uNetwork.exploitRecycling(oDevice);
             showResult();
         } else {
+            oDevice.setDestination(Constants_Intern.EXPLOITATION_REUSE);
             uNetwork.exploitReuse(oDevice);
             checkDetails();
         }
