@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -39,9 +38,8 @@ import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
-import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 
-public class Activity_Bouncer extends AppCompatActivity implements Interface_Selection, View.OnClickListener, Interface_Manager {
+public class Activity_Bouncer extends Activity_Manager_Device implements Interface_Selection, View.OnClickListener, Interface_Manager {
 
     // Utilities
     Utility_Network uNetwork;
@@ -60,7 +58,6 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     // Fragments
     FragmentManager fManager;
-    private final static String FRAGMENT_DEVICE = "FRAGMENT_DEVICE";
 
     // Interfaces
     Interface_Device iDevice;
@@ -69,9 +66,6 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     private int cRecycling = 0;
     private int cReuse = 0;
 
-    // Printer
-    ManagerPrinter mPrinter;
-    boolean usePrinter = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,11 +76,6 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
             cRecycling = savedInstanceState.getInt(Constants_Intern.COUNTER_RECYCLING, 0);
             cReuse = savedInstanceState.getInt(Constants_Intern.COUNTER_REUSE, 0);
         }
-
-        // Utilities
-        uNetwork = new Utility_Network(this);
-        if (usePrinter) mPrinter = new ManagerPrinter(this);
-
 
         // Objects
         oDevice = new Device();
@@ -99,15 +88,14 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
         setLayout();
         handleInteraction();
         Fragment fDevice = new Fragment_Device();
-        fManager.beginTransaction().replace(R.id.flFragmentDevice, fDevice, FRAGMENT_DEVICE).commit();
+        fManager.beginTransaction().replace(R.id.flFragmentDevice, fDevice, Constants_Intern.FRAGMENT_DEVICE).commit();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        iDevice = (Interface_Device) fManager.findFragmentByTag(FRAGMENT_DEVICE);
-        if (usePrinter) mPrinter.connect();
+        iDevice = (Interface_Device) fManager.findFragmentByTag(Constants_Intern.FRAGMENT_DEVICE);
     }
 
     @Override
@@ -119,7 +107,6 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
     @Override
     protected void onPause() {
         super.onPause();
-        if (usePrinter) mPrinter.disconnect();
     }
 
 
@@ -472,7 +459,7 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     @Override
     public void updateUI() {
-        ((Fragment_Device) fManager.findFragmentByTag(FRAGMENT_DEVICE)).updateUI(oDevice);
+        ((Fragment_Device) fManager.findFragmentByTag(Constants_Intern.FRAGMENT_DEVICE)).updateUI(oDevice);
         tvCounterRecycling.setText(Integer.toString(cRecycling));
         tvCounterReuse.setText(Integer.toString(cReuse));
         tvCounterTotal.setText(Integer.toString(cRecycling + cReuse));
@@ -485,15 +472,10 @@ public class Activity_Bouncer extends AppCompatActivity implements Interface_Sel
 
     @Override
     public void returnDefaultExploitation(int exploitation) {
-        oDevice.setExploitation(exploitation);
-        updateUI();
+        super.returnDefaultExploitation(exploitation);
         if (oDevice.getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
-            oDevice.setDestination(Constants_Intern.EXPLOITATION_RECYCLING);
-            uNetwork.exploitRecycling(oDevice);
             showResult();
         } else {
-            oDevice.setDestination(Constants_Intern.EXPLOITATION_REUSE);
-            uNetwork.exploitReuse(oDevice);
             checkDetails();
         }
     }

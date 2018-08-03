@@ -8,6 +8,7 @@
     <string name="activity_name_bouncer">Bouncer</string>
     <string name="activity_name_manager">Manager</string>
     <string name="activity_name_juicer">Juicer</string>
+    <string name="activity_name_lku_manager">LKU Manager</string>
 
     // Activity_Selection
     <string name="not_defined">Not defined</string>
@@ -51,6 +52,9 @@
     <string name="default_exploitation">Default Exploitation</string>
     <string name="destination">Destination</string>
     <string name="station">Station</string>
+
+    // Activity - Manager_LKU
+    <string name="is_lku_filled">Is LKU space full? </string>
 
     // Printer
     <string name="printer_head_open">Head of printer is open</string>

@@ -1,8 +1,5 @@
 package com.example.ericschumacher.bouncer.Interfaces;
 
-import android.graphics.Color;
-
-import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
@@ -21,6 +18,7 @@ public interface Interface_Manager {
     void returnManufacturer(Manufacturer manufacturer);
     void returnCharger(Charger charger);
     void returnBattery(String name);
+    void onClickLKU();
 
     void returnShape(Variation_Shape shape);
     void returnColor(Variation_Color color);

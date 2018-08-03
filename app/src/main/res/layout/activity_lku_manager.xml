@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_scan"
+        android:id="@+id/lScan"/>
+
+    <FrameLayout
+        android:id="@+id/flFragmentDevice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lScan"/>
+
+    <FrameLayout
+        android:id="@+id/flFragmentRequest"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/flFragmentDevice">
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/etScan"
+        android:layout_width="1px"
+        android:layout_height="1px"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

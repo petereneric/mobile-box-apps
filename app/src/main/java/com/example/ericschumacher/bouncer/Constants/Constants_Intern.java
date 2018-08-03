@@ -46,6 +46,7 @@ public class Constants_Intern {
 
     // Fragment
     public final static String FRAGMENT_REQUEST = "FRAGMENT_REQUEST";
+    public final static String FRAGMENT_DEVICE = "FRAGMENT_DEVICE";
 
     // Stations
     public final static String STATION_SCREENING = "STATION_SCREENING";
@@ -54,4 +55,13 @@ public class Constants_Intern {
     public final static String STATION_EXCESS_STOCKING = "STATION_EXCESS_STOCKING";
     public final static String STATION_LKU_STOCKING = "STATION_LKU_STOCKING";
     public final static String STATION_REUSE = "STATION_REUSE";
+    public final static String STATION_UNKNOWN = "STATION_UNKNOWN";
+
+    public final static int STATION_SCREENING_INT = 2;
+    public final static int STATION_RECYCLING_INT = 3;
+    public final static int STATION_PRESORT_INT = 4;
+    public final static int STATION_EXCESS_STOCKING_INT = 5;
+    public final static int STATION_LKU_STOCKING_INT = 6;
+    public final static int STATION_REUSE_INT = 7;
+    public final static int STATION_UNKNOWN_INT = 8;
 }

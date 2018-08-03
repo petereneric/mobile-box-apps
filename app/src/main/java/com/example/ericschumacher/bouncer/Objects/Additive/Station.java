@@ -8,6 +8,16 @@ public class Station extends Additive {
         super(id, name);
     }
 
+    public Station (int id) {
+        Id = id;
+        if (id == Constants_Intern.STATION_SCREENING_INT) Name = Constants_Intern.STATION_SCREENING;
+        if (id == Constants_Intern.STATION_RECYCLING_INT) Name = Constants_Intern.STATION_RECYCLING;
+        if (id == Constants_Intern.STATION_PRESORT_INT) Name = Constants_Intern.STATION_PRESORT;
+        if (id == Constants_Intern.STATION_EXCESS_STOCKING_INT) Name = Constants_Intern.STATION_EXCESS_STOCKING;
+        if (id == Constants_Intern.STATION_LKU_STOCKING_INT) Name = Constants_Intern.STATION_LKU_STOCKING;
+        if (id == Constants_Intern.STATION_UNKNOWN_INT) Name = Constants_Intern.STATION_UNKNOWN;
+    }
+
     public Station (String name) {
         Name = name;
         if (name.equals(Constants_Intern.STATION_SCREENING)) Id = 2;
@@ -15,7 +25,7 @@ public class Station extends Additive {
         if (name.equals(Constants_Intern.STATION_PRESORT)) Id = 4;
         if (name.equals(Constants_Intern.STATION_EXCESS_STOCKING)) Id = 5;
         if (name.equals(Constants_Intern.STATION_LKU_STOCKING)) Id = 6;
-        if (name.equals(Constants_Intern.STATION_REUSE)) Id = 7;
+        if (name.equals(Constants_Intern.STATION_UNKNOWN)) Id = 8;
     }
 
     public static int getId (String name) {
@@ -25,6 +35,7 @@ public class Station extends Additive {
         if (name.equals(Constants_Intern.STATION_EXCESS_STOCKING)) return 5;
         if (name.equals(Constants_Intern.STATION_LKU_STOCKING)) return  6;
         if (name.equals(Constants_Intern.STATION_REUSE)) return 7;
+        if (name.equals(Constants_Intern.STATION_UNKNOWN)) return 8;
         return 0;
     }
 

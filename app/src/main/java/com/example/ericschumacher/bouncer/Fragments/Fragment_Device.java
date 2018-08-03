@@ -9,16 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.ericschumacher.bouncer.Activities.Activity_Bouncer;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Device;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Model;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
@@ -128,7 +125,8 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.trLKU:
-                requestLKU();
+                iManager.onClickLKU();
+                //requestLKU();
                 break;
             case R.id.trDestination:
                 requestDestination();
@@ -147,7 +145,7 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
 
     @Override
     public void requestLKU() {
-        Toast.makeText(getActivity(), "Noch checken", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getActivity(), "Noch checken", Toast.LENGTH_LONG).show();
         /*
         if (iManager.getDevice().getIdModel() > 0) {
             uNetwork.connectWithLku(iManager.getDevice(), new Interface_VolleyCallback_Int() {

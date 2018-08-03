@@ -6,35 +6,14 @@
     android:layout_height="match_parent"
     android:layout_margin="16dp">
 
-    <RelativeLayout
-        android:id="@+id/rlScan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:id="@+id/ivClearScan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_clear_24dp"
-            android:layout_alignParentRight="true"
-            android:padding="8dp"/>
-
-        <EditText
-            style="@style/et_default"
-            android:id="@+id/etScan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_scan"
-            android:layout_toLeftOf="@id/ivClearScan"/>
-
-    </RelativeLayout>
+    <include layout="@layout/layout_scan"
+        android:id="@+id/lScan"/>
 
     <FrameLayout
         android:id="@+id/flFragmentDevice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rlScan"/>
+        android:layout_below="@id/lScan" />
 
     <TableLayout
         android:id="@+id/tlResult"
@@ -42,8 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <TableRow
-            android:id="@+id/trCounterRecycling">
+        <TableRow android:id="@+id/trCounterRecycling">
 
             <TextView
                 style="@style/tv_tableRow"
@@ -55,8 +33,7 @@
                 android:text="94" />
         </TableRow>
 
-        <TableRow
-            android:id="@+id/trCounterReuse">
+        <TableRow android:id="@+id/trCounterReuse">
 
             <TextView
                 style="@style/tv_tableRow"
@@ -68,8 +45,7 @@
                 android:text="30" />
         </TableRow>
 
-        <TableRow
-            android:id="@+id/trCounterTotal">
+        <TableRow android:id="@+id/trCounterTotal">
 
             <TextView
                 style="@style/tv_tableRow"
@@ -87,16 +63,15 @@
         android:id="@+id/flFragmentRequest"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/flFragmentDevice"
-        android:layout_above="@id/tlResult">
-    </FrameLayout>
+        android:layout_above="@id/tlResult"
+        android:layout_below="@id/flFragmentDevice"></FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="16dp"
         android:clickable="true"
         android:tint="@color/color_white"
