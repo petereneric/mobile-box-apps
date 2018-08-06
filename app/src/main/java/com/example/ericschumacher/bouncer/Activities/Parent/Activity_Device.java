@@ -1,4 +1,4 @@
-package com.example.ericschumacher.bouncer.Activities;
+package com.example.ericschumacher.bouncer.Activities.Parent;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,14 +15,14 @@ import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 
-public class Activity_Manager_Device extends AppCompatActivity implements Interface_Manager {
+public class Activity_Device extends AppCompatActivity implements Interface_Manager {
 
     Device oDevice;
     Utility_Network uNetwork;
 
     // Printer
     boolean usePrinter = true;
-    ManagerPrinter mPrinter;
+    public ManagerPrinter mPrinter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

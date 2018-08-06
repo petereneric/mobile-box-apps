@@ -11,16 +11,16 @@ import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.example.ericschumacher.bouncer.Activities.Parent.Activity_Device;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Device;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
-public class Activity_LKU_Manager extends Activity_Manager_Device implements Interface_Manager {
+public class Activity_LKU_Manager extends Activity_Device {
 
     // Layout
     EditText etScan;
@@ -64,11 +64,16 @@ public class Activity_LKU_Manager extends Activity_Manager_Device implements Int
                                     oDevice.setLKU(i);
                                     updateUI();
                                     uNetwork.updateDevice(oDevice);
+                                    mPrinter.printDevice(oDevice);
                                 }
 
                                 @Override
                                 public void onFailure() {
-
+                                    // Platz scheint voll
+                                    oDevice.getStation().setId(Constants_Intern.STATION_EXCESS_STOCKING_INT);
+                                    updateUI();
+                                    uNetwork.updateDevice(oDevice);
+                                    mPrinter.printDevice(oDevice);
                                 }
                             });
 

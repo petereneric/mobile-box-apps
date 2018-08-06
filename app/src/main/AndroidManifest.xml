@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.Activity_Menu">
+        <activity android:name=".Activities.Menu.Activity_Menu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".Activities.Activity_Bouncer"></activity>
         <activity android:name=".Activities.Activity_Juicer"></activity>
-        <activity android:name=".Activities.Activity_Manager"></activity>
+        <activity android:name=".Activities.Activity_LKU_Manager"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
