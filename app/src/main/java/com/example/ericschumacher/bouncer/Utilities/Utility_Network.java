@@ -1291,8 +1291,8 @@ public class Utility_Network {
         }
     }
 
-    public void getModelColorShapeIdsForJuicerByCharger(Charger charger, final Interface_VolleyCallback_ArrayList_ModelColorShapeIds iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/devices/juicer" + "/" + Integer.toString(charger.getId());
+    public void getDevicesForJuicer(Charger charger, final Interface_VolleyCallback_ArrayList_ModelColorShapeIds iCallback) {
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/ids/juicer" + "/" + Integer.toString(charger.getId());
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -1339,7 +1339,7 @@ public class Utility_Network {
     }
 
     public void getDevicesByIdModelColorShape(int idModelColorShape, int idStation, final Interface_VolleyCallback_ArrayList_Devices iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/devices/model/color/shape" + "/" + Integer.toString(idModelColorShape) + "/" + Integer.toString(idStation);
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/devices/juicer" + "/" + Integer.toString(idModelColorShape);
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
