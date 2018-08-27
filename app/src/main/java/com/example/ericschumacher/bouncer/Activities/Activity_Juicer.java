@@ -110,7 +110,7 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
     @Override
     public void onChoice(int position) {
         Charger charger = (Charger)lAdditive.get(position);
-        uNetwork.getModelColorShapeIdsForJuicerByCharger(charger, new Interface_VolleyCallback_ArrayList_ModelColorShapeIds() {
+        uNetwork.getDevicesForJuicer(charger, new Interface_VolleyCallback_ArrayList_ModelColorShapeIds() {
             @Override
             public void onSuccess(ArrayList<Integer> modelColorShapeIds) {
                 aLKUs = new Adapter_Pager_ModelColorShape(modelColorShapeIds, getSupportFragmentManager());
