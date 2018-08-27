@@ -64,6 +64,7 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
             public void onSuccess(ArrayList<Additive> list) {
                 lAdditive = list;
                 Adapter_Request_Choice adapter = new Adapter_Request_Choice(Activity_Juicer.this, lAdditive, Activity_Juicer.this);
+                rvCharger.setAdapter(adapter);
             }
         });
 

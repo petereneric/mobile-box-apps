@@ -900,6 +900,49 @@ public class Utility_Network {
         }
     }
 
+    public void getChargers(final Interface_VolleyCallback_ArrayList_Additive iCallback) {
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/all/";
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("Response, Charger: ", response);
+                    try {
+                        ArrayList<Additive> chargers = new ArrayList<>();
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            Log.i("Looping", "Array");
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            chargers.add(new Charger(jsonObject.getInt(Constants_Extern.ID), jsonObject.getString(Constants_Extern.NAME)));
+                        }
+                        iCallback.onSuccess(chargers);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    if (response != null && response.statusCode == 200) {
+                        responseString = new String(response.data);
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+            queue.add(stringRequest);
+            queue.getCache().clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     /*
