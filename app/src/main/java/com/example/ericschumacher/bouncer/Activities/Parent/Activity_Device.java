@@ -21,7 +21,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
     Utility_Network uNetwork;
 
     // Printer
-    boolean usePrinter = true;
+    public boolean usePrinter = false;
     public ManagerPrinter mPrinter;
 
     @Override
