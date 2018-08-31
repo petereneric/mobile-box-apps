@@ -11,6 +11,7 @@ import com.example.ericschumacher.bouncer.Objects.Rpd.Warenbewegung;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -19,15 +20,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class Service_Rpd extends IntentService{
-
+#
+    // Database Connection
     private java.sql.Connection cWawi = null;
-    Statement stat = null;
-    ResultSet rs = null;
-    private final String url = "jdbc:sqlserver://62.108.36.198:49745;databaseName=eazybusiness;user=sa;password=D353§$tgftg";
-    private Statement stErp;
     private Connection cErp;
+    PreparedStatement stWawi = null;
+    PreparedStatement stErp;
+    ResultSet rs = null;
+    String sql;
+
+    // Variables
     int verkauft;
-    int anzeige = 0;
+
     ArrayList<Object_Model_Color_Shape> lModelColorShape = new ArrayList<Object_Model_Color_Shape>();
     ArrayList<Warenbewegung> Warenbuchung = new ArrayList<Warenbewegung>();
     ArrayList<Kindartikel> Kinder = new ArrayList<Kindartikel>();
@@ -39,41 +43,55 @@ public class Service_Rpd extends IntentService{
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+
+        SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+
         try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            // Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver");
+            connectToDB();
 
-            cWawi = java.sql.DriverManager.getConnection(url);
-            if (cWawi != null)
-                System.out.println("Connection Successful!!");
-            try {
-                Class.forName("com.mysql.jdbc.Driver");
-                cErp = DriverManager.getConnection("jdbc:mysql://217.160.167.191:3306/svp_erp", "eric", "kuerbiskopf1");
-                stErp = cErp.createStatement();
-            } catch (Exception ex) {
-                System.out.println("Error: " + ex);
-            }
-
-            String bsql = "Update Lagerliste set Relevant=0";
-            String sql = "SELECT Model_Color_Shape.id, Model_Color_Shape.id_shape, Model_Color.id_color, Model.name FROM Model_Color_Shape\n" +
-                    "    INNER JOIN Model_Color ON Model_Color_Shape.id_model_color = Model_Color.id INNER JOIN Model ON Model_Color.id_model = Model.id";
-            stat = cWawi.createStatement();
-            //stErp.execute(bsql);
-            rs = stErp.executeQuery(sql);
+            // Get all id_model_color_id's
+            sql = "SELECT Model_Color_Shape.id, Model_Color_Shape.id_shape, Model_Color.id_color, Model.name FROM Model_Color_Shape INNER JOIN Model_Color ON Model_Color_Shape.id_model_color = Model_Color.id INNER JOIN Model ON Model_Color.id_model = Model.id";
+            stErp = cErp.prepareStatement(sql);
+            rs = stErp.executeQuery();
 
             while (rs.next()) {
-                lModelColorShape.add(new Object_Model_Color_Shape(rs.getInt("id"), rs.getInt("id_color"), rs.getInt("id_shape"), rs.getString("name")));
+                int id_model_color_shape = rs.getInt("id");
+                int id_color = rs.getInt("id_color");
+                String id_shape = rs.getString("id_shape");
+                String name = rs.getString("name");
+                //lModelColorShape.add(new Object_Model_Color_Shape(rs.getInt("id"), , rs.getInt("id_shape"), rs.getString("name")));
+                sql = "SELECT dbo.tArtikel.kArtikel FROM dbo.tArtikel JOIN dbo.tArtikelAttribut \n" +
+                        "ON dbo.tArtikel.kArtikel = dbo.tArtikelAttribut.kArtikel JOIN dbo.tArtikelAttributSprache ON dbo.tArtikelAttribut.kArtikelAttribut = dbo.tArtikelAttributSprache.kArtikelAttribut \n" +
+                        "WHERE dbo.tArtikelAttribut.kAttribut = 191 AND dbo.tArtikelAttributSprache.cWertVarchar = '"+ id_shape +"' INTERSECT\n" +
+                        "SELECT dbo.tArtikel.kArtikel FROM dbo.tArtikel JOIN dbo.tArtikelAttribut  ON dbo.tArtikel.kArtikel = dbo.tArtikelAttribut.kArtikel JOIN dbo.tArtikelAttributSprache\n" +
+                        "ON dbo.tArtikelAttribut.kArtikelAttribut = dbo.tArtikelAttributSprache.kArtikelAttribut \n" +
+                        "WHERE dbo.tArtikelAttribut.kAttribut = 194 AND dbo.tArtikelAttributSprache.cWertVarchar = '"+ name +"' INTERSECT\n" +
+                        "SELECT dbo.tArtikel.kArtikel FROM dbo.tArtikel JOIN dbo.tArtikelAttribut  ON dbo.tArtikel.kArtikel = dbo.tArtikelAttribut.kArtikel JOIN dbo.tArtikelAttributSprache\n" +
+                        "ON dbo.tArtikelAttribut.kArtikelAttribut = dbo.tArtikelAttributSprache.kArtikelAttribut \n" +
+                        "WHERE dbo.tArtikelAttribut.kAttribut = 193 AND dbo.tArtikelAttributSprache.nWertInt = "+Integer.toString(id_color);
             }
+
+            stWawi = cWawi.prepareStatement(sql);
+            rs = stWawi.executeQuery();
+
+            int kArtikel = 0;
+            while (rs.next()) {
+                kArtikel = rs.getInt("kArtikel");
+            }
+
+            sql = "Select fvkNetto FROM dbo.tArtikel WHERE dbo.kArtikel = "+Integer.toString(kArtikel);
+            stWawi = cWawi.prepareStatement(sql);
+            rs = stWawi.executeQuery();
 
             for (int j = 0; j < lModelColorShape.size(); j++) {
                 // System.out.println(skuliste.get(j));
                 double Vaterprio = 0;
-                SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+
 
                 String sql1 = "Select kArtikel, fvkNetto from dbo.tArtikel where cArtNr like('" + skuliste.get(j)
                         + "-00_') AND cArtNr Not like('" + skuliste.get(j) + "-001')";
-                stat = cWawi.createStatement();
-                rs = stat.executeQuery(sql1);
+                stWawi = cWawi.createStatement();
+                rs = stWawi.executeQuery(sql1);
                 Kinder.clear();
                 while (rs.next()) {
                     String key = rs.getString("kArtikel");
@@ -90,8 +108,8 @@ public class Service_Rpd extends IntentService{
 
                     String sql2 = "Select h.kArtikel, fAnzahl, dGebucht, cKommentar, fLagerBestandGesamt, fLagerbestand, fVerfuegbar from  dbo.tArtikelHistory h  Where kArtikel="
                             + Kinder.get(x).getKey();
-                    stat = cWawi.createStatement();
-                    rs = stat.executeQuery(sql2);
+                    stWawi = cWawi.createStatement();
+                    rs = stWawi.executeQuery(sql2);
 
                     while (rs.next()) {
                         int anzahl = rs.getInt("fAnzahl");
@@ -212,8 +230,31 @@ public class Service_Rpd extends IntentService{
         return i;
     }
 
+    private void connectToDB() throws ClassNotFoundException, SQLException {
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver"); // Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver");
+
+        cWawi = java.sql.DriverManager.getConnection("jdbc:sqlserver://62.108.36.198:49745;databaseName=eazybusiness;user=sa;password=D353§$tgftg");
+        if (cWawi != null)
+            System.out.println("Connection Successful!!");
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            cErp = DriverManager.getConnection("jdbc:mysql://217.160.167.191:3306/svp_erp", "eric", "kuerbiskopf1");
+            stErp = cErp.createStatement();
+        } catch (Exception ex) {
+            System.out.println("Error: " + ex);
+        }
+    }
+
     double round2(double d) {
         d = Math.floor(d * 100) / 100;
         return d;
+    }
+
+    private int getDaysOfSale() {
+
+    }
+
+    private double getRpd(int sold, int daysOfSale, double price) {
+        return sold*price/daysOfSale;
     }
 }
