@@ -900,6 +900,49 @@ public class Utility_Network {
         }
     }
 
+    public void getChargers(final Interface_VolleyCallback_ArrayList_Additive iCallback) {
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/all/";
+        try {
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    Log.i("Response, Charger: ", response);
+                    try {
+                        ArrayList<Additive> chargers = new ArrayList<>();
+                        JSONArray jsonArray = new JSONArray(response);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            Log.i("Looping", "Array");
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            chargers.add(new Charger(jsonObject.getInt(Constants_Extern.ID), jsonObject.getString(Constants_Extern.NAME)));
+                        }
+                        iCallback.onSuccess(chargers);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    Log.e("VOLLEY", error.toString());
+                }
+            }) {
+                @Override
+                protected Response<String> parseNetworkResponse(NetworkResponse response) {
+                    String responseString = "";
+                    if (response != null && response.statusCode == 200) {
+                        responseString = new String(response.data);
+                    }
+                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
+                }
+            };
+            queue.add(stringRequest);
+            queue.getCache().clear();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     /*
@@ -1232,13 +1275,13 @@ public class Utility_Network {
         }
     }
 
-    public void updateDevice(Device o) {
+    public void updateDevice(Device o, final Interface_VolleyCallback iCallback) {
         RequestQueue queue;
         queue = Volley.newRequestQueue(Context);
         final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/device/update";
         final JSONObject jsonBody = new JSONObject();
         try {
-            final String requestBody = convertDeviceToJson(o).toString();
+            final String requestBody = convertJsonToDevice(o).toString();
             Log.i("Show me", requestBody);
             StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
                 @Override
@@ -1247,6 +1290,7 @@ public class Utility_Network {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                            iCallback.onSuccess();
                         } else {
                         }
                     } catch (Exception e) {
@@ -1353,7 +1397,7 @@ public class Utility_Network {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 Log.i("Looping", "Array");
                                 JSONObject json = jsonArray.getJSONObject(i);
-                                devices.add(convertDeviceToJson(json));
+                                devices.add(convertJsonToDevice(json));
                             }
                             iCallback.onSuccess(devices);
                         } else {
@@ -1396,7 +1440,7 @@ public class Utility_Network {
                         JSONObject jsonObject = new JSONObject(response);
                         if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
                             JSONObject json = jsonObject.getJSONObject(Constants_Extern.DEVICE);
-                            iCallback.onSuccess(convertDeviceToJson(json));
+                            iCallback.onSuccess(convertJsonToDevice(json));
                         } else {
                             iCallback.onFailure();
                         }
@@ -1466,7 +1510,7 @@ public class Utility_Network {
         }
     }
 
-    private Device convertDeviceToJson(JSONObject json) {
+    private Device convertJsonToDevice(JSONObject json) {
         Device device = new Device();
         try {
             if (!json.isNull(Constants_Extern.ID_MODEL))
@@ -1491,11 +1535,11 @@ public class Utility_Network {
                 device.setCondition(json.getInt(Constants_Extern.CONDITION));
             if (!json.isNull(Constants_Extern.DESTINATION))
                 device.setDestination(json.getInt(Constants_Extern.DESTINATION));
-            if (!json.isNull(Constants_Extern.ID_STATION) && !json.isNull(Constants_Extern.NAME_STATION))
-                device.setStation(new Station(json.getInt(Constants_Extern.ID_STATION), json.getString(Constants_Extern.NAME_STATION)));
-            if (!json.isNull(Constants_Extern.ID_VARIATION_COLOR) && !json.isNull(Constants_Extern.NAME_COLOR) && !json.isNull(Constants_Extern.HEX_CODE))
+            if (!json.isNull(Constants_Extern.ID_STATION))
+                device.setStation(new Station(json.getInt(Constants_Extern.ID_STATION)));
+            if (!json.isNull(Constants_Extern.ID_COLOR) && !json.isNull(Constants_Extern.NAME_COLOR) && !json.isNull(Constants_Extern.HEX_CODE))
                 device.setVariationColor
-                        (new Variation_Color(json.getInt(Constants_Extern.ID_VARIATION_COLOR), json.getString(Constants_Extern.NAME_COLOR), json.getString(Constants_Extern.HEX_CODE)));
+                        (new Variation_Color(json.getInt(Constants_Extern.ID_COLOR), json.getString(Constants_Extern.NAME_COLOR), json.getString(Constants_Extern.HEX_CODE)));
             if (!json.isNull(Constants_Extern.ID_SHAPE) && !json.isNull(Constants_Extern.NAME_SHAPE))
                 device.setVariationShape(new Variation_Shape(json.getInt(Constants_Extern.ID_SHAPE), json.getString(Constants_Extern.NAME_SHAPE)));
         } catch (JSONException e) {
@@ -1504,7 +1548,7 @@ public class Utility_Network {
         return device;
     }
 
-    private JSONObject convertDeviceToJson(Device device) {
+    private JSONObject convertJsonToDevice(Device device) {
         JSONObject json = new JSONObject();
 
         try {

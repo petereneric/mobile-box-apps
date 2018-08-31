@@ -1,6 +1,7 @@
 package com.example.ericschumacher.bouncer.Fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,7 +22,7 @@ import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
 import java.util.ArrayList;
 
-public class Fragment_Fragment_Devices extends Fragment implements Interface_Fragment_Devices {
+public class Fragment_Devices extends Fragment implements Interface_Fragment_Devices {
 
     // Layout
     View Layout;
@@ -60,15 +61,28 @@ public class Fragment_Fragment_Devices extends Fragment implements Interface_Fra
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                int idDevice = Integer.parseInt(charSequence.toString());
-                boolean isPartOfList = false;
-                for (Device device : lDevices) {
-                    if (device.getIdDevice() == idDevice) {
-                        isPartOfList = true;
-                        break;
+                if (!charSequence.toString().equals("")) {
+                    int idDevice = Integer.parseInt(charSequence.toString());
+                    Device device = null;
+                    boolean isPartOfList = false;
+                    for (Device d : lDevices) {
+                        if (d.getIdDevice() == idDevice) {
+                            isPartOfList = true;
+                            device = d;
+                            iDevices.scan(device, isPartOfList);
+                            break;
+                        }
                     }
+                    etScan.setText("");
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            iDevices.getDevices(getArguments(), Fragment_Devices.this);
+                        }
+                    }, 500);
+
                 }
-                iDevices.scan(idDevice, isPartOfList);
             }
 
             @Override
@@ -98,8 +112,11 @@ public class Fragment_Fragment_Devices extends Fragment implements Interface_Fra
 
     @Override
     public void setDevices(ArrayList<Device> devices) {
+        if (devices.size() == 0) {
+            onDestroy();
+        }
         lDevices = devices;
-        aDevices = new Adapter_Devices(getActivity(), lDevices, Fragment_Fragment_Devices.this);
+        aDevices = new Adapter_Devices(getActivity(), lDevices, Fragment_Devices.this);
         rvDevices.setAdapter(aDevices);
     }
 }

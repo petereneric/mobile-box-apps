@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.example.ericschumacher.bouncer.Objects.Device;
 
 public interface Interface_Devices {
-    void scan(int idDevice, boolean isPartOfList);
+    void scan(Device device, boolean isPartOfList);
     void delete(Device device);
     void getDevices(Bundle data, Interface_Fragment_Devices iCallback);
 }

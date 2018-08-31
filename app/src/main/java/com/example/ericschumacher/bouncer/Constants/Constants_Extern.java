@@ -46,6 +46,7 @@ public class Constants_Extern extends Constants_Intern {
     public final static String NAME_SHAPE = "NAME_SHAPE";
     public final static String NAME_STATION = "NAME_STATION";
     public final static String DEVICE = "DEVICE";
+    public final static String DPS = "DPS";
 
     // Details
     public final static String TAC_KNOWN = "TAC_KNOWN";

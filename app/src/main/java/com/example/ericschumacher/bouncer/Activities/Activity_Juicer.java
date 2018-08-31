@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Request_Choice;
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager_ModelColorShape;
@@ -15,6 +16,7 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_Devices;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Devices;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Juicer;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Request_Choice;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Devices;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_ModelColorShapeIds;
@@ -54,6 +56,8 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setLayout();
+
         uNetwork = new Utility_Network(this);
         fManager = getSupportFragmentManager();
 
@@ -64,10 +68,11 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
             public void onSuccess(ArrayList<Additive> list) {
                 lAdditive = list;
                 Adapter_Request_Choice adapter = new Adapter_Request_Choice(Activity_Juicer.this, lAdditive, Activity_Juicer.this);
+                rvCharger.setAdapter(adapter);
             }
         });
 
-        setLayout();
+
     }
 
     private void setLayout() {
@@ -82,13 +87,35 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
     }
 
     @Override
-    public void scan(int idDevice, boolean isPartOfList) {
+    public void scan(Device device, boolean isPartOfList) {
+        device.getStation().setId(Constants_Intern.STATION_UNKNOWN_INT);
+        uNetwork.updateDevice(device, new Interface_VolleyCallback() {
+            @Override
+            public void onSuccess() {
 
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+        Toast.makeText(this, getString(R.string.device_written_off), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void delete(Device device) {
-        device.getStation().setId(Constants_Intern.CURRENT_STATION_UNKNOWN);
+        uNetwork.deleteDevice(device, new Interface_VolleyCallback() {
+            @Override
+            public void onSuccess() {
+
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 
     @Override
@@ -114,7 +141,6 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
             public void onSuccess(ArrayList<Integer> modelColorShapeIds) {
                 aLKUs = new Adapter_Pager_ModelColorShape(modelColorShapeIds, getSupportFragmentManager());
             }
-
             @Override
             public void onFailure() {
 

@@ -56,6 +56,12 @@
     // Activity - Manager_LKU
     <string name="is_lku_filled">Is LKU space full? </string>
 
+    // Activity - LKU Manager
+    <string name="device_written_off">Device is written off</string>
+    <string name="device_stored_lku">Device is stored in LKU Stock - Wait for lable..</string>
+    <string name="device_stored_excess_stock">Device is stored in Excess Stock - Wait for lable..</string>
+    <string name="device_deleted">Device deleted</string>
+
     // Printer
     <string name="printer_head_open">Head of printer is open</string>
     <string name="printer_paused">Printer is paused</string>

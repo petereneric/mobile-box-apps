@@ -47,6 +47,11 @@ public class Adapter_Devices extends RecyclerView.Adapter<Adapter_Devices.ViewHo
         return Devices.size();
     }
 
+    public void updateList(ArrayList<Device> devices) {
+        Devices = devices;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder_Device extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvDeviceId;

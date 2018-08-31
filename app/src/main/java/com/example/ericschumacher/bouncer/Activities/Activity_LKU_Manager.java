@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Activities.Parent.Activity_Device;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
@@ -57,13 +58,17 @@ public class Activity_LKU_Manager extends Activity_Device {
                         if (oDevice.getStation().getId() == Constants_Intern.STATION_LKU_STOCKING_INT) {
                             oDevice.getStation().setId(Constants_Intern.STATION_UNKNOWN_INT);
                             uNetwork.updateDevice(oDevice);
+                            Toast.makeText(Activity_LKU_Manager.this, getString(R.string.device_written_off), Toast.LENGTH_LONG).show();
+                            mPrinter.printDevice(oDevice);
                         } else {
                             uNetwork.assignLku(oDevice, new Interface_VolleyCallback_Int() {
                                 @Override
                                 public void onSuccess(int i) {
                                     oDevice.setLKU(i);
+                                    oDevice.getStation().setId(Constants_Intern.STATION_LKU_STOCKING_INT);
                                     updateUI();
                                     uNetwork.updateDevice(oDevice);
+                                    Toast.makeText(Activity_LKU_Manager.this, getString(R.string.device_stored_lku), Toast.LENGTH_LONG).show();
                                     mPrinter.printDevice(oDevice);
                                 }
 
@@ -73,6 +78,7 @@ public class Activity_LKU_Manager extends Activity_Device {
                                     oDevice.getStation().setId(Constants_Intern.STATION_EXCESS_STOCKING_INT);
                                     updateUI();
                                     uNetwork.updateDevice(oDevice);
+                                    Toast.makeText(Activity_LKU_Manager.this, getString(R.string.device_stored_excess_stock), Toast.LENGTH_LONG).show();
                                     mPrinter.printDevice(oDevice);
                                 }
                             });

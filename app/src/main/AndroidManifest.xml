@@ -20,6 +20,7 @@
         <activity android:name=".Activities.Activity_Bouncer"></activity>
         <activity android:name=".Activities.Activity_Juicer"></activity>
         <activity android:name=".Activities.Activity_LKU_Manager"></activity>
+        <service android:name=".Services.Service_Rpd"></service>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
