@@ -13,6 +13,7 @@ import com.example.ericschumacher.bouncer.Activities.Activity_LKU_Manager;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Menu;
 import com.example.ericschumacher.bouncer.Objects.Object_Menu;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Services.Service_Rpd;
 import com.zebra.sdk.comm.Connection;
 import com.zebra.sdk.printer.ZebraPrinter;
 
@@ -35,6 +36,9 @@ public class Activity_Menu extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Start Service
+        startService(new Intent(this, Service_Rpd.class));
 
         // RecyclerView
         setLayout();

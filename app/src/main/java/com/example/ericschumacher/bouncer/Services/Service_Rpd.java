@@ -32,9 +32,7 @@ public class Service_Rpd extends IntentService{
     // Variables
     int verkauft;
 
-    ArrayList<Object_Model_Color_Shape> lModelColorShape = new ArrayList<Object_Model_Color_Shape>();
     ArrayList<Warenbewegung> Warenbuchung = new ArrayList<Warenbewegung>();
-    ArrayList<Kindartikel> Kinder = new ArrayList<Kindartikel>();
     DecimalFormat dff = new DecimalFormat("####0.00");
 
     public Service_Rpd() {
@@ -168,7 +166,7 @@ public class Service_Rpd extends IntentService{
 
         cWawi = java.sql.DriverManager.getConnection("jdbc:sqlserver://62.108.36.198:49745;databaseName=eazybusiness;user=sa;password=D353§$tgftg");
         if (cWawi != null)
-            System.out.println("Connection Successful!!");
+            System.out.println("Connection to WAWI Successful!!");
         try {
             Class.forName("com.mysql.jdbc.Driver");
             cErp = DriverManager.getConnection("jdbc:mysql://217.160.167.191:3306/svp_erp", "eric", "kuerbiskopf1");
