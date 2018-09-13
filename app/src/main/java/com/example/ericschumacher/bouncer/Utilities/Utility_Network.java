@@ -484,7 +484,9 @@ public class Utility_Network {
                             if (!jsonObject.isNull(Constants_Extern.ID_MANUFACTURER)) {
                                 device.setManufacturer(new Manufacturer(jsonObject.getInt(Constants_Extern.ID_MANUFACTURER), jsonObject.getString(Constants_Extern.NAME_MANUFACTURER)));
                             }
-                            device.setExploitation(jsonObject.getInt(Constants_Extern.EXPLOITATION));
+                            if (!jsonObject.isNull(Constants_Extern.EXPLOITATION)) {
+                                device.setExploitation(jsonObject.getInt(Constants_Extern.EXPLOITATION));
+                            }
                             iCallback.onSuccess();
                         } else {
                             iCallback.onFailure();

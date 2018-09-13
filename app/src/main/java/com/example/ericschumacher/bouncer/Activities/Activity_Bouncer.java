@@ -38,15 +38,10 @@ import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Shape;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.R;
-import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
 public class Activity_Bouncer extends Activity_Device implements Interface_Selection, View.OnClickListener, Interface_Manager {
 
-    // Utilities
-    Utility_Network uNetwork;
-
     // Objects
-    Device oDevice;
 
     // Layout -
     EditText etScan;
@@ -110,13 +105,20 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
         super.onPause();
     }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Bundle outState = new Bundle();
+        outState.putInt(Constants_Intern.COUNTER_RECYCLING, cRecycling);
+        outState.putInt(Constants_Intern.COUNTER_REUSE, cReuse);
+        onSaveInstanceState(outState);
+    }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putInt(Constants_Intern.COUNTER_RECYCLING, cRecycling);
         outState.putInt(Constants_Intern.COUNTER_REUSE, cReuse);
+        super.onSaveInstanceState(outState);
     }
 
     // Layout
@@ -228,7 +230,8 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
 
     @Override
     public void saveDevice() {
-        if (oDevice.getDestination() == Constants_Intern.EXPLOITATION_RECYCLING) {
+        if (oDevice.getDestination() == Constants_Intern.EXPLOITATION_RECYCLING || true) {
+
             reset();
         } else {
             oDevice.setDestination(2);
@@ -520,6 +523,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
+
                 totalReset();
                 break;
             case R.id.ivClearScan:

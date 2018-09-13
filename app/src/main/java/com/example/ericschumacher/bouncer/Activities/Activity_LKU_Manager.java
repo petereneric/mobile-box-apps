@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.ericschumacher.bouncer.Activities.Parent.Activity_Device;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Device;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Objects.Device;
@@ -57,7 +58,17 @@ public class Activity_LKU_Manager extends Activity_Device {
                         updateUI();
                         if (oDevice.getStation().getId() == Constants_Intern.STATION_LKU_STOCKING_INT) {
                             oDevice.getStation().setId(Constants_Intern.STATION_UNKNOWN_INT);
-                            uNetwork.updateDevice(oDevice);
+                            uNetwork.updateDevice(oDevice, new Interface_VolleyCallback() {
+                                @Override
+                                public void onSuccess() {
+
+                                }
+
+                                @Override
+                                public void onFailure() {
+
+                                }
+                            });
                             Toast.makeText(Activity_LKU_Manager.this, getString(R.string.device_written_off), Toast.LENGTH_LONG).show();
                             mPrinter.printDevice(oDevice);
                         } else {
@@ -67,7 +78,17 @@ public class Activity_LKU_Manager extends Activity_Device {
                                     oDevice.setLKU(i);
                                     oDevice.getStation().setId(Constants_Intern.STATION_LKU_STOCKING_INT);
                                     updateUI();
-                                    uNetwork.updateDevice(oDevice);
+                                    uNetwork.updateDevice(oDevice, new Interface_VolleyCallback() {
+                                        @Override
+                                        public void onSuccess() {
+
+                                        }
+
+                                        @Override
+                                        public void onFailure() {
+
+                                        }
+                                    });
                                     Toast.makeText(Activity_LKU_Manager.this, getString(R.string.device_stored_lku), Toast.LENGTH_LONG).show();
                                     mPrinter.printDevice(oDevice);
                                 }
@@ -77,7 +98,17 @@ public class Activity_LKU_Manager extends Activity_Device {
                                     // Platz scheint voll
                                     oDevice.getStation().setId(Constants_Intern.STATION_EXCESS_STOCKING_INT);
                                     updateUI();
-                                    uNetwork.updateDevice(oDevice);
+                                    uNetwork.updateDevice(oDevice, new Interface_VolleyCallback() {
+                                        @Override
+                                        public void onSuccess() {
+
+                                        }
+
+                                        @Override
+                                        public void onFailure() {
+
+                                        }
+                                    });
                                     Toast.makeText(Activity_LKU_Manager.this, getString(R.string.device_stored_excess_stock), Toast.LENGTH_LONG).show();
                                     mPrinter.printDevice(oDevice);
                                 }

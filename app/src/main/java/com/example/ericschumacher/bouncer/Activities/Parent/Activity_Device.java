@@ -17,8 +17,8 @@ import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 
 public class Activity_Device extends AppCompatActivity implements Interface_Manager {
 
-    Device oDevice;
-    Utility_Network uNetwork;
+    public Device oDevice;
+    public Utility_Network uNetwork;
 
     // Printer
     public boolean usePrinter = false;

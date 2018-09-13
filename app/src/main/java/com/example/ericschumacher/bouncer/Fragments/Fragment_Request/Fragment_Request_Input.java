@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,6 +70,9 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
         });
         rSearchResults.setAdapter(aSearchResults);
 
+        // EditText
+        etInput.setOnClickListener(this);
+
         return Layout;
     }
 
@@ -85,7 +89,13 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-
+        switch (view.getId()) {
+            case R.id.et_name:
+                Log.i("JO", "JO");
+                InputMethodManager imm = (InputMethodManager)
+                        getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 
     public void closeKeyboard() {
