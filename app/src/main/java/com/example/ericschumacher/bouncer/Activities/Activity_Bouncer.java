@@ -21,10 +21,12 @@ import android.widget.Toast;
 import com.example.ericschumacher.bouncer.Activities.Parent.Activity_Device;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Simple;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request_Condition;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Device;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Dialog;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
@@ -40,7 +42,7 @@ import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
-public class Activity_Bouncer extends Activity_Device implements Interface_Selection, View.OnClickListener, Interface_Manager {
+public class Activity_Bouncer extends Activity_Device implements Interface_Selection, View.OnClickListener, Interface_Manager, Interface_Dialog {
 
     // Utilities
     Utility_Network uNetwork;
@@ -520,6 +522,12 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.fab:
+                Fragment_Dialog_Simple f = new Fragment_Dialog_Simple();
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants_Intern.TITLE, getString(R.string.dialog_fragment_total_reset_title));
+                bundle.putInt(Constants_Intern.TYPE_FRAGMENT_DIALOG, Constants_Intern.TYPE_FRAGMENT_DIALOG_TOTAL_RESET);
+                f.setArguments(bundle);
+                f.show(getSupportFragmentManager(), "Fragment_Dialog_Total_Reset");
                 totalReset();
                 break;
             case R.id.ivClearScan:
@@ -529,4 +537,16 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     }
 
 
+    @Override
+    public void onYes(int type) {
+        switch (type) {
+            case Constants_Intern.TYPE_FRAGMENT_DIALOG_TOTAL_RESET:
+                totalReset();
+        }
+    }
+
+    @Override
+    public void onNo() {
+
+    }
 }
