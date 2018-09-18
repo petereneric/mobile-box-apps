@@ -2,6 +2,7 @@ package com.example.ericschumacher.bouncer.Adapter.List;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,10 @@ public class Adapter_Devices extends RecyclerView.Adapter<Adapter_Devices.ViewHo
     Interface_Fragment_Devices iDevices;
 
     public Adapter_Devices(Context context, ArrayList<Device> devices, Interface_Fragment_Devices iDevices) {
+        Log.i("Why", "not working"+Integer.toString(devices.size()));
         Context = context;
         Devices = devices;
+
         this.iDevices = iDevices;
     }
 
@@ -39,6 +42,7 @@ public class Adapter_Devices extends RecyclerView.Adapter<Adapter_Devices.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder_Device holder, int position) {
+        Log.i("works", "like"+Integer.toString(Devices.get(position).getIdDevice()));
         holder.tvDeviceId.setText(Devices.get(position).getIdDevice());
     }
 

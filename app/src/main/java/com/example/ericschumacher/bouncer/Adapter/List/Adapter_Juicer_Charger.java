@@ -13,15 +13,14 @@ import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.R;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Adapter_Juicer_Charger extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private ArrayList<Charger> lChargers;
-    private Listener_Adapter_Juicer_Charger iListener;
+    private Interface_Adapter_Juicer_Charger iListener;
     private Context mContext;
 
-    public Adapter_Juicer_Charger(Context context, ArrayList<Charger> chargers, Listener_Adapter_Juicer_Charger listener) {
+    public Adapter_Juicer_Charger(Context context, ArrayList<Charger> chargers, Interface_Adapter_Juicer_Charger listener) {
         mContext = context;
         lChargers = chargers;
         iListener = listener;
@@ -41,7 +40,7 @@ public class Adapter_Juicer_Charger extends RecyclerView.Adapter<RecyclerView.Vi
                     }
                 }
                 iListener.onChargerChanged(chargersUnselected);
-                notifyDataSetChanged();
+                //notifyDataSetChanged();
             }
         });
         return holder;
@@ -86,9 +85,16 @@ public class Adapter_Juicer_Charger extends RecyclerView.Adapter<RecyclerView.Vi
                     break;
             }
         }
+
+
     }
 
-    public interface Listener_Adapter_Juicer_Charger {
+    public void updateData(ArrayList<Charger> chargers) {
+        lChargers = chargers;
+        notifyDataSetChanged();
+    }
+
+    public interface Interface_Adapter_Juicer_Charger {
         public void onChargerChanged(ArrayList<Charger> chargerUnselected);
     }
 

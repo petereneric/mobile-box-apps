@@ -18,6 +18,7 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Charger;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Devices;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Input;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_ModelColorShapeIds;
@@ -43,6 +44,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by Eric Schumacher on 19.05.2018.
@@ -54,12 +56,9 @@ public class Utility_Network {
     Context Context;
     RequestQueue queue;
 
-    // Interfaces
-    Interface_Selection iSelection;
 
     public Utility_Network(Context context) {
         Context = context;
-        iSelection = (Interface_Selection) context;
         queue = Volley.newRequestQueue(Context);
     }
 
@@ -900,15 +899,15 @@ public class Utility_Network {
         }
     }
 
-    public void getChargers(final Interface_VolleyCallback_ArrayList_Additive iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/all/";
+    public void getChargers(final Interface_VolleyCallback_ArrayList_Charger iCallback) {
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/all";
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("Response, Charger: ", response);
                     try {
-                        ArrayList<Additive> chargers = new ArrayList<>();
+                        ArrayList<Charger> chargers = new ArrayList<>();
                         JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < jsonArray.length(); i++) {
                             Log.i("Looping", "Array");
@@ -1335,22 +1334,31 @@ public class Utility_Network {
         }
     }
 
-    public void getDevicesForJuicer(Charger charger, final Interface_VolleyCallback_ArrayList_ModelColorShapeIds iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/ids/juicer" + "/" + Integer.toString(charger.getId());
+    public void getDevicesForJuicer(ArrayList<Charger> chargerNotSeledted, final Interface_VolleyCallback_ArrayList_ModelColorShapeIds iCallback) {
+
+
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/ids/juicer";
         try {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            final JSONObject jsonBody = new JSONObject();
+            for (int i = 0; i<chargerNotSeledted.size(); i++) {
+                Charger charger = chargerNotSeledted.get(i);
+                jsonBody.put(Integer.toString(i), charger.getId());
+            }
+            final String requestBody = jsonBody.toString();
+            Log.i("Request: ", requestBody);
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     Log.i("Response: ", response);
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                            JSONArray jsonArray = jsonObject.getJSONArray(Constants_Extern.DEVICES);
+                            JSONArray jsonArray = jsonObject.getJSONArray(Constants_Extern.IDS);
                             ArrayList<Integer> modelColorShapeIds = new ArrayList<>();
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 Log.i("Looping", "Array");
                                 JSONObject json = jsonArray.getJSONObject(i);
-                                modelColorShapeIds.add(json.getInt(Constants_Extern.ID_MODEL_COLOR_SHAPE));
+                                modelColorShapeIds.add(json.getInt(Constants_Extern.ID));
                             }
                             iCallback.onSuccess(modelColorShapeIds);
                         } else {
@@ -1366,6 +1374,23 @@ public class Utility_Network {
                     Log.e("VOLLEY", error.toString());
                 }
             }) {
+                @Override
+                public String getBodyContentType() {
+                    return "application/json; charset=utf-8";
+                }
+
+                @Override
+                public byte[] getBody() throws AuthFailureError {
+                    try {
+                        return requestBody == null ? null : requestBody.getBytes("utf-8");
+                    } catch (UnsupportedEncodingException uee) {
+                        VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", requestBody, "utf-8");
+                        return null;
+                    } finally {
+
+                    }
+                }
+
                 @Override
                 protected Response<String> parseNetworkResponse(NetworkResponse response) {
                     String responseString = "";
@@ -1383,7 +1408,7 @@ public class Utility_Network {
     }
 
     public void getDevicesByIdModelColorShape(int idModelColorShape, int idStation, final Interface_VolleyCallback_ArrayList_Devices iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/devices/juicer" + "/" + Integer.toString(idModelColorShape);
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/devices/" + Integer.toString(idModelColorShape);
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override

@@ -80,6 +80,8 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
             cReuse = savedInstanceState.getInt(Constants_Intern.COUNTER_REUSE, 0);
         }
 
+        uNetwork = new Utility_Network(this);
+
         // Objects
         oDevice = new Device();
 
