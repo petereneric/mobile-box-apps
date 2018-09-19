@@ -67,4 +67,7 @@
     <string name="printer_paused">Printer is paused</string>
     <string name="printer_paper_out">Printer paper is out</string>
 
+    // Dialog
+    <string name="dialog_fragment_total_reset_title">Are you sure that you want to reset the counter?</string>
+
 </resources>

@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
+import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Juicer_Charger;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Request_Choice;
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager_ModelColorShape;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
@@ -18,6 +19,7 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_Juicer;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Request_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Charger;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Devices;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_ModelColorShapeIds;
 import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
@@ -33,11 +35,11 @@ import java.util.ArrayList;
  * Created by Eric Schumacher on 08.07.2018.
  */
 
-public class Activity_Juicer extends AppCompatActivity implements Interface_Juicer, Interface_Devices, Interface_Request_Choice {
+public class Activity_Juicer extends AppCompatActivity implements Interface_Juicer, Interface_Devices, Interface_Request_Choice, Adapter_Juicer_Charger.Interface_Adapter_Juicer_Charger {
 
     // Data
     ArrayList<Device> Devices;
-    ArrayList<Additive> lAdditive = new ArrayList<>();
+    ArrayList<Charger> lCharger = new ArrayList<>();
 
     // Layout
     ViewPager ViewPager;
@@ -45,6 +47,7 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
 
     // Adapter
     Adapter_Pager_ModelColorShape aLKUs;
+    Adapter_Juicer_Charger aCharger;
 
     // Utilities
     Utility_Network uNetwork;
@@ -63,16 +66,25 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
 
         // RecyclerView
         rvCharger.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        uNetwork.getChargers(new Interface_VolleyCallback_ArrayList_Additive() {
+        aCharger = new Adapter_Juicer_Charger(Activity_Juicer.this, lCharger, Activity_Juicer.this);
+        rvCharger.setAdapter(aCharger);
+
+        ArrayList<Integer> test = new ArrayList<>();
+
+        aLKUs = new Adapter_Pager_ModelColorShape(test, getSupportFragmentManager());
+        ViewPager.setAdapter(aLKUs);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        uNetwork.getChargers(new Interface_VolleyCallback_ArrayList_Charger() {
             @Override
-            public void onSuccess(ArrayList<Additive> list) {
-                lAdditive = list;
-                Adapter_Request_Choice adapter = new Adapter_Request_Choice(Activity_Juicer.this, lAdditive, Activity_Juicer.this);
-                rvCharger.setAdapter(adapter);
+            public void onSuccess(ArrayList<Charger> list) {
+                aCharger.updateData(list);
             }
         });
-
-
     }
 
     private void setLayout() {
@@ -135,17 +147,20 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
 
     @Override
     public void onChoice(int position) {
-        Charger charger = (Charger)lAdditive.get(position);
-        uNetwork.getDevicesForJuicer(charger, new Interface_VolleyCallback_ArrayList_ModelColorShapeIds() {
+    }
+
+    @Override
+    public void onChargerChanged(ArrayList<Charger> chargerUnselected) {
+        uNetwork.getDevicesForJuicer(chargerUnselected, new Interface_VolleyCallback_ArrayList_ModelColorShapeIds() {
             @Override
             public void onSuccess(ArrayList<Integer> modelColorShapeIds) {
-                aLKUs = new Adapter_Pager_ModelColorShape(modelColorShapeIds, getSupportFragmentManager());
+                aLKUs.updateData(modelColorShapeIds);
             }
             @Override
             public void onFailure() {
-
             }
         });
+
     }
 }
 

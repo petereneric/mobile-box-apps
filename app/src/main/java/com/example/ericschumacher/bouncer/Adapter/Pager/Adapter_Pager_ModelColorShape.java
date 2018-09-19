@@ -32,4 +32,9 @@ public class Adapter_Pager_ModelColorShape extends FragmentPagerAdapter {
     public int getCount() {
         return Lkus.size();
     }
+
+    public void updateData(ArrayList<Integer> list) {
+        Lkus = list;
+        notifyDataSetChanged();
+    }
 }

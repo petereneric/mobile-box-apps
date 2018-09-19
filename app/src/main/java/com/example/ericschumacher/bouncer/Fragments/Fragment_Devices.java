@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -92,6 +93,8 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
 
         // RecyclerView
         rvDevices.setLayoutManager(new LinearLayoutManager(getActivity()));
+        aDevices = new Adapter_Devices(getActivity(), lDevices, Fragment_Devices.this);
+        rvDevices.setAdapter(aDevices);
 
         // Data
         iDevices.getDevices(getArguments(), this);
@@ -113,10 +116,10 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
     @Override
     public void setDevices(ArrayList<Device> devices) {
         if (devices.size() == 0) {
-            onDestroy();
+            //onDestroy();
         }
+        Log.i("Works", "so far");
         lDevices = devices;
-        aDevices = new Adapter_Devices(getActivity(), lDevices, Fragment_Devices.this);
-        rvDevices.setAdapter(aDevices);
+        aDevices.updateList(lDevices);
     }
 }

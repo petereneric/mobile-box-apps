@@ -64,4 +64,9 @@ public class Constants_Intern {
     public final static int STATION_LKU_STOCKING_INT = 6;
     public final static int STATION_REUSE_INT = 7;
     public final static int STATION_UNKNOWN_INT = 8;
+
+    // Dialog
+    public final static String TITLE = "TITLE";
+    public final static String TYPE_FRAGMENT_DIALOG = "TYPE_FRAGMENT_DIALOG";
+    public final static int TYPE_FRAGMENT_DIALOG_TOTAL_RESET = 0;
 }
