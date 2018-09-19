@@ -47,9 +47,6 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     // Utilities
     Utility_Network uNetwork;
 
-    // Objects
-    Device oDevice;
-
     // Layout -
     EditText etScan;
     ImageView ivClearScan;
