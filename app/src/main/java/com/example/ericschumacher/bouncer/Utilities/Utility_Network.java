@@ -15,7 +15,6 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Charger;
@@ -44,7 +43,6 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Created by Eric Schumacher on 19.05.2018.
@@ -125,7 +123,9 @@ public class Utility_Network {
                             if (!jsonObject.isNull(Constants_Extern.ID_MANUFACTURER)) {
                                 device.setManufacturer(new Manufacturer(jsonObject.getInt(Constants_Extern.ID_MANUFACTURER), jsonObject.getString(Constants_Extern.NAME_MANUFACTURER)));
                             }
-                            device.setExploitation(jsonObject.getInt(Constants_Extern.EXPLOITATION));
+                            if (!jsonObject.isNull(Constants_Extern.EXPLOITATION)) {
+                                device.setExploitation(jsonObject.getInt(Constants_Extern.EXPLOITATION));
+                            }
                             iCallback.onSuccess();
                         } else {
                             iCallback.onFailure();
