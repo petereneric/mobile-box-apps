@@ -7,10 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Juicer_Charger;
-import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Request_Choice;
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager_ModelColorShape;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Devices;
@@ -18,11 +18,9 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Devices;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Juicer;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Request_Choice;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Charger;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Devices;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_ModelColorShapeIds;
-import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.Objects.Device;
@@ -79,9 +77,11 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
     @Override
     protected void onResume() {
         super.onResume();
+        Log.i("Activity_Juicer", "onResume");
         uNetwork.getChargers(new Interface_VolleyCallback_ArrayList_Charger() {
             @Override
             public void onSuccess(ArrayList<Charger> list) {
+                Log.i("List size", Integer.toString(list.size()));
                 aCharger.updateData(list);
             }
         });
@@ -151,9 +151,11 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
 
     @Override
     public void onChargerChanged(ArrayList<Charger> chargerUnselected) {
+        Log.i("Activity_Juicer", "onChargerChanged");
         uNetwork.getDevicesForJuicer(chargerUnselected, new Interface_VolleyCallback_ArrayList_ModelColorShapeIds() {
             @Override
             public void onSuccess(ArrayList<Integer> modelColorShapeIds) {
+                Log.i("modelColorShapeIds", Integer.toString(modelColorShapeIds.size()));
                 aLKUs.updateData(modelColorShapeIds);
             }
             @Override

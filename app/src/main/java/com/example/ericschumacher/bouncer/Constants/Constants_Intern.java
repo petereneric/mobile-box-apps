@@ -5,6 +5,8 @@ package com.example.ericschumacher.bouncer.Constants;
  */
 
 public class Constants_Intern {
+    public final static String SHARED_PREFERENCES = "SHARED_PREFERENCES";
+
     public final static String SELECTION_RESULT = "SELECTION_RESULT";
     public final static String SELECTION_ID_MODEL = "SELECTION_ID_MODEL";
     public final static String LIST_CHOICE_MANUFACTURES = "LIST_CHOICE_MANUFACTURES";
@@ -18,6 +20,8 @@ public class Constants_Intern {
     public final static String LKU = "LKU";
     public final static int ID_UNKNOWN = 0;
     public final static String ID_MODEL_COLOR_SHAPE = "ID_MODEL_COLOR_SHAPE";
+    public final static String UNKNOWN_IMEI = "000000000000000";
+    public final static String UNKNOWN_NAME = "UNKNOWN_NAME";
 
     public final static int DESTINATION_UNKNOWN = 0;
 
@@ -45,11 +49,23 @@ public class Constants_Intern {
     public final static String COUNTER_REUSE = "COUNTER_REUSE";
 
     // Fragment
+    public final static String FRAGMENT_REQUEST_NAME = "FRAGMENT_REQUEST_NAME";
+    public final static String FRAGMENT_REQUEST_MANUFACTURER = "FRAGMENT_REQUEST_MANUFACTURER";
+    public final static String FRAGMENT_REQUEST_CHARGER = "FRAGMENT_REQUEST_CHARGER";
+    public final static String FRAGMENT_REQUEST_BATTERY = "FRAGMENT_REQUEST_BATTERY";
+    public final static String FRAGMENT_REQUEST_DEFAULT_EXPLOITATION = "FRAGMENT_REQUEST_DEFAULT_EXPLOITATION";
+    public final static String FRAGMENT_REQUEST_STATION = "FRAGMENT_REQUEST_STATION";
+    public final static String FRAGMENT_REQUEST_COLOR = "FRAGMENT_REQUEST_COLOR";
+    public final static String FRAGMENT_REQUEST_SHAPE = "FRAGMENT_REQUEST_SHAPE";
+    public final static String FRAGMENT_REQUEST_CONDITION = "FRAGMENT_REQUEST_CONDITION";
     public final static String FRAGMENT_REQUEST = "FRAGMENT_REQUEST";
     public final static String FRAGMENT_DEVICE = "FRAGMENT_DEVICE";
+    public final static String FRAGMENT_OVERVIEW = "FRAGMENT_OVERVIEW";
+    public final static String FRAGMENT_LKU_BOOKING = "FRAGMENT_LKU_BOOKING";
 
     // Stations
-    public final static String STATION_SCREENING = "STATION_SCREENING";
+    public final static String ID_STATION = "ID_STATION";
+    public final static String STATION_SELECTION = "STATION_SELECTION";
     public final static String STATION_RECYCLING = "STATION_RECYCLING";
     public final static String STATION_PRESORT = "STATION_PRESORT";
     public final static String STATION_EXCESS_STOCKING = "STATION_EXCESS_STOCKING";
@@ -57,13 +73,13 @@ public class Constants_Intern {
     public final static String STATION_REUSE = "STATION_REUSE";
     public final static String STATION_UNKNOWN = "STATION_UNKNOWN";
 
-    public final static int STATION_SCREENING_INT = 2;
-    public final static int STATION_RECYCLING_INT = 3;
-    public final static int STATION_PRESORT_INT = 4;
-    public final static int STATION_EXCESS_STOCKING_INT = 5;
-    public final static int STATION_LKU_STOCKING_INT = 6;
-    public final static int STATION_REUSE_INT = 7;
-    public final static int STATION_UNKNOWN_INT = 8;
+    public final static int STATION_SELECTION_INT = 1;
+    public final static int STATION_RECYCLING_INT = 2;
+    public final static int STATION_PRESORT_INT = 3;
+    public final static int STATION_EXCESS_STOCKING_INT = 4;
+    public final static int STATION_LKU_STOCKING_INT = 5;
+    public final static int STATION_REUSE_INT = 6;
+    public final static int STATION_UNKNOWN_INT = 0;
 
     // Dialog
     public final static String TITLE = "TITLE";

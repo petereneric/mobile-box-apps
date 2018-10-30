@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_SearchResults;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
@@ -32,6 +33,7 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
     // Layout
     View Layout;
     EditText etInput;
+    ImageView ivHelp;
     Button bCommit;
     RecyclerView rSearchResults;
 
@@ -80,11 +82,13 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
     private void setLayout() {
         etInput = Layout.findViewById(R.id.et_name);
         bCommit = Layout.findViewById(R.id.b_commit);
+        ivHelp = Layout.findViewById(R.id.ivHelp);
         rSearchResults = Layout.findViewById(R.id.recycler_view);
     }
 
     private void handleInteraction() {
         bCommit.setOnClickListener(this);
+        ivHelp.setOnClickListener(this);
     }
 
     @Override
@@ -95,6 +99,7 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
                 InputMethodManager imm = (InputMethodManager)
                         getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT);
+                break;
         }
     }
 

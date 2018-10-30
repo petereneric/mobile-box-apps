@@ -171,7 +171,7 @@ private class ViewHolder_Request_Choice extends RecyclerView.ViewHolder implemen
         ivIcon = itemView.findViewById(R.id.iv_icon);
         tvName = itemView.findViewById(R.id.tv_name);
 
-        tvName.setVisibility(View.GONE);
+        //tvName.setVisibility(View.GONE);
 
         llCardview.setOnClickListener(this);
 

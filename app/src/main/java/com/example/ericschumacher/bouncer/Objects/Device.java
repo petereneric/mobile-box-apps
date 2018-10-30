@@ -28,6 +28,7 @@ public class Device extends Model implements Parcelable {
 
     public Device() {
         super();
+        IdDevice = Constants_Intern.ID_UNKNOWN;
     }
 
     public Device (String imei) {
@@ -73,7 +74,7 @@ public class Device extends Model implements Parcelable {
     }
 
     public boolean testMode() {
-        return IMEI.equals("000000000000000");
+        return false;
     }
 
     public int getLKU() {

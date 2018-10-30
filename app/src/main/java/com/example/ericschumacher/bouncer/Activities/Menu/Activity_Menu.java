@@ -6,21 +6,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.ericschumacher.bouncer.Activities.Activity_Bouncer;
 import com.example.ericschumacher.bouncer.Activities.Activity_Juicer;
+import com.example.ericschumacher.bouncer.Activities.Activity_LKU_Booker;
 import com.example.ericschumacher.bouncer.Activities.Activity_LKU_Manager;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Menu;
 import com.example.ericschumacher.bouncer.Objects.Object_Menu;
 import com.example.ericschumacher.bouncer.R;
-import com.example.ericschumacher.bouncer.Services.Service_Rpd;
 import com.zebra.sdk.comm.Connection;
 import com.zebra.sdk.printer.ZebraPrinter;
 
@@ -63,5 +56,6 @@ public class Activity_Menu extends AppCompatActivity {
         lMenu.add(new Object_Menu(getString(R.string.activity_name_bouncer), new Intent(this, Activity_Bouncer.class), R.color.color_primary));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_manager), new Intent(this, Activity_LKU_Manager.class), R.color.color_primary_light));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_juicer), new Intent(this, Activity_Juicer.class), R.color.color_primary_dark));
+        lMenu.add(new Object_Menu(getString(R.string.activity_name_lku_booker), new Intent(this, Activity_LKU_Booker.class), R.color.color_secondary));
     }
 }

@@ -22,7 +22,7 @@ public class Model implements Parcelable {
     Charger Charger = null;
     Manufacturer Manufacturer = null;
 
-    int DefaultExploitation;
+    int DefaultExploitation = 0;
 
     public Model() {
     }

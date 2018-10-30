@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:focusableInTouchMode="true"
+    android:fitsSystemWindows="true">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/appBarLayout"
+        android:focusableInTouchMode="true">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_primary"
+            app:tabIndicatorColor="@color/color_white"
+            app:tabSelectedTextColor="@color/color_white"
+            app:tabTextColor="@color/color_white"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusableInTouchMode="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
+
+    <!-->
     <include layout="@layout/layout_scan"
-        android:id="@+id/lScan"/>
+        android:id="@+id/lScan"
+        android:visibility="invisible"/>
 
     <FrameLayout
         android:id="@+id/flFragmentDevice"
@@ -26,4 +55,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"/>
 
-</RelativeLayout>
+        <-->
+
+</android.support.design.widget.CoordinatorLayout>

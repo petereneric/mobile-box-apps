@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.R;
 
 /**
@@ -22,7 +22,7 @@ public class Fragment_Request_Condition extends Fragment implements View.OnClick
     TextView tvBroken;
     TextView tvOk;
 
-    Interface_Selection iSelection;
+    Interface_Manager iManager;
 
     @Nullable
     @Override
@@ -31,7 +31,7 @@ public class Fragment_Request_Condition extends Fragment implements View.OnClick
 
         setLayout();
 
-        iSelection = (Interface_Selection)getActivity();
+        iManager = (Interface_Manager)getActivity();
 
         return Layout;
     }
@@ -48,10 +48,10 @@ public class Fragment_Request_Condition extends Fragment implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tvBroken:
-                iSelection.setCondition(Constants_Intern.CONDITION_BROKEN);
+                iManager.returnCondition(Constants_Intern.CONDITION_BROKEN);
                 break;
             case R.id.tvOk:
-                iSelection.setCondition(Constants_Intern.CONDITION_OK);
+                iManager.returnCondition(Constants_Intern.CONDITION_OK);
                 break;
         }
     }

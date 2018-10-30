@@ -132,7 +132,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
     @Override
     public void requestName() {
         Fragment_Request_Name f = new Fragment_Request_Name();
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
+        fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, Constants_Intern.FRAGMENT_REQUEST_NAME).commit();
     }
 
     public void requestManufacturer() {
@@ -141,7 +141,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
             public void onSuccess(ArrayList<Additive> list) {
                 Bundle b = new Bundle();
                 b.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
-                startFragmentChoice(b);
+                startFragmentChoice(b, Constants_Intern.FRAGMENT_REQUEST_MANUFACTURER);
             }
         });
     }
@@ -153,7 +153,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
             public void onSuccess(ArrayList<Additive> list) {
                 Bundle b = new Bundle();
                 b.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
-                startFragmentChoice(b);
+                startFragmentChoice(b, Constants_Intern.FRAGMENT_REQUEST_CHARGER);
             }
         });
     }
@@ -164,7 +164,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
         Bundle b = new Bundle();
         b.putInt(Constants_Intern.SELECTION_ID_MODEL, model.getIdModel());
         fragment.setArguments(b);
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, fragment, Constants_Intern.FRAGMENT_REQUEST).commit();
+        fManager.beginTransaction().replace(R.id.flFragmentInteraction, fragment, Constants_Intern.FRAGMENT_REQUEST_BATTERY).commit();
     }
 
     @Override
@@ -173,12 +173,12 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
         Bundle b = new Bundle();
         b.putInt(Constants_Intern.SELECTION_ID_MODEL, model.getIdModel());
         f.setArguments(b);
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
+        fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, Constants_Intern.FRAGMENT_REQUEST_DEFAULT_EXPLOITATION).commit();
     }
 
-    private void startFragmentChoice(Bundle bundle) {
+    private void startFragmentChoice(Bundle bundle, String fragmentTag) {
         Fragment_Request_Choice f = new Fragment_Request_Choice();
         f.setArguments(bundle);
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
+        fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, fragmentTag).commit();
     }
 }

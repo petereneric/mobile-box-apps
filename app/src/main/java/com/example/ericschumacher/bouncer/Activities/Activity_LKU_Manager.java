@@ -27,6 +27,7 @@ public class Activity_LKU_Manager extends Activity_Device {
     // Layout
     EditText etScan;
     ImageView ivClearScan;
+    android.support.v4.view.ViewPager ViewPager;
 
     // Utilities
     Utility_Network uNetwork;
@@ -141,11 +142,6 @@ public class Activity_LKU_Manager extends Activity_Device {
         super.onPostResume();
         updateUI();
 
-    }
-
-    private void setLayout() {
-        etScan = findViewById(R.id.etScan);
-        ivClearScan = findViewById(R.id.ivClearScan);
     }
 
     @Override

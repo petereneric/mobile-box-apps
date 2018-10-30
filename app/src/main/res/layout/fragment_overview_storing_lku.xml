@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TableLayout
+        android:id="@+id/tlResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TableRow android:id="@+id/trCounterRecycling">
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/booked" />
+
+            <TextView
+                android:id="@+id/tvBooked"
+                style="@style/tv_tableRow"
+                android:text="94" />
+        </TableRow>
+
+        <TableRow android:id="@+id/trCounterReuse">
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/booked_out" />
+
+            <TextView
+                android:id="@+id/tvBookedOut"
+                style="@style/tv_tableRow"
+                android:text="30" />
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

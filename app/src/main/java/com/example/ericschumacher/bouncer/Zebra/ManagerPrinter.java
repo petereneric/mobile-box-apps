@@ -42,6 +42,7 @@ public class ManagerPrinter {
         try {
             if (Printer != null && readyToPrint()) {
                 Connection.write(getDeviceLabel(device));
+                Log.i("What", "should work");
             }
         } catch (ConnectionException e1) {
             Log.d("JOOO","Error sending file to printer");
@@ -72,6 +73,13 @@ public class ManagerPrinter {
 
                 */
 
+        String idDevice = Integer.toString(device.getIdDevice());
+        String LKU = Integer.toString(device.getLKU());
+        String name = device.getName();
+        String manufacturer = device.getManufacturer().getName();
+        String color = device.getVariationColor().getName();
+        String shape = device.getVariationShape().getName();
+
         String label = "\u0010CT~~CD,~CC^~CT~\n" +
                 "^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR6,6~SD15^JUS^LRN^CI0^XZ\n" +
                 "^XA\n" +
@@ -84,19 +92,20 @@ public class ManagerPrinter {
                 "^FO136,146^GB165,49,4^FS\n" +
                 "^FO37,30^GB107,34,4^FS\n" +
                 "^BY2,3,62^FT157,96^BCN,,N,N\n" +
-                "^FD>:"+device.getIdDevice()+"^FS\n" +
-                "^FT94,53^A0N,20,19^FH\\^FD"+device.getLKU()+"^FS\n" +
-                "^FT314,125^A0N,23,21^FH\\^FD"+device.getName()+"^FS\n" +
-                "^FT187,124^A0N,23,19^FH\\^FD"+device.getManufacturer().getName()+"^FS\n" +
-                "^FT345,183^A0N,23,16^FH\\^FD"+device.getIdDevice()+"^FS\n" +
-                "^FT37,136^A0N,20,19^FH\\^FD"+device.getVariationColor().getName()+"^FS\n" +
-                "^FT37,161^A0N,17,16^FH\\^FD"+device.getVariationShape().getName()+"^FS\n" +
+                "^FD>:"+idDevice+"^FS\n" +
+                "^FT94,53^A0N,20,19^FH\\^FD"+LKU+"^FS\n" +
+                "^FT314,125^A0N,23,21^FH\\^FD"+name+"^FS\n" +
+                "^FT187,124^A0N,23,19^FH\\^FD"+manufacturer+"^FS\n" +
+                "^FT345,183^A0N,23,16^FH\\^FD"+idDevice+"^FS\n" +
+                "^FT37,136^A0N,20,19^FH\\^FD"+color+"^FS\n" +
+                "^FT37,161^A0N,17,16^FH\\^FD"+shape+"^FS\n" +
                 "^FO33,108^GB92,0,2^FS\n" +
                 "^FT146,181^A0N,28,28^FH\\^FD"+"LKU Lagerung"+"^FS\n" +
                 "^FT43,52^A0N,20,19^FH\\^FDLKU:^FS\n" +
                 "^FO312,134^GE93,64,4^FS\n" +
                 "^FT354,159^A0N,17,14^FH\\^FDID^FS\n" +
                 "^PQ1,0,1,Y^XZ";
+        Log.i("Device Label", label);
         return label.getBytes();
     }
     private boolean readyToPrint () {

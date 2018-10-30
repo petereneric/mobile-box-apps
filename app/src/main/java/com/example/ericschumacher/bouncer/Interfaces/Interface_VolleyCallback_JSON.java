@@ -7,6 +7,5 @@ import org.json.JSONObject;
  */
 
 public interface Interface_VolleyCallback_JSON {
-    void onSuccess(JSONObject json);
-    void onFailure(JSONObject json);
+    void onResponse(JSONObject json);
 }

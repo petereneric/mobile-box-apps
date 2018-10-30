@@ -8,6 +8,7 @@ public interface Interface_Device {
     void requestDestination();
     void requestStation();
     void requestShape();
+    void requestCondition();
     void requestColor(Device device);
 
     void requestName();

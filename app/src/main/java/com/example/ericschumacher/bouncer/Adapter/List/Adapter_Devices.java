@@ -43,7 +43,7 @@ public class Adapter_Devices extends RecyclerView.Adapter<Adapter_Devices.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder_Device holder, int position) {
         Log.i("works", "like"+Integer.toString(Devices.get(position).getIdDevice()));
-        holder.tvDeviceId.setText(Devices.get(position).getIdDevice());
+        holder.tvDeviceId.setText(Integer.toString(Devices.get(position).getIdDevice()));
     }
 
     @Override

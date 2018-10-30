@@ -59,6 +59,10 @@ public class Fragment_Request_Battery extends Fragment_Request_Input {
                 iManager.returnBattery(etInput.getText().toString());
                 closeKeyboard();
                 break;
+            case R.id.ivHelp:
+                iManager.unknownBattery();
+                closeKeyboard();
+                break;
         }
     }
 }

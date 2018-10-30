@@ -35,6 +35,8 @@ public class Fragment_Request_Name extends Fragment_Request_Input {
         etInput.setFocusableInTouchMode(true);
         etInput.requestFocus();
 
+        ivHelp.setVisibility(View.GONE);
+
         etInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

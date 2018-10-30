@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,9 +94,10 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
 
     public void updateUI(Device device) {
 
-        if (device.getLKU() > Constants_Intern.INT_UNKNOWN) {
+        if (device.getLKU() > Constants_Intern.STATION_UNKNOWN_INT) {
             tvLKU.setText(Integer.toString(device.getLKU()));
         } else {
+            Log.i("LKU ID", Integer.toString(device.getLKU()));
             tvLKU.setText(Constants_Intern.UNKOWN);
         }
         if (device.getVariationColor() != null) {
@@ -177,7 +179,13 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
     @Override
     public void requestShape() {
         Fragment_Request_Shape f = new Fragment_Request_Shape();
-        fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
+        fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, Constants_Intern.FRAGMENT_REQUEST_SHAPE).commit();
+    }
+
+    @Override
+    public void requestCondition() {
+        Fragment_Request_Condition f = new Fragment_Request_Condition();
+        fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, Constants_Intern.FRAGMENT_REQUEST_CONDITION).commit();
     }
 
     @Override
@@ -189,7 +197,7 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
                 bundle.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
                 Fragment_Request_Choice f = new Fragment_Request_Choice();
                 f.setArguments(bundle);
-                fManager.beginTransaction().replace(R.id.flFragmentRequest, f, Constants_Intern.FRAGMENT_REQUEST).commit();
+                fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, Constants_Intern.FRAGMENT_REQUEST_COLOR).commit();
             }
         });
     }

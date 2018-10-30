@@ -15,14 +15,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/lScan" />
 
-
+    <FrameLayout
+        android:id="@+id/flFragmentOverview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
 
     <FrameLayout
-        android:id="@+id/flFragmentRequest"
+        android:id="@+id/flFragmentInteraction"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/tlResult"
-        android:layout_below="@id/flFragmentDevice"></FrameLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@id/flFragmentDevice"
+        android:layout_above="@id/flFragmentOverview"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -36,5 +40,7 @@
         app:backgroundTint="@color/color_primary"
         app:rippleColor="@color/color_white"
         app:srcCompat="@drawable/ic_add_24dp" />
+
+
 
 </RelativeLayout>

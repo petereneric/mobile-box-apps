@@ -9,6 +9,7 @@
     <string name="activity_name_manager">Manager</string>
     <string name="activity_name_juicer">Juicer</string>
     <string name="activity_name_lku_manager">LKU Manager</string>
+    <string name="activity_name_lku_booker">LKU Booker</string>
 
     // Activity_Selection
     <string name="not_defined">Not defined</string>
@@ -60,7 +61,10 @@
     <string name="device_written_off">Device is written off</string>
     <string name="device_stored_lku">Device is stored in LKU Stock - Wait for lable..</string>
     <string name="device_stored_excess_stock">Device is stored in Excess Stock - Wait for lable..</string>
-    <string name="device_deleted">Device deleted</string>
+    <string name="booked">Booked</string>
+    <string name="booked_out">Booked out</string>
+    <string name="book">Book into LKU Stock (Tap for yes)</string>
+    <string name="book_out">Book out of LKU Stock (Tap for yes)</string>
 
     // Printer
     <string name="printer_head_open">Head of printer is open</string>
@@ -69,5 +73,8 @@
 
     // Dialog
     <string name="dialog_fragment_total_reset_title">Are you sure that you want to reset the counter?</string>
+
+    // Failures
+    <string name="device_does_not_exist">Device does not exist</string>
 
 </resources>
