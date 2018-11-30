@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+    android:id="@+id/tvDateCreation"
+    style="@style/tv_itemRow"
+    android:layout_width="0dp"
+    android:layout_weight="1"
+    android:text="@string/date_creation" />
+
+    <TextView
+        android:id="@+id/tvName"
+        style="@style/tv_itemRow"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="@string/name" />
+
+    <TextView
+        android:id="@+id/tvAccountHolder"
+        style="@style/tv_itemRow"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="@string/account_holder" />
+
+    <TextView
+        android:id="@+id/tvIban"
+        style="@style/tv_itemRow"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="@string/iban" />
+
+    <TextView
+        android:id="@+id/tvPayment"
+        style="@style/tv_itemRow"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="@string/payment" />
+
+
+</LinearLayout>

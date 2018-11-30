@@ -17,10 +17,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.Activity_Bouncer"></activity>
+        <activity android:screenOrientation="portrait" android:name=".Activities.Activity_Bouncer"></activity>
         <activity android:name=".Activities.Activity_Juicer"></activity>
         <activity android:name=".Activities.Activity_LKU_Manager"></activity>
         <activity android:name=".Activities.Activity_LKU_Booker"></activity>
+        <activity android:name=".Activities.Activity_Turing"></activity>
+        <activity android:name=".Activities.Activity_Zwegat"></activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

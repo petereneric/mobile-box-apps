@@ -24,6 +24,7 @@ public class Adapter_Juicer_Charger extends RecyclerView.Adapter<RecyclerView.Vi
         mContext = context;
         lChargers = chargers;
         iListener = listener;
+        iListener.onChargerChanged(lChargers);
     }
 
     @Override

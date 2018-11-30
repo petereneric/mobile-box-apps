@@ -4,15 +4,18 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
-import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
-import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Shape;
+import com.example.ericschumacher.bouncer.Objects.Additive.Color;
+import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
+
+import java.io.Serializable;
 
 /**
  * Created by Eric Schumacher on 21.05.2018.
  */
 
-public class Device extends Model implements Parcelable {
+public class Device extends Model implements Serializable {
 
     private int IdDevice;
 
@@ -23,8 +26,8 @@ public class Device extends Model implements Parcelable {
     private int Destination = Constants_Intern.DESTINATION_UNKNOWN;
     private Station Station = new Station(0, "null");
 
-    private Variation_Color VariationColor = null;
-    private Variation_Shape VariationShape = null;
+    private Color VariationColor = null;
+    private Shape VariationShape = null;
 
     public Device() {
         super();
@@ -48,8 +51,8 @@ public class Device extends Model implements Parcelable {
         Destination = destination;
         Station = new Station(id_station, name_station);
 
-        VariationColor = new Variation_Color(idVariationColor, nameColor, hexCode);
-        VariationShape = new Variation_Shape(idVariationShape, nameShape);
+        VariationColor = new Color(idVariationColor, nameColor, hexCode, new Manufacturer(idManufacturer, nameManufacturer), new Model(idModel, name));
+        VariationShape = new Shape(idVariationShape, nameShape);
 
     }
 
@@ -109,19 +112,19 @@ public class Device extends Model implements Parcelable {
         Station = station;
     }
 
-    public Variation_Color getVariationColor() {
+    public Color getVariationColor() {
         return VariationColor;
     }
 
-    public void setVariationColor(Variation_Color variationColor) {
+    public void setVariationColor(Color variationColor) {
         VariationColor = variationColor;
     }
 
-    public Variation_Shape getVariationShape() {
+    public Shape getVariationShape() {
         return VariationShape;
     }
 
-    public void setVariationShape(Variation_Shape variationShape) {
+    public void setVariationShape(Shape variationShape) {
         VariationShape = variationShape;
     }
 

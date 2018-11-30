@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/rvRecord">
+
+    <TextView
+        style="@style/tv_itemRow"
+        android:id="@+id/tvId"
+        android:text="@string/id"/>
+
+    <TextView
+        style="@style/tv_itemRow"
+        android:id="@+id/tvLastUpdate"
+        android:text="@string/date_last_update"
+        android:layout_toRightOf="@id/tvId"/>
+
+    <TextView
+        style="@style/tv_itemRow"
+        android:id="@+id/tvTotal"
+        android:text="@string/total"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        style="@style/tv_itemRow"
+        android:id="@+id/tvCollector"
+        android:text="@string/collector"
+        android:layout_toLeftOf="@id/tvTotal"
+        android:layout_toRightOf="@id/tvLastUpdate"/>
+
+</RelativeLayout>

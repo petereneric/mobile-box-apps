@@ -67,7 +67,8 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
             public void onResultClick(Object_SearchResult o) {
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(etInput.getWindowToken(), 0);
-                etInput.setText(o.getName());
+
+                itemSelected(o);
             }
         });
         rSearchResults.setAdapter(aSearchResults);
@@ -106,6 +107,10 @@ public class Fragment_Request_Input extends Fragment implements View.OnClickList
     public void closeKeyboard() {
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(etInput.getWindowToken(), 0);
+    }
+
+    public void itemSelected(Object_SearchResult oSearchResult) {
+        etInput.setText(oSearchResult.getName());
     }
 
 }

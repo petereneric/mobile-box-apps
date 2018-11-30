@@ -10,6 +10,8 @@
     <string name="activity_name_juicer">Juicer</string>
     <string name="activity_name_lku_manager">LKU Manager</string>
     <string name="activity_name_lku_booker">LKU Booker</string>
+    <string name="activity_name_turing">Turing</string>
+    <string name="activity_name_zwegat">Zwegat</string>
 
     // Activity_Selection
     <string name="not_defined">Not defined</string>
@@ -32,7 +34,6 @@
     <string name="summary">Summary</string>
     <string name="new_selection">Start new selection</string>
     <string name="undo">Undo</string>
-    <string name="commit">Commit</string>
     <string name="added_to">Added to:</string>
     <string name="add_battery">Add %1$s to batteries?</string>
     <string name="hint_enter_battery_name">Enter battery name..</string>
@@ -53,6 +54,11 @@
     <string name="default_exploitation">Default Exploitation</string>
     <string name="destination">Destination</string>
     <string name="station">Station</string>
+    <string name="model_name">Model name</string>
+
+    // Activity - Turing
+    <string name="color_erp">Color ERP</string>
+    <string name="color_wawi">Color WAWI</string>
 
     // Activity - Manager_LKU
     <string name="is_lku_filled">Is LKU space full? </string>
@@ -76,5 +82,50 @@
 
     // Failures
     <string name="device_does_not_exist">Device does not exist</string>
+
+    // Device
+    <string name="item_device_id">Device Id: </string>
+    <string name="item_lku_id">LKU Id: </string>
+
+    // Model Color Shape
+    <string name="id_model_color_shape">id</string>
+    <string name="id_color">id_color</string>
+    <string name="id_shape">id_shape</string>
+    <string name="rpd">rpd</string>
+
+    // Edit Color
+    <string name="et_hint_color_name">Enter color name...</string>
+    <string name="et_hint_hex">Enter hex code...</string>
+    <string name="no_manufacturer_selected">No manufacturer selected</string>
+    <string name="no_model_selected">No model selected</string>
+
+    // Button
+    <string name="commit">Commit</string>
+    <string name="finish">Finish</string>
+    <string name="delete">Delete</string>
+    <string name="pause">Pause</string>
+    <string name="new_record">New record</string>
+    <string name="existing_record">Existing record</string>
+    <string name="unknown_sourc">Unknown Source</string>
+    <string name="start">Start</string>
+    <string name="back">Back</string>
+
+    // Hints
+    <string name="enter_collector">Enter collector...</string>
+
+    // Item row
+    <string name="id">Id</string>
+    <string name="date_last_update">Last update</string>
+    <string name="date_creation">Date creation</string>
+    <string name="account_holder">Accountholder</string>
+    <string name="iban">Iban</string>
+    <string name="payment">Payment</string>
+
+    // Toast
+    <string name="please_select_collector">Please select collector</string>
+    <string name="ready_to_bounce">Ready to bounce!</string>
+    <string name="missing_color_information">Please enter color name and hex</string>
+    <string name="bouncer_imei_exists">We already have a device with this IMEI in our system. Therefore you can skip this one.</string>
+
 
 </resources>

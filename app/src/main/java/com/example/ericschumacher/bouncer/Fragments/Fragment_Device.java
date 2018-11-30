@@ -12,7 +12,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Color;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Device;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Model;
@@ -195,7 +195,7 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
             public void onSuccess(ArrayList<Additive> list) {
                 Bundle bundle = new Bundle();
                 bundle.putParcelableArrayList(Constants_Intern.LIST_ADDITIVE, list);
-                Fragment_Request_Choice f = new Fragment_Request_Choice();
+                Fragment_Request_Color f = new Fragment_Request_Color();
                 f.setArguments(bundle);
                 fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, Constants_Intern.FRAGMENT_REQUEST_COLOR).commit();
             }

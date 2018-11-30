@@ -1,12 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <TableLayout
+        android:id="@+id/tlRecord"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3">
+
+        <TableRow android:id="@+id/trCollector">
+
+            <TextView
+                style="@style/tv_tableRow"
+                android:text="@string/collector"
+                android:textStyle="bold"/>
+
+
+        </TableRow>
+        <TableRow >
+            <TextView
+                android:id="@+id/tvCollector"
+                style="@style/tv_tableRow"
+                android:text="Missio Aachen" />
+        </TableRow>
+
+    </TableLayout>
 
     <TableLayout
         android:id="@+id/tlResult"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="2">
 
         <TableRow android:id="@+id/trCounterRecycling">
 
@@ -46,4 +73,30 @@
 
     </TableLayout>
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <Button
+            style="@style/button_default"
+            android:id="@+id/bPause"
+            android:text="@string/pause"/>
+
+        <Button
+            style="@style/button_default"
+            android:id="@+id/bFinish"
+            android:text="@string/finish"/>
+
+        <Button
+            style="@style/button_default"
+            android:id="@+id/bDelete"
+            android:text="@string/delete"
+            android:visibility="gone"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

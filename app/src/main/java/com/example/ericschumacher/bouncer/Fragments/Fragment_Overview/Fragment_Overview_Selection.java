@@ -4,14 +4,18 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Overview_Selection;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
+import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.R;
 
 public class Fragment_Overview_Selection extends Fragment implements View.OnClickListener, Interface_Overview_Selection {
@@ -22,6 +26,7 @@ public class Fragment_Overview_Selection extends Fragment implements View.OnClic
 
     // Layout
     View Layout;
+    TextView tvCollector;
     TextView tvCounterReuse;
     TextView tvCounterRecycling;
     TextView tvCounterTotal;
@@ -30,8 +35,18 @@ public class Fragment_Overview_Selection extends Fragment implements View.OnClic
     TableRow trCounterRecycling;
     TableRow trCounterTotal;
 
+    Button bPause;
+    Button bFinish;
+    Button bDelete;
+
     // Shared Preferences
     SharedPreferences SharedPreferences;
+
+    // Interface
+    Interface_Selection iBouncer;
+
+    // Objects
+    Record oRecord;
 
     @Nullable
     @Override
@@ -40,8 +55,17 @@ public class Fragment_Overview_Selection extends Fragment implements View.OnClic
 
         setLayout();
 
+        // Interface
+        iBouncer = (Interface_Selection)getActivity();
+
+        // Objects
+        oRecord = (Record) getArguments().getSerializable(Constants_Intern.OBJECT_RECORD);
+
+        // Data
+        updateUI();
+
         // SharedPreferences
-        SharedPreferences = getActivity().getSharedPreferences(Constants_Intern.SHARED_PREFERENCES, 0);
+        //SharedPreferences = getActivity().getSharedPreferences(Constants_Intern.SHARED_PREFERENCES, 0);
 
         return Layout;
     }
@@ -49,27 +73,30 @@ public class Fragment_Overview_Selection extends Fragment implements View.OnClic
     @Override
     public void onResume() {
         super.onResume();
-        tvCounterReuse.setText(Integer.toString(SharedPreferences.getInt(Constants_Intern.COUNTER_REUSE, 0)));
-        tvCounterRecycling.setText(Integer.toString(SharedPreferences.getInt(Constants_Intern.COUNTER_RECYCLING, 0)));
-        tvCounterTotal.setText(Integer.toString(SharedPreferences.getInt(Constants_Intern.COUNTER_REUSE, 0))+Integer.toString(SharedPreferences.getInt(Constants_Intern.COUNTER_RECYCLING, 0)));
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        SharedPreferences.edit().putInt(Constants_Intern.COUNTER_RECYCLING, cRecycling).commit();
-        SharedPreferences.edit().putInt(Constants_Intern.COUNTER_REUSE, cReuse).commit();
     }
 
     private void setLayout() {
+        tvCollector = Layout.findViewById(R.id.tvCollector);
         tvCounterReuse = Layout.findViewById(R.id.tvCounterReuse);
         tvCounterRecycling = Layout.findViewById(R.id.tvCounterRecycling);
         tvCounterTotal = Layout.findViewById(R.id.tvCounterTotal);
+
+        bPause = Layout.findViewById(R.id.bPause);
+        bFinish = Layout.findViewById(R.id.bFinish);
+        bDelete = Layout.findViewById(R.id.bDelete);
 
         trCounterReuse = Layout.findViewById(R.id.trCounterReuse);
         trCounterRecycling = Layout.findViewById(R.id.trCounterRecycling);
         trCounterTotal = Layout.findViewById(R.id.trCounterTotal);
 
+        bPause.setOnClickListener(this);
+        bFinish.setOnClickListener(this);
+        bDelete.setOnClickListener(this);
         trCounterReuse.setOnClickListener(this);
         trCounterRecycling.setOnClickListener(this);
         trCounterTotal.setOnClickListener(this);
@@ -87,47 +114,27 @@ public class Fragment_Overview_Selection extends Fragment implements View.OnClic
             case R.id.trCounterTotal:
 
                 break;
+            case R.id.bFinish:
+                iBouncer.finishRecord();
+                break;
+            case R.id.bDelete:
+                iBouncer.deleteRecord();
+                break;
+            case R.id.bPause:
+                iBouncer.pauseRecord();
+                break;
         }
     }
 
-    @Override
-    public void incrementCounterReuse() {
-        cRecycling++;
-        updateUI();
-
-    }
-
-    @Override
-    public void incrementCounterRecycling() {
-        cReuse++;
-        updateUI();
-    }
-
-    @Override
-    public int getCounterRecycling() {
-        return cRecycling;
-    }
-
-    @Override
-    public int getCounterReuse() {
-        return cReuse;
-    }
-
-    @Override
-    public int getCounterTotal() {
-        return cReuse+cRecycling;
-    }
-
     public void updateUI() {
-        tvCounterRecycling.setText(Integer.toString(cRecycling));
-        tvCounterReuse.setText(Integer.toString(cReuse));
-        tvCounterReuse.setText(Integer.toString(cReuse+cRecycling));
+        Log.i("Callled", "yes");
+        tvCollector.setText(iBouncer.getNameCollector());
+        tvCounterRecycling.setText(Integer.toString(iBouncer.getCountRecycling()));
+        tvCounterReuse.setText(Integer.toString(iBouncer.getCountReuse()));
+        tvCounterTotal.setText(Integer.toString(iBouncer.getCountRecycling()+iBouncer.getCountReuse()));
     }
 
     public void reset() {
-        cReuse = 0;
-        cRecycling = 0;
-        updateUI();
     }
 
 }

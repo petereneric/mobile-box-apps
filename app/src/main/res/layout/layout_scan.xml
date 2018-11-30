@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/ivClearScan"
         android:layout_toRightOf="@id/ivHelp"
+        android:inputType="number"
         android:hint="@string/hint_scan" />
 
 </RelativeLayout>

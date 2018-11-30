@@ -22,28 +22,35 @@ import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Color_Add;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Simple;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Device;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Dialog;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Search_Manufacturer;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Search_Model;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Input;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
+import com.example.ericschumacher.bouncer.Objects.Additive.Color;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
+import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
-import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
-import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Shape;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
+import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class Activity_Device extends AppCompatActivity implements Interface_Manager, View.OnClickListener, Interface_Dialog {
 
@@ -55,7 +62,6 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
     public Utility_Network uNetwork;
 
     // Printer
-    public boolean usePrinter = true;
     public ManagerPrinter mPrinter;
 
     // Layout
@@ -77,7 +83,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
         // Instances
         uNetwork = new Utility_Network(this);
         fManager = getSupportFragmentManager();
-        if (usePrinter) mPrinter = new ManagerPrinter(this);
+        mPrinter = new ManagerPrinter(this);
 
         // Layout
         setLayout();
@@ -92,13 +98,13 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
     protected void onResume() {
         super.onResume();
         iDevice = (Interface_Device) fManager.findFragmentByTag(Constants_Intern.FRAGMENT_DEVICE);
-        if (usePrinter) mPrinter.connect();
+        mPrinter.connect();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        if (usePrinter) mPrinter.disconnect();
+        mPrinter.disconnect();
     }
 
     public void setLayout() {
@@ -126,11 +132,12 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (!charSequence.toString().equals("")) onScan(charSequence.toString());
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+                if (!editable.toString().equals("")) onScan(editable.toString());
             }
         });
     }
@@ -160,6 +167,41 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
     @Override
     public Device getDevice() {
         return oDevice;
+    }
+
+    @Override
+    public Color getColor() {
+        return oDevice.getVariationColor();
+    }
+
+    @Override
+    public void searchMatchingModel(String namePart, final Interface_Search_Model iSearchModel) {
+        uNetwork.getMatchingModels(namePart, new Interface_VolleyCallback_ArrayList_Input() {
+            @Override
+            public void onSuccess(ArrayList<Object_SearchResult> list) {
+                iSearchModel.returnSearchResultsForModel(list);
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+    }
+
+    @Override
+    public void searchMatchingManufacturer(String namePart, final Interface_Search_Manufacturer iSearchManufacturer) {
+        uNetwork.getMatchingManufacturers(namePart, new Interface_VolleyCallback_ArrayList_Input() {
+            @Override
+            public void onSuccess(ArrayList<Object_SearchResult> list) {
+                iSearchManufacturer.returnSearchResultsForManufacturer(list);
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
     }
 
     @Override
@@ -193,82 +235,6 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
                 });
             }
         }
-
-
-
-        /*
-        uNetwork.getDevice(Integer.parseInt(text), new Interface_VolleyCallback_Device() {
-            @Override
-            public void onSuccess(Device device) {
-                oDevice = device;
-                updateUI();
-                if (oDevice.getStation().getId() == Constants_Intern.STATION_LKU_STOCKING_INT) {
-                    oDevice.getStation().setId(Constants_Intern.STATION_UNKNOWN_INT);
-                    uNetwork.updateDevice(oDevice, new Interface_VolleyCallback() {
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onFailure() {
-
-                        }
-                    });
-                    Toast.makeText(Activity_Device.this, getString(R.string.device_written_off), Toast.LENGTH_LONG).show();
-                    mPrinter.printDevice(oDevice);
-                } else {
-                    uNetwork.assignLku(oDevice, new Interface_VolleyCallback_Int() {
-                        @Override
-                        public void onSuccess(int i) {
-                            oDevice.setLKU(i);
-                            oDevice.getStation().setId(Constants_Intern.STATION_LKU_STOCKING_INT);
-                            updateUI();
-                            uNetwork.updateDevice(oDevice, new Interface_VolleyCallback() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onFailure() {
-
-                                }
-                            });
-                            Toast.makeText(Activity_Device.this, getString(R.string.device_stored_lku), Toast.LENGTH_LONG).show();
-                            mPrinter.printDevice(oDevice);
-                        }
-
-                        @Override
-                        public void onFailure() {
-                            // Platz scheint voll
-                            oDevice.getStation().setId(Constants_Intern.STATION_EXCESS_STOCKING_INT);
-                            updateUI();
-                            uNetwork.updateDevice(oDevice, new Interface_VolleyCallback() {
-                                @Override
-                                public void onSuccess() {
-
-                                }
-
-                                @Override
-                                public void onFailure() {
-
-                                }
-                            });
-                            Toast.makeText(Activity_Device.this, getString(R.string.device_stored_excess_stock), Toast.LENGTH_LONG).show();
-                            mPrinter.printDevice(oDevice);
-                        }
-                    });
-
-                }
-            }
-
-            @Override
-            public void onFailure() {
-
-            }
-        });
-        */
     }
 
     @Override
@@ -283,9 +249,10 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
                     @Override
                     public void onSuccess() {
                         updateUI();
-                        Log.i("tagg", "bookDeviceIntoOfLKUSTock - Success");
-                        if (usePrinter) mPrinter.printDevice(oDevice);
-                        resetDevice();
+                        Log.i("tagg", "bookDeviceIntoOfLKUStock - Success");
+                        mPrinter.printDevice(oDevice);
+                        etScan.setText("");
+                        openKeyboard(etScan);
                     }
 
                     @Override
@@ -294,7 +261,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
                     }
                 });
                 Toast.makeText(Activity_Device.this, getString(R.string.device_stored_lku), Toast.LENGTH_LONG).show();
-                if (usePrinter) mPrinter.printDevice(oDevice);
+                mPrinter.printDevice(oDevice);
             }
 
             @Override
@@ -306,7 +273,9 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
                     public void onSuccess() {
                         updateUI();
                         Log.i("tagg", "bookDeviceIntoOfLKUSTock - Failure");
-                        if (usePrinter) mPrinter.printDevice(oDevice);
+                        mPrinter.printDevice(oDevice);
+                        etScan.setText("");
+                        openKeyboard(etScan);
                     }
 
                     @Override
@@ -346,8 +315,9 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
                         oDevice.setLKU(Constants_Intern.ID_UNKNOWN);
                         updateUI();
                         Log.i("tagg", "bookDeviceOutOfLKUSTock");
-                        if (usePrinter) mPrinter.printDevice(oDevice);
-                        resetDevice();
+                        mPrinter.printDevice(oDevice);
+                        etScan.setText("");
+                        openKeyboard(etScan);
                     }
 
                     @Override
@@ -437,6 +407,64 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
     }
 
     @Override
+    public void addColor(final Color color) {
+        uNetwork.addColor(color, new Interface_VolleyCallback_Int() {
+            @Override
+            public void onSuccess(int i) {
+                color.setId(i);
+                oDevice.setVariationColor(color);
+                handledReturnAddColor();
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+    }
+
+    @Override
+    public void updateColor(Color color) {
+        uNetwork.updateColor(color, new Interface_VolleyCallback() {
+            @Override
+            public void onSuccess() {
+                handledReturnUpdateColor();
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+    }
+
+    @Override
+    public void fragmentColorUpdate() {
+        fragmentInteraction(new Fragment_Color_Add(), null, Constants_Intern.FRAGMENT_COLOR_UPDATE);
+    }
+
+    @Override
+    public void fragmentColorAdd() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
+        fragmentInteraction(new Fragment_Color_Add(), bundle, Constants_Intern.FRAGMENT_COLOR_ADD);
+    }
+
+    private void fragmentInteraction(Fragment f, Bundle b, String tag) {
+        if (b != null) {
+            f.setArguments(b);
+        }
+        fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, tag).commit();
+    }
+
+    public void fragmentOverview(Fragment f, Bundle b, String tag) {
+        if (b != null) {
+            f.setArguments(b);
+        }
+        fManager.beginTransaction().replace(R.id.flFragmentOverview, f, tag).commit();
+    }
+
+    @Override
     public void returnManufacturer(Manufacturer manufacturer) {
         oDevice.setManufacturer(manufacturer);
         uNetwork.addManufacturerToModel(oDevice);
@@ -453,14 +481,14 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
     }
 
     @Override
-    public void returnShape(Variation_Shape shape) {
+    public void returnShape(Shape shape) {
         oDevice.setVariationShape(shape);
         updateUI();
         handledReturnShape();
     }
 
     @Override
-    public void returnColor(Variation_Color color) {
+    public void returnColor(Color color) {
         oDevice.setVariationColor(color);
         updateUI();
         handledReturnColor();
@@ -550,6 +578,16 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
         fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST_COLOR)).commit();
     }
 
+    public void handledReturnAddColor() {
+        fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST_COLOR)).commit();
+        fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_COLOR_ADD)).commit();
+        Log.i("Why", "the fuck");
+    }
+
+    public void handledReturnUpdateColor() {
+        fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_COLOR_UPDATE)).commit();
+    }
+
     public void handledReturnShape() {
         fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST_SHAPE)).commit();
     }
@@ -579,6 +617,12 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
     public void closeKeyboard(View v) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    public void openKeyboard(View v) {
+        InputMethodManager inputMethodManager =  (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        inputMethodManager.toggleSoftInputFromWindow(v.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+        v.requestFocus();
     }
 
     // Dialogs
@@ -625,9 +669,9 @@ public class Activity_Device extends AppCompatActivity implements Interface_Mana
             if (oDevice.getLKU() == Constants_Intern.STATION_LKU_STOCKING_INT) oDevice.getStation().setId(Constants_Intern.STATION_LKU_STOCKING_INT);
             if (!json.isNull(Constants_Extern.ID_COLOR) && !json.isNull(Constants_Extern.NAME_COLOR) && !json.isNull(Constants_Extern.HEX_CODE))
                 oDevice.setVariationColor
-                        (new Variation_Color(json.getInt(Constants_Extern.ID_COLOR), json.getString(Constants_Extern.NAME_COLOR), json.getString(Constants_Extern.HEX_CODE)));
+                        (new Color(json.getInt(Constants_Extern.ID_COLOR), json.getString(Constants_Extern.NAME_COLOR), json.getString(Constants_Extern.HEX_CODE)));
             if (!json.isNull(Constants_Extern.ID_SHAPE) && !json.isNull(Constants_Extern.NAME_SHAPE))
-                oDevice.setVariationShape(new Variation_Shape(json.getInt(Constants_Extern.ID_SHAPE), json.getString(Constants_Extern.NAME_SHAPE)));
+                oDevice.setVariationShape(new Shape(json.getInt(Constants_Extern.ID_SHAPE), json.getString(Constants_Extern.NAME_SHAPE)));
         } catch (JSONException e) {
             e.printStackTrace();
         }

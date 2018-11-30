@@ -44,6 +44,11 @@ public class Fragment_Request_Battery extends Fragment_Request_Input {
                     public void onSuccess(ArrayList<Object_SearchResult> list) {
                         aSearchResults.update(list);
                     }
+
+                    @Override
+                    public void onFailure() {
+
+                    }
                 });
             }
         });

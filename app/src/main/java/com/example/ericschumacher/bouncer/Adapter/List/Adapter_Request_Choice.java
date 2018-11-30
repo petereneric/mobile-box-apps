@@ -2,7 +2,6 @@ package com.example.ericschumacher.bouncer.Adapter.List;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,7 +20,7 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_Request_Choice;
 import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
-import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
+import com.example.ericschumacher.bouncer.Objects.Additive.Color;
 import com.example.ericschumacher.bouncer.R;
 
 import java.util.ArrayList;
@@ -53,34 +52,6 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View layout = LayoutInflater.from(Context).inflate(R.layout.cardview_choice, parent, false);
-        /*
-        if (viewType == TYPE_MANUFACTURER) {
-            ViewHolder_Request_Choice vh = new ViewHolder_Request_Choice(layout, new Interface_Click() {
-                @Override
-                public void onClick(int position) {
-                    iRequestChoice.onChoice(position);
-                }
-            });
-            return vh;
-        }
-        if (viewType == TYPE_CHARGER) {
-            ViewHolder_Request_Choice vh = new ViewHolder_Request_Choice_Charger(layout, new Interface_Click() {
-                @Override
-                public void onClick(int position) {
-                    iRequestChoice.returnCharger((Charger)lAdditive.get(position));
-                }
-            });
-            return vh;
-        }
-        if (viewType == TYPE_COLOR) {
-            ViewHolder_Request_Choice_Color vh = new ViewHolder_Request_Choice_Color(layout, new Interface_Click() {
-                @Override
-                public void onClick(int position) {
-                    iRequestChoice.returnColor((Variation_Color)lAdditive.get(position));
-                }
-            });
-            return vh;
-            */
         ViewHolder_Request_Choice vh = new ViewHolder_Request_Choice(layout, new Interface_Click() {
             @Override
             public void onClick(int position) {
@@ -98,8 +69,8 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
         h.tvName.setText(additive.getName());
         Log.i("onBind", additive.getName());
 
-        if (additive instanceof Variation_Color) {
-            h.ivIcon.setBackgroundColor(Color.parseColor(((Variation_Color) additive).getHexCode()));
+        if (additive instanceof Color) {
+            h.ivIcon.setBackgroundColor(android.graphics.Color.parseColor(((Color) additive).getHexCode()));
         } else {
             ImageRequest request = new ImageRequest("http://svp-server.com/svp-gmbh/erp/files/" + additive.getUrlName() + "/" + Integer.toString(additive.getId()) + ".png",
                     new Response.Listener<Bitmap>() {
@@ -156,7 +127,7 @@ public class Adapter_Request_Choice extends RecyclerView.Adapter<RecyclerView.Vi
         }
     }
 
-private class ViewHolder_Request_Choice extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class ViewHolder_Request_Choice extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     LinearLayout llCardview;
     ImageView ivIcon;
@@ -187,7 +158,7 @@ private class ViewHolder_Request_Choice extends RecyclerView.ViewHolder implemen
     }
 }
 
-private interface Interface_Click {
+public interface Interface_Click {
     public void onClick(int position);
 }
 

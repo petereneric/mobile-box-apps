@@ -17,11 +17,16 @@ public class Constants_Intern {
     public final static int EXPLOITATION_REUSE = 2;
     public final static String OBJECT_MODEL = "OBJECT_MODEL";
     public final static String OBJECT_DEVICE = "OBJECT_DEVICE";
+    public final static String OBJECT_COLOR = "OBJECT_COLOR";
     public final static String LKU = "LKU";
     public final static int ID_UNKNOWN = 0;
     public final static String ID_MODEL_COLOR_SHAPE = "ID_MODEL_COLOR_SHAPE";
     public final static String UNKNOWN_IMEI = "000000000000000";
     public final static String UNKNOWN_NAME = "UNKNOWN_NAME";
+    public final static String NAME_NULL = "";
+    public final static String OBJECT_COLLECTOR = "OBJECT_COLLECTOR";
+    public final static String OBJECT_RECORD = "OBJECT_RECORD";
+    public final static String USE_PRINTER = "USE_PRINTER";
 
     public final static int DESTINATION_UNKNOWN = 0;
 
@@ -33,6 +38,7 @@ public class Constants_Intern {
 
     public final static int INT_UNKNOWN = 0;
     public final static String UNKOWN = "UNKNOWN";
+    public final static int ID_NULL = 0;
 
     // Condition & Shape
     public final static int CONDITION_BROKEN = 0;
@@ -62,6 +68,12 @@ public class Constants_Intern {
     public final static String FRAGMENT_DEVICE = "FRAGMENT_DEVICE";
     public final static String FRAGMENT_OVERVIEW = "FRAGMENT_OVERVIEW";
     public final static String FRAGMENT_LKU_BOOKING = "FRAGMENT_LKU_BOOKING";
+    public final static String FRAGMENT_COLOR_ADD = "FRAGMENT_COLOR_ADD";
+    public final static String FRAGMENT_COLOR_UPDATE = "FRAGMENT_COLOR_UPDATE";
+    public final static String FRAGMENT_RECORD_MENU = "FRAGMENT_RECORD_MENU";
+    public final static String FRAGMENT_RECORD_NEW = "FRAGMENT_RECORD_NEW";
+    public final static String FRAGMENT_RECORD_EXISTING = "FRAGMENT_RECORD_EXISTING";
+    public final static String FRAGMENT_RECORD = "FRAGMENT_RECORD";
 
     // Stations
     public final static String ID_STATION = "ID_STATION";

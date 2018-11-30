@@ -1,31 +1,44 @@
 package com.example.ericschumacher.bouncer.Activities;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Activities.Parent.Activity_Device;
+import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Overview.Fragment_Overview_Selection;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Record.Fragment_Record_Existing;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Record.Fragment_Record_Menu;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Record.Fragment_Record_New;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Dialog;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Overview_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_FailureResponse;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
+import com.example.ericschumacher.bouncer.Objects.Additive.Color;
+import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
-import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
-import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Shape;
+import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Activity_Bouncer extends Activity_Device implements Interface_Selection, View.OnClickListener, Interface_Manager, Interface_Dialog {
 
     // Interfaces
     Interface_Overview_Selection iOverviewSelection;
+
+    // Objects
+    Record oRecord;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,16 +46,20 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
 
         // Objects
         oDevice = new Device();
+        oRecord = null;
 
         // Layout
-        Fragment fOverview = new Fragment_Overview_Selection();
-        fManager.beginTransaction().add(R.id.flFragmentOverview, fOverview, Constants_Intern.FRAGMENT_OVERVIEW).commit();
+        Fragment_Record_Menu fRecordMenu = new Fragment_Record_Menu();
+        fManager.beginTransaction().add(R.id.flFragmentOverview, fRecordMenu, Constants_Intern.FRAGMENT_RECORD_MENU).commit();
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        iOverviewSelection = (Interface_Overview_Selection) fManager.findFragmentByTag(Constants_Intern.FRAGMENT_OVERVIEW);
+        // Keyboard
+        closeKeyboard(etScan);
     }
 
     @Override
@@ -58,25 +75,40 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
 
     @Override
     public void onScan(String text) {
-        if (text.length() == 15) {
-            oDevice.setIMEI(text);
+        if (oRecord != null) {
+            if (text.length() == 15) {
+                oDevice.setIMEI(text);
 
-            if (text.equals(Constants_Intern.UNKNOWN_IMEI)) {
-                bounce();
+                if (text.equals(Constants_Intern.UNKNOWN_IMEI)) {
+                    bounce();
 
-            } else {
-                uNetwork.getModelByTac(oDevice, new Interface_VolleyCallback() {
-                    @Override
-                    public void onSuccess() {
-                        bounce();
-                    }
-                    @Override
-                    public void onFailure() {
-                        bounce();
-                    }
-                });
+                } else {
+                    uNetwork.getModelByTac(oDevice, new Interface_VolleyCallback_FailureResponse() {
+                        @Override
+                        public void onSuccess() {
+                            bounce();
+                        }
+
+                        @Override
+                        public void onFailure(JSONObject json) {
+                            try {
+                                if (json.getString(Constants_Extern.DETAILS).equals(Constants_Extern.IMEI_EXISTS_ALREADY)) {
+                                    Toast.makeText(Activity_Bouncer.this, getString(R.string.bouncer_imei_exists), Toast.LENGTH_LONG).show();
+                                    resetDevice();
+                                } else {
+                                    bounce();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+                closeKeyboard(etScan);
             }
-            closeKeyboard(etScan);
+        } else {
+            etScan.setText("");
+            Toast.makeText(this, getString(R.string.please_select_collector), Toast.LENGTH_LONG).show();
         }
     }
 
@@ -141,29 +173,127 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     public void afterBounce() {
         switch (oDevice.getExploitation()) {
             case Constants_Intern.EXPLOITATION_RECYCLING:
-                iOverviewSelection.incrementCounterRecycling();
-                resetDevice();
+
+                uNetwork.recordRecycling(oRecord.getId(), new Interface_VolleyCallback() {
+                    @Override
+                    public void onSuccess() {
+                        oRecord.incrementRecycling();
+                        updateUI();
+                        resetDevice();
+                        Log.i("REEECyling:", Integer.toString(oRecord.getnRecycling()));
+
+                    }
+
+                    @Override
+                    public void onFailure() {
+
+                    }
+                });
                 break;
             case Constants_Intern.EXPLOITATION_REUSE:
-                iOverviewSelection.incrementCounterReuse();
-                oDevice.setStation(new Station(Constants_Intern.STATION_PRESORT_INT));
-                //addDevice();
-                if (usePrinter) mPrinter.printDevice(oDevice);
-                resetDevice();
+
+                uNetwork.recordReuse(oRecord.getId(), new Interface_VolleyCallback() {
+                    @Override
+                    public void onSuccess() {
+                        oRecord.incrementReuse();
+                        oDevice.setStation(new Station(Constants_Intern.STATION_PRESORT_INT));
+                        addDevice();
+                    }
+
+                    @Override
+                    public void onFailure() {
+
+                    }
+                });
+
                 break;
         }
-        updateUI();
+    }
+
+    public void prepareBounce() {
+        //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants_Intern.OBJECT_RECORD, oRecord);
+        fragmentOverview(new Fragment_Overview_Selection(), bundle, Constants_Intern.FRAGMENT_RECORD);
+        Toast.makeText(this, getString(R.string.ready_to_bounce), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showFragmentRecordNew() {
+        fragmentOverview(new Fragment_Record_New(), null, Constants_Intern.FRAGMENT_RECORD_NEW);
+    }
+
+    @Override
+    public void showFragmentRecordExisting() {
+        fragmentOverview(new Fragment_Record_Existing(), null, Constants_Intern.FRAGMENT_RECORD_EXISTING);
+    }
+
+    @Override
+    public void showFragmentRecordMenu() {
+        fragmentOverview(new Fragment_Record_Menu(), null, Constants_Intern.FRAGMENT_RECORD_MENU);
+    }
+
+
+    @Override
+    public void setRecord(Record record) {
+        oRecord = new Record(record.getId(), record.getdLastUpdate(), record.getnRecycling(), record.getnReuse(), record.getnDevices(), record.getcCollectorName());
+        //oRecord = record;
+        prepareBounce();
+    }
+
+    @Override
+    public void pauseRecord() {
+        showFragmentRecordMenu();
+    }
+
+    @Override
+    public void finishRecord() {
+        uNetwork.recordSelected(oRecord.getId(), new Interface_VolleyCallback() {
+            @Override
+            public void onSuccess() {
+                totalReset();
+                oRecord = null;
+                showFragmentRecordMenu();
+            }
+
+            @Override
+            public void onFailure() {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void deleteRecord() {
+
+    }
+
+    @Override
+    public int getCountReuse() {
+        return oRecord.getnReuse();
+    }
+
+    @Override
+    public int getCountRecycling() {
+        return oRecord.getnRecycling();
+    }
+
+    @Override
+    public String getNameCollector() {
+        return oRecord.getcCollectorName();
     }
 
     // Specific methods
     public void addDevice() {
         if (oDevice.getIdDevice() == Constants_Intern.ID_UNKNOWN) {
-            uNetwork.addDevice(oDevice, new Interface_VolleyCallback_Int() {
+            uNetwork.addDevice(oDevice, oRecord, new Interface_VolleyCallback_Int() {
                 @Override
                 public void onSuccess(int i) {
                     oDevice.setIdDevice(i);
-                    if (usePrinter) mPrinter.printDevice(oDevice);
+                    mPrinter.printDevice(oDevice);
                     resetDevice();
+                    updateUI();
                     /*
                     uNetwork.assignLku(oDevice, new Interface_VolleyCallback_Int() {
                         @Override
@@ -195,8 +325,9 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     // Return Methods
 
     @Override
-    public void returnColor(Variation_Color color) {
+    public void returnColor(Color color) {
         super.returnColor(color);
+        Log.i("da", "da");
         bounce();
     }
 
@@ -207,7 +338,12 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     }
 
     @Override
-    public void returnShape(Variation_Shape shape) {
+    public void fragmentColorUpdate() {
+
+    }
+
+    @Override
+    public void returnShape(Shape shape) {
         super.returnShape(shape);
         bounce();
     }
@@ -245,6 +381,11 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     }
 
     @Override
+    public void handledReturnAddColor() {
+        bounce();
+    }
+
+    @Override
     public void handledReturnCharger() {
         bounce();
     }
@@ -252,14 +393,15 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     // Reset
     @Override
     public void totalReset() {
-        totalReset();
-        iOverviewSelection.reset();
+        super.totalReset();
     }
 
     // UI
     @Override
     public void updateUI() {
         super.updateUI();
+        iOverviewSelection = (Interface_Overview_Selection) fManager.findFragmentByTag(Constants_Intern.FRAGMENT_RECORD);
+
         iOverviewSelection.updateUI();
     }
 

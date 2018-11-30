@@ -1,7 +1,6 @@
 package com.example.ericschumacher.bouncer.Fragments;
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,8 +14,10 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Devices;
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Devices;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Devices;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Juicer;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
@@ -35,6 +36,7 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
 
     // Interface
     Interface_Devices iDevices;
+    Interface_Juicer iJuicer;
 
     // Adapter
     Adapter_Devices aDevices;
@@ -50,6 +52,7 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
 
         // Interface
         iDevices = (Interface_Devices) getActivity();
+        iJuicer = (Interface_Juicer)getActivity();
 
         // Utility
         uNetwork = new Utility_Network(getActivity());
@@ -70,18 +73,19 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
                         if (d.getIdDevice() == idDevice) {
                             isPartOfList = true;
                             device = d;
+                            lDevices.remove(d);
                             iDevices.scan(device, isPartOfList);
+                            etScan.setText("");
+                            aDevices.updateList(lDevices);
+                            if (lDevices.size() == 0) {
+                                iJuicer.removeIdModelColorShape(getArguments().getInt(Constants_Intern.ID_MODEL_COLOR_SHAPE));
+                            } else {
+
+                            }
                             break;
                         }
                     }
-                    etScan.setText("");
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            iDevices.getDevices(getArguments(), Fragment_Devices.this);
-                        }
-                    }, 500);
+
 
                 }
             }
@@ -117,9 +121,11 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
     public void setDevices(ArrayList<Device> devices) {
         if (devices.size() == 0) {
             //onDestroy();
+        } else {
+            Log.i("Works", "so far");
+            lDevices = devices;
+            aDevices.updateList(lDevices);
         }
-        Log.i("Works", "so far");
-        lDevices = devices;
-        aDevices.updateList(lDevices);
+
     }
 }

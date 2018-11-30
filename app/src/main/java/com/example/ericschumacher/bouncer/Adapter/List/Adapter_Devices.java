@@ -31,7 +31,7 @@ public class Adapter_Devices extends RecyclerView.Adapter<Adapter_Devices.ViewHo
 
     @Override
     public ViewHolder_Device onCreateViewHolder(ViewGroup parent, int viewType) {
-        ViewHolder_Device vhDevice = new ViewHolder_Device(LayoutInflater.from(Context).inflate(R.layout.item_device, parent, false), new Interface_Device() {
+        ViewHolder_Device vhDevice = new ViewHolder_Device(LayoutInflater.from(Context).inflate(R.layout.item_device_lku, parent, false), new Interface_Device() {
             @Override
             public void remove(int position) {
                 iDevices.delete(Devices.get(position));
@@ -43,7 +43,8 @@ public class Adapter_Devices extends RecyclerView.Adapter<Adapter_Devices.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder_Device holder, int position) {
         Log.i("works", "like"+Integer.toString(Devices.get(position).getIdDevice()));
-        holder.tvDeviceId.setText(Integer.toString(Devices.get(position).getIdDevice()));
+        holder.tvDeviceId.setText(Context.getString(R.string.item_device_id)+" "+Integer.toString(Devices.get(position).getIdDevice()));
+        holder.tvLKU.setText(Context.getString(R.string.item_lku_id)+" "+Integer.toString(Devices.get(position).getLKU()));
     }
 
     @Override
@@ -59,6 +60,7 @@ public class Adapter_Devices extends RecyclerView.Adapter<Adapter_Devices.ViewHo
     public class ViewHolder_Device extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvDeviceId;
+        TextView tvLKU;
         ImageView ivRemove;
 
         Interface_Device iDevice;
@@ -69,6 +71,7 @@ public class Adapter_Devices extends RecyclerView.Adapter<Adapter_Devices.ViewHo
             this.iDevice = iDevice;
 
             tvDeviceId = itemView.findViewById(R.id.tvDevice);
+            tvLKU = itemView.findViewById(R.id.tvLKU);
             ivRemove = itemView.findViewById(R.id.ivDelete);
 
             tvDeviceId.setOnClickListener(this);

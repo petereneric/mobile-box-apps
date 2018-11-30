@@ -79,4 +79,6 @@ public class Adapter_SearchResults extends RecyclerView.Adapter<RecyclerView.Vie
     private interface Interface_Click {
         public void onClick(int position);
     }
+
+
 }

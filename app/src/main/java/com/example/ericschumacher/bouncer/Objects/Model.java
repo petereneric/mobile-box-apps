@@ -27,6 +27,11 @@ public class Model implements Parcelable {
     public Model() {
     }
 
+    public Model(int idModel, String name) {
+        IdModel = idModel;
+        Name = name;
+    }
+
     public Model(int idModel, String name, int defaultExploitation, int idManufacturer, String nameManufacturer, int idBattery, String nameBattery, int idCharger, String nameCharger) {
         IdModel = idModel;
         Name = name;

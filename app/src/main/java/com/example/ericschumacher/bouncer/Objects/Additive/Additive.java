@@ -5,11 +5,13 @@ import android.os.Parcelable;
 
 import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 
+import java.io.Serializable;
+
 /**
  * Created by Eric on 13.07.2018.
  */
 
-public class Additive implements Parcelable{
+public class Additive implements Serializable, Parcelable {
     int Id;
     String Name;
     String UrlName;

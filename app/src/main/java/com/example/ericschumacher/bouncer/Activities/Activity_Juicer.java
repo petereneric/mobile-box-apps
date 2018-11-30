@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -36,8 +37,8 @@ import java.util.ArrayList;
 public class Activity_Juicer extends AppCompatActivity implements Interface_Juicer, Interface_Devices, Interface_Request_Choice, Adapter_Juicer_Charger.Interface_Adapter_Juicer_Charger {
 
     // Data
-    ArrayList<Device> Devices;
     ArrayList<Charger> lCharger = new ArrayList<>();
+    ArrayList<Integer> lModelColorShapeIds = new ArrayList<>();
 
     // Layout
     ViewPager ViewPager;
@@ -63,7 +64,7 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
         fManager = getSupportFragmentManager();
 
         // RecyclerView
-        rvCharger.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        rvCharger.setLayoutManager(new GridLayoutManager(this,3, LinearLayoutManager.HORIZONTAL, false));
         aCharger = new Adapter_Juicer_Charger(Activity_Juicer.this, lCharger, Activity_Juicer.this);
         rvCharger.setAdapter(aCharger);
 
@@ -99,9 +100,14 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
     }
 
     @Override
+    public void removeIdModelColorShape(int idModelColorShape) {
+        lModelColorShapeIds.remove(new Integer(idModelColorShape));
+        aLKUs.updateData(lModelColorShapeIds);
+    }
+
+    @Override
     public void scan(Device device, boolean isPartOfList) {
-        device.getStation().setId(Constants_Intern.STATION_UNKNOWN_INT);
-        uNetwork.updateDevice(device, new Interface_VolleyCallback() {
+        uNetwork.bookDeviceOutOfLKUStock(device, new Interface_VolleyCallback() {
             @Override
             public void onSuccess() {
 
@@ -150,13 +156,21 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
     }
 
     @Override
+    public void onAdd() {
+
+    }
+
+    @Override
     public void onChargerChanged(ArrayList<Charger> chargerUnselected) {
+        ViewPager.setBackgroundColor(getResources().getColor(R.color.color_primary_dark));
         Log.i("Activity_Juicer", "onChargerChanged");
         uNetwork.getDevicesForJuicer(chargerUnselected, new Interface_VolleyCallback_ArrayList_ModelColorShapeIds() {
             @Override
             public void onSuccess(ArrayList<Integer> modelColorShapeIds) {
+                lModelColorShapeIds = modelColorShapeIds;
                 Log.i("modelColorShapeIds", Integer.toString(modelColorShapeIds.size()));
-                aLKUs.updateData(modelColorShapeIds);
+                aLKUs.updateData(lModelColorShapeIds);
+                ViewPager.setBackgroundColor(getResources().getColor(R.color.color_white));
             }
             @Override
             public void onFailure() {

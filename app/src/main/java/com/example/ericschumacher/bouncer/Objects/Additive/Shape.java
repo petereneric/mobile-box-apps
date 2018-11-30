@@ -4,9 +4,9 @@ package com.example.ericschumacher.bouncer.Objects.Additive;
  * Created by Eric on 13.07.2018.
  */
 
-public class Variation_Shape extends Additive {
+public class Shape extends Additive {
 
-    public Variation_Shape(int id, String name) {
+    public Shape(int id, String name) {
         super(id, name);
     }
 }

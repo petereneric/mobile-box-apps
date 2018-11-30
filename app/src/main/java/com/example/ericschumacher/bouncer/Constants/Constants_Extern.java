@@ -48,6 +48,20 @@ public class Constants_Extern extends Constants_Intern {
     public final static String DEVICE = "DEVICE";
     public final static String DPS = "DPS";
     public final static String IDS = "IDS";
+    public final static String IDS_NOT_CONNECTED = "IDS_NOT_CONNECTED";
+    public final static String RPD = "RPD";
+    public final static String COLLECTORS = "COLLECTORS";
+    public final static String RECORDS = "RECORDS";
+    public final static String LAST_UPDATE = "LAST_UPDATE";
+    public final static String NAME_PAYEE = "NAME_PAYEE";
+    public final static String ACCOUNTHOLDER = "ACCOUNT_HOLDER";
+    public final static String IBAN = "IBAN";
+    public final static String PAYMENT = "PAYMENT";
+    public final static String COUNT_RECYCLING = "COUNT_RECYCLING";
+    public final static String COUNT_REUSE = "COUNT_REUSE";
+    public final static String DATE_CREATION = "DATE_CREATION";
+    public final static String BILLS = "BILLS";
+    public final static String IMEI_EXISTS_ALREADY = "IMEI_EXISTS_ALREADY";
 
     // Details
     public final static String TAC_KNOWN = "TAC_KNOWN";
@@ -55,4 +69,5 @@ public class Constants_Extern extends Constants_Intern {
     public final static String NAME_UNKNOWN = "NAME_UNKNOWN";
     public final static String NAME_KNOWN = "NAME_KNOWN";
 
+    public static final String ID_RECORD = "ID_RECORD";
 }

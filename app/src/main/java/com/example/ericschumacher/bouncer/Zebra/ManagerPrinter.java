@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 import com.zebra.sdk.btleComm.BluetoothLeConnection;
@@ -22,9 +23,11 @@ public class ManagerPrinter {
     private Connection Connection;
     Context Context;
 
+    boolean bUsePrinter;
+
     public ManagerPrinter(Context context) {
         Context = context;
-        connect();
+        if (usePrinter(Context)) connect();
 
     }
 
@@ -39,40 +42,19 @@ public class ManagerPrinter {
     }
 
     public void printDevice(Device device) {
-        try {
-            if (Printer != null && readyToPrint()) {
-                Connection.write(getDeviceLabel(device));
-                Log.i("What", "should work");
+        if (usePrinter(Context) && Connection != null) {
+            try {
+                if (Printer != null && readyToPrint()) {
+                    Connection.write(getDeviceLabel(device));
+                    Log.i("What", "should work");
+                }
+            } catch (ConnectionException e1) {
+                Log.d("JOOO","Error sending file to printer");
             }
-        } catch (ConnectionException e1) {
-            Log.d("JOOO","Error sending file to printer");
         }
     }
 
     private byte[] getDeviceLabel(Device device) {
-        /*
-        String labelTest = "\u0010CT~~CD,~CC^~CT~\n" +
-                "^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR6,6~SD15^JUS^LRN^CI0^XZ\n" +
-                "^XA\n" +
-                "^MMT\n" +
-                "^PW408\n" +
-                "^LL0200\n" +
-                "^LS0\n" +
-                "^FT392,47^A0I,28,28^FH\\^FD"+device.getIdModel()+"^FS\n" +
-                "^FT256,46^A0I,28,28^FH\\^FD-^FS\n" +
-                "^FT220,50^A0I,28,16^FH\\^FD"+"FARBE"+"^FS\n" +
-                "^FT135,47^A0I,28,19^FH\\^FD-^FS\n" +
-                "^FT113,49^A0I,28,24^FH\\^FD"+"ZUSTAND"+"^FS\n" +
-                "^FT160,15^A0I,25,26^FH\\^FD"+device.getName()+"^FS\n" +
-                "^FT189,11^A0I,28,28^FH\\^FD:^FS\n" +
-                "^FT389,16^A0I,21,28^FH\\^FD"+device.getManufacturer().getName()+"^FS\n" +
-                "^FT269,163^A0I,28,28^FH\\^FD"+device.getLKU()+"^FS\n" +
-                "^BY4,3,40^FT384,114^BCI,,Y,N\n" +
-                "^FD>:"+device.getIdDevice()+"^FS\n" +
-                "^PQ1,0,1,Y^XZ";
-
-                */
-
         String idDevice = Integer.toString(device.getIdDevice());
         String LKU = Integer.toString(device.getLKU());
         String name = device.getName();
@@ -132,32 +114,43 @@ public class ManagerPrinter {
     }
 
     public void connect() {
-        if (Printer == null) {
-            Connection = null;
-            Connection = new BluetoothLeConnection("C4:F3:12:17:D0:2E", Context);
+        if (usePrinter(Context)) {
+            if (Printer == null) {
+                Connection = null;
+                Connection = new BluetoothLeConnection("C4:F3:12:17:D0:2E", Context);
 
-            try {
-                Connection.open();
-            } catch (ConnectionException e) {
-                DemoSleeper.sleep(1000);
-                disconnect();
-            }
-            Printer = null;
-
-            if (Connection.isConnected()) {
                 try {
-                    Printer = ZebraPrinterFactory.getInstance(Connection);
-                    String pl = SGD.GET("device.languages", Connection);
+                    Connection.open();
                 } catch (ConnectionException e) {
-                    Printer = null;
-                    DemoSleeper.sleep(1000);
-                    disconnect();
-                } catch (ZebraPrinterLanguageUnknownException e) {
-                    Printer = null;
                     DemoSleeper.sleep(1000);
                     disconnect();
                 }
+                Printer = null;
+
+                if (Connection.isConnected()) {
+                    try {
+                        Printer = ZebraPrinterFactory.getInstance(Connection);
+                        String pl = SGD.GET("device.languages", Connection);
+                    } catch (ConnectionException e) {
+                        Printer = null;
+                        DemoSleeper.sleep(1000);
+                        disconnect();
+                    } catch (ZebraPrinterLanguageUnknownException e) {
+                        Printer = null;
+                        DemoSleeper.sleep(1000);
+                        disconnect();
+                    }
+                }
             }
         }
+
+    }
+
+    public static boolean usePrinter(Context context) {
+        return context.getSharedPreferences(Constants_Intern.SHARED_PREFERENCES, 0).getBoolean(Constants_Intern.USE_PRINTER, false);
+    }
+
+    public static void usePrinter(Context context, boolean bUsePrinter) {
+        context.getSharedPreferences(Constants_Intern.SHARED_PREFERENCES, 0).edit().putBoolean(Constants_Intern.USE_PRINTER, bUsePrinter).commit();
     }
 }

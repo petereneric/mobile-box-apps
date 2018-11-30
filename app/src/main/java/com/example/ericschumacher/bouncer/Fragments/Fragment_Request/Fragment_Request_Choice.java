@@ -17,9 +17,7 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_Request_Choice;
 import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
-import com.example.ericschumacher.bouncer.Objects.Additive.Variation_Color;
 import com.example.ericschumacher.bouncer.R;
-import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
 import java.util.ArrayList;
 
@@ -32,9 +30,6 @@ public class Fragment_Request_Choice extends Fragment implements Interface_Reque
     // Layout
     View Layout;
     RecyclerView RecyclerView;
-
-    // Variables
-    Utility_Network uNetwork;
 
     // Interface
     Interface_Manager iManager;
@@ -56,9 +51,10 @@ public class Fragment_Request_Choice extends Fragment implements Interface_Reque
         Bundle arg = getArguments();
         lAdditive = new ArrayList<>();
         lAdditive = arg.getParcelableArrayList(Constants_Intern.LIST_ADDITIVE);
-        Adapter_Request_Choice adapter = new Adapter_Request_Choice(getActivity(), lAdditive, this);
+
         RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
-        RecyclerView.setAdapter(adapter);
+        setAdapter();
+
 
         return Layout;
     }
@@ -73,6 +69,15 @@ public class Fragment_Request_Choice extends Fragment implements Interface_Reque
         Additive additive = lAdditive.get(position);
         if (additive instanceof Manufacturer) iManager.returnManufacturer((Manufacturer) lAdditive.get(position));
         if (additive instanceof Charger) iManager.returnCharger((Charger) lAdditive.get(position));
-        if (additive instanceof Variation_Color)  iManager.returnColor((Variation_Color) lAdditive.get(position));
+    }
+
+    public void setAdapter() {
+        Adapter_Request_Choice adapter = new Adapter_Request_Choice(getActivity(), lAdditive, this);
+        RecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onAdd() {
+
     }
 }

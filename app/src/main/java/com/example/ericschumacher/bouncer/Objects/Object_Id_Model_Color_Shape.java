@@ -1,17 +1,19 @@
 package com.example.ericschumacher.bouncer.Objects;
 
-public class Object_Model_Color_Shape {
+public class Object_Id_Model_Color_Shape {
 
     private int Id_model_color_shape;
     private int Id_color;
     private int Id_shape;
     private String Name;
+    private double Rpd;
 
-    public Object_Model_Color_Shape(int id_model_color_shape, int id_color, int id_shape, String name) {
+    public Object_Id_Model_Color_Shape(int id_model_color_shape, int id_color, int id_shape, String name) {
         Id_model_color_shape = id_model_color_shape;
         Id_color = id_color;
         Id_shape = id_shape;
         Name = name;
+        Rpd = 0.0;
     }
 
     public int getId_model_color_shape() {
@@ -44,5 +46,13 @@ public class Object_Model_Color_Shape {
 
     public void setName(String name) {
         Name = name;
+    }
+
+    public double getRpd() {
+        return Rpd;
+    }
+
+    public void setRpd(double rpd) {
+        Rpd = rpd;
     }
 }
