@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Turing;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_List;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_IdModelColorShape;
 import com.example.ericschumacher.bouncer.Objects.Object_Id_Model_Color_Shape;
 import com.example.ericschumacher.bouncer.R;
@@ -15,7 +16,7 @@ import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
 import java.util.ArrayList;
 
-public class Activity_Turing extends AppCompatActivity {
+public class Activity_Turing extends AppCompatActivity implements Interface_List {
 
     // Layout
     RecyclerView rvIdsNotConnected;
@@ -61,6 +62,21 @@ public class Activity_Turing extends AppCompatActivity {
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(rvIdsNotConnected);
+
+    }
+
+    @Override
+    public void onClick(int position, String tagFragment) {
+
+    }
+
+    @Override
+    public void onSwipeLeft(int position, String tagFragment) {
+
+    }
+
+    @Override
+    public void onSwipeRight(int position, String tagFragment) {
 
     }
 }

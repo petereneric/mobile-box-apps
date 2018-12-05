@@ -27,6 +27,11 @@ public class Constants_Intern {
     public final static String OBJECT_COLLECTOR = "OBJECT_COLLECTOR";
     public final static String OBJECT_RECORD = "OBJECT_RECORD";
     public final static String USE_PRINTER = "USE_PRINTER";
+    public final static String STRING_JSON = "STRING_JSON";
+    public final static String JSON_LIST_HEADER = "JSON_LIST_HEADER";
+    public final static String JSON_LIST = "JSON_LIST";
+    public final static String LAYOUT_WEIGHT = "LAYOUT_WEIGHT";
+    public final static String TEXT_VALUE = "TEXT_VALUE";
 
     public final static int DESTINATION_UNKNOWN = 0;
 
