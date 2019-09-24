@@ -3,6 +3,10 @@
     // App name
     <string name="app_name">Bouncer</string>
 
+    // Model
+    <string name="dps">Dps</string>
+
+
     // Activity-Names
     <string name="activity_name_menu">Menu</string>
     <string name="activity_name_bouncer">Bouncer</string>
@@ -17,13 +21,13 @@
     <string name="not_defined">Not defined</string>
     <string name="phone">Phone</string>
     <string name="model">Model</string>
-    <string name="battery">Battery</string>
+    <string name="oBattery">Battery</string>
     <string name="shape">Shape</string>
     <string name="color">Color</string>
     <string name="producer">Producer</string>
     <string name="hint_scan">Scan..</string>
     <string name="hint_model_name">Enter model name..</string>
-    <string name="hint_battery_name">Enter battery name..</string>
+    <string name="hint_battery_name">Enter oBattery name..</string>
     <string name="missing_input">Missing input</string>
     <string name="selection_result">Result of selection</string>
     <string name="reuse">Reuse</string>
@@ -36,7 +40,7 @@
     <string name="undo">Undo</string>
     <string name="added_to">Added to:</string>
     <string name="add_battery">Add %1$s to batteries?</string>
-    <string name="hint_enter_battery_name">Enter battery name..</string>
+    <string name="hint_enter_battery_name">Enter oBattery name..</string>
     <string name="broken">Broken</string>
     <string name="shape_broken">Broken</string>
     <string name="ok">Ok</string>
@@ -49,12 +53,13 @@
     <string name="total">Total</string>
     <string name="name">Name</string>
     <string name="manufacturer">Manufacturer</string>
-    <string name="charger">Charger</string>
+    <string name="oManufacturer">Manufacturer</string>
+    <string name="oCharger">Charger</string>
     <string name="toast_model_has_lku">Wolfram was machst du da? Das Model hat doch schon eine LKU. </string>
-    <string name="default_exploitation">Default Exploitation</string>
+    <string name="default_exploitation">Exploitation</string>
     <string name="destination">Destination</string>
-    <string name="station">Station</string>
-    <string name="model_name">Model name</string>
+    <string name="oStation">Station</string>
+    <string name="model_name">Model-Name</string>
 
     // Activity - Turing
     <string name="color_erp">Color ERP</string>
@@ -70,7 +75,15 @@
     <string name="booked">Booked</string>
     <string name="booked_out">Booked out</string>
     <string name="book">Book into LKU Stock (Tap for yes)</string>
-    <string name="book_out">Book out of LKU Stock (Tap for yes)</string>
+    <string name="book_out">Book out of LKU Stock</string>
+    <string name="suggested_lku">Suggested LKU: </string>
+    <string name="suggested">Suggested - </string>
+    <string name="Stock">Stock: </string>
+    <string name="Lku">Lku: </string>
+
+    <string name="lku_booked_in">Booked</string>
+    <string name="space_full">Space full</string>
+    <string name="cancel">Cancel</string>
 
     // Printer
     <string name="printer_head_open">Head of printer is open</string>
@@ -86,6 +99,7 @@
     // Device
     <string name="item_device_id">Device Id: </string>
     <string name="item_lku_id">LKU Id: </string>
+    <string name="condition">Condition</string>
 
     // Model Color Shape
     <string name="id_model_color_shape">id</string>
@@ -96,7 +110,7 @@
     // Edit Color
     <string name="et_hint_color_name">Enter color name...</string>
     <string name="et_hint_hex">Enter hex code...</string>
-    <string name="no_manufacturer_selected">No manufacturer selected</string>
+    <string name="no_manufacturer_selected">No oManufacturer selected</string>
     <string name="no_model_selected">No model selected</string>
 
     // Button
@@ -126,6 +140,59 @@
     <string name="ready_to_bounce">Ready to bounce!</string>
     <string name="missing_color_information">Please enter color name and hex</string>
     <string name="bouncer_imei_exists">We already have a device with this IMEI in our system. Therefore you can skip this one.</string>
+
+    // Tabs Turing
+    <string name="tab_turing_one">Summary</string>
+    <string name="tab_turing_two">Error model</string>
+    <string name="tab_turing_three">Error color</string>
+
+    <string name="flush">Flush</string>
+    <string name="selection">Selection</string>
+    <string name="id_device">Id-Device</string>
+    <string name="position">Position</string>
+    <string name="click_for_front_picture">Please click to take front picture (Long Click for skipping)</string>
+    <string name="toast_request_permission_camera">Please permit camera usage.</string>
+    <string name="click_for_back_picture">Click for back picture (Long Click for skipping)</string>
+    <string name="battery">Battery</string>
+    <string name="unknown">Unknown</string>
+    <string name="charger">Charger</string>
+    <string name="doubleModel">Double Models</string>
+    <string name="devices_no_model_color_shape_lku">Devices without model, color, shape in Lku</string>
+    <string name="id_model">ID Model</string>
+    <string name="name_model">Name Model</string>
+    <string name="name_stock">Name Stock</string>
+    <string name="id_lku">ID Lku</string>
+    <string name="multiple_model">Multiple Model</string>
+    <string name="merge">Merge</string>
+    <string name="name_collector">Name collector</string>
+    <string name="id_collector">Collector</string>
+    <string name="id_shipping_record">Shipping record</string>
+    <string name="number_box">#</string>
+    <string name="id_bricolage">Bricolage</string>
+    <string name="number_bricolage">#</string>
+    <string name="id_flyer">Flyer</string>
+    <string name="number_flyer">#</string>
+    <string name="id_poster">Poster</string>
+    <string name="number_poster">#</string>
+    <string name="id_tracking">Tracking</string>
+    <string name="shipping_status">Status</string>
+    <string name="marketing_shipping_records_not_sent">Marketing shipping records not sent</string>
+    <string name="id_box">Box</string>
+    <string name="sent">Sent</string>
+    <string name="devices_no_color_lku">Devices no color in Prime-Stock</string>
+    <string name="devices_no_model_lku">Device no model in Prime-Stock</string>
+    <string name="error_forgot_to_book">Error: You forgot to book the device or did not cancel the booking request</string>
+    <string name="battery_contained">Battery contained</string>
+    <string name="_false">False</string>
+    <string name="_true">True</string>
+    <string name="request_battery_contained_title">Battery contained?</string>
+    <string name="battery_removable">Battery removable</string>
+    <string name="request_battery_removable_title">Battery removable?</string>
+    <string name="request">Request</string>
+    <string name="result">Result</string>
+    <string name="device">Device</string>
+    <string name="backcover">Backcover</string>
+    <string name="repair">Repair</string>
 
 
 </resources>

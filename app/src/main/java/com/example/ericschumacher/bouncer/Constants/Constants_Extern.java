@@ -40,7 +40,6 @@ public class Constants_Extern extends Constants_Intern {
     public final static String STATUS = "STATUS";
     public final static String NOTES = "NOTES";
     public final static String DEVICES = "DEVICES";
-    public final static String EXPLOITATION_DEFAULT = "EXPLOITATION_DEFAULT";
     public final static String ID_VARIATION_COLOR = "ID_VARIATION_COLOR";
     public final static String ID_VARIATION_SHAPE = "ID_VARIATION_SHAPE";
     public final static String NAME_SHAPE = "NAME_SHAPE";
@@ -70,4 +69,77 @@ public class Constants_Extern extends Constants_Intern {
     public final static String NAME_KNOWN = "NAME_KNOWN";
 
     public static final String ID_RECORD = "ID_RECORD";
+    public static final String ID_STOCK = "ID_STOCK";
+
+    public static final String OBJECT_STATION = "OBJECT_STATION";
+    public static final String OBJECT_STORAGEPLACE = "OBJECT_STORAGEPLACE";
+    public static final String OBJECT_MANUFACTURER = "OBJECT_MANUFACTURER";
+    public static final String OBJECT_CHARGER = "OBJECT_CHARGER";
+    public static final String OBJECT_BATTERY = "OBJECT_BATTERY";
+    public static final String OBJECT_COLOR = "OBJECT_COLOR";
+    public static final String OBJECT_SHAPE = "OBJECT_SHAPE";
+
+
+    public static final String ID_STORAGE_PLACE = "ID_STORAGE_PLACE";
+    public static final String POSITION = "POSITION";
+    public static final String NAME_STOCK = "NAME_STOCK";
+    public static final String LIST_MANUFACTURER = "LIST_MANUFACTURER";
+    public static final String LIST_MODELS = "LIST_MODELS";
+    public static final int UNKNOWN_POSITION = 0;
+    public static final String LIST_COLORS = "LIST_COLORS";
+    public static final String IMAGE_DEVICE_FRONT = "IMAGE_DEVICE_FRONT";
+    public static final String IMAGE_DEVICE_BACK = "IMAGE_DEVICE_BACK";
+    public static final String NAME_TYPE = "NAME_TYPE";
+    public static final String LIST_MODEL_COLOR_SHAPE_IDS = "LIST_MODEL_COLOR_SHAPE_IDS";
+    public static final String LIST_DEVICES = "LIST_DEVICES";
+    public static final String OBJECT_BOX = "OBJECT_BOX";
+    public static final String NUMBER_BOX = "NUMBER_BOX";
+    public static final String OBJECT_BRICOLAGE = "OBJECT_BRICOLAGE";
+    public static final String NUMBER_BRICOLAGE = "NUMBER_BRICOLAGE";
+    public static final String OBJECT_FLYER = "OBJECT_FLYER";
+    public static final String NUMBER_FLYER = "NUMBER_FLYER";
+    public static final String OBJECT_POSTER = "OBJECT_POSTER";
+    public static final String NUMBER_POSTER = "NUMBER_POSTER";
+    public static final String ID_TRACKING = "ID_TRACKING";
+    public static final String IS_SENT = "IS_SENT";
+    public static final String VERSION = "VERSION";
+    public static final String WIDTH = "WIDTH";
+    public static final String HEIGHT = "HEIGHT";
+    public static final String DEPTHS = "DEPTHS";
+    public static final String FILE_DESIGN_PRINT = "FILE_DESIGN_PRINT";
+    public static final String FILE_DESIGN_WEB = "FILE_DESIGN_WEB";
+    public static final String NUMBER_STOCK = "NUMBER_STOCK";
+    public static final String PRICE = "PRICE";
+    public static final String PAGES = "PAGES";
+    public static final String DATE_SHIPPING = "DATE_SHIPPING";
+    public static final String DECLARATION = "DECLARATION";
+    public static final String BATTERY_REMOVABLE = "BATTERY_REMOVABLE";
+    public static final String BOOLEAN_BATTERY_CONTAINED = "BOOLEAN_BATTERY_CONTAINED";
+
+
+    // Collector
+    public static final String NAME_DETAILS = "NAME_DETAILS";
+    public static final String TYPE = "TYPE";
+    public static final String PRENAME_PERSON = "PRENAME_PERSON";
+    public static final String SURNAME_PERSON = "SURNAME_PERSON";
+    public static final String TITLE_PERSON = "TITLE_PERSON";
+    public static final String ADDRESS_FORMALLY = "ADDRESS_FORMALLY";
+    public static final String PHONE_FIXED_LINE = "PHONE_FIXED_LINE";
+    public static final String PHONE_MOBILE = "PHONE_MOBILE";
+    public static final String E_MAIL = "E_MAIL";
+    public static final String E_MAIL_CC = "E_MAIL_CC";
+    public static final String SHIPPING_NAME_ONE = "SHIPPING_NAME_ONE";
+    public static final String SHIPPING_NAME_TWO = "SHIPPING_NAME_TWO";
+    public static final String SHIPPING_STREET = "SHIPPING_STREET";
+    public static final String SHIPPING_STREET_NUMBER = "SHIPPING_STREET_NUMBER";
+    public static final String SHIPPING_ZIP = "SHIPPING_ZIP";
+    public static final String SHIPPING_CITY = "SHIPPING_CITY";
+    public static final String SHIPPING_COUNTRY = "SHIPPING_COUNTRY";
+    public static final String ID_PAYEE = "ID_PAYEE";
+    public static final String ID_COLLECTOR = "ID_COLLECTOR";
+
+
+
+    public static final String DESCRIPTION = "DESCRIPTION";
+    public static final String LIST_SHIPPING_RECORDS = "LIST_SHIPPING_RECORDS";
 }

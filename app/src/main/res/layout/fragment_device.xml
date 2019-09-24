@@ -7,7 +7,7 @@
     <FrameLayout
         android:id="@+id/flModel"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1" />
 
     <RelativeLayout
@@ -20,64 +20,76 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TableRow android:id="@+id/trLKU">
-
-                <TextView
-                    style="@style/tv_tableRow"
-                    android:text="@string/lku" />
-
-                <TextView
-                    android:id="@+id/tvLKU"
-                    style="@style/tv_tableRow"
-                    android:text="Nicht vergeben" />
-            </TableRow>
-
-            <TableRow android:id="@+id/trDestination">
-
-                <TextView
-                    style="@style/tv_tableRow"
-                    android:text="@string/destination" />
-
-                <TextView
-                    android:id="@+id/tvDestination"
-                    style="@style/tv_tableRow"
-                    android:text="Reparatur" />
-            </TableRow>
-
-            <TableRow android:id="@+id/trStation">
-
-                <TextView
-                    style="@style/tv_tableRow"
-                    android:text="@string/station" />
-
-                <TextView
-                    android:id="@+id/tvStation"
-                    style="@style/tv_tableRow"
-                    android:text="Selektion" />
-            </TableRow>
-
             <TableRow android:id="@+id/trColor">
 
                 <TextView
-                    style="@style/tv_tableRow"
+                    style="@style/tv_tableRow_Key"
                     android:text="@string/color" />
 
                 <TextView
                     android:id="@+id/tvColor"
-                    style="@style/tv_tableRow"
+                    style="@style/tv_tableRow_Value"
                     android:text="Weiß" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trCondition">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/condition" />
+
+                <TextView
+                    android:id="@+id/tvCondition"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Ok" />
             </TableRow>
 
             <TableRow android:id="@+id/trShape">
 
                 <TextView
-                    style="@style/tv_tableRow"
+                    style="@style/tv_tableRow_Key"
                     android:text="@string/shape" />
 
                 <TextView
                     android:id="@+id/tvShape"
-                    style="@style/tv_tableRow"
+                    style="@style/tv_tableRow_Value"
                     android:text="@string/shape_very_good" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trBattery">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/battery_contained" />
+
+                <TextView
+                    android:id="@+id/tvBattery"
+                    style="@style/tv_tableRow_Value"
+                    android:text="true" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trStation">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/oStation" />
+
+                <TextView
+                    android:id="@+id/tvStation"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Selektion" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trLKU">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/lku" />
+
+                <TextView
+                    android:id="@+id/tvLKU"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Nicht vergeben" />
             </TableRow>
 
         </TableLayout>

@@ -1,5 +1,7 @@
 package com.example.ericschumacher.bouncer.Objects.Collection;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -182,5 +184,11 @@ public class Record implements Serializable{
 
     public void setkBillCollector(int kBillCollector) {
         this.kBillCollector = kBillCollector;
+    }
+
+    public JSONObject getJson() {
+        JSONObject oJson = new JSONObject();
+
+        return oJson;
     }
 }

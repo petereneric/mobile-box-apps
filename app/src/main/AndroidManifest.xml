@@ -17,12 +17,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:screenOrientation="portrait" android:name=".Activities.Activity_Bouncer"></activity>
-        <activity android:name=".Activities.Activity_Juicer"></activity>
-        <activity android:name=".Activities.Activity_LKU_Manager"></activity>
+        <activity android:screenOrientation="portrait" android:name=".Activities.Activity_Bouncer" android:launchMode="singleTask"></activity>
+        <activity android:screenOrientation="portrait" android:name=".Activities.Activity_Juicer"></activity>
+        <activity android:name=".Activities.Activity_LKU_Device_Manager"></activity>
         <activity android:name=".Activities.Activity_LKU_Booker"></activity>
         <activity android:name=".Activities.Activity_Turing"></activity>
         <activity android:name=".Activities.Activity_Zwegat"></activity>
+        <activity android:name=".Activities.Activity_Manager"></activity>
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.ericschumacher.bouncer"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"></meta-data>
+        </provider>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -37,6 +48,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-feature android:name="android.hardware.bluetooth_le" android:required="true"/>
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
 
 </manifest>

@@ -1,34 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/card_view"
     android:layout_width="160dp"
     android:layout_height="200dp"
-    card_view:cardUseCompatPadding="true"
-    card_view:cardCornerRadius="8dp">
+    card_view:cardCornerRadius="8dp"
+    card_view:cardUseCompatPadding="true">
 
     <LinearLayout
+        android:id="@+id/ll_cardview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/ll_cardview"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_icon"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2"/>
+            android:layout_weight="2">
+
+            <ImageView
+                android:id="@+id/iv_icon_two"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"/>
+
+            <ImageView
+                android:layout_toLeftOf="@id/iv_icon_two"
+                android:id="@+id/iv_icon"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+
+
+        </RelativeLayout>
 
         <TextView
+            android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/tv_name"
             android:layout_alignParentBottom="true"
-            android:text="Nokia"
+            android:layout_weight="1"
             android:gravity="center"
-            android:textSize="18sp"/>
+            android:text="Nokia"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvSuggestedLku"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:padding="16dp"
+        android:text="@string/suggested_lku"
+        android:gravity="center"/>
+
+    <Button
+        android:layout_height="132dp"
+        android:id="@+id/bBooked"
+        style="@style/button_default"
+        android:layout_width="match_parent"
+        android:text="@string/booked"/>
+
+    <Button
+        android:layout_height="132dp"
+        android:id="@+id/bSpaceFull"
+        style="@style/button_default"
+        android:layout_width="match_parent"
+        android:text="@string/space_full"/>
+
+    <Button
+        android:layout_height="132dp"
+        android:id="@+id/bCancel"
+        style="@style/button_default"
+        android:layout_width="match_parent"
+        android:text="@string/cancel"/>
+
+</LinearLayout>

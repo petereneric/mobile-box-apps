@@ -131,6 +131,7 @@ public class ViewHolder_Request_Choice extends RecyclerView.ViewHolder implement
 
     LinearLayout llCardview;
     ImageView ivIcon;
+    ImageView ivIconTwo;
     TextView tvName;
 
     Interface_Click iClick;
@@ -140,6 +141,7 @@ public class ViewHolder_Request_Choice extends RecyclerView.ViewHolder implement
 
         llCardview = itemView.findViewById(R.id.ll_cardview);
         ivIcon = itemView.findViewById(R.id.iv_icon);
+        ivIconTwo = itemView.findViewById(R.id.iv_icon_two);
         tvName = itemView.findViewById(R.id.tv_name);
 
         //tvName.setVisibility(View.GONE);

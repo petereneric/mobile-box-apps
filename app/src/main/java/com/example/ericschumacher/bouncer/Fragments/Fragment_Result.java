@@ -38,8 +38,8 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
         setLayout();
 
         // Data
-        oModel = getArguments().getParcelable(Constants_Intern.OBJECT_MODEL);
-        tvResult.setText(oModel.getExploitationForScreen(getActivity()));
+        oModel = (Device)getArguments().getSerializable(Constants_Intern.OBJECT_MODEL);
+        tvResult.setText(oModel.getoModel().getExploitationForScreen(getActivity()));
 
         // Interface
         iSelection = (Interface_Selection) getActivity();

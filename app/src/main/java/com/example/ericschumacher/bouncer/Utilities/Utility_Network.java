@@ -16,7 +16,6 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
-import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Additive;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_BillPayee;
@@ -27,7 +26,6 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Ar
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_ModelColorShapeIds;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Records;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Device;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_FailureResponse;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
 import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
@@ -149,145 +147,6 @@ public class Utility_Network {
             queue.getCache().clear();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public void getModelByTac(final Device device, final Interface_VolleyCallback_FailureResponse iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/tac/" + device.getIMEI() + "/" + device.getTAC();
-        Log.i("Checking", url);
-        try {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.i("Response: ", response);
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                            device.setIdModel(jsonObject.getInt(Constants_Extern.ID_MODEL));
-                            device.setName(jsonObject.getString(Constants_Extern.NAME_MODEL));
-                            if (!jsonObject.isNull(Constants_Extern.ID_BATTERY)) {
-                                device.setBattery(new Battery(jsonObject.getInt(Constants_Extern.ID_BATTERY), jsonObject.getString(Constants_Extern.NAME_BATTERY)));
-                            }
-                            if (!jsonObject.isNull(Constants_Extern.ID_CHARGER)) {
-                                device.setCharger(new Charger(jsonObject.getInt(Constants_Extern.ID_CHARGER), jsonObject.getString(Constants_Extern.NAME_CHARGER)));
-                            }
-                            if (!jsonObject.isNull(Constants_Extern.ID_MANUFACTURER)) {
-                                device.setManufacturer(new Manufacturer(jsonObject.getInt(Constants_Extern.ID_MANUFACTURER), jsonObject.getString(Constants_Extern.NAME_MANUFACTURER)));
-                            }
-                            if (!jsonObject.isNull(Constants_Extern.EXPLOITATION)) {
-                                device.setExploitation(jsonObject.getInt(Constants_Extern.EXPLOITATION));
-                            }
-                            iCallback.onSuccess();
-                        } else {
-                            iCallback.onFailure(jsonObject);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("VOLLEY", error.toString());
-                }
-            }) {
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                    String responseString = "";
-                    if (response != null && response.statusCode == 200) {
-                        responseString = new String(response.data);
-                    }
-                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                }
-            };
-            queue.add(stringRequest);
-            queue.getCache().clear();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void getLKU(Device o, final Interface_VolleyCallback_Int iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/lku/" + Integer.toString(o.getIdModel());
-        try {
-            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    Log.i("Response: ", response);
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                            iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_LKU));
-                        } else {
-                            iCallback.onFailure();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("VOLLEY", error.toString());
-                }
-            }) {
-                @Override
-                protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                    String responseString = "";
-                    if (response != null && response.statusCode == 200) {
-                        responseString = new String(response.data);
-                    }
-                    return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                }
-            };
-            queue.add(stringRequest);
-            queue.getCache().clear();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void connectWithLku(Device o, final Interface_VolleyCallback_Int iCallback) {
-        if (o.testMode()) {
-            iCallback.onSuccess(0);
-        } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/lku/connect/" + Integer.toString(o.getIdModel());
-            try {
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("Response: ", response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                                iCallback.onSuccess(jsonObject.getInt(Constants_Extern.ID_LKU));
-                            } else {
-                                iCallback.onFailure();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("VOLLEY", error.toString());
-                    }
-                }) {
-                    @Override
-                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                        String responseString = "";
-                        if (response != null && response.statusCode == 200) {
-                            responseString = new String(response.data);
-                        }
-                        return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                    }
-                };
-                queue.add(stringRequest);
-                queue.getCache().clear();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 
@@ -419,51 +278,7 @@ public class Utility_Network {
             }
     }
 
-    public void checkExploitation(Device o, final Interface_VolleyCallback_Int iCallback) {
-        if (o.testMode()) {
-            iCallback.onSuccess(2);
-        } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/check/exploitation/" + Integer.toString(o.getIdModel());
-            Log.i("urlCheck", url);
-            try {
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("Response: ", response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                                iCallback.onSuccess(jsonObject.getInt(Constants_Extern.EXPLOITATION));
-                            } else {
-                                iCallback.onFailure();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("VOLLEY", error.toString());
-                    }
-                }) {
-                    @Override
-                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                        String responseString = "";
-                        if (response != null && response.statusCode == 200) {
-                            responseString = new String(response.data);
-                        }
-                        return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                    }
-                };
-                queue.add(stringRequest);
-                queue.getCache().clear();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
     public void updateRpd(final Interface_VolleyCallback_ArrayList_IdModelColorShape iCallback) {
             final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/rpd";
@@ -518,7 +333,7 @@ public class Utility_Network {
         if (o.testMode()) {
 
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/exploitation/reuse/" + Integer.toString(o.getIdModel());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/exploitation/reuse/" + Integer.toString(o.getoModel().getkModel());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
                     @Override
@@ -561,7 +376,7 @@ public class Utility_Network {
 
         } else {
             Log.i("exploitRecycling", "started");
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/exploitation/recycling/" + Integer.toString(o.getIdModel());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/exploitation/recycling/" + Integer.toString(o.getoModel().getkModel());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
                     @Override
@@ -676,7 +491,7 @@ public class Utility_Network {
 
 
     public void getIdModel_Name(final Device device, final Interface_VolleyCallback iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/id/name/" + device.getName() + "/" + device.getTAC();
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/id/name/" + device.getoModel().getName() + "/" + device.getTAC();
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -685,19 +500,19 @@ public class Utility_Network {
                     try {
                         JSONObject jsonObject = new JSONObject(response);
                         if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                            device.setIdModel(jsonObject.getInt(Constants_Extern.ID_MODEL));
-                            device.setName(jsonObject.getString(Constants_Extern.NAME_MODEL));
+                            device.getoModel().setkModel(jsonObject.getInt(Constants_Extern.ID_MODEL));
+                            device.getoModel().setName(jsonObject.getString(Constants_Extern.NAME_MODEL));
                             if (!jsonObject.isNull(Constants_Extern.ID_BATTERY)) {
-                                device.setBattery(new Battery(jsonObject.getInt(Constants_Extern.ID_BATTERY), jsonObject.getString(Constants_Extern.NAME_BATTERY)));
+                                device.getoModel().setoBattery(new Battery(jsonObject.getInt(Constants_Extern.ID_BATTERY), jsonObject.getString(Constants_Extern.NAME_BATTERY), 2));
                             }
                             if (!jsonObject.isNull(Constants_Extern.ID_CHARGER)) {
-                                device.setCharger(new Charger(jsonObject.getInt(Constants_Extern.ID_CHARGER), jsonObject.getString(Constants_Extern.NAME_CHARGER)));
+                                device.getoModel().setoCharger(new Charger(jsonObject.getInt(Constants_Extern.ID_CHARGER), jsonObject.getString(Constants_Extern.NAME_CHARGER)));
                             }
                             if (!jsonObject.isNull(Constants_Extern.ID_MANUFACTURER)) {
-                                device.setManufacturer(new Manufacturer(jsonObject.getInt(Constants_Extern.ID_MANUFACTURER), jsonObject.getString(Constants_Extern.NAME_MANUFACTURER)));
+                                device.getoModel().setoManufacturer(new Manufacturer(jsonObject.getInt(Constants_Extern.ID_MANUFACTURER), jsonObject.getString(Constants_Extern.NAME_MANUFACTURER)));
                             }
                             if (!jsonObject.isNull(Constants_Extern.EXPLOITATION)) {
-                                device.setExploitation(jsonObject.getInt(Constants_Extern.EXPLOITATION));
+                                device.getoModel().settDefaultExploitation(jsonObject.getInt(Constants_Extern.EXPLOITATION));
                             }
                             iCallback.onSuccess();
                         } else {
@@ -731,9 +546,9 @@ public class Utility_Network {
 
     public void addModel(final Device device, final Interface_VolleyCallback_Int iCallback) {
         if (device.testMode()) {
-            device.setIdModel(0);
+            device.getoModel().setkModel(0);
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/add/" + device.getName() + "/" + device.getTAC();
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/add/" + device.getoModel().getName() + "/" + device.getTAC();
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -774,7 +589,7 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(0);
         } else {
-            final String url = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/add/" + name + "/" + Integer.toString(o.getManufacturer().getId());
+            final String url = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/add/" + name + "/" + Integer.toString(o.getoModel().getoManufacturer().getId());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -824,7 +639,7 @@ public class Utility_Network {
             }
             iCallback.onResponse(json);
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/" + Integer.toString(o.getIdModel());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/" + Integer.toString(o.getoModel().getkModel());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -868,7 +683,7 @@ public class Utility_Network {
         if (o.testMode()) {
 
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/connect/" + Integer.toString(o.getBattery().getId()) + "/" + Integer.toString(o.getIdModel());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/connect/" + Integer.toString(o.getoModel().getoBattery().getId()) + "/" + Integer.toString(o.getoModel().getkModel());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -900,7 +715,7 @@ public class Utility_Network {
     }
 
     public void getIdBattery(Device o, String name, final Interface_VolleyCallback_Int iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/id/" + Integer.toString(o.getIdModel()) + "/" + name;
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/id/" + Integer.toString(o.getoModel().getkModel()) + "/" + name;
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -941,7 +756,7 @@ public class Utility_Network {
     }
 
     public void getMatchingBatteries(Model model, String namePart, final Interface_VolleyCallback_ArrayList_Input iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/all/" + Integer.toString(model.getIdModel()) + "/" + namePart;
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/battery/all/" + Integer.toString(model.getkModel()) + "/" + namePart;
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -992,7 +807,7 @@ public class Utility_Network {
             jsonBody.put(Constants_Extern.NAME_COLOR, color.getName());
             jsonBody.put(Constants_Extern.HEX_CODE, color.getHexCode());
             jsonBody.put(Constants_Extern.ID_MANUFACTURER, (color.getManufacturer() == null) ? null : color.getManufacturer().getId());
-            jsonBody.put(Constants_Extern.ID_MODEL, (color.getModel() == null) ? null : color.getModel().getIdModel());
+            jsonBody.put(Constants_Extern.ID_MODEL, (color.getModel() == null) ? null : color.getModel().getkModel());
             final String requestBody = jsonBody.toString();
             Log.i("Show me", requestBody);
             StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
@@ -1058,7 +873,7 @@ public class Utility_Network {
             jsonBody.put(Constants_Extern.NAME_COLOR, color.getName());
             jsonBody.put(Constants_Extern.HEX_CODE, color.getHexCode());
             jsonBody.put(Constants_Extern.ID_MANUFACTURER, color.getManufacturer().getId());
-            jsonBody.put(Constants_Extern.ID_MODEL, color.getModel().getIdModel());
+            jsonBody.put(Constants_Extern.ID_MODEL, color.getModel().getkModel());
             final String requestBody = jsonBody.toString();
             Log.i("Show me", requestBody);
             StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
@@ -1177,63 +992,13 @@ public class Utility_Network {
     }
 
     // Charger
-    public void getCharger(Model model, final Interface_VolleyCallback_JSON iCallback) {
-        if (model instanceof Device && ((Device) model).testMode()) {
-            JSONObject json = new JSONObject();
-            try {
-                json.put(Constants_Extern.ID_CHARGER, 0);
-                json.put(Constants_Extern.NAME_CHARGER, "test");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-            iCallback.onResponse(json);
-        } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/" + Integer.toString(model.getIdModel());
-            try {
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.i("Response: ", response);
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                                iCallback.onResponse(jsonObject);
-                            } else {
-                                //iCallback.onResponse(jsonObject);
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.e("VOLLEY", error.toString());
-                    }
-                }) {
-                    @Override
-                    protected Response<String> parseNetworkResponse(NetworkResponse response) {
-                        String responseString = "";
-                        if (response != null && response.statusCode == 200) {
-                            responseString = new String(response.data);
-                        }
-                        return Response.success(responseString, HttpHeaderParser.parseCacheHeaders(response));
-                    }
-                };
-                queue.add(stringRequest);
-                queue.getCache().clear();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
 
-    }
 
     public void connectChargerWithModel(Device o) {
         if (o.testMode()) {
 
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/connect/" + Integer.toString(o.getIdModel()) + "/" + Integer.toString(o.getCharger().getId());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/connect/" + Integer.toString(o.getoModel().getkModel()) + "/" + Integer.toString(o.getoModel().getoCharger().getId());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -1266,7 +1031,7 @@ public class Utility_Network {
     }
 
     public void getChargers(Model model, final Interface_VolleyCallback_ArrayList_Additive iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/all/" + Integer.toString(model.getIdModel());
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/charger/all/" + Integer.toString(model.getkModel());
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -1355,7 +1120,7 @@ public class Utility_Network {
 
 
     /*
-    public void getManufacturer(final Device device, final Interface_VolleyCallback iCallback) {
+    public void getoManufacturer(final Device device, final Interface_VolleyCallback iCallback) {
         if (device.testMode()) {
             JSONObject json = new JSONObject();
             try {
@@ -1375,7 +1140,7 @@ public class Utility_Network {
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (jsonObject.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                                device.setManufacturer(new Manufacturer(jsonObject.getInt(Constants_Extern.ID_MANUFACTURER), jsonObject.getString(Constants_Extern.NAME_MANUFACTURER)));
+                                device.setoManufacturer(new Manufacturer(jsonObject.getInt(Constants_Extern.ID_MANUFACTURER), jsonObject.getString(Constants_Extern.NAME_MANUFACTURER)));
                             } else {
                                 iCallback.onFailure();
                             }
@@ -1410,7 +1175,7 @@ public class Utility_Network {
 
     public void addManufacturerToModel(Device o) {
         if (!o.testMode()) {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/add/manufacturer/" + Integer.toString(o.getIdModel()) + "/" + Integer.toString(o.getManufacturer().getId());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/model/add/manufacturer/" + Integer.toString(o.getoModel().getkModel()) + "/" + Integer.toString(o.getoModel().getoManufacturer().getId());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -1486,7 +1251,7 @@ public class Utility_Network {
     }
 
     public void getColors(Device o, final Interface_VolleyCallback_ArrayList_Additive iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/all/" + Integer.toString(o.getIdModel());
+        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/all/" + Integer.toString(o.getoModel().getkModel());
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -1531,7 +1296,7 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(0);
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/" + Integer.toString(o.getIdModel()) + "/" + Integer.toString(o.getVariationColor().getId());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/" + Integer.toString(o.getoModel().getkModel()) + "/" + Integer.toString(o.getoColor().getId());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                     @Override
@@ -1576,7 +1341,7 @@ public class Utility_Network {
         if (o.testMode()) {
             iCallback.onSuccess(0);
         } else {
-            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/" + Integer.toString(o.getIdModel()) + "/" + Integer.toString(o.getVariationColor().getId());
+            final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/modelColor/" + Integer.toString(o.getoModel().getkModel()) + "/" + Integer.toString(o.getoColor().getId());
             try {
                 StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
                     @Override
@@ -1624,10 +1389,10 @@ public class Utility_Network {
         final JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put(Constants_Extern.IMEI, o.getIMEI());
-            jsonBody.put(Constants_Extern.ID_MODEL, o.getIdModel());
-            jsonBody.put(Constants_Extern.ID_COLOR, o.getVariationColor().getId());
-            jsonBody.put(Constants_Extern.ID_SHAPE, o.getVariationShape().getId());
-            jsonBody.put(Constants_Extern.ID_STATION, o.getStation().getId());
+            jsonBody.put(Constants_Extern.ID_MODEL, o.getoModel().getkModel());
+            jsonBody.put(Constants_Extern.ID_COLOR, o.getoColor().getId());
+            jsonBody.put(Constants_Extern.ID_SHAPE, o.getoShape().getId());
+            jsonBody.put(Constants_Extern.ID_STATION, o.getoStation().getId());
             jsonBody.put(Constants_Extern.ID_RECORD, oRecord.getId());
             final String requestBody = jsonBody.toString();
             Log.i("Show me", requestBody);
@@ -1691,10 +1456,10 @@ public class Utility_Network {
         final JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put(Constants_Extern.ID_DEVICE, o.getIdDevice());
-            jsonBody.put(Constants_Extern.ID_MODEL, o.getIdModel());
-            jsonBody.put(Constants_Extern.ID_COLOR, o.getVariationColor().getId());
-            jsonBody.put(Constants_Extern.ID_SHAPE, o.getVariationShape().getId());
-            jsonBody.put(Constants_Extern.ID_STATION, o.getStation().getId());
+            jsonBody.put(Constants_Extern.ID_MODEL, o.getoModel().getkModel());
+            jsonBody.put(Constants_Extern.ID_COLOR, o.getoColor().getId());
+            jsonBody.put(Constants_Extern.ID_SHAPE, o.getoShape().getId());
+            jsonBody.put(Constants_Extern.ID_STATION, o.getoStation().getId());
             final String requestBody = jsonBody.toString();
             Log.i("Show me", requestBody);
             StringRequest stringRequest = new StringRequest(Request.Method.PUT, url, new Response.Listener<String>() {
@@ -1956,17 +1721,17 @@ public class Utility_Network {
         Device device = new Device();
         try {
             if (!json.isNull(Constants_Extern.ID_MODEL))
-                device.setIdModel(json.getInt(Constants_Extern.ID_MODEL));
+                device.getoModel().setkModel(json.getInt(Constants_Extern.ID_MODEL));
             if (!json.isNull(Constants_Extern.NAME_MODEL))
-                device.setName(json.getString(Constants_Extern.NAME_MODEL));
-            if (!json.isNull(Constants_Extern.EXPLOITATION_DEFAULT))
-                device.setDefaultExploitation(json.getInt(Constants_Extern.EXPLOITATION_DEFAULT));
+                device.getoModel().setName(json.getString(Constants_Extern.NAME_MODEL));
+            if (!json.isNull(Constants_Extern.EXPLOITATION))
+                device.getoModel().settDefaultExploitation(json.getInt(Constants_Extern.EXPLOITATION));
             if (!json.isNull(Constants_Extern.ID_MANUFACTURER) && !json.isNull(Constants_Extern.NAME_MANUFACTURER))
-                device.setManufacturer(new Manufacturer(json.getInt(Constants_Extern.ID_MANUFACTURER), json.getString(Constants_Extern.NAME_MANUFACTURER)));
+                device.getoModel().setoManufacturer(new Manufacturer(json.getInt(Constants_Extern.ID_MANUFACTURER), json.getString(Constants_Extern.NAME_MANUFACTURER)));
             if (!json.isNull(Constants_Extern.ID_BATTERY) && !json.isNull(Constants_Extern.NAME_BATTERY))
-                device.setBattery(new Battery(json.getInt(Constants_Extern.ID_BATTERY), json.getString(Constants_Extern.NAME_BATTERY)));
+                device.getoModel().setoBattery(new Battery(json.getInt(Constants_Extern.ID_BATTERY), json.getString(Constants_Extern.NAME_BATTERY), 0));
             if (!json.isNull(Constants_Extern.ID_CHARGER) && !json.isNull(Constants_Extern.NAME_CHARGER))
-                device.setCharger(new Charger(json.getInt(Constants_Extern.ID_CHARGER), json.getString(Constants_Extern.NAME_CHARGER)));
+                device.getoModel().setoCharger(new Charger(json.getInt(Constants_Extern.ID_CHARGER), json.getString(Constants_Extern.NAME_CHARGER)));
             if (!json.isNull(Constants_Extern.ID_DEVICE))
                 device.setIdDevice(json.getInt(Constants_Extern.ID_DEVICE));
             if (!json.isNull(Constants_Extern.IMEI))
@@ -1976,15 +1741,12 @@ public class Utility_Network {
             if (!json.isNull(Constants_Extern.DESTINATION))
                 device.setDestination(json.getInt(Constants_Extern.DESTINATION));
             if (!json.isNull(Constants_Extern.ID_STATION))
-                device.setStation(new Station(json.getInt(Constants_Extern.ID_STATION)));
-            if (!json.isNull(Constants_Extern.ID_LKU))
-                device.setLKU((json.getInt(Constants_Extern.ID_LKU)));
-                if (device.getLKU() > 0) device.getStation().setId(Constants_Intern.STATION_LKU_STOCKING_INT);
+                device.setoStation(new Station(json.getInt(Constants_Extern.ID_STATION)));
             if (!json.isNull(Constants_Extern.ID_COLOR) && !json.isNull(Constants_Extern.NAME_COLOR) && !json.isNull(Constants_Extern.HEX_CODE))
-                device.setVariationColor
+                device.setoColor
                         (new Color(json.getInt(Constants_Extern.ID_COLOR), json.getString(Constants_Extern.NAME_COLOR), json.getString(Constants_Extern.HEX_CODE)));
             if (!json.isNull(Constants_Extern.ID_SHAPE) && !json.isNull(Constants_Extern.NAME_SHAPE))
-                device.setVariationShape(new Shape(json.getInt(Constants_Extern.ID_SHAPE), json.getString(Constants_Extern.NAME_SHAPE)));
+                device.setoShape(new Shape(json.getInt(Constants_Extern.ID_SHAPE), json.getString(Constants_Extern.NAME_SHAPE)));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -1997,12 +1759,11 @@ public class Utility_Network {
         try {
             if (device.getIdDevice() != 0) json.put(Constants_Extern.ID_DEVICE, device.getIdDevice());
             if (device.getIMEI() != null) json.put(Constants_Extern.IMEI, device.getIMEI());
-            if (device.getLKU() != 0) json.put(Constants_Extern.ID_LKU, device.getLKU());
             if (device.getCondition() != 0) json.put(Constants_Extern.CONDITION, device.getCondition());
             if (device.getDestination() != 0) json.put(Constants_Extern.DESTINATION, device.getDestination());
-            if (device.getStation() != null && device.getStation().getId() != 0) json.put(Constants_Extern.ID_STATION, device.getStation().getId());
-            if (device.getVariationColor() != null && device.getVariationColor().getId() != 0) json.put(Constants_Extern.ID_COLOR, device.getVariationColor().getId());
-            if (device.getVariationShape() != null && device.getVariationShape().getId() != 0) json.put(Constants_Extern.ID_SHAPE, device.getVariationShape().getId());
+            if (device.getoStation() != null && device.getoStation().getId() != 0) json.put(Constants_Extern.ID_STATION, device.getoStation().getId());
+            if (device.getoColor() != null && device.getoColor().getId() != 0) json.put(Constants_Extern.ID_COLOR, device.getoColor().getId());
+            if (device.getoShape() != null && device.getoShape().getId() != 0) json.put(Constants_Extern.ID_SHAPE, device.getoShape().getId());
 
         } catch (JSONException e) {
             e.printStackTrace();

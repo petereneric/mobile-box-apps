@@ -7,9 +7,10 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <android.support.v4.view.ViewPager
+        <com.example.ericschumacher.bouncer.Views.ViewPager_Eric
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/ViewPager"/>
@@ -18,23 +19,34 @@
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:elevation="4dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_primary"
+            android:background="@color/color_primary_turing"
             app:layout_scrollFlags="scroll|enterAlways"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:tabGravity="fill"
+            app:tabTextColor="@color/color_white"
+            app:tabSelectedTextColor="@color/color_white"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/TabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways"
-            android:elevation="4dp"/>
+            android:background="@color/color_primary_turing"
+            app:tabIndicatorColor="@android:color/white"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:tabIndicatorHeight="4dp"
+            app:tabMaxWidth="0dp"
+            app:tabGravity="fill"
+            app:tabMode="fixed"
+            />
 
     </android.support.design.widget.AppBarLayout>
 

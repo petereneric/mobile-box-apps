@@ -8,7 +8,7 @@
         android:id="@+id/tvManufacturer"
         style="@style/tv_itemRow"
         android:layout_weight="2"
-        android:text="@string/manufacturer"/>
+        android:text="@string/oManufacturer"/>
 
     <TextView
         android:id="@+id/tvModel"

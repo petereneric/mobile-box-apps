@@ -20,7 +20,7 @@ import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_SearchResults;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_DeviceManager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_SearchResults;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Search_Manufacturer;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Search_Model;
@@ -47,7 +47,7 @@ public class Fragment_Color_Add extends Fragment implements View.OnClickListener
     RecyclerView rvModel;
 
     // Interface
-    Interface_Manager iManager;
+    Interface_DeviceManager iManager;
 
     // Objects
     Manufacturer oManufacturer;
@@ -66,7 +66,7 @@ public class Fragment_Color_Add extends Fragment implements View.OnClickListener
         setLayout();
 
         // Interface
-        iManager = (Interface_Manager) getActivity();
+        iManager = (Interface_DeviceManager) getActivity();
         oColor = new Color();
 
         // Layout
@@ -86,7 +86,7 @@ public class Fragment_Color_Add extends Fragment implements View.OnClickListener
             public void onResultClick(Object_SearchResult o) {
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(etColorName.getWindowToken(), 0);
-                oColor.setModel(new Model(o.getId(), o.getName()));
+                //oColor.setModel(new Model(o.getId(), o.getName()));
                 updateUI();
                 aModel.update(new ArrayList<Object_SearchResult>());
             }
@@ -162,8 +162,8 @@ public class Fragment_Color_Add extends Fragment implements View.OnClickListener
         });
 
         // Objects
-        oColor.setManufacturer(new Manufacturer(iManager.getModel().getManufacturer().getId(), iManager.getModel().getManufacturer().getName()));
-        oColor.setModel(new Model(iManager.getModel().getIdModel(), iManager.getModel().getName()));
+        oColor.setManufacturer(new Manufacturer(iManager.getModel().getoManufacturer().getId(), iManager.getModel().getoManufacturer().getName()));
+        //oColor.setModel(getActivity(), new Model(iManager.getModel().getkModel(), iManager.getModel().getName()));
         updateUI();
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);

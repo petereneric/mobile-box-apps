@@ -13,10 +13,50 @@
         android:padding="32dp"
         />
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/ivCamera"
+        android:src="@drawable/ic_camera_24dp"
+        android:layout_toLeftOf="@id/ivPrinter"
+        android:padding="32dp"
+        />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/ivPrinter"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/ivCamera"
+        android:layout_alignParentBottom="true">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbPrinterOne"
+            android:text="Printer 1"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbPrinterTwo"
+            android:text="Printer 2"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbPrinterThree"
+            android:text="Printer 3"
+            android:onClick="onRadioButtonClicked"/>
+
+
+    </RadioGroup>
 
 </RelativeLayout>

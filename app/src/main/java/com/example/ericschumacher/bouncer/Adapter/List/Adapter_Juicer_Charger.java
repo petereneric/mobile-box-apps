@@ -2,6 +2,7 @@ package com.example.ericschumacher.bouncer.Adapter.List;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +25,6 @@ public class Adapter_Juicer_Charger extends RecyclerView.Adapter<RecyclerView.Vi
         mContext = context;
         lChargers = chargers;
         iListener = listener;
-        iListener.onChargerChanged(lChargers);
     }
 
     @Override
@@ -33,15 +33,20 @@ public class Adapter_Juicer_Charger extends RecyclerView.Adapter<RecyclerView.Vi
             @Override
             public void onCheckedChanged(int position, boolean checked) {
                 Charger charger = lChargers.get(position);
-                charger.setSelected(checked);
+                charger.setSelected(!charger.isSelected());
                 ArrayList<Charger> chargersUnselected = new ArrayList<>();
+
                 for (Charger charger1 : lChargers) {
                     if (!charger1.isSelected()) {
                         chargersUnselected.add(charger1);
                     }
                 }
+
+                //chargersUnselected.add(new Charger(1, "Nokia Eins"));
+
+                Log.i("Charger", "channnged"+chargersUnselected.size());
                 iListener.onChargerChanged(chargersUnselected);
-                //notifyDataSetChanged();
+                notifyDataSetChanged();
             }
         });
         return holder;
@@ -60,7 +65,7 @@ public class Adapter_Juicer_Charger extends RecyclerView.Adapter<RecyclerView.Vi
         return lChargers.size();
     }
 
-    private class ViewHolder_Juicer_Charger extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
+    private class ViewHolder_Juicer_Charger extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
 
         TextView tvCharger;
         CheckBox cbCharger;
@@ -75,6 +80,7 @@ public class Adapter_Juicer_Charger extends RecyclerView.Adapter<RecyclerView.Vi
             tvCharger = itemView.findViewById(R.id.tvCharger);
             cbCharger = itemView.findViewById(R.id.cbCharger);
             cbCharger.setOnCheckedChangeListener(this);
+            cbCharger.setOnClickListener(this);
         }
 
 
@@ -82,12 +88,20 @@ public class Adapter_Juicer_Charger extends RecyclerView.Adapter<RecyclerView.Vi
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             switch (compoundButton.getId()) {
                 case R.id.cbCharger:
-                    iListener.onCheckedChanged(getAdapterPosition(), b);
+                    //iListener.onCheckedChanged(getAdapterPosition(), b);
                     break;
             }
         }
 
 
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                case R.id.cbCharger:
+                    Log.i("go", "go");
+                    iListener.onCheckedChanged(getAdapterPosition(), false);
+            }
+        }
     }
 
     public void updateData(ArrayList<Charger> chargers) {

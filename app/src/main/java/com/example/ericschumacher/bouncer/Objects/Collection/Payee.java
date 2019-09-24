@@ -1,5 +1,7 @@
 package com.example.ericschumacher.bouncer.Objects.Collection;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 
 public class Payee implements Serializable {
@@ -110,5 +112,11 @@ public class Payee implements Serializable {
         IdRewardModel = idRewardModel;
 
 
+    }
+
+    public JSONObject getJson() {
+        JSONObject oJson = new JSONObject();
+
+        return oJson;
     }
 }

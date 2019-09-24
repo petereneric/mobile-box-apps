@@ -6,33 +6,37 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Activities.Parent.Activity_Device;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Interaction;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Overview.Fragment_Overview_Selection;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Record.Fragment_Record_Existing;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Record.Fragment_Record_Menu;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Record.Fragment_Record_New;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_DeviceManager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Dialog;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Overview_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_FailureResponse;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
-import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Color;
 import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.Objects.Device;
+import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Volley.Urls;
+import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Activity_Bouncer extends Activity_Device implements Interface_Selection, View.OnClickListener, Interface_Manager, Interface_Dialog {
+public class Activity_Bouncer extends Activity_Device implements Interface_Selection, View.OnClickListener, Interface_DeviceManager, Interface_Dialog {
 
     // Interfaces
     Interface_Overview_Selection iOverviewSelection;
@@ -40,9 +44,16 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     // Objects
     Record oRecord;
 
+    // Connection
+    Volley_Connection vConnection;
+    private final static String URL_ADD_DEVICE = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/device/add/2";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Connection
+        vConnection = new Volley_Connection(this);
 
         // Objects
         oDevice = new Device();
@@ -76,17 +87,26 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     @Override
     public void onScan(String text) {
         if (oRecord != null) {
+            oDevice.setkRecord(oRecord.getId());
             if (text.length() == 15) {
                 oDevice.setIMEI(text);
 
                 if (text.equals(Constants_Intern.UNKNOWN_IMEI)) {
                     bounce();
-
                 } else {
+                    cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_BY_TAC + oDevice.getTAC(), null, new Interface_VolleyResult() {
+                        @Override
+                        public void onResult(JSONObject oJson) throws JSONException {
+                            if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS))
+                                oDevice.setoModel(new Model(Activity_Bouncer.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL)));
+                            bounce();
+                        }
+                    });
+                    /*
                     uNetwork.getModelByTac(oDevice, new Interface_VolleyCallback_FailureResponse() {
                         @Override
                         public void onSuccess() {
-                            bounce();
+
                         }
 
                         @Override
@@ -103,21 +123,101 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
                             }
                         }
                     });
+                    */
                 }
                 closeKeyboard(etScan);
             }
         } else {
             etScan.setText("");
-            Toast.makeText(this, getString(R.string.please_select_collector), Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "please select collector", Toast.LENGTH_LONG).show();
         }
     }
 
     // Fragments
     @Override
     public void showResult() {
+        /*
+        Fragment_Interaction fResult = new Fragment_Interaction();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants_Intern.TITLE_MAIN, getString(R.string.result));
+        String[] lTitle;
+        String[] lButtons;
+        if (oDevice.getCondition() == Constants_Intern.CONDITION_BROKEN ) {
+            if (oDevice.getoModel().getoBattery() != null) {
+                if (oDevice.getoModel().getoBattery().getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
+                    lTitle = new String[1];
+                    lTitle[0] = getString(R.string.recycling);
+                    lButtons = new String[2];
+                }
+            }
+
+        }
+        */
+
+
+        Fragment_Interaction fResult = new Fragment_Interaction();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants_Intern.TITLE_MAIN, getString(R.string.result));
+
+        String[] lTitle;
+        String[] lButtons;
+        int[] lColorIds;
+        if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_RECYCLING || oDevice.getCondition() == Constants_Intern.CONDITION_BROKEN) {
+            if (oDevice.getoModel().isBatteryRemovable()) {
+                if (oDevice.isBatteryContained()) {
+                    if (oDevice.getoModel().getoBattery().getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
+                        lTitle = new String[1];
+                        lTitle[0] = getString(R.string.recycling);
+
+                        lButtons = new String[2];
+                        lButtons[0] = getString(R.string.device);
+                        lButtons[1] = getString(R.string.battery);
+
+                        lColorIds = new int[2];
+                        lColorIds[0] = R.color.color_recycling;
+                        lColorIds[1] = R.color.color_recycling;
+                    } else {
+                        lTitle = new String[2];
+                        lTitle[0] = getString(R.string.reuse);
+                        lTitle[1] = getString(R.string.recycling);
+
+                        lButtons = new String[2];
+                        lButtons[0] = getString(R.string.battery);
+                        lButtons[1] = Constants_Intern.GONE;
+                        lButtons[2] = Constants_Intern.GONE;
+                        lButtons[3] = getString(R.string.device);
+
+                        lColorIds = new int[2];
+                        lColorIds[0] = R.color.color_reuse;
+                        lColorIds[1] = R.color.color_white;
+                        lColorIds[1] = R.color.color_white;
+                        lColorIds[1] = R.color.color_recycling;
+                    }
+                } else {
+
+                }
+
+            } else {
+
+            }
+
+
+        }
+        String[] lTitle = new String[1];
+        lTitle[0] = getString(R.string.request_battery_removable_title);
+        bundle.putStringArray(Constants_Intern.LIST_TITLE, lTitle);
+        String[] lButtons = new String[2];
+        lButtons[0] = getString(R.string.yes);
+        lButtons[1] = getString(R.string.no);
+        bundle.putStringArray(Constants_Intern.LIST_BUTTONS, lButtons);
+        int[] lColorIds = {R.color.color_choice_positive, R.color.color_choice_negative};
+        bundle.putIntArray(Constants_Intern.LIST_COLOR_IDS, lColorIds);
+        fResult.setArguments(bundle);
+        fManager.beginTransaction().replace(R.id.flFragmentInteraction, fResult, Constants_Intern.FRAGMENT_REQUEST_BATTERY_REMOVABLE).commit();
+
         Fragment_Result f = new Fragment_Result();
         Bundle b = new Bundle();
-        b.putParcelable(Constants_Intern.OBJECT_MODEL, oDevice);
+        b.putSerializable(Constants_Intern.OBJECT_MODEL, oDevice);
         f.setArguments(b);
         fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, Constants_Intern.FRAGMENT_REQUEST).commit();
     }
@@ -125,36 +225,48 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     // Logic of Bouncer
     public void bounce() {
         updateUI();
-        if (oDevice.getName() == null) {
+        if (oDevice.getoModel().getkModel() == Constants_Intern.ID_UNKNOWN) {
             iDevice.requestName();
         } else {
-            if (oDevice.getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
+            if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
                 oDevice.setDestination(Constants_Intern.EXPLOITATION_RECYCLING);
                 showResult();
             } else {
-                if (oDevice.getExploitation() == Constants_Intern.EXPLOITATION_NULL) {
-                    iDevice.requestDefaultExploitation(oDevice);
+                if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_NULL) {
+                    iDevice.requestDefaultExploitation(oDevice.getoModel());
                 } else {
-                    if (oDevice.getExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
-                        if (oDevice.getManufacturer() == null) {
+                    if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
+                        if (oDevice.getoModel().getoManufacturer() == null) {
                             iDevice.requestManufacturer();
                         } else {
-                            if (oDevice.getCharger() == null) {
+                            if (oDevice.getoModel().getoCharger() == null) {
                                 iDevice.requestCharger(oDevice);
                             } else {
-                                if (oDevice.getBattery() == null) {
-                                    iDevice.requestBattery(oDevice);
+                                if (oDevice.getoModel().isBatteryRemovable() == null) {
+                                    iDevice.requestBatteryRemovable(oDevice);
                                 } else {
-                                    if (oDevice.getCondition() == Constants_Intern.CONDITION_UNKNOWN) {
-                                        iDevice.requestCondition();
+                                    if (oDevice.getoModel().isBatteryRemovable() && (oDevice.isBatteryContained() == null || oDevice.isBatteryContained() == true) && oDevice.getoModel().getoBattery() == null) {
+                                        iDevice.requestBattery(oDevice);
                                     } else {
-                                        if (oDevice.getVariationShape() == null) {
-                                            iDevice.requestShape();
+                                        if (oDevice.getCondition() == Constants_Intern.CONDITION_UNKNOWN) {
+                                            iDevice.requestCondition();
                                         } else {
-                                            if (oDevice.getVariationColor() == null) {
+                                            if (oDevice.getoColor() == null) {
                                                 iDevice.requestColor(oDevice);
                                             } else {
-                                                showResult();
+                                                if (oDevice.getoShape() == null) {
+                                                    iDevice.requestShape();
+                                                } else {
+                                                    if (oDevice.getoColor().getkModelColor() == 0 && mSharedPreferences.getBoolean(Constants_Intern.USE_CAMERA_MODEL_COLOR, false) && oDevice.getoColor().getkModelColor() != Constants_Intern.TAKE_NO_PICTURE) {
+                                                        takePictures(IMAGE_FRONT);
+                                                    } else {
+                                                        if (oDevice.isBatteryContained() == null) {
+                                                            iDevice.requestBatteryContained();
+                                                        } else {
+                                                            showResult();
+                                                        }
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -163,15 +275,13 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
                         }
                     }
                 }
-
-
             }
         }
     }
 
     @Override
     public void afterBounce() {
-        switch (oDevice.getExploitation()) {
+        switch (oDevice.getoModel().gettDefaultExploitation()) {
             case Constants_Intern.EXPLOITATION_RECYCLING:
 
                 uNetwork.recordRecycling(oRecord.getId(), new Interface_VolleyCallback() {
@@ -196,8 +306,32 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
                     @Override
                     public void onSuccess() {
                         oRecord.incrementReuse();
-                        oDevice.setStation(new Station(Constants_Intern.STATION_PRESORT_INT));
-                        addDevice();
+                        oDevice.setoStation(new Station(Constants_Intern.STATION_PRE_STOCK));
+
+                        vConnection.getResponse(Request.Method.PUT, URL_ADD_DEVICE, oDevice.getJson(), new Interface_VolleyResult() {
+                            @Override
+                            public void onResult(JSONObject oJson) {
+                                Log.i("Raus damit", oJson.toString());
+                                try {
+                                    if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                                        oDevice.setIdDevice(oJson.getInt(Constants_Extern.ID_DEVICE));
+                                        mPrinter.printDevice(oDevice);
+                                        resetDevice();
+                                        updateUI();
+                                    } else {
+                                        Toast.makeText(Activity_Bouncer.this, "IMEI exists", Toast.LENGTH_LONG).show();
+                                        resetDevice();
+                                        updateUI();
+                                    }
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        });
+                        //addDevice();
+
                     }
 
                     @Override
@@ -215,7 +349,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants_Intern.OBJECT_RECORD, oRecord);
         fragmentOverview(new Fragment_Overview_Selection(), bundle, Constants_Intern.FRAGMENT_RECORD);
-        Toast.makeText(this, getString(R.string.ready_to_bounce), Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "ready to bounce", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -237,6 +371,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     @Override
     public void setRecord(Record record) {
         oRecord = new Record(record.getId(), record.getdLastUpdate(), record.getnRecycling(), record.getnReuse(), record.getnDevices(), record.getcCollectorName());
+
         //oRecord = record;
         prepareBounce();
     }
@@ -290,7 +425,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
             uNetwork.addDevice(oDevice, oRecord, new Interface_VolleyCallback_Int() {
                 @Override
                 public void onSuccess(int i) {
-                    oDevice.setIdDevice(i);
+                    //oDevice.setIdDevice(i);
                     mPrinter.printDevice(oDevice);
                     resetDevice();
                     updateUI();
@@ -354,12 +489,6 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
         bounce();
     }
 
-    @Override
-    public void unknownBattery() {
-        oDevice.setBattery(new Battery(Constants_Intern.ID_UNKNOWN, Constants_Intern.UNKNOWN_NAME));
-        bounce();
-    }
-
     // Handled Returns
     @Override
     public void handledReturnModel() {
@@ -389,6 +518,22 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     public void handledReturnCharger() {
         bounce();
     }
+
+    @Override
+    public void handledPicturesTaken() {
+        bounce();
+    }
+
+    @Override
+    public void handledReturnBatteryContained() {
+        bounce();
+    }
+
+    @Override
+    public void handledReturnBatteryRemovable() {
+        bounce();
+    }
+
 
     // Reset
     @Override

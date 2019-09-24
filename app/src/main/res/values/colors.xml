@@ -8,19 +8,45 @@
     <color name="color_secondary_dark">#3a5e2b</color>
 
     // Text
-    <color name="color_text">#1a1a1d</color>
+    <color name="color_text">#4E4E55</color>
     <color name="color_text_header">#777983</color>
     <color name="color_text_minor">#c5c7d2</color>
+    <color name="color_text_primary">#39393D</color>
+    <color name="color_text_secondary">#585863</color>
+    <color name="color_text_tertiary">#9D9DAF</color>
+
+    // Color Set - Turing
+    <color name="color_primary_turing">#217fd6</color>
+    <color name="color_primary_dark_turing">#0f4f8b</color>
+
+    // Color Set - Lethe
+    <color name="color_primary_lethe">#CDDC39</color>
+    <color name="color_primary_dark_lethe">#9CA826</color>
+
 
     // Common
     <color name="color_white">#ffffff</color>
+    <color name="color_black">#000000</color>
     <color name="color_transparent">#00ffffff</color>
     <color name="color_divider">#FF4081</color>
     <color name="color_grey_light">#bcb6b5b5</color>
     <color name="color_grey_very_light">#77dcdadb</color>
 
-    // Mode
+    // Special cases
+    <color name="color_flush">#40afff</color>
+    <color name="color_delete">#b1151a</color>
     <color name="color_activated">#58763a</color>
     <color name="color_deactivated">#802222</color>
+    <color name="color_choice_positive">#77428802</color>
+    <color name="color_choice_negative">#77B60F0F</color>
+    <color name="color_background_white_half_transparent">#D7FFFFFF</color>
+    <color name="color_recycling_dark">#A1C91919</color>
+    <color name="color_recycling">#6AC91919</color>
+    <color name="color_reuse_dark">#A10C30E7</color>
+    <color name="color_reuse">#630C30E7</color>
+    <color name="color_repair_dark">#9FFFEB3B</color>
+    <color name="color_repair">#75FFEB3B</color>
+
+
 
 </resources>

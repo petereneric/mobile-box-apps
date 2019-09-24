@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
@@ -37,10 +36,12 @@ public class Adapter_Pager_ModelColorShape extends FragmentStatePagerAdapter {
         return Lkus.size();
     }
 
+    /*
     @Override
     public int getItemPosition(Object object) {
         return PagerAdapter.POSITION_NONE;
     }
+    */
 
     public void deleteFragment(ArrayList<Integer> list) {
         Log.i("Jo", "Delete");

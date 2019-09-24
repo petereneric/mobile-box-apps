@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rlResult">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@id/tvHeader">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/llReuse">
+
+            <TextView
+                style="@style/tv_interaction_result_header_exploitation"
+                android:background="@color/color_reuse_dark"
+                android:text="@string/reuse"
+                android:id="@+id/tvReuse"/>
+
+            <TextView
+                style="@style/tv_interaction_result_object_reuse"
+                android:text="@string/device"
+                android:id="@+id/tvReuseDevice"/>
+
+            <TextView
+                style="@style/tv_interaction_result_object_reuse"
+                android:text="@string/battery"
+                android:id="@+id/tvReuseBattery"/>
+
+            <TextView
+                style="@style/tv_interaction_result_object_reuse"
+                android:text="@string/backcover"
+                android:id="@+id/tvReuseBackcover"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/llRepair">
+
+            <TextView
+                style="@style/tv_interaction_result_header_exploitation"
+                android:background="@color/color_repair_dark"
+                android:text="@string/repair"
+                android:id="@+id/tvRepair"/>
+
+            <TextView
+                style="@style/tv_interaction_result_object_repair"
+                android:text="@string/device"
+                android:id="@+id/tvRepairDevice"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/llRecycling">
+
+            <TextView
+                style="@style/tv_interaction_result_header_exploitation"
+                android:background="@color/color_recycling_dark"
+                android:text="@string/recycling"
+                android:id="@+id/tvRecycling"/>
+
+            <TextView
+                style="@style/tv_interaction_result_object_recycling"
+                android:text="@string/device"
+                android:id="@+id/tvRecyclingDevice"/>
+
+            <TextView
+                style="@style/tv_interaction_result_object_recycling"
+                android:text="@string/battery"
+                android:id="@+id/tvRecyclingBattery"/>
+
+            <TextView
+                style="@style/tv_interaction_result_object_recycling"
+                android:text="@string/backcover"
+                android:id="@+id/tvRecyclingBackcover"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_header_interaction"
+        android:id="@+id/tvHeader"/>
+
+</RelativeLayout>

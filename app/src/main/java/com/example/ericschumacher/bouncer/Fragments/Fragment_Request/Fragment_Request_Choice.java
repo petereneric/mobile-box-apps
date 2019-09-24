@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Request_Choice;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_DeviceManager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Request_Choice;
 import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
@@ -32,7 +32,7 @@ public class Fragment_Request_Choice extends Fragment implements Interface_Reque
     RecyclerView RecyclerView;
 
     // Interface
-    Interface_Manager iManager;
+    Interface_DeviceManager iManager;
 
     // Data
     ArrayList<Additive> lAdditive;
@@ -46,7 +46,7 @@ public class Fragment_Request_Choice extends Fragment implements Interface_Reque
         setLayout();
 
         // Interface
-        iManager = (Interface_Manager) getActivity();
+        iManager = (Interface_DeviceManager) getActivity();
 
         Bundle arg = getArguments();
         lAdditive = new ArrayList<>();

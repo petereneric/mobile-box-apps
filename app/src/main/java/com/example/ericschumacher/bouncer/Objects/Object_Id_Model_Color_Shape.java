@@ -1,5 +1,9 @@
 package com.example.ericschumacher.bouncer.Objects;
 
+import android.content.Context;
+
+import org.json.JSONObject;
+
 public class Object_Id_Model_Color_Shape {
 
     private int Id_model_color_shape;
@@ -14,6 +18,10 @@ public class Object_Id_Model_Color_Shape {
         Id_shape = id_shape;
         Name = name;
         Rpd = 0.0;
+    }
+
+    public Object_Id_Model_Color_Shape(Context context, JSONObject oJson) {
+
     }
 
     public int getId_model_color_shape() {

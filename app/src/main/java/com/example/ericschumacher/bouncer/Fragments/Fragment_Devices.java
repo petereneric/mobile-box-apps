@@ -20,6 +20,7 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Devices;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Juicer;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Keyboard;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 
 import java.util.ArrayList;
@@ -78,6 +79,7 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
                             etScan.setText("");
                             aDevices.updateList(lDevices);
                             if (lDevices.size() == 0) {
+                                Log.i("leeer", "jo");
                                 iJuicer.removeIdModelColorShape(getArguments().getInt(Constants_Intern.ID_MODEL_COLOR_SHAPE));
                             } else {
 
@@ -94,6 +96,8 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
             public void afterTextChanged(Editable editable) {
             }
         });
+        etScan.requestFocus();
+        Utility_Keyboard.hideKeyboardFrom(getContext(), etScan);
 
         // RecyclerView
         rvDevices.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -126,6 +130,8 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
             lDevices = devices;
             aDevices.updateList(lDevices);
         }
+        etScan.requestFocus();
+        Utility_Keyboard.hideKeyboardFrom(getContext(), etScan);
 
     }
 }

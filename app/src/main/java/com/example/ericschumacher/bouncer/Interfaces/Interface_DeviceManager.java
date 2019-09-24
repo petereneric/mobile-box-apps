@@ -8,7 +8,7 @@ import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
 
-public interface Interface_Manager {
+public interface Interface_DeviceManager {
     Model getModel();
     Device getDevice();
     Color getColor();
@@ -18,7 +18,7 @@ public interface Interface_Manager {
     void updateUI();
 
     void returnDefaultExploitation(int exploitation);
-    void returnName(String name);
+    void returnName(String name, int id);
     void returnManufacturer(Manufacturer manufacturer);
     void returnCharger(Charger charger);
     void returnBattery(String name);
@@ -26,6 +26,7 @@ public interface Interface_Manager {
     void onClickLKU();
     void onScan(String text);
     void returnCondition(int condition);
+    void onClickRequestButton(String tFragment, int tButton);
     void bookDeviceIntoLKUStock();
     void bookDeviceOutOfLKUStock();
     void returnStation(Station station);

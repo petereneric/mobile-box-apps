@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_DeviceManager;
 import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.R;
 
@@ -25,7 +25,7 @@ public class Fragment_Request_Shape extends Fragment implements View.OnClickList
     TextView tvVeryGood;
     TextView tvCherry;
 
-    Interface_Manager iManager;
+    Interface_DeviceManager iManager;
 
     @Nullable
     @Override
@@ -33,7 +33,7 @@ public class Fragment_Request_Shape extends Fragment implements View.OnClickList
         Layout = inflater.inflate(R.layout.fragment_request_shape, container, false);
         setLayout();
 
-        iManager = (Interface_Manager) getActivity();
+        iManager = (Interface_DeviceManager) getActivity();
 
         return Layout;
     }

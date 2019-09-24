@@ -1,6 +1,7 @@
 package com.example.ericschumacher.bouncer.Zebra;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -22,24 +23,33 @@ public class ManagerPrinter {
     ZebraPrinter Printer;
     private Connection Connection;
     Context Context;
+    SharedPreferences SharedPreferences;
 
     boolean bUsePrinter;
 
     public ManagerPrinter(Context context) {
         Context = context;
+        SharedPreferences = context.getSharedPreferences(Constants_Intern.SHARED_PREFERENCES, 0);
         if (usePrinter(Context)) connect();
 
     }
 
     public void disconnect() {
-        try {
-            if (Connection != null) {
-                Connection.close();
+        new Thread(new Runnable() {
+            public void run() {
+
+                try {
+                    if (Connection != null) {
+                        Connection.close();
+                    }
+                } catch (ConnectionException e) {
+                    e.printStackTrace();
+                }
             }
-        } catch (ConnectionException e) {
-            e.printStackTrace();
-        }
+        }).start();
+
     }
+
 
     public void printDevice(Device device) {
         if (usePrinter(Context) && Connection != null) {
@@ -56,11 +66,11 @@ public class ManagerPrinter {
 
     private byte[] getDeviceLabel(Device device) {
         String idDevice = Integer.toString(device.getIdDevice());
-        String LKU = Integer.toString(device.getLKU());
-        String name = device.getName();
-        String manufacturer = device.getManufacturer().getName();
-        String color = device.getVariationColor().getName();
-        String shape = device.getVariationShape().getName();
+        //String LKU = Integer.toString(device.getLKU());
+        String name = device.getoModel().getName();
+        String manufacturer = device.getoModel().getoManufacturer().getName();
+        String color = device.getoColor().getName();
+        String shape = device.getoShape().getName();
 
         String label = "\u0010CT~~CD,~CC^~CT~\n" +
                 "^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR6,6~SD15^JUS^LRN^CI0^XZ\n" +
@@ -75,7 +85,7 @@ public class ManagerPrinter {
                 "^FO37,30^GB107,34,4^FS\n" +
                 "^BY2,3,62^FT157,96^BCN,,N,N\n" +
                 "^FD>:"+idDevice+"^FS\n" +
-                "^FT94,53^A0N,20,19^FH\\^FD"+LKU+"^FS\n" +
+                "^FT94,53^A0N,20,19^FH\\^FD"+"FEHLT"+"^FS\n" +
                 "^FT314,125^A0N,23,21^FH\\^FD"+name+"^FS\n" +
                 "^FT187,124^A0N,23,19^FH\\^FD"+manufacturer+"^FS\n" +
                 "^FT345,183^A0N,23,16^FH\\^FD"+idDevice+"^FS\n" +
@@ -87,8 +97,20 @@ public class ManagerPrinter {
                 "^FO312,134^GE93,64,4^FS\n" +
                 "^FT354,159^A0N,17,14^FH\\^FDID^FS\n" +
                 "^PQ1,0,1,Y^XZ";
-        Log.i("Device Label", label);
-        return label.getBytes();
+
+
+        String labelSimple = "\u0010CT~~CD,~CC^~CT~\n" +
+                "^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR6,6~SD15^JUS^LRN^CI0^XZ\n" +
+                "^XA\n" +
+                "^MMT\n" +
+                "^PW448\n" +
+                "^LL0406\n" +
+                "^LS0\n" +
+                "^BY4,3,142^FT25,152^BCN,,Y,N\n" +
+                "^FD>:"+idDevice +"^FS\n" +
+                "^PQ1,0,1,Y^XZ";
+        Log.i("Device Label", labelSimple);
+        return labelSimple.getBytes();
     }
     private boolean readyToPrint () {
         boolean isReady = true;
@@ -114,35 +136,41 @@ public class ManagerPrinter {
     }
 
     public void connect() {
-        if (usePrinter(Context)) {
-            if (Printer == null) {
-                Connection = null;
-                Connection = new BluetoothLeConnection("C4:F3:12:17:D0:2E", Context);
+        new Thread(new Runnable() {
+            public void run() {
+                Log.i("Zebra connects", "jo");
+                if (usePrinter(Context)) {
+                    if (Printer == null) {
+                        Connection = null;
+                        Connection = new BluetoothLeConnection(SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, "C4:F3:12:17:D0:2E"), Context);
 
-                try {
-                    Connection.open();
-                } catch (ConnectionException e) {
-                    DemoSleeper.sleep(1000);
-                    disconnect();
-                }
-                Printer = null;
+                        try {
+                            Connection.open();
+                        } catch (ConnectionException e) {
+                            DemoSleeper.sleep(1000);
+                            disconnect();
+                        }
+                        Printer = null;
 
-                if (Connection.isConnected()) {
-                    try {
-                        Printer = ZebraPrinterFactory.getInstance(Connection);
-                        String pl = SGD.GET("device.languages", Connection);
-                    } catch (ConnectionException e) {
-                        Printer = null;
-                        DemoSleeper.sleep(1000);
-                        disconnect();
-                    } catch (ZebraPrinterLanguageUnknownException e) {
-                        Printer = null;
-                        DemoSleeper.sleep(1000);
-                        disconnect();
+                        if (Connection.isConnected()) {
+                            try {
+                                Printer = ZebraPrinterFactory.getInstance(Connection);
+                                String pl = SGD.GET("device.languages", Connection);
+                            } catch (ConnectionException e) {
+                                Printer = null;
+                                DemoSleeper.sleep(1000);
+                                disconnect();
+                            } catch (ZebraPrinterLanguageUnknownException e) {
+                                Printer = null;
+                                DemoSleeper.sleep(1000);
+                                disconnect();
+                            }
+                        }
                     }
                 }
             }
-        }
+        }).start();
+
 
     }
 

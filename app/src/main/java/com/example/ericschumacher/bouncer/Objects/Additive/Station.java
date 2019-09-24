@@ -1,6 +1,10 @@
 package com.example.ericschumacher.bouncer.Objects.Additive;
 
+import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Station extends Additive {
 
@@ -10,33 +14,34 @@ public class Station extends Additive {
 
     public Station (int id) {
         Id = id;
-        if (id == Constants_Intern.STATION_SELECTION_INT) Name = Constants_Intern.STATION_SELECTION;
-        if (id == Constants_Intern.STATION_RECYCLING_INT) Name = Constants_Intern.STATION_RECYCLING;
-        if (id == Constants_Intern.STATION_PRESORT_INT) Name = Constants_Intern.STATION_PRESORT;
-        if (id == Constants_Intern.STATION_EXCESS_STOCKING_INT) Name = Constants_Intern.STATION_EXCESS_STOCKING;
-        if (id == Constants_Intern.STATION_LKU_STOCKING_INT) Name = Constants_Intern.STATION_LKU_STOCKING;
-        if (id == Constants_Intern.STATION_UNKNOWN_INT) Name = Constants_Intern.STATION_UNKNOWN;
+        if (id == Constants_Intern.STATION_SCREENING) Name = "Screening";
+        if (id == Constants_Intern.STATION_RECYCLING) Name = "Recycling";
+        if (id == Constants_Intern.STATION_EXCESS_STOCK) Name = "Excess Stock";
+        if (id == Constants_Intern.STATION_PRIME_STOCK) Name = "Prime Stock";
+        if (id == Constants_Intern.STATION_REUSE) Name = "Reuse";
+        if (id == Constants_Intern.STATION_PRE_STOCK) Name = "Pre-Stock";
+        if (id == Constants_Intern.STATION_UNKNOWN) Name = "Unknown";
     }
 
-    public Station (String name) {
-        Name = name;
-        if (name.equals(Constants_Intern.STATION_SELECTION)) Id = 2;
-        if (name.equals(Constants_Intern.STATION_RECYCLING)) Id = 3;
-        if (name.equals(Constants_Intern.STATION_PRESORT)) Id = 4;
-        if (name.equals(Constants_Intern.STATION_EXCESS_STOCKING)) Id = 5;
-        if (name.equals(Constants_Intern.STATION_LKU_STOCKING)) Id = 6;
-        if (name.equals(Constants_Intern.STATION_UNKNOWN)) Id = 8;
+    public Station(JSONObject oJson) {
+        try {
+            setId(oJson.getInt(Constants_Extern.ID_STATION));
+            setName(oJson.getString(Constants_Extern.NAME_STATION));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static int getId (String name) {
-        if (name.equals(Constants_Intern.STATION_SELECTION)) return 2;
-        if (name.equals(Constants_Intern.STATION_RECYCLING)) return 3;
-        if (name.equals(Constants_Intern.STATION_PRESORT)) return 4;
-        if (name.equals(Constants_Intern.STATION_EXCESS_STOCKING)) return 5;
-        if (name.equals(Constants_Intern.STATION_LKU_STOCKING)) return  6;
-        if (name.equals(Constants_Intern.STATION_REUSE)) return 7;
-        if (name.equals(Constants_Intern.STATION_UNKNOWN)) return 8;
-        return 0;
+    public JSONObject getJson() {
+        JSONObject oJson = new JSONObject();
+        try {
+            oJson.put(Constants_Extern.ID_STATION, Id);
+            oJson.put(Constants_Extern.NAME_STATION, Name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return oJson;
     }
 
 }

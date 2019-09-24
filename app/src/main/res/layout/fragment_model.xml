@@ -12,12 +12,12 @@
             android:id="@+id/trName">
 
             <TextView
-                style="@style/tv_tableRow"
-                android:text="@string/name" />
+                style="@style/tv_tableRow_Key"
+                android:text="@string/model_name" />
 
             <TextView
                 android:id="@+id/tvName"
-                style="@style/tv_tableRow"
+                style="@style/tv_tableRow_Value"
                 android:text="6310i" />
         </TableRow>
 
@@ -25,12 +25,12 @@
             android:id="@+id/trManufacturer">
 
             <TextView
-                style="@style/tv_tableRow"
-                android:text="@string/manufacturer" />
+                style="@style/tv_tableRow_Key"
+                android:text="@string/oManufacturer" />
 
             <TextView
                 android:id="@+id/tvManufacturer"
-                style="@style/tv_tableRow"
+                style="@style/tv_tableRow_Value"
                 android:text="Nokia" />
         </TableRow>
 
@@ -38,38 +38,64 @@
             android:id="@+id/trCharger">
 
             <TextView
-                style="@style/tv_tableRow"
-                android:text="@string/charger" />
+                style="@style/tv_tableRow_Key"
+                android:text="@string/oCharger" />
 
             <TextView
                 android:id="@+id/tvCharger"
-                style="@style/tv_tableRow"
+                style="@style/tv_tableRow_Value"
                 android:text="Dick" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trBatteryRemovable">
+
+            <TextView
+                style="@style/tv_tableRow_Key"
+                android:text="@string/battery_removable" />
+
+            <TextView
+                android:id="@+id/tvBatteryRemovable"
+                style="@style/tv_tableRow_Value"
+                android:text="Yes" />
         </TableRow>
 
         <TableRow
             android:id="@+id/trBattery">
 
             <TextView
-                style="@style/tv_tableRow"
-                android:text="@string/battery" />
+                style="@style/tv_tableRow_Key"
+                android:text="@string/oBattery" />
 
             <TextView
                 android:id="@+id/tvBattery"
-                style="@style/tv_tableRow"
+                style="@style/tv_tableRow_Value"
                 android:text="BL-4C" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/trDps">
+
+            <TextView
+                style="@style/tv_tableRow_Key"
+                android:text="@string/dps"/>
+
+            <TextView
+                android:id="@+id/tvDps"
+                style="@style/tv_tableRow_Value"
+                android:text="7" />
         </TableRow>
 
         <TableRow
             android:id="@+id/trDefaultExploitation">
 
             <TextView
-                style="@style/tv_tableRow"
+                style="@style/tv_tableRow_Key"
                 android:text="@string/default_exploitation"/>
 
             <TextView
                 android:id="@+id/tvDefaultExploitation"
-                style="@style/tv_tableRow"
+                style="@style/tv_tableRow_Value"
                 android:text="@string/recycling" />
         </TableRow>
 
