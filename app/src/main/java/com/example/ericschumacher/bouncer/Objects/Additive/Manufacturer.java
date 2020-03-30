@@ -11,15 +11,19 @@ import org.json.JSONObject;
 
 public class Manufacturer extends Additive {
 
+    private String cShortcut;
+
     public Manufacturer(int id, String name) {
         super(id, name);
         UrlName = "icon_manufactures";
     }
 
     public Manufacturer(JSONObject oJson) {
+        UrlName = "icon_manufactures";
         try {
             Id = oJson.getInt(Constants_Extern.ID_MANUFACTURER);
             Name = oJson.getString(Constants_Extern.NAME_MANUFACTURER);
+            cShortcut = oJson.getString(Constants_Extern.SHORTCUT);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -27,7 +31,27 @@ public class Manufacturer extends Additive {
 
     public JSONObject getJson() {
         JSONObject oJson = new JSONObject();
-
+        try {
+            oJson.put(Constants_Extern.SHORTCUT, cShortcut);
+            oJson.put(Constants_Extern.NAME_MANUFACTURER, Name);
+            oJson.put(Constants_Extern.ID_MANUFACTURER, Id);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return oJson;
     }
+
+    public String getUrlIcon() {
+        return "http://svp-server.com/svp-gmbh/erp/files/icon_manufactures/" + Integer.toString(Id) + ".jpg";
+    }
+
+    public String getcShortcut() {
+        return cShortcut;
+    }
+
+    public void setcShortcut(String cShortcut) {
+        this.cShortcut = cShortcut;
+    }
+
+
 }

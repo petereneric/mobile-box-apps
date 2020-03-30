@@ -29,7 +29,6 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_De
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
 import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
-import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Color;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
@@ -503,7 +502,7 @@ public class Utility_Network {
                             device.getoModel().setkModel(jsonObject.getInt(Constants_Extern.ID_MODEL));
                             device.getoModel().setName(jsonObject.getString(Constants_Extern.NAME_MODEL));
                             if (!jsonObject.isNull(Constants_Extern.ID_BATTERY)) {
-                                device.getoModel().setoBattery(new Battery(jsonObject.getInt(Constants_Extern.ID_BATTERY), jsonObject.getString(Constants_Extern.NAME_BATTERY), 2));
+                                //device.getoModel().setoBattery(new Battery(jsonObject.getInt(Constants_Extern.ID_BATTERY), jsonObject.getString(Constants_Extern.NAME_BATTERY), 2));
                             }
                             if (!jsonObject.isNull(Constants_Extern.ID_CHARGER)) {
                                 device.getoModel().setoCharger(new Charger(jsonObject.getInt(Constants_Extern.ID_CHARGER), jsonObject.getString(Constants_Extern.NAME_CHARGER)));
@@ -1164,7 +1163,7 @@ public class Utility_Network {
                     }
                 };
                 queue.add(stringRequest);
-                queue.getCache().clear();
+                queue.getCache().clearSearch();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -1729,7 +1728,7 @@ public class Utility_Network {
             if (!json.isNull(Constants_Extern.ID_MANUFACTURER) && !json.isNull(Constants_Extern.NAME_MANUFACTURER))
                 device.getoModel().setoManufacturer(new Manufacturer(json.getInt(Constants_Extern.ID_MANUFACTURER), json.getString(Constants_Extern.NAME_MANUFACTURER)));
             if (!json.isNull(Constants_Extern.ID_BATTERY) && !json.isNull(Constants_Extern.NAME_BATTERY))
-                device.getoModel().setoBattery(new Battery(json.getInt(Constants_Extern.ID_BATTERY), json.getString(Constants_Extern.NAME_BATTERY), 0));
+                //device.getoModel().setoBattery(new Battery(json.getInt(Constants_Extern.ID_BATTERY), json.getString(Constants_Extern.NAME_BATTERY), 0));
             if (!json.isNull(Constants_Extern.ID_CHARGER) && !json.isNull(Constants_Extern.NAME_CHARGER))
                 device.getoModel().setoCharger(new Charger(json.getInt(Constants_Extern.ID_CHARGER), json.getString(Constants_Extern.NAME_CHARGER)));
             if (!json.isNull(Constants_Extern.ID_DEVICE))
@@ -1738,8 +1737,6 @@ public class Utility_Network {
                 device.setIMEI(json.getString(Constants_Extern.IMEI));
             if (!json.isNull(Constants_Extern.CONDITION))
                 device.setCondition(json.getInt(Constants_Extern.CONDITION));
-            if (!json.isNull(Constants_Extern.DESTINATION))
-                device.setDestination(json.getInt(Constants_Extern.DESTINATION));
             if (!json.isNull(Constants_Extern.ID_STATION))
                 device.setoStation(new Station(json.getInt(Constants_Extern.ID_STATION)));
             if (!json.isNull(Constants_Extern.ID_COLOR) && !json.isNull(Constants_Extern.NAME_COLOR) && !json.isNull(Constants_Extern.HEX_CODE))
@@ -1760,7 +1757,6 @@ public class Utility_Network {
             if (device.getIdDevice() != 0) json.put(Constants_Extern.ID_DEVICE, device.getIdDevice());
             if (device.getIMEI() != null) json.put(Constants_Extern.IMEI, device.getIMEI());
             if (device.getCondition() != 0) json.put(Constants_Extern.CONDITION, device.getCondition());
-            if (device.getDestination() != 0) json.put(Constants_Extern.DESTINATION, device.getDestination());
             if (device.getoStation() != null && device.getoStation().getId() != 0) json.put(Constants_Extern.ID_STATION, device.getoStation().getId());
             if (device.getoColor() != null && device.getoColor().getId() != 0) json.put(Constants_Extern.ID_COLOR, device.getoColor().getId());
             if (device.getoShape() != null && device.getoShape().getId() != 0) json.put(Constants_Extern.ID_SHAPE, device.getoShape().getId());

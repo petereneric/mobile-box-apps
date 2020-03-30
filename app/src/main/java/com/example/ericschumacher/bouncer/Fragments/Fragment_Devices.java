@@ -1,5 +1,6 @@
 package com.example.ericschumacher.bouncer.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -131,7 +132,9 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
             aDevices.updateList(lDevices);
         }
         etScan.requestFocus();
-        Utility_Keyboard.hideKeyboardFrom(getContext(), etScan);
-
+        Context context = getContext();
+        if (context != null && etScan != null) {
+            Utility_Keyboard.hideKeyboardFrom(getContext(), etScan);
+        }
     }
 }

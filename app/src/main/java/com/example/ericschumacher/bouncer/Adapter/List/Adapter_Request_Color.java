@@ -65,7 +65,7 @@ public class Adapter_Request_Color extends Adapter_Request_Choice {
                         new Response.Listener<Bitmap>() {
                             @Override
                             public void onResponse(Bitmap bitmap) {
-                                h.ivIconTwo.setImageBitmap(Utility_Camera.resizeToGivenWidth(Context, bitmap, 80));
+                                h.ivIconTwo.setImageBitmap(Utility_Camera.resizeToGivenWidth(Context, bitmap, 300));
                             }
                         }, 0, 0, ImageView.ScaleType.FIT_CENTER, null,
                         new Response.ErrorListener() {
@@ -78,10 +78,11 @@ public class Adapter_Request_Color extends Adapter_Request_Choice {
                             @Override
                             public void onResponse(Bitmap bitmap) {
                                 Log.i("Width..", ""+bitmap.getWidth());
-                                h.ivIcon.setImageBitmap(Utility_Camera.resizeToGivenWidth(Context, bitmap, 80));
+                                h.ivIcon.setImageBitmap(Utility_Camera.resizeToGivenWidth(Context, bitmap, 300));
+                                //h.ivIcon.setImageBitmap(bitmap);
 
                             }
-                        }, 0, 0, ImageView.ScaleType.FIT_CENTER, null,
+                        }, 0, 0, ImageView.ScaleType.MATRIX, Bitmap.Config.RGB_565,
                         new Response.ErrorListener() {
                             public void onErrorResponse(VolleyError error) {
                                 error.printStackTrace();

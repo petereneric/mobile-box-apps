@@ -15,9 +15,15 @@ public class Adapter_Pager_ModelColorShape extends FragmentStatePagerAdapter {
 
     private ArrayList<Integer> Lkus;
     private int baseId = 17;
+    FragmentManager fm;
+    private ArrayList<Fragment_Devices> lFragments = new ArrayList<>();
 
     public Adapter_Pager_ModelColorShape(ArrayList<Integer> lkus, FragmentManager fm) {
         super(fm);
+        this.fm = fm;
+        if (fm.getFragments() != null) {
+            fm.getFragments().clear();
+        }
         Lkus = lkus;
     }
 
@@ -27,6 +33,7 @@ public class Adapter_Pager_ModelColorShape extends FragmentStatePagerAdapter {
         Bundle bundle = new Bundle();
         bundle.putInt(Constants_Intern.ID_MODEL_COLOR_SHAPE, Lkus.get(position));
         fDevices.setArguments(bundle);
+        lFragments.add(fDevices);
         return fDevices;
     }
 
@@ -36,17 +43,26 @@ public class Adapter_Pager_ModelColorShape extends FragmentStatePagerAdapter {
         return Lkus.size();
     }
 
-    /*
     @Override
     public int getItemPosition(Object object) {
-        return PagerAdapter.POSITION_NONE;
+        // Causes adapter to reload all Fragments when
+        // notifyDataSetChanged is called
+        return POSITION_NONE;
     }
-    */
 
-    public void deleteFragment(ArrayList<Integer> list) {
-        Log.i("Jo", "Delete");
-        Lkus = list;
-        notifyDataSetChanged();
+    public void deleteFragment(int kModelColorShape) {
+        for (int i = 0; i<lFragments.size(); i++) {
+            if (lFragments.get(i).getArguments().getInt(Constants_Intern.ID_MODEL_COLOR_SHAPE) == kModelColorShape) {
+                lFragments.remove(lFragments.get(i));
+            }
+        }
+    }
+
+    public void clear() {
+        lFragments.clear();
+        if (fm.getFragments() != null) {
+            fm.getFragments().clear();
+        }
     }
 
     public void updateData(ArrayList<Integer> list) {

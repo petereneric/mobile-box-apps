@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 import com.zebra.sdk.btleComm.BluetoothLeConnection;
@@ -64,6 +65,62 @@ public class ManagerPrinter {
         }
     }
 
+    public void printBattery(Battery battery) {
+        if (usePrinter(Context) && Connection != null) {
+            try {
+                if (Printer != null && readyToPrint()) {
+                    Connection.write(getBatteryLabel(battery));
+                    Log.i("What", "should work");
+                }
+            } catch (ConnectionException e1) {
+                Log.d("JOOO","Error sending file to printer");
+            }
+        }
+    }
+
+    private byte[] getBatteryLabel(Battery battery) {
+        String id = Integer.toString(battery.getId());
+        String name = battery.getName();
+        String manufacturer = battery.getoManufacturer().getName();
+        String lku = battery.getoManufacturer().getcShortcut()+"-"+Integer.toString(battery.getLku());
+        String lStorageName = battery.getlStockName();
+
+        String label = "\u0010CT~~CD,~CC^~CT~\n" +
+                "^XA\n" +
+                "~TA000\n" +
+                "~JSN\n" +
+                "^LT0\n" +
+                "^MNW\n" +
+                "^MTT\n" +
+                "^PON\n" +
+                "^PMN\n" +
+                "^LH0,0\n" +
+                "^JMA\n" +
+                "^PR6,6\n" +
+                "~SD15\n" +
+                "^JUS\n" +
+                "^LRN\n" +
+                "^CI27\n" +
+                "^PA0,1,1,0\n" +
+                "^XZ\n" +
+                "^XA\n" +
+                "^MMT\n" +
+                "^PW408\n" +
+                "^LL200\n" +
+                "^LS0\n" +
+                "^FPH,3^FT212,188^A@B,25,25,TT0003M_^FH\\^CI28^FDBATTERY^FS^CI27\n" +
+                "^FPH,3^FT252,186^A@B,17,18,TT0003M_^FH\\^CI28^FD"+name+"^FS^CI27\n" +
+                "^FPH,3^FT322,186^A@B,17,18,TT0003M_^FH\\^CI28^FD"+lku+"^FS^CI27\n" +
+                "^FPH,3^FT345,186^A@B,14,13,TT0003M_^FH\\^CI28^FD"+lStorageName+"^FS^CI27\n" +
+                "^FPH,3^FT275,186^A@B,14,13,TT0003M_^FH\\^CI28^FD"+manufacturer+"^FS^CI27\n" +
+                "^BY2,3,20^FT387,186^BCB,,N,N\n" +
+                "^FH\\^FD>:411^FS\n" +
+                "^PQ1,0,1,Y\n" +
+                "^XZ";
+
+        return label.getBytes();
+    }
+
     private byte[] getDeviceLabel(Device device) {
         String idDevice = Integer.toString(device.getIdDevice());
         //String LKU = Integer.toString(device.getLKU());
@@ -71,6 +128,15 @@ public class ManagerPrinter {
         String manufacturer = device.getoModel().getoManufacturer().getName();
         String color = device.getoColor().getName();
         String shape = device.getoShape().getName();
+        String cState = device.getStateName();
+        String lkuBattery;
+        if (device.getoModel().getoBattery() != null) {
+            Battery battery = device.getoModel().getoBattery();
+            lkuBattery = battery.getoManufacturer().getcShortcut()+"-"+Integer.toString(battery.getLku());
+        } else {
+            lkuBattery = "-";
+        }
+
 
         String label = "\u0010CT~~CD,~CC^~CT~\n" +
                 "^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR6,6~SD15^JUS^LRN^CI0^XZ\n" +
@@ -110,7 +176,88 @@ public class ManagerPrinter {
                 "^FD>:"+idDevice +"^FS\n" +
                 "^PQ1,0,1,Y^XZ";
         Log.i("Device Label", labelSimple);
-        return labelSimple.getBytes();
+
+        String labelOld = "\u0010CT~~CD,~CC^~CT~\n" +
+                "^XA\n" +
+                "~TA000\n" +
+                "~JSN\n" +
+                "^LT0\n" +
+                "^MNW\n" +
+                "^MTT\n" +
+                "^PON\n" +
+                "^PMN\n" +
+                "^LH0,0\n" +
+                "^JMA\n" +
+                "^PR6,6\n" +
+                "~SD15\n" +
+                "^JUS\n" +
+                "^LRN\n" +
+                "^CI27\n" +
+                "^PA0,1,1,0\n" +
+                "^XZ\n" +
+                "^XA\n" +
+                "^MMT\n" +
+                "^PW408\n" +
+                "^LL200\n" +
+                "^LS0\n" +
+                "^FPH,3^FT19,84^A@N,17,18,TT0003M_^FH\\^CI28^FDId:^FS^CI27\n" +
+                "^FPH,3^FT19,109^A@N,17,18,TT0003M_^FH\\^CI28^FDFarbe:^FS^CI27\n" +
+                "^FPH,3^FT19,132^A@N,17,18,TT0003M_^FH\\^CI28^FDZustand:^FS^CI27\n" +
+                "^FPH,3^FT254,84^A@N,17,18,TT0003M_^FH\\^CI28^FDLku-Battery:^FS^CI27\n" +
+                "^FPH,3^FT19,156^A@N,17,18,TT0003M_^FH\\^CI28^FDStatus:^FS^CI27\n" +
+                "^BY3,3,20^FT19,191^BCN,,N,N\n" +
+                "^FH\\^FD>:"+idDevice+"^FS\n" +
+                "^FPH,3^FT129,84^A@N,17,18,TT0003M_^FH\\^CI28^FD"+idDevice+"^FS^CI27\n" +
+                "^FPH,3^FT19,38^A@N,20,20,TT0003M_^FH\\^CI28^FD"+name+"^FS^CI27\n" +
+                "^FPH,3^FT129,109^A@N,17,18,TT0003M_^FH\\^CI28^FD"+color+"^FS^CI27\n" +
+                "^FPH,3^FT129,132^A@N,17,18,TT0003M_^FH\\^CI28^FD"+shape+"^FS^CI27\n" +
+                "^FPH,3^FT254,110^A@N,17,18,TT0003M_^FH\\^CI28^FD"+lkuBattery+"^FS^CI27\n" +
+                "^FPH,3^FT19,55^A@N,14,13,TT0003M_^FH\\^CI28^FD"+manufacturer+"^FS^CI27\n" +
+                "^FPH,3^FT129,156^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cState+"^FS^CI27\n" +
+                "^PQ1,0,1,Y\n" +
+                "^XZ\n";
+
+        String labelNew = "\u0010CT~~CD,~CC^~CT~\n" +
+                "^XA\n" +
+                "~TA000\n" +
+                "~JSN\n" +
+                "^LT0\n" +
+                "^MNW\n" +
+                "^MTT\n" +
+                "^PON\n" +
+                "^PMN\n" +
+                "^LH0,0\n" +
+                "^JMA\n" +
+                "^PR6,6\n" +
+                "~SD15\n" +
+                "^JUS\n" +
+                "^LRN\n" +
+                "^CI27\n" +
+                "^PA0,1,1,0\n" +
+                "^XZ\n" +
+                "^XA\n" +
+                "^MMT\n" +
+                "^PW408\n" +
+                "^LL200\n" +
+                "^LS0\n" +
+                "^FPH,3^FT19,84^A@N,17,18,TT0003M_^FH\\^CI28^FDId:^FS^CI27\n" +
+                "^FPH,3^FT19,108^A@N,17,18,TT0003M_^FH\\^CI28^FDFarbe:^FS^CI27\n" +
+                "^FPH,3^FT19,134^A@N,17,18,TT0003M_^FH\\^CI28^FDZustand:^FS^CI27\n" +
+                "^FPH,3^FT19,187^A@N,17,18,TT0003M_^FH\\^CI28^FDBatterie:^FS^CI27\n" +
+                "^FPH,3^FT19,160^A@N,17,18,TT0003M_^FH\\^CI28^FDStatus:^FS^CI27\n" +
+                "^FPH,3^FT155,84^A@N,17,18,TT0003M_^FH\\^CI28^FD"+idDevice+"^FS^CI27\n" +
+                "^FPH,3^FT19,38^A@N,20,20,TT0003M_^FH\\^CI28^FD"+name+"^FS^CI27\n" +
+                "^FPH,3^FT155,107^A@N,17,18,TT0003M_^FH\\^CI28^FD"+color+"^FS^CI27\n" +
+                "^FPH,3^FT155,134^A@N,17,18,TT0003M_^FH\\^CI28^FD"+shape+"^FS^CI27\n" +
+                "^FPH,3^FT155,187^A@N,17,18,TT0003M_^FH\\^CI28^FD"+lkuBattery+"^FS^CI27\n" +
+                "^FPH,3^FT19,55^A@N,14,13,TT0003M_^FH\\^CI28^FD"+manufacturer+"^FS^CI27\n" +
+                "^FPH,3^FT155,160^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cState+"^FS^CI27\n" +
+                "^BY2,3,20^FT155,48^BCN,,N,N\n" +
+                "^FH\\^FD>:"+idDevice+"^FS\n" +
+                "^PQ1,0,1,Y\n" +
+                "^XZ";
+
+        return labelNew.getBytes();
     }
     private boolean readyToPrint () {
         boolean isReady = true;
@@ -142,7 +289,7 @@ public class ManagerPrinter {
                 if (usePrinter(Context)) {
                     if (Printer == null) {
                         Connection = null;
-                        Connection = new BluetoothLeConnection(SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, "C4:F3:12:17:D0:2E"), Context);
+                        Connection = new BluetoothLeConnection(SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, "28:EC:9A:21:30:55"), Context);
 
                         try {
                             Connection.open();

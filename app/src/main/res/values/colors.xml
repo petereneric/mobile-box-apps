@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     // App
-    <color name="color_primary">#d64521</color>
+    <color name="color_primary">#009688</color>
     <color name="color_primary_dark">#8b0929</color>
-    <color name="color_primary_light">#df9b8a</color>
+    <color name="color_primary_light">#3AD1C2</color>
     <color name="color_secondary">#2c8927</color>
     <color name="color_secondary_dark">#3a5e2b</color>
 
@@ -14,6 +14,7 @@
     <color name="color_text_primary">#39393D</color>
     <color name="color_text_secondary">#585863</color>
     <color name="color_text_tertiary">#9D9DAF</color>
+    <color name="color_text_hint">#9D9DAF</color>
 
     // Color Set - Turing
     <color name="color_primary_turing">#217fd6</color>
@@ -29,23 +30,51 @@
     <color name="color_black">#000000</color>
     <color name="color_transparent">#00ffffff</color>
     <color name="color_divider">#FF4081</color>
-    <color name="color_grey_light">#bcb6b5b5</color>
+    <color name="color_grey">#B3B2B2</color>
+    <color name="color_grey_light">#BEB6B5B5</color>
+    <color name="color_grey_light_100">#B6B5B5</color>
     <color name="color_grey_very_light">#77dcdadb</color>
+    <color name="color_green">#4CAF50</color>
+    <color name="color_orange">#FF5722</color>
+    <color name="color_red">#F44336</color>
+
 
     // Special cases
     <color name="color_flush">#40afff</color>
     <color name="color_delete">#b1151a</color>
     <color name="color_activated">#58763a</color>
     <color name="color_deactivated">#802222</color>
-    <color name="color_choice_positive">#77428802</color>
-    <color name="color_choice_negative">#77B60F0F</color>
+    <color name="color_choice_positive">#BF428802</color>
+    <color name="color_choice_negative">#BFB60F0F</color>
+    <color name="color_choice_positive_100">#428802</color>
+    <color name="color_choice_negative_100">#B60F0F</color>
     <color name="color_background_white_half_transparent">#D7FFFFFF</color>
     <color name="color_recycling_dark">#A1C91919</color>
-    <color name="color_recycling">#6AC91919</color>
-    <color name="color_reuse_dark">#A10C30E7</color>
-    <color name="color_reuse">#630C30E7</color>
-    <color name="color_repair_dark">#9FFFEB3B</color>
-    <color name="color_repair">#75FFEB3B</color>
+    <color name="color_recycling">#B30404</color>
+    <color name="color_recycling_light">#75B30404</color>
+    <color name="color_intact_reuse_dark">#A10C30E7</color>
+    <color name="color_intact_reuse">#1231DB</color>
+    <color name="color_intact_reuse_light">#861231DB</color>
+    <color name="color_unknown">#A1535353</color>
+    <color name="color_unknown_light">#A1A0A0A0</color>
+    <color name="color_unknown_dark">#A1535353</color>
+    <color name="color_defect_reuse_dark">#9FFFEB3B</color>
+    <color name="color_defect_reuse">#CCB82E</color>
+    <color name="color_defect_repair">#BFAC981A</color>
+    <color name="color_defect_repair_100">#AC981A</color>
+    <color name="color_yes">#4CAF50</color>
+    <color name="color_no">#F44336</color>
+    <color name="color_defect_reuse_light">#83CCB82E</color>
+
+    // Shape
+    <color name="color_shape_cherry">#4CAF50</color>
+    <color name="color_shape_very_good">#8BC34A</color>
+    <color name="color_shape_good">#FFC107</color>
+    <color name="color_shape_acceptable">#FF9800</color>
+    <color name="color_shape_broken">#F44336</color>
+
+    // Selector
+
 
 
 

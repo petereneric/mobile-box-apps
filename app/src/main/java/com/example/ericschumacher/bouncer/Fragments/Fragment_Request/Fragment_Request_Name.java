@@ -91,7 +91,7 @@ public class Fragment_Request_Name extends Fragment_Request_Input {
                 uNetwork.getMatchingModels(editable.toString(), new Interface_VolleyCallback_ArrayList_Input() {
                     @Override
                     public void onSuccess(ArrayList<Object_SearchResult> list) {
-                        aSearchResults.update(list);
+                        aSearchResults.updateLayout(list);
                     }
 
                     @Override

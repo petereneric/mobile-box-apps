@@ -3,102 +3,172 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TableLayout
-        android:id="@+id/tableLayout"
+    <include
+        layout="@layout/layout_header_left"
+        android:id="@+id/tvTitle"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:orientation="horizontal">
 
-        <TableRow
-            android:id="@+id/trName">
+        <TableLayout
+            android:id="@+id/tableLayoutOne"
+            android:layout_width="0dp"
+            android:layout_weight="9"
+            android:layout_height="wrap_content">
 
-            <TextView
-                style="@style/tv_tableRow_Key"
-                android:text="@string/model_name" />
+            <TableRow
+                android:id="@+id/trName">
 
-            <TextView
-                android:id="@+id/tvName"
-                style="@style/tv_tableRow_Value"
-                android:text="6310i" />
-        </TableRow>
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/model_name" />
 
-        <TableRow
-            android:id="@+id/trManufacturer">
+                <TextView
+                    android:id="@+id/tvName"
+                    style="@style/tv_tableRow_Value"
+                    android:text="6310i" />
+            </TableRow>
 
-            <TextView
-                style="@style/tv_tableRow_Key"
-                android:text="@string/oManufacturer" />
+            <TableRow
+                android:id="@+id/trManufacturer">
 
-            <TextView
-                android:id="@+id/tvManufacturer"
-                style="@style/tv_tableRow_Value"
-                android:text="Nokia" />
-        </TableRow>
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/oManufacturer" />
 
-        <TableRow
-            android:id="@+id/trCharger">
+                <TextView
+                    android:id="@+id/tvManufacturer"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Nokia" />
+            </TableRow>
 
-            <TextView
-                style="@style/tv_tableRow_Key"
-                android:text="@string/oCharger" />
+            <TableRow
+                android:id="@+id/trCharger">
 
-            <TextView
-                android:id="@+id/tvCharger"
-                style="@style/tv_tableRow_Value"
-                android:text="Dick" />
-        </TableRow>
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/oCharger" />
 
-        <TableRow
-            android:id="@+id/trBatteryRemovable">
+                <TextView
+                    android:id="@+id/tvCharger"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Dick" />
+            </TableRow>
 
-            <TextView
-                style="@style/tv_tableRow_Key"
-                android:text="@string/battery_removable" />
+            <TableRow
+                android:id="@+id/trBattery">
 
-            <TextView
-                android:id="@+id/tvBatteryRemovable"
-                style="@style/tv_tableRow_Value"
-                android:text="Yes" />
-        </TableRow>
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/oBattery" />
 
-        <TableRow
-            android:id="@+id/trBattery">
+                <TextView
+                    android:id="@+id/tvBattery"
+                    style="@style/tv_tableRow_Value"
+                    android:text="BL-4C" />
+            </TableRow>
 
-            <TextView
-                style="@style/tv_tableRow_Key"
-                android:text="@string/oBattery" />
+        </TableLayout>
 
-            <TextView
-                android:id="@+id/tvBattery"
-                style="@style/tv_tableRow_Value"
-                android:text="BL-4C" />
-        </TableRow>
+        <TableLayout
+            android:id="@+id/tableLayoutTwo"
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content">
 
-        <TableRow
-            android:id="@+id/trDps">
+            <TableRow
+                android:id="@+id/trPhone">
 
-            <TextView
-                style="@style/tv_tableRow_Key"
-                android:text="@string/dps"/>
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/typePhone" />
 
-            <TextView
-                android:id="@+id/tvDps"
-                style="@style/tv_tableRow_Value"
-                android:text="7" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/tvPhone"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Handy" />
+            </TableRow>
 
-        <TableRow
-            android:id="@+id/trDefaultExploitation">
+            <TableRow
+                android:id="@+id/trDefaultExploitation">
 
-            <TextView
-                style="@style/tv_tableRow_Key"
-                android:text="@string/default_exploitation"/>
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/default_exploitation"/>
 
-            <TextView
-                android:id="@+id/tvDefaultExploitation"
-                style="@style/tv_tableRow_Value"
-                android:text="@string/recycling" />
-        </TableRow>
+                <TextView
+                    android:id="@+id/tvDefaultExploitation"
+                    style="@style/tv_tableRow_Value"
+                    android:text="@string/recycling" />
+            </TableRow>
 
-    </TableLayout>
+            <TableRow
+                android:id="@+id/trDps">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/dps"/>
+
+                <TextView
+                    android:id="@+id/tvDps"
+                    style="@style/tv_tableRow_Value"
+                    android:text="7" />
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayoutThree"
+            android:layout_width="0dp"
+            android:layout_weight="12"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:id="@+id/trBatteryRemovable">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/battery_removable" />
+
+                <TextView
+                    android:id="@+id/tvBatteryRemovable"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Yes" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trBackcoverRemovable">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/backcover_removable" />
+
+                <TextView
+                    android:id="@+id/tvBackcoverRemovable"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Yes" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trBatteryLku">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/battery_lku" />
+
+                <TextView
+                    android:id="@+id/tvBatteryLku"
+                    style="@style/tv_tableRow_Value"
+                    android:text="NOK - 34" />
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+
 
 </RelativeLayout>

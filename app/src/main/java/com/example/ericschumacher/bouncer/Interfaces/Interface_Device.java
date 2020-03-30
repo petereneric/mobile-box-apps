@@ -10,11 +10,15 @@ public interface Interface_Device{
     void requestCondition();
     void requestColor(Device device);
     void requestBatteryContained();
+    void requestBackcoverContained();
 
     void requestName();
     void requestManufacturer();
     void requestCharger(Device device);
     void requestBatteryRemovable(Device device);
+    void requestBackcoverRemovable(Device device);
     void requestBattery(Device device);
     void requestDefaultExploitation(Model model);
+    void requestTypePhone();
+    void requestModelDamages(Model model);
 }

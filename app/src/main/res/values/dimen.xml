@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="size_text_item">15sp</dimen>
+    <dimen name="size_text_item">14sp</dimen>
+    <dimen name="size_text_item_sub">12sp</dimen>
+    <dimen name="size_text_information">15sp</dimen>
+    <dimen name="size_text_button">15sp</dimen>
+    <dimen name="size_text_title">15sp</dimen>
+    <dimen name="size_text_subtitle">15sp</dimen>
+    <dimen name="size_text_button_interaction">15sp</dimen>
     <dimen name="size_text_default">20sp</dimen>
     <dimen name="item_height_default">50dp</dimen>
     <dimen name="item_height_one_row_text">50dp</dimen>
+    <dimen name="frame_width">2dp</dimen>
+    <dimen name="item_height_big">60dp</dimen>
 </resources>

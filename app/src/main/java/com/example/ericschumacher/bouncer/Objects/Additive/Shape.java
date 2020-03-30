@@ -15,6 +15,31 @@ public class Shape extends Additive {
         super(id, name);
     }
 
+    public Shape(int id) {
+        this.Id = id;
+        String name;
+        switch (id) {
+            case 1:
+                name = "Cherry";
+                break;
+            case 2:
+                name = "Very Good";
+                break;
+            case 3:
+                name = "Good";
+                break;
+            case 4:
+                name = "Acceptable";
+                break;
+            case 5:
+                name = "Broken";
+                break;
+            default:
+                name = "Not defined";
+        }
+        this.Name = name;
+    }
+
     public Shape (JSONObject oJson) {
         try {
             Id = oJson.getInt(Constants_Extern.ID_SHAPE);

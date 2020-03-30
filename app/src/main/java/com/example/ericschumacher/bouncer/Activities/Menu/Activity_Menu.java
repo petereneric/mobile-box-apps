@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.ericschumacher.bouncer.Activities.Activity_Battery;
 import com.example.ericschumacher.bouncer.Activities.Activity_Bouncer;
 import com.example.ericschumacher.bouncer.Activities.Activity_Juicer;
 import com.example.ericschumacher.bouncer.Activities.Activity_LKU_Booker;
@@ -43,6 +44,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
     RadioButton rbPrinterOne;
     RadioButton rbPrinterTwo;
     RadioButton rbPrinterThree;
+    RadioButton rbPrinterFour;
 
     ArrayList<Object_Menu> lMenu = new ArrayList<>();
 
@@ -93,6 +95,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         rbPrinterOne = findViewById(R.id.rbPrinterOne);
         rbPrinterTwo = findViewById(R.id.rbPrinterTwo);
         rbPrinterThree = findViewById(R.id.rbPrinterThree);
+        rbPrinterFour = findViewById(R.id.rbPrinterFour);
 
         if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_ONE).equals(Constants_Intern.ID_PRINTER_ONE)) {
             rbPrinterOne.setChecked(true);
@@ -102,6 +105,9 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         }
         if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_ONE).equals(Constants_Intern.ID_PRINTER_THREE)) {
             rbPrinterThree.setChecked(true);
+        }
+        if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_ONE).equals(Constants_Intern.ID_PRINTER_FOUR)) {
+            rbPrinterFour.setChecked(true);
         }
 
         updateUI();
@@ -114,6 +120,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         lMenu.add(new Object_Menu(getString(R.string.activity_name_lku_booker), new Intent(this, Activity_LKU_Booker.class), R.color.color_secondary));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_turing), new Intent(this, Activity_Turing.class), R.color.color_primary_turing));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_zwegat), new Intent(this, Activity_Zwegat.class), R.color.color_divider));
+        lMenu.add(new Object_Menu(getString(R.string.activity_battery), new Intent(this, Activity_Battery.class), R.color.color_primary));
     }
 
     @Override
@@ -147,6 +154,10 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
             case R.id.rbPrinterThree:
                 if (checked)
                     SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_THREE).commit();
+                break;
+            case R.id.rbPrinterFour:
+                if (checked)
+                    SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_FOUR).commit();
                 break;
         }
     }

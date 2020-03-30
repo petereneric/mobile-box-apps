@@ -179,7 +179,7 @@ public class Volley_Connection {
             @Override
             public void onErrorResponse(VolleyError e) {
                 e.printStackTrace();
-                Toast.makeText(Context, e + "error", Toast.LENGTH_LONG).show();
+                //Toast.makeText(Context, e + "error", Toast.LENGTH_LONG).show();
             }
         }) {
             // set headers
@@ -226,6 +226,8 @@ public class Volley_Connection {
     }
 
     public void execute(int method, final String url, final JSONObject jsonValue) {
+
+        if (jsonValue != null) Log.i("JSON-Execute", jsonValue.toString());
 
         StringRequest strreq = new StringRequest(method, url, new Response.Listener<String>() {
 

@@ -3,10 +3,6 @@
     // App name
     <string name="app_name">Bouncer</string>
 
-    // Model
-    <string name="dps">Dps</string>
-
-
     // Activity-Names
     <string name="activity_name_menu">Menu</string>
     <string name="activity_name_bouncer">Bouncer</string>
@@ -17,7 +13,8 @@
     <string name="activity_name_turing">Turing</string>
     <string name="activity_name_zwegat">Zwegat</string>
 
-    // Activity_Selection
+    // Else
+    <string name="dps">Dps</string>
     <string name="not_defined">Not defined</string>
     <string name="phone">Phone</string>
     <string name="model">Model</string>
@@ -27,7 +24,7 @@
     <string name="producer">Producer</string>
     <string name="hint_scan">Scan..</string>
     <string name="hint_model_name">Enter model name..</string>
-    <string name="hint_battery_name">Enter oBattery name..</string>
+    <string name="hint_battery_name">Search here for battery..</string>
     <string name="missing_input">Missing input</string>
     <string name="selection_result">Result of selection</string>
     <string name="reuse">Reuse</string>
@@ -40,7 +37,7 @@
     <string name="undo">Undo</string>
     <string name="added_to">Added to:</string>
     <string name="add_battery">Add %1$s to batteries?</string>
-    <string name="hint_enter_battery_name">Enter oBattery name..</string>
+    <string name="hint_enter_battery_name">Search here for battery..</string>
     <string name="broken">Broken</string>
     <string name="shape_broken">Broken</string>
     <string name="ok">Ok</string>
@@ -60,15 +57,9 @@
     <string name="destination">Destination</string>
     <string name="oStation">Station</string>
     <string name="model_name">Model-Name</string>
-
-    // Activity - Turing
     <string name="color_erp">Color ERP</string>
     <string name="color_wawi">Color WAWI</string>
-
-    // Activity - Manager_LKU
     <string name="is_lku_filled">Is LKU space full? </string>
-
-    // Activity - LKU Manager
     <string name="device_written_off">Device is written off</string>
     <string name="device_stored_lku">Device is stored in LKU Stock - Wait for lable..</string>
     <string name="device_stored_excess_stock">Device is stored in Excess Stock - Wait for lable..</string>
@@ -80,40 +71,25 @@
     <string name="suggested">Suggested - </string>
     <string name="Stock">Stock: </string>
     <string name="Lku">Lku: </string>
-
     <string name="lku_booked_in">Booked</string>
     <string name="space_full">Space full</string>
     <string name="cancel">Cancel</string>
-
-    // Printer
     <string name="printer_head_open">Head of printer is open</string>
     <string name="printer_paused">Printer is paused</string>
     <string name="printer_paper_out">Printer paper is out</string>
-
-    // Dialog
     <string name="dialog_fragment_total_reset_title">Are you sure that you want to reset the counter?</string>
-
-    // Failures
     <string name="device_does_not_exist">Device does not exist</string>
-
-    // Device
     <string name="item_device_id">Device Id: </string>
     <string name="item_lku_id">LKU Id: </string>
     <string name="condition">Condition</string>
-
-    // Model Color Shape
     <string name="id_model_color_shape">id</string>
     <string name="id_color">id_color</string>
     <string name="id_shape">id_shape</string>
     <string name="rpd">rpd</string>
-
-    // Edit Color
     <string name="et_hint_color_name">Enter color name...</string>
     <string name="et_hint_hex">Enter hex code...</string>
     <string name="no_manufacturer_selected">No oManufacturer selected</string>
     <string name="no_model_selected">No model selected</string>
-
-    // Button
     <string name="commit">Commit</string>
     <string name="finish">Finish</string>
     <string name="delete">Delete</string>
@@ -123,29 +99,20 @@
     <string name="unknown_sourc">Unknown Source</string>
     <string name="start">Start</string>
     <string name="back">Back</string>
-
-    // Hints
     <string name="enter_collector">Enter collector...</string>
-
-    // Item row
     <string name="id">Id</string>
     <string name="date_last_update">Last update</string>
     <string name="date_creation">Date creation</string>
     <string name="account_holder">Accountholder</string>
     <string name="iban">Iban</string>
     <string name="payment">Payment</string>
-
-    // Toast
     <string name="please_select_collector">Please select collector</string>
     <string name="ready_to_bounce">Ready to bounce!</string>
     <string name="missing_color_information">Please enter color name and hex</string>
     <string name="bouncer_imei_exists">We already have a device with this IMEI in our system. Therefore you can skip this one.</string>
-
-    // Tabs Turing
     <string name="tab_turing_one">Summary</string>
     <string name="tab_turing_two">Error model</string>
     <string name="tab_turing_three">Error color</string>
-
     <string name="flush">Flush</string>
     <string name="selection">Selection</string>
     <string name="id_device">Id-Device</string>
@@ -193,6 +160,62 @@
     <string name="device">Device</string>
     <string name="backcover">Backcover</string>
     <string name="repair">Repair</string>
+    <string name="defect_reuse">Defect - Reuse</string>
+    <string name="interaction_simple_choice">Simple Choice</string>
+    <string name="intact_reuse">Intact - Reuse</string>
+    <string name="backcover_contained">Is Backcover contained</string>
+    <string name="backcover_removable">Backcover removable</string>
+    <string name="interaction_multiple_choice">Multiple Choice</string>
+    <string name="not_repairable">Not repairable</string>
+    <string name="damage_not_listed">Damage not listed</string>
+    <string name="damage_overbroken">Overbroken</string>
+    <string name="damaged">Damaged</string>
+    <string name="repaired">Repaired</string>
+    <string name="not_selected">Not selected</string>
+    <string name="damages">Damages</string>
+    <string name="no_damages_available">No damages available</string>
+    <string name="handy">Handy</string>
+    <string name="smartphone">Smartphone</string>
+    <string name="typePhone">Phone-Type</string>
+    <string name="overview">Overview</string>
+    <string name="activity_battery">Battery</string>
+    <string name="storage">Storage</string>
+    <string name="main_storage">Main Storage</string>
+    <string name="no_storage">No storage</string>
+    <string name="no_more_storage">No more storage</string>
+    <string name="reserve_storage">Reserve storage</string>
+    <string name="apply">Apply</string>
+    <string name="edit">Edit</string>
+    <string name="hint_enter">Enter name...</string>
+    <string name="battery_intact_and_contained">Battery intact and contained?</string>
+    <string name="backcover_intact_and_contained">Backcover intact and contained?</string>
+    <string name="battery_lku">Battery Lku</string>
+    <string name="print_label">Print label</string>
+    <string name="no_label_print_battery">No label print for battery</string>
+    <string name="label_print_battery">Label print for battery</string>
+    <string name="label_print_device">Label print for device</string>
+    <string name="enter_name">Enter name...</string>
+    <string name="interaction_title_select_device_battery">Select device battery</string>
+    <string name="interaction_title_edit_model_battery">Edit model battery</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="invalid_input">Invalid input</string>
+    <string name="add_model">Add model</string>
+    <string name="interaction_title_request_name_model">Request model</string>
+    <string name="exploitation">Exploitation</string>
+    <string name="request_name_battery">Request battery</string>
+    <string name="tac">TAC</string>
+    <string name="imei">IMEI</string>
+    <string name="enter_scan_name_model">Enter or scan model name</string>
+    <string name="enter_scan_id_model">Enter or scan model id</string>
+    <string name="enter_scan_tac">Enter or scan TAC</string>
+    <string name="enter_scan_imei">Enter or scan IMEI</string>
+    <string name="enter_scan_id_device">Enter or scan device id</string>
+    <string name="id_unknown">Id unknown</string>
+    <string name="name_unknown">Name unknown</string>
+    <string name="tac_unknown">Tac unknown</string>
+    />
+
+    // Not translated
 
 
 </resources>

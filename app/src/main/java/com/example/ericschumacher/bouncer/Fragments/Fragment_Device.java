@@ -42,12 +42,16 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
     TableRow trColor;
     TableRow trShape;
     TableRow trBatteryContained;
+    TableRow trBackcoverContained;
+    TableRow trDamages;
 
     TextView tvLKU;
     TextView tvStation;
     TextView tvColor;
     TextView tvShape;
     TextView tvBatteryContained;
+    TextView tvBackcoverContained;
+    TextView tvDamages;
 
     // Fragment
     FragmentManager fManager;
@@ -91,18 +95,24 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
         trColor = Layout.findViewById(R.id.trColor);
         trShape = Layout.findViewById(R.id.trShape);
         trBatteryContained = Layout.findViewById(R.id.trBattery);
+        trBackcoverContained = Layout.findViewById(R.id.trBackcoverContained);
+        trDamages = Layout.findViewById(R.id.trDamages);
 
         tvLKU = Layout.findViewById(R.id.tvLKU);
         tvStation = Layout.findViewById(R.id.tvStation);
         tvColor = Layout.findViewById(R.id.tvColor);
         tvShape = Layout.findViewById(R.id.tvShape);
         tvBatteryContained = Layout.findViewById(R.id.tvBattery);
+        tvBackcoverContained = Layout.findViewById(R.id.tvBackcoverContained);
+        tvDamages = Layout.findViewById(R.id.tvDamages);
 
         trLKU.setOnClickListener(this);
         trStation.setOnClickListener(this);
         trColor.setOnClickListener(this);
         trShape.setOnClickListener(this);
         trBatteryContained.setOnClickListener(this);
+        trBackcoverContained.setOnClickListener(this);
+        trDamages.setOnClickListener(this);
     }
 
     public void updateUI(Device device) {
@@ -140,6 +150,16 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
         } else {
             tvBatteryContained.setText(getString(R.string.unknown));
         }
+        if (device.isBackcoverContained() != null) {
+            if (device.isBackcoverContained()) {
+                tvBackcoverContained.setText(getString(R.string.yes));
+            } else {
+                tvBackcoverContained.setText(getString(R.string.no));
+            }
+        } else {
+            tvBackcoverContained.setText(getString(R.string.unknown));
+        }
+        tvDamages.setText(Integer.toString(device.getlDeviceDamages().size()));
         ((Fragment_Model)fManager.findFragmentByTag(FRAGMENT_MODEL)).updateUI(device.getoModel());
     }
 
@@ -161,6 +181,12 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
                 break;
             case R.id.trBattery:
                 requestBatteryContained();
+                break;
+            case R.id.trBackcoverContained:
+                requestBackcoverContained();
+                break;
+            case R.id.trDamages:
+                iManager.requestDamages();
                 break;
         }
     }
@@ -193,8 +219,46 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
 
     @Override
     public void requestShape() {
-        Fragment_Request_Shape f = new Fragment_Request_Shape();
-        fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, Constants_Intern.FRAGMENT_REQUEST_SHAPE).commit();
+        Fragment_Interaction_Simple_Choice fRequestButtons = new Fragment_Interaction_Simple_Choice();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants_Intern.INTERACTION_TYPE, getString(R.string.interaction_simple_choice));
+        bundle.putString(Constants_Intern.INTERACTION_TITLE, getString(R.string.shape));
+        int[] lDrawableIds = new int[7];
+        lDrawableIds[0] = R.drawable.button_interaction_shape_cherry;
+        lDrawableIds[1] = R.drawable.button_interaction_shape_very_good;
+        lDrawableIds[2] = Constants_Intern.GONE_INT;
+        lDrawableIds[3] = R.drawable.button_interaction_shape_good;
+        lDrawableIds[4] = R.drawable.button_interaction_shape_acceptable;
+        lDrawableIds[5] = Constants_Intern.GONE_INT;
+        lDrawableIds[6] = R.drawable.button_interaction_shape_broken;
+        bundle.putIntArray(Constants_Intern.LIST_DRAWABLE_IDS, lDrawableIds);
+        int[] lColorIds = new int[7];
+        lColorIds[0] = R.color.color_shape_cherry;
+        lColorIds[1] = R.color.color_shape_very_good;
+        lColorIds[2] = Constants_Intern.GONE_INT;
+        lColorIds[3] = R.color.color_shape_good;
+        lColorIds[4] = R.color.color_shape_acceptable;
+        lColorIds[5] = Constants_Intern.GONE_INT;
+        lColorIds[6] = R.color.color_shape_broken;
+        bundle.putIntArray(Constants_Intern.LIST_COLOR_IDS, lColorIds);
+        String[] lButtons = new String[7];
+        lButtons[0] = getString(R.string.shape_cherry);
+        lButtons[1] = getString(R.string.shape_very_good);
+        lButtons[2] = Constants_Intern.GONE;
+        lButtons[3] = getString(R.string.shape_good);
+        lButtons[4] = getString(R.string.shape_acceptable);
+        lButtons[5] = Constants_Intern.GONE;
+        lButtons[6] = getString(R.string.broken);
+        bundle.putStringArray(Constants_Intern.LIST_BUTTONS, lButtons);
+        //int[] lColorIds = {R.color.color_choice_positive, R.color.color_choice_negative};
+        //bundle.putIntArray(Constants_Intern.LIST_COLOR_IDS, lColorIds);
+        fRequestButtons.setArguments(bundle);
+        fManager.beginTransaction().replace(R.id.flFragmentInteraction, fRequestButtons, Constants_Intern.FRAGMENT_INTERACTION_SHAPE).commit();
+
+        //Fragment_Request_Shape f = new Fragment_Request_Shape();
+        //fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, Constants_Intern.FRAGMENT_REQUEST_SHAPE).commit();
+
+
     }
 
     @Override
@@ -240,20 +304,46 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
 
     @Override
     public void requestBatteryContained() {
-        Fragment_Interaction fRequestButtons = new Fragment_Interaction();
+        Fragment_Interaction_Simple_Choice fRequestButtons = new Fragment_Interaction_Simple_Choice();
         Bundle bundle = new Bundle();
-        bundle.putString(Constants_Intern.TITLE_MAIN, getString(R.string.request));
-        String[] lTitle = new String[1];
-        lTitle[0] = getString(R.string.request_battery_contained_title);
-        bundle.putStringArray(Constants_Intern.LIST_TITLE, lTitle);
+        bundle.putString(Constants_Intern.INTERACTION_TYPE, getString(R.string.interaction_simple_choice));
+        bundle.putString(Constants_Intern.INTERACTION_TITLE, getString(R.string.battery_intact_and_contained));
+        int[] lDrawableIds = new int[2];
+        lDrawableIds[0] = R.drawable.button_interaction_yes;
+        lDrawableIds[1] = R.drawable.button_interaction_no;
+        bundle.putIntArray(Constants_Intern.LIST_DRAWABLE_IDS, lDrawableIds);
+        int[] lColorIds = new int[2];
+        lColorIds[0] = R.color.color_yes;
+        lColorIds[1] = R.color.color_no;
+        bundle.putIntArray(Constants_Intern.LIST_COLOR_IDS, lColorIds);
         String[] lButtons = new String[2];
         lButtons[0] = getString(R.string.yes);
         lButtons[1] = getString(R.string.no);
         bundle.putStringArray(Constants_Intern.LIST_BUTTONS, lButtons);
-        int[] lColorIds = {R.color.color_choice_positive, R.color.color_choice_negative};
-        bundle.putIntArray(Constants_Intern.LIST_COLOR_IDS, lColorIds);
         fRequestButtons.setArguments(bundle);
         fManager.beginTransaction().replace(R.id.flFragmentInteraction, fRequestButtons, Constants_Intern.FRAGMENT_REQUEST_BATTERY_CONTAINED).commit();
+    }
+
+    @Override
+    public void requestBackcoverContained() {
+        Fragment_Interaction_Simple_Choice fInteraction = new Fragment_Interaction_Simple_Choice();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants_Intern.INTERACTION_TYPE, getString(R.string.interaction_simple_choice));
+        bundle.putString(Constants_Intern.INTERACTION_TITLE, getString(R.string.backcover_intact_and_contained));
+        int[] lDrawableIds = new int[2];
+        lDrawableIds[0] = R.drawable.button_interaction_yes;
+        lDrawableIds[1] = R.drawable.button_interaction_no;
+        bundle.putIntArray(Constants_Intern.LIST_DRAWABLE_IDS, lDrawableIds);
+        int[] lColorIds = new int[2];
+        lColorIds[0] = R.color.color_yes;
+        lColorIds[1] = R.color.color_no;
+        bundle.putIntArray(Constants_Intern.LIST_COLOR_IDS, lColorIds);
+        String[] lButtons = new String[2];
+        lButtons[0] = getString(R.string.yes);
+        lButtons[1] = getString(R.string.no);
+        bundle.putStringArray(Constants_Intern.LIST_BUTTONS, lButtons);
+        fInteraction.setArguments(bundle);
+        fManager.beginTransaction().replace(R.id.flFragmentInteraction, fInteraction, Constants_Intern.FRAGMENT_INTERACTION_BACKCOVER_CONTAINED).commit();
     }
 
     @Override
@@ -277,6 +367,11 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
     }
 
     @Override
+    public void requestBackcoverRemovable(Device device) {
+        iModel.requestBackcoverRemovable(device.getoModel());
+    }
+
+    @Override
     public void requestBattery(Device device) {
         iModel.requestBattery(device.getoModel());
     }
@@ -284,5 +379,15 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
     @Override
     public void requestDefaultExploitation(Model model) {
         iModel.requestDefaultExploitation(model);
+    }
+
+    @Override
+    public void requestTypePhone() {
+        iModel.requestTypePhone();
+    }
+
+    @Override
+    public void requestModelDamages(Model model) {
+        iModel.requestModelDamages(model);
     }
 }

@@ -142,4 +142,36 @@ public class Constants_Extern extends Constants_Intern {
 
     public static final String DESCRIPTION = "DESCRIPTION";
     public static final String LIST_SHIPPING_RECORDS = "LIST_SHIPPING_RECORDS";
+    public static final String TYPE_STATE = "TYPE_STATE";
+    public static final String BOOLEAN_SOFTWARE_INTACT = "BOOLEAN_SOFTWARE_INTACT";
+    public static final String BOOLEAN_BACKCOVER_CONTAINED = "BOOLEAN_BACKCOVER_CONTAINED";
+    public static final String ID_BACKCOVER = "ID_BACKCOVER";
+    public static final String TYPE_SHAPE = "TYPE_SHAPE";
+    public static final String ID_UNIT_BATTERY = "ID_UNIT_BATTERY";
+    public static final String BOOLEAN_BATTERY_INTACT = "BOOLEAN_BATTERY_INTACT";
+    public static final String BACKCOVER_REMOVABLE = "BACKCOVER_REMOVABLE";
+    public static final String ID_DAMAGE = "ID_DAMAGE";
+    public static final String TYPE_DAMAGE = "TYPE_DAMAGE";
+    public static final String ID_MODEL_DAMAGE = "ID_MODEL_DAMAGE";
+    public static final String OBJECT_DAMAGE = "OBJECT_DAMAGE";
+    public static final String BOOLEAN_REPAIRABLE = "BOOLEAN_REPAIRABLE";
+    public static final String ID_SPARE = "ID_SPARE";
+    public static final String LINK_GUIDE = "LINK_GUIDE";
+    public static final String LIST_DAMAGES = "LIST_DAMAGES";
+    public static final String ID_DEVICE_DAMAGE = "ID_DEVICE_DAMAGE";
+    public static final String OBJECT_MODEL_DAMAGE = "OBJECT_MODEL_DAMAGE";
+    public static final String TYPE_STATUS = "TYPE_STATUS";
+    public static final String LIST_DEVICE_DAMAGES = "LIST_DEVICE_DAMAGES";
+    public static final String TYPE_REPAIR_PLACE = "TYPE_REPAIR_PLACE";
+    public static final String LINK_ICON = "LINK_ICON";
+    public static final String TYPE_PHONE = "TYPE_PHONE";
+    public static final String SHORTCUT = "SHORTCUT";
+    public static final String LEVEL_STOCK = "LEVEL_STOCK";
+    public static final String LKU_BATTERY = "LKU_BATTERY";
+    public static final String LIST_BATTERIES = "LIST_BATTERIES";
+    public static final String LIST_CHARGER = "LIST_CHARGER";
+    public static final String MULTIPLE_BATTERIES = "MULTIPLE_BATTERIES";
+    public static final String ID_MODEL_BATTERY = "ID_MODEL_BATTERY";
+    public static final String LIST_MODEL_BATTERIES = "LIST_MODEL_BATTERIES";
+    public static final String OBJECT_MODEL_BATTERY = "OBJECT_MODEL_BATTERY";
 }

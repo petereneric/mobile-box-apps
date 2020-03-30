@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:state_pressed="true">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- you can use any color you want I used here gray color-->
+            <solid android:color="@color/color_transparent" />
+            <stroke android:width="2dp" android:color="@color/color_primary"/>
+            <corners android:radius="16dp"/>
+        </shape>
+    </item>
+    <item
+        android:state_pressed="false">
+        <shape xmlns:android="http://schemas.android.com/apk/res/android">
+            <!-- you can use any color you want I used here gray color-->
+            <solid android:color="@color/color_transparent" />
+            <stroke android:width="2dp" android:color="@color/color_grey_light"/>
+            <corners android:radius="16dp"/>
+        </shape>
+    </item>
+</selector>

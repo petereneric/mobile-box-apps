@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp">
+
+    <include
+        layout="@layout/layout_header"
+        android:id="@+id/lHeader"/>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@id/lHeader">
+
+        <LinearLayout
+            android:id="@+id/llOne"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/bOne"
+                style="@style/button_request"
+                android:background="@color/color_choice_positive"
+                android:text="button one"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bTwo"
+                style="@style/button_request"
+                android:background="@color/color_choice_negative"
+                android:text="button two"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bThree"
+                style="@style/button_request"
+                android:background="@color/color_choice_negative"
+                android:text="button three"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:id="@+id/llTwo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bFour"
+                style="@style/button_request"
+                android:background="@color/color_choice_positive"
+                android:text="button three"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bFive"
+                style="@style/button_request"
+                android:background="@color/color_choice_negative"
+                android:text="button four"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bSix"
+                style="@style/button_request"
+                android:background="@color/color_choice_negative"
+                android:text="button three"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llThree"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/bSeven"
+                style="@style/button_request"
+                android:background="@color/color_choice_positive"
+                android:text="button three"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bEight"
+                style="@style/button_request"
+                android:background="@color/color_choice_negative"
+                android:text="button four"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/bNine"
+                style="@style/button_request"
+                android:background="@color/color_choice_negative"
+                android:text="button three"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

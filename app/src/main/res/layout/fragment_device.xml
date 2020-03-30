@@ -68,6 +68,18 @@
                     android:text="true" />
             </TableRow>
 
+            <TableRow android:id="@+id/trBackcoverContained">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/backcover_contained" />
+
+                <TextView
+                    android:id="@+id/tvBackcoverContained"
+                    style="@style/tv_tableRow_Value"
+                    android:text="true" />
+            </TableRow>
+
             <TableRow android:id="@+id/trStation">
 
                 <TextView
@@ -90,6 +102,18 @@
                     android:id="@+id/tvLKU"
                     style="@style/tv_tableRow_Value"
                     android:text="Nicht vergeben" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trDamages">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/damages" />
+
+                <TextView
+                    android:id="@+id/tvDamages"
+                    style="@style/tv_tableRow_Value"
+                    android:text="4" />
             </TableRow>
 
         </TableLayout>

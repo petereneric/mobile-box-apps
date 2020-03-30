@@ -5,7 +5,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_black</item>
-        <item name="colorAccent">@color/color_secondary</item>
+        <item name="colorAccent">@color/color_primary</item>
 
     </style>
 
@@ -27,15 +27,17 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:padding">8dp</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="tv_tableRow_Key" parent="tv_tableRow">
-        <item name="android:layout_weight">4</item>
+        <item name="android:layout_weight">7</item>
         <item name="android:textStyle">bold</item>
+
     </style>
 
     <style name="tv_tableRow_Value" parent="tv_tableRow">
-        <item name="android:layout_weight">6</item>
+        <item name="android:layout_weight">4</item>
         <item name="android:paddingLeft">16dp</item>
         <item name="android:textColor">@color/color_text_secondary</item>
     </style>
@@ -47,6 +49,8 @@
         <item name="android:layout_height">@dimen/item_height_default</item>
         <item name="android:gravity">center_vertical</item>
     </style>
+
+
 
     <style name="tv_navigationDrawer" parent="tv_default">
         <item name="android:layout_width">match_parent</item>
@@ -68,8 +72,9 @@
 
     <style name="tv_interaction_result_header_exploitation" parent="tv_default">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">24dp</item>
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">4dp</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/size_text_default</item>
@@ -87,28 +92,48 @@
     </style>
 
     <style name="tv_interaction_result_object_reuse" parent="tv_interaction_result_object">
-        <item name="android:background">@color/color_reuse</item>
+        <item name="android:background">@drawable/textview_bouncer_result_title_reuse_light</item>
     </style>
 
     <style name="tv_interaction_result_object_repair" parent="tv_interaction_result_object">
-        <item name="android:background">@color/color_repair</item>
+        <item name="android:background">@drawable/textview_bouncer_result_title_repair_light</item>
     </style>
 
     <style name="tv_interaction_result_object_recycling" parent="tv_interaction_result_object">
-        <item name="android:background">@color/color_recycling</item>
+        <item name="android:background">@drawable/textview_bouncer_result_title_recycling_light</item>
+    </style>
+
+    <style name="tv_interaction_result_object_unknown" parent="tv_interaction_result_object">
+        <item name="android:background">@drawable/textview_bouncer_result_title_unknown_light</item>
     </style>
 
 
     // Button
 
     <style name="button_default">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/background_stroke_round_color_primary</item>
+        <item name="android:textColor">@color/color_primary</item>
+        <item name="android:textSize">@dimen/size_text_button</item>
+        <item name="android:gravity">center</item>
+        <item name="colorButtonNormal">@color/color_white</item>
+        <item name="android:layout_margin">8dp</item>
+
+    </style>
+
+    <style name="button_commit">
         <item name="android:padding">8dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/design_button_default</item>
-        <item name="android:textColor">@color/color_white</item>
+        <item name="android:background">@drawable/button_commit</item>
+        <item name="android:textColor">@color/color_button_text_commit</item>
         <item name="android:textSize">@dimen/size_text_default</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:layout_margin">8dp</item>
+        <item name="android:drawableRight">@drawable/button_image_commit</item>
+        <item name="android:text">@string/commit</item>
     </style>
 
     <style name="button_request">

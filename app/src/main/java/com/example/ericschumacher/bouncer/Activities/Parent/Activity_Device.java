@@ -1,19 +1,16 @@
 package com.example.ericschumacher.bouncer.Activities.Parent;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,11 +28,16 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Color_Add;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Simple;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Interaction_Multiple_Choice_Device_Damages;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Interaction_Multiple_Choice_Model_Battery;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Interaction_Multiple_Choice_Model_Battery_Select;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_SimpleText;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Device;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_DeviceManager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Dialog;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_SimpleText;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_ModelBatteryManager;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Request_Name;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Search_Manufacturer;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Search_Model;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
@@ -43,6 +45,7 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Ar
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_JSON;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
+import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Color;
@@ -51,6 +54,9 @@ import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
+import com.example.ericschumacher.bouncer.Objects.Model_Battery;
+import com.example.ericschumacher.bouncer.Objects.Object_Device_Damage;
+import com.example.ericschumacher.bouncer.Objects.Object_Model_Damage;
 import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Camera;
@@ -59,13 +65,16 @@ import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class Activity_Device extends AppCompatActivity implements Interface_DeviceManager, View.OnClickListener, Interface_Dialog, Interface_Fragment_SimpleText {
+public class Activity_Device extends AppCompatActivity implements Interface_DeviceManager, View.OnClickListener, Interface_Dialog, Interface_Fragment_SimpleText, Interface_ModelBatteryManager,
+        Interface_Request_Name {
 
     // Interfaces
     public Interface_Device iDevice;
@@ -358,26 +367,24 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
     @Override
     public void bookDeviceOutOfLKUStock() {
         uNetwork.bookDeviceOutOfLKUStock(oDevice, new Interface_VolleyCallback() {
-                    @Override
-                    public void onSuccess() {
-                        oDevice.getoStation().setId(Constants_Intern.STATION_UNKNOWN);
-                        //oDevice.setLKU(Constants_Intern.ID_UNKNOWN);
-                        updateUI();
-                        Log.i("tagg", "bookDeviceOutOfLKUSTock");
-                        mPrinter.printDevice(oDevice);
-                        etScan.setText("");
-                        openKeyboard(etScan);
-                    }
+            @Override
+            public void onSuccess() {
+                oDevice.getoStation().setId(Constants_Intern.STATION_UNKNOWN);
+                //oDevice.setLKU(Constants_Intern.ID_UNKNOWN);
+                updateUI();
+                Log.i("tagg", "bookDeviceOutOfLKUSTock");
+                mPrinter.printDevice(oDevice);
+                etScan.setText("");
+                openKeyboard(etScan);
+            }
 
-                    @Override
-                    public void onFailure() {
+            @Override
+            public void onFailure() {
 
-                    }
-                });
+            }
+        });
         fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_LKU_BOOKING)).commit();
     }
-
-
 
 
     // Updates
@@ -404,6 +411,18 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
 
     }
 
+    public void requestDeviceBattery() {
+        if (oDevice.getoModel().getlModelBatteries().size() > 1) {
+            Fragment_Interaction_Multiple_Choice_Model_Battery_Select fragment = new Fragment_Interaction_Multiple_Choice_Model_Battery_Select();
+            Bundle bData = new Bundle();
+            bData.putString(Constants_Intern.INTERACTION_TITLE, getString(R.string.interaction_title_select_device_battery));
+            bData.putInt(Constants_Intern.ID_MODEL, oDevice.getoModel().getkModel());
+            bData.putInt(Constants_Intern.TYPE_MODE, Constants_Intern.TYPE_MODE_SELECT);
+            fragment.setArguments(bData);
+            fManager.beginTransaction().replace(R.id.flFragmentInteraction, fragment, Constants_Intern.FRAGMENT_MULTIPLE_CHOICE_MODEL_BATTERY_SELECT).commit();
+        }
+    }
+
     // Returns
     @Override
     public void returnDefaultExploitation(int exploitation) {
@@ -425,10 +444,10 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
             public void onResult(JSONObject oJson) throws JSONException {
                 if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
                     oDevice.setoModel(new Model(Activity_Device.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL)));
-                    cVolley.execute(Request.Method.PUT, Urls.URL_INSERT_TAC_MODEL+oDevice.getoModel().getkModel()+"/"+oDevice.getTAC(), null);
+                    cVolley.execute(Request.Method.PUT, Urls.URL_PUT_MODEL_TAC + oDevice.getoModel().getkModel() + "/" + oDevice.getTAC(), null);
                     handledReturnModel();
                 } else {
-                    cVolley.getResponse(Request.Method.PUT, Urls.URL_PUT_MODEL_ADD + name + "/" + oDevice.getTAC(), null, new Interface_VolleyResult() {
+                    cVolley.getResponse(Request.Method.PUT, Urls.URL_PUT_MODEL_ADD + name, null, new Interface_VolleyResult() {
                         @Override
                         public void onResult(JSONObject oJson) throws JSONException {
                             oDevice.setoModel(new Model(Activity_Device.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL)));
@@ -469,22 +488,27 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
 
     public void returnCondition(int condition) {
         oDevice.setCondition(condition);
-        if (oDevice.getCondition() == Constants_Intern.CONDITION_BROKEN) oDevice.getoModel().settDefaultExploitation(Constants_Intern.EXPLOITATION_RECYCLING);
+        if (oDevice.getCondition() == Constants_Intern.CONDITION_BROKEN)
+            oDevice.getoModel().settDefaultExploitation(Constants_Intern.EXPLOITATION_RECYCLING);
         handledReturnCondition();
     }
 
     @Override
-    public void onClickRequestButton(String tFragment, int tButton) {
+    public void onClickInteractionButton(String tFragment, int tButton) {
         switch (tFragment) {
             case Constants_Intern.FRAGMENT_REQUEST_BATTERY_CONTAINED:
                 switch (tButton) {
                     case Constants_Intern.BUTTON_ONE:
                         oDevice.setBatteryContained(true);
+                        if (oDevice.getoModel().getlModelBatteries() != null && oDevice.getoModel().getlModelBatteries().size() == 1) {
+                            oDevice.setoBattery(oDevice.getoModel().getoBattery());
+                        }
                         break;
-                        case Constants_Intern.BUTTON_TWO:
-                            oDevice.setBatteryContained(false);
-                            break;
+                    case Constants_Intern.BUTTON_TWO:
+                        oDevice.setBatteryContained(false);
+                        break;
                 }
+                updateUI();
                 handledReturnBatteryContained();
                 break;
             case Constants_Intern.FRAGMENT_REQUEST_BATTERY_REMOVABLE:
@@ -494,14 +518,207 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
                         break;
                     case Constants_Intern.BUTTON_TWO:
                         oDevice.getoModel().setBatteryRemovable(false);
-                        oDevice.setBatteryContained(true);
+                        if (oDevice.isBatteryContained() == null) oDevice.setBatteryContained(true);
                         break;
                 }
+                updateUI();
                 handledReturnBatteryRemovable();
                 break;
+            case Constants_Intern.FRAGMENT_REQUEST_BACKCOVER_REMOVABLE:
+                switch (tButton) {
+                    case Constants_Intern.BUTTON_ONE:
+                        oDevice.getoModel().setBackcoverRemovable(true);
+                        break;
+                    case Constants_Intern.BUTTON_TWO:
+                        oDevice.getoModel().setBackcoverRemovable(false);
+                        if (oDevice.isBackcoverContained() == null)
+                            oDevice.setbBackcoverContained(true);
+                        break;
+                }
+                updateUI();
+                handledReturnBackcoverRemovable();
+                break;
+            case Constants_Intern.FRAGMENT_INTERACTION_EXPLOITATION:
+                switch (tButton) {
+                    case Constants_Intern.BUTTON_ONE:
+                        oDevice.getoModel().settDefaultExploitation(Constants_Intern.EXPLOITATION_RECYCLING);
+                        break;
+                    case Constants_Intern.BUTTON_TWO:
+                        oDevice.getoModel().settDefaultExploitation(Constants_Intern.EXPLOITATION_INTACT_REUSE);
+                        break;
+                    case Constants_Intern.BUTTON_THREE:
+                        oDevice.getoModel().settDefaultExploitation(Constants_Intern.EXPLOITATION_DEFECT_REUSE);
+                        break;
+                    case Constants_Intern.BUTTON_FOUR:
 
+                        break;
+                }
+                updateUI();
+                handledReturnDefaultExploitation();
+                break;
+            case Constants_Intern.FRAGMENT_INTERACTION_SHAPE:
+                int tShape = 0;
+                Log.i("Shappe:", Integer.toString(tShape));
+                switch (tButton) {
+                    case Constants_Intern.BUTTON_ONE:
+                        tShape = 1;
+                        break;
+                    case Constants_Intern.BUTTON_TWO:
+                        tShape = 2;
+                        break;
+                    case Constants_Intern.BUTTON_FOUR:
+                        Log.i("button_four", "called");
+                        tShape = 3;
+                        break;
+                    case Constants_Intern.BUTTON_FIVE:
+                        tShape = 4;
+                        break;
+                    case Constants_Intern.BUTTON_SEVEN:
+                        tShape = 5;
+                        break;
+                }
+                oDevice.setoShape(new Shape(tShape));
+                if (tShape == Constants_Intern.SHAPE_BROKEN) {
+                    // Get Model Damage
+                    cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_DAMAGE + oDevice.getoModel().getkModel(), null, new Interface_VolleyResult() {
+                        @Override
+                        public void onResult(JSONObject oJson) throws JSONException {
+                            if (Volley_Connection.successfulResponse(oJson)) {
+                                // Damages found
+                                JSONArray aJson = oJson.getJSONArray(Constants_Extern.LIST_DAMAGES);
+                                ArrayList<Object_Model_Damage> lModelDamages = new ArrayList<>();
+                                for (int i = 0; i < aJson.length(); i++) {
+                                    JSONObject oJsonModelDamage = aJson.getJSONObject(i);
+                                    Object_Model_Damage oModelDamage = new Object_Model_Damage(Activity_Device.this, oJsonModelDamage);
+                                    lModelDamages.add(oModelDamage);
+                                }
+                                for (Object_Device_Damage oDeviceDamage : oDevice.getlDeviceDamages()) {
+                                    for (Object_Model_Damage oModelDamage : lModelDamages) {
+                                        if (oDeviceDamage.getoModelDamage().equals(oModelDamage)) {
+                                            lModelDamages.remove(oModelDamage);
+                                        }
+                                    }
+                                }
+
+
+                                JSONArray aJsonDeviceDamages = new JSONArray();
+                                for (Object_Device_Damage oDeviceDamageDamage : oDevice.getlDeviceDamages()) {
+                                    aJsonDeviceDamages.put(oDeviceDamageDamage.getJson());
+                                }
+                                Log.i("Pre Device Damages: ", aJsonDeviceDamages.toString());
+                                JSONArray aJsonModelDamages = new JSONArray();
+                                for (Object_Model_Damage oModelDamage : lModelDamages) {
+                                    aJsonModelDamages.put(oModelDamage.getJson());
+                                }
+                                Log.i("Pre Model Damages: ", aJsonModelDamages.toString());
+
+                                Bundle bData = new Bundle();
+                                bData.putInt(Constants_Intern.ID_DEVICE, oDevice.getIdDevice());
+                                bData.putString(Constants_Intern.STRING_MODEL_DAMAGES, aJsonModelDamages.toString());
+                                bData.putString(Constants_Intern.STRING_DEVICE_DAMAGES, aJsonDeviceDamages.toString());
+                                fragmentInteraction(new Fragment_Interaction_Multiple_Choice_Device_Damages(), bData, Constants_Intern.FRAGMENT_INTERACTION_DEVICE_DAMAGES);
+
+                            } else {
+                                // No damages found
+                                switch (oDevice.getoModel().gettDefaultExploitation()) {
+                                    case Constants_Intern.DEFAULT_EXPLOITATION_REUSE:
+                                        oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                                        updateUI();
+                                        handledReturnShape();
+                                        break;
+                                    case Constants_Intern.DEFAULT_EXPLOITATION_DEFECT_REUSE:
+                                        oDevice.settState(Constants_Intern.STATE_DEFECT_REUSE);
+                                        updateUI();
+                                        handledReturnShape();
+                                        break;
+                                }
+                            }
+                        }
+                    });
+                }
+
+
+                if (tShape < 5) {
+                    Log.i("Shappeeee:", Integer.toString(tShape));
+                    oDevice.settState(Constants_Intern.STATE_INTACT_REUSE);
+                    updateUI();
+                    handledReturnShape();
+                }
+                break;
+            case Constants_Intern.FRAGMENT_INTERACTION_BACKCOVER_CONTAINED:
+                switch (tButton) {
+                    case Constants_Intern.BUTTON_ONE:
+                        oDevice.setbBackcoverContained(true);
+                        break;
+                    case Constants_Intern.BUTTON_TWO:
+                        oDevice.setbBackcoverContained(false);
+                        break;
+                }
+                updateUI();
+                handledReturnBackcoverContained();
+                break;
+            case Constants_Intern.FRAGMENT_REQUEST_DEFAULT_EXPLOITATION:
+                int tDefaultExploitation = 0;
+                switch (tButton) {
+                    case Constants_Intern.BUTTON_ONE:
+                        tDefaultExploitation = 1;
+                        break;
+                    case Constants_Intern.BUTTON_TWO:
+                        tDefaultExploitation = 2;
+                        break;
+                    case Constants_Intern.BUTTON_THREE:
+                        tDefaultExploitation = 3;
+                        break;
+                }
+                oDevice.getoModel().settDefaultExploitation(tDefaultExploitation);
+                oDevice.settState(Constants_Intern.STATE_UNKNOWN);
+//                if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
+//                    uNetwork.exploitRecycling(oDevice);
+//                } else {
+//                    uNetwork.exploitReuse(oDevice);
+//                }
+                handledReturnDefaultExploitation();
+                break;
+            case Constants_Intern.FRAGMENT_MULTIPLE_CHOICE_DEVICE_DAMAGES:
+                switch (tButton) {
+                    case Constants_Intern.BUTTON_OVERBROKEN:
+                        oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                        break;
+                    case Constants_Intern.BUTTON_OTHER_DAMAGES:
+                        oDevice.setlDeviceDamages(new ArrayList<Object_Device_Damage>());
+                        switch (oDevice.getoModel().gettDefaultExploitation()) {
+                            case Constants_Intern.DEFAULT_EXPLOITATION_REUSE:
+                                oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                                break;
+                            case Constants_Intern.DEFAULT_EXPLOITATION_DEFECT_REUSE:
+                                oDevice.settState(Constants_Intern.STATE_DEFECT_REUSE);
+                                break;
+                        }
+                        break;
+                }
+                handledReturnDeviceDamages();
+                break;
+            case Constants_Intern.FRAGMENT_REQUEST_PHONE_TYPE:
+                switch (tButton) {
+                    case Constants_Intern.BUTTON_TYPE_PHONE_HANDY:
+                        oDevice.getoModel().settPhone(Constants_Intern.TYPE_PHONE_HANDY);
+                        break;
+                    case Constants_Intern.BUTTON_TYPE_PHONE_SMARTPHONE:
+                        oDevice.getoModel().settPhone(Constants_Intern.TYPE_PHONE_SMARTPHONE);
+                        break;
+                }
+                handledReturnTypePhone();
         }
+    }
 
+
+    @Override
+    public void onClickInteractionMultipleChoiceCommit(String tFragment, ArrayList<Additive> lAdditive) {
+        switch (tFragment) {
+            case Constants_Intern.FRAGMENT_INTERACTION_MULTIPLE_CHOICE_DAMAGES:
+
+                break;
+        }
     }
 
 
@@ -553,6 +770,67 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
         fragmentInteraction(new Fragment_Color_Add(), bundle, Constants_Intern.FRAGMENT_COLOR_ADD);
     }
 
+    @Override
+    public void requestDamages() {
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_DAMAGE + oDevice.getoModel().getkModel(), null, new Interface_VolleyResult() {
+            @Override
+            public void onResult(JSONObject oJson) throws JSONException {
+                if (Volley_Connection.successfulResponse(oJson)) {
+                    // Damages found
+                    JSONArray aJson = oJson.getJSONArray(Constants_Extern.LIST_DAMAGES);
+                    ArrayList<Object_Model_Damage> lModelDamages = new ArrayList<>();
+                    for (int i = 0; i < aJson.length(); i++) {
+                        JSONObject oJsonModelDamage = aJson.getJSONObject(i);
+                        Object_Model_Damage oModelDamage = new Object_Model_Damage(Activity_Device.this, oJsonModelDamage);
+                        lModelDamages.add(oModelDamage);
+                    }
+                    for (Object_Device_Damage oDeviceDamage : oDevice.getlDeviceDamages()) {
+                        Iterator<Object_Model_Damage> iModelDamage = lModelDamages.iterator();
+                        while (iModelDamage.hasNext()) {
+                            Object_Model_Damage oModelDamage = iModelDamage.next();
+                            if (oDeviceDamage.getoModelDamage().equals(oModelDamage)) {
+                                iModelDamage.remove();
+                            }
+                        }
+                    }
+
+                    JSONArray aJsonDeviceDamages = new JSONArray();
+                    for (Object_Device_Damage oDeviceDamageDamage : oDevice.getlDeviceDamages()) {
+                        aJsonDeviceDamages.put(oDeviceDamageDamage.getJson());
+                    }
+                    Log.i("Pre Device Damages: ", aJsonDeviceDamages.toString());
+                    JSONArray aJsonModelDamages = new JSONArray();
+                    for (Object_Model_Damage oModelDamage : lModelDamages) {
+                        aJsonModelDamages.put(oModelDamage.getJson());
+                    }
+                    Log.i("Pre Model Damages: ", aJsonModelDamages.toString());
+
+                    Bundle bData = new Bundle();
+                    bData.putInt(Constants_Intern.ID_DEVICE, oDevice.getIdDevice());
+                    bData.putString(Constants_Intern.STRING_MODEL_DAMAGES, aJsonModelDamages.toString());
+                    bData.putString(Constants_Intern.STRING_DEVICE_DAMAGES, aJsonDeviceDamages.toString());
+                    fragmentInteraction(new Fragment_Interaction_Multiple_Choice_Device_Damages(), bData, Constants_Intern.FRAGMENT_INTERACTION_DEVICE_DAMAGES);
+
+                } else {
+                    // No damages found
+                    Toast.makeText(Activity_Device.this, getString(R.string.no_damages_available), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    @Override
+    public void returnDeviceBattery(Battery oBattery) {
+        oDevice.setoBattery(oBattery);
+        handledReturnDeviceBattery();
+    }
+
+    @Override
+    public void returnModelBatteries(ArrayList<Model_Battery> lModelBatteries) {
+        oDevice.getoModel().setlModelBatteries(lModelBatteries);
+        handledReturnModelBatteries();
+    }
+
     public void fragmentInteraction(Fragment f, Bundle b, String tag) {
         if (b != null) {
             f.setArguments(b);
@@ -586,6 +864,11 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
     @Override
     public void returnShape(Shape shape) {
         oDevice.setoShape(shape);
+        if (shape.getId() == 5) {
+            oDevice.settState(Constants_Intern.STATE_RECYCLING);
+        } else {
+            oDevice.settState(Constants_Intern.STATE_INTACT_REUSE);
+        }
         updateUI();
         handledReturnShape();
     }
@@ -598,15 +881,22 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
     }
 
     @Override
+    public void continueWithRoutine() {
+
+    }
+
+    @Override
     public void returnBattery(final String name) {
 
-        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_BATTERY_BY_NAME+name, null, new Interface_VolleyResult() {
+        /*
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_BATTERY_BY_NAME + name, null, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
                 if (Volley_Connection.successfulResponse(oJson)) {
-                    Battery oBattery = new Battery(oJson.getJSONObject(Constants_Extern.OBJECT_BATTERY));
+
+                    Battery oBattery = new Battery(oJson.getJSONObject(Constants_Extern.OBJECT_BATTERY), Activity_Device.this);
                     oDevice.getoModel().setoBattery(oBattery);
-                    cVolley.execute(Request.Method.GET, Urls.URL_GET_BATTERY_CONNECT_MODEL+oBattery.getId()+"/"+oDevice.getoModel().getkModel(), null);
+                    oDevice.getoModel().addlModelBatteries(new Model_Battery(Activity_Device.this, oDevice.getoModel().getkModel(), oBattery, 0));
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
@@ -618,38 +908,28 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
                     builder.setTitle(getString(R.string.add_battery, name));
                     builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            uNetwork.addBattery(name, oDevice, new Interface_VolleyCallback_Int() {
+                        public void onAdapterClick(DialogInterface dialogInterface, final int i) {
+                            cVolley.getResponse(Request.Method.PUT, Urls.URL_PUT_BATTERY_ADD + name + "/" + oDevice.getoModel().getoManufacturer().getId(), null, new Interface_VolleyResult() {
                                 @Override
-                                public void onSuccess(final int i) {
-                                    cVolley.getResponse(Request.Method.PUT, Urls.URL_PUT_BATTERY_ADD + name+"/"+oDevice.getoModel().getoManufacturer().getId(), null, new Interface_VolleyResult() {
-                                        @Override
-                                        public void onResult(JSONObject oJson) throws JSONException {
-                                            if (Volley_Connection.successfulResponse(oJson)) {
-                                                Battery oBattery = new Battery(oJson.getJSONObject(Constants_Extern.OBJECT_BATTERY));
-                                                cVolley.execute(Request.Method.GET, Urls.URL_GET_BATTERY_CONNECT_MODEL+i+"/"+oDevice.getoModel().getkModel(), null);
-                                                oDevice.getoModel().setoBattery(oBattery);
-                                                Handler handler = new Handler();
-                                                handler.postDelayed(new Runnable() {
-                                                    public void run() {
-                                                        handledReturnBattery();
-                                                    }
-                                                }, 500);
+                                public void onResult(JSONObject oJson) throws JSONException {
+                                    if (Volley_Connection.successfulResponse(oJson)) {
+                                        Battery oBattery = new Battery(oJson.getJSONObject(Constants_Extern.OBJECT_BATTERY), Activity_Device.this);
+                                        cVolley.execute(Request.Method.GET, Urls.URL_GET_BATTERY_CONNECT_MODEL + oBattery.getId() + "/" + oDevice.getoModel().getkModel(), null);
+                                        oDevice.getoModel().setoBattery(oBattery);
+                                        Handler handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            public void run() {
+                                                handledReturnBattery();
                                             }
-                                        }
-                                    });
-                                }
-
-                                @Override
-                                public void onFailure() {
-
+                                        }, 500);
+                                    }
                                 }
                             });
                         }
                     });
                     builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
+                        public void onAdapterClick(DialogInterface dialogInterface, int i) {
                             handledReturnBattery();
                         }
                     });
@@ -658,6 +938,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
                 }
             }
         });
+        */
 
                 /*
         uNetwork.getIdBattery(oDevice, name, new Interface_VolleyCallback_Int() {
@@ -679,7 +960,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
                 builder.setTitle(getString(R.string.add_battery, name));
                 builder.setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onAdapterClick(DialogInterface dialogInterface, int i) {
                         uNetwork.addBattery(name, oDevice, new Interface_VolleyCallback_Int() {
                             @Override
                             public void onSuccess(int i) {
@@ -702,7 +983,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
                 });
                 builder.setNegativeButton(getString(R.string.no), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+                    public void onAdapterClick(DialogInterface dialogInterface, int i) {
                         handledReturnBattery();
                     }
                 });
@@ -711,6 +992,24 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
             }
         });
         */
+    }
+
+    @Override
+    public void returnDamages(ArrayList<Object_Device_Damage> lDeviceDamages) {
+        oDevice.setlDeviceDamages(lDeviceDamages);
+        boolean bBigRefurbishment = false;
+        for (Object_Device_Damage oDeviceDamage : lDeviceDamages) {
+            if (oDeviceDamage.getoModelDamage().gettRepairPlace() == Constants_Intern.WORK_STATION_BIG_REFURBISHMENT) {
+                bBigRefurbishment = true;
+                break;
+            }
+        }
+        if (bBigRefurbishment) {
+            oDevice.settState(Constants_Intern.STATE_DEFECT_REPAIR);
+        } else {
+            oDevice.settState(Constants_Intern.STATE_DEFECT_REPAIR);
+        }
+        handledReturnDeviceDamages();
     }
 
     @Override
@@ -724,12 +1023,28 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
         fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST_NAME)).commit();
     }
 
+    public void handledReturnDeviceDamages() {
+        fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_INTERACTION_DEVICE_DAMAGES)).commit();
+    }
+
     public void handledReturnBattery() {
         fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST_BATTERY)).commit();
     }
 
+    public void handledReturnDeviceBattery() {
+        fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_MULTIPLE_CHOICE_MODEL_BATTERY_SELECT)).commit();
+    }
+
+    public void handledReturnModelBatteries() {
+        //fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST_BATTERY)).commit();
+    }
+
     public void handledReturnManufacturer() {
         fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST_MANUFACTURER)).commit();
+    }
+
+    public void handledReturnTypePhone() {
+        fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST_PHONE_TYPE)).commit();
     }
 
     public void handledReturnCharger() {
@@ -755,7 +1070,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
     }
 
     public void handledReturnShape() {
-        fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST_SHAPE)).commit();
+        fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_INTERACTION_SHAPE)).commit();
     }
 
     public void handledReturnCondition() {
@@ -767,8 +1082,18 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
         updateUI();
     }
 
+    public void handledReturnBackcoverContained() {
+        fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_INTERACTION_BACKCOVER_CONTAINED)).commit();
+        updateUI();
+    }
+
     public void handledReturnBatteryRemovable() {
         fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST_BATTERY_REMOVABLE)).commit();
+        updateUI();
+    }
+
+    public void handledReturnBackcoverRemovable() {
+        fManager.beginTransaction().remove(fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST_BACKCOVER_REMOVABLE)).commit();
         updateUI();
     }
 
@@ -804,7 +1129,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
     }
 
     public void openKeyboard(View v) {
-        InputMethodManager inputMethodManager =  (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
         inputMethodManager.toggleSoftInputFromWindow(v.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
         v.requestFocus();
     }
@@ -826,7 +1151,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
                 fManager.beginTransaction().replace(R.id.flFragmentInteraction, fSimpleText2, Constants_Intern.FRAGMENT_TAKE_BACK_PICTURE).commitAllowingStateLoss();
                 break;
             case IMAGE_SAVE:
-                JSONObject oJson= new JSONObject();
+                JSONObject oJson = new JSONObject();
                 try {
                     oJson.put(Constants_Extern.IMAGE_DEVICE_FRONT, Utility_Camera.getStringImage(Utility_Camera.getImageFileFront(this)));
                     oJson.put(Constants_Extern.IMAGE_DEVICE_BACK, Utility_Camera.getStringImage(Utility_Camera.getImageFileBack(this)));
@@ -874,15 +1199,13 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
             if (!json.isNull(Constants_Extern.ID_MANUFACTURER) && !json.isNull(Constants_Extern.NAME_MANUFACTURER))
                 oDevice.getoModel().setoManufacturer(new Manufacturer(json.getInt(Constants_Extern.ID_MANUFACTURER), json.getString(Constants_Extern.NAME_MANUFACTURER)));
             if (!json.isNull(Constants_Extern.ID_BATTERY) && !json.isNull(Constants_Extern.NAME_BATTERY))
-                oDevice.getoModel().setoBattery(new Battery(json.getInt(Constants_Extern.ID_BATTERY), json.getString(Constants_Extern.NAME_BATTERY), json.getInt(Constants_Extern.EXPLOITATION)));
+                //oDevice.getoModel().setoBattery(new Battery(json.getInt(Constants_Extern.ID_BATTERY), json.getString(Constants_Extern.NAME_BATTERY), json.getInt(Constants_Extern.EXPLOITATION)));
             if (!json.isNull(Constants_Extern.ID_CHARGER) && !json.isNull(Constants_Extern.NAME_CHARGER))
                 oDevice.getoModel().setoCharger(new Charger(json.getInt(Constants_Extern.ID_CHARGER), json.getString(Constants_Extern.NAME_CHARGER)));
             if (!json.isNull(Constants_Extern.IMEI))
                 oDevice.setIMEI(json.getString(Constants_Extern.IMEI));
             if (!json.isNull(Constants_Extern.CONDITION))
                 oDevice.setCondition(json.getInt(Constants_Extern.CONDITION));
-            if (!json.isNull(Constants_Extern.DESTINATION))
-                oDevice.setDestination(json.getInt(Constants_Extern.DESTINATION));
             if (!json.isNull(Constants_Extern.ID_STATION))
                 oDevice.setoStation(new Station(json.getInt(Constants_Extern.ID_STATION)));
             if (!json.isNull(Constants_Extern.ID_COLOR) && !json.isNull(Constants_Extern.NAME_COLOR) && !json.isNull(Constants_Extern.HEX_CODE))
@@ -901,7 +1224,8 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
             case Constants_Intern.FRAGMENT_TAKE_FRONT_PICTURE:
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                    if (Utility_Camera.getImageFileFront(this).isDirectory())Utility_Camera.deleteImageFileFront(this);
+                    if (Utility_Camera.getImageFileFront(this).isDirectory())
+                        Utility_Camera.deleteImageFileFront(this);
                     File file = Utility_Camera.getImageFileFront(this);
                     if (file != null) {
                         Uri photoURI = FileProvider.getUriForFile(this, "com.example.ericschumacher.bouncer", file);
@@ -919,7 +1243,8 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
             case Constants_Intern.FRAGMENT_TAKE_BACK_PICTURE:
                 Intent takePictureIntent2 = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (takePictureIntent2.resolveActivity(getPackageManager()) != null) {
-                    if (Utility_Camera.getImageFileBack(this).isDirectory())Utility_Camera.deleteImageFileBack(this);
+                    if (Utility_Camera.getImageFileBack(this).isDirectory())
+                        Utility_Camera.deleteImageFileBack(this);
                     File file = Utility_Camera.getImageFileBack(this);
                     if (file != null) {
                         Uri photoURI = FileProvider.getUriForFile(this, "com.example.ericschumacher.bouncer", file);
@@ -943,13 +1268,70 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
     public void onLongClick(String cTag) {
         switch (cTag) {
             case Constants_Intern.FRAGMENT_TAKE_BACK_PICTURE:
-                oDevice.getoColor().setkModelColor(Constants_Intern.TAKE_NO_PICTURE);
-                handledPicturesTaken();
-                break;
             case Constants_Intern.FRAGMENT_TAKE_FRONT_PICTURE:
                 oDevice.getoColor().setkModelColor(Constants_Intern.TAKE_NO_PICTURE);
                 handledPicturesTaken();
                 break;
         }
+    }
+
+    @Override
+    public void returnSelectedModelBattery(Battery oBattery) {
+
+    }
+
+    @Override
+    public void connectModelBattery(int kModel, int kBattery, Fragment_Interaction_Multiple_Choice_Model_Battery fragment) {
+
+    }
+
+    @Override
+    public void deleteModelBattery(int kModelBattery) {
+
+    }
+
+    @Override
+    public void returnRequestNameResult(String tFragment, Object object) {
+
+        if (tFragment.equals(Constants_Intern.FRAGMENT_REQUEST_NAME_MODEL)) {
+            if (object != null) {
+                Model oModel = (Model)object;
+                oDevice.setoModel(oModel);
+
+                if (!oDevice.getTAC().equals(Constants_Extern.TAC_UNKNOWN)) cVolley.execute(Request.Method.PUT, Urls.URL_PUT_MODEL_TAC + oDevice.getoModel().getkModel() + "/" + oDevice.getTAC(), null);
+                handledReturnModel();
+            } else {
+                oDevice.settState(Constants_Intern.STATE_MODEL_UNKNOWN);
+                handledReturnModel();
+            }
+
+        }
+
+        if (tFragment.equals(Constants_Intern.FRAGMENT_REQUEST_MODEL_BATTERY)) {
+            if (object != null) {
+                oDevice.getoModel().getlModelBatteries().add(new Model_Battery(this, oDevice.getoModel().getkModel(), (Battery)object, 0));
+                oDevice.setoBattery(oDevice.getoModel().getoBattery());
+                oDevice.getoModel().update();
+                handledReturnModelBatteries();
+            } else {
+                //oDevice.getoModel().setbBatteryKnown(false);
+                handledReturnModelBatteries();
+            }
+        }
+        if (tFragment.equals(Constants_Intern.FRAGMENT_REQUEST_NAME_BATTERY_IN_EDIT_MODE)) {
+            oDevice.getoModel().getlModelBatteries().add(new Model_Battery(this, oDevice.getoModel().getkModel(), (Battery)object, 0));
+            oDevice.getoModel().update();
+            iDevice.requestBattery(oDevice);
+        }
+        if (tFragment.equals(Constants_Intern.FRAGMENT_MULTIPLE_CHOICE_MODEL_BATTERY_SELECT)) {
+            oDevice.getoModel().getlModelBatteries().add(new Model_Battery(this, oDevice.getoModel().getkModel(), (Battery)object, 0));
+            oDevice.getoModel().update();
+            requestDeviceBattery();
+        }
+    }
+
+    @Override
+    public void returnRequestNameUnknown(int tObject) {
+
     }
 }

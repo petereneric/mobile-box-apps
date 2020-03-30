@@ -52,7 +52,7 @@ public class Fragment_Request_Choice extends Fragment implements Interface_Reque
         lAdditive = new ArrayList<>();
         lAdditive = arg.getParcelableArrayList(Constants_Intern.LIST_ADDITIVE);
 
-        RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+        RecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
         setAdapter();
 
 

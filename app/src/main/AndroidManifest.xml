@@ -24,6 +24,8 @@
         <activity android:name=".Activities.Activity_Turing"></activity>
         <activity android:name=".Activities.Activity_Zwegat"></activity>
         <activity android:name=".Activities.Activity_Manager"></activity>
+        <activity android:name=".Activities.Activity_Battery"></activity>
+        <activity android:name=".Activities.Activity_Model"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

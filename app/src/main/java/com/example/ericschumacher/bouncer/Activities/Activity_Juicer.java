@@ -82,10 +82,6 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
 
         ArrayList<Integer> test = new ArrayList<>();
 
-        aLKUs = new Adapter_Pager_ModelColorShape(test, getSupportFragmentManager());
-        ViewPager.setAdapter(aLKUs);
-
-
         // Connection
         vConnection = new Volley_Connection(this);
         //simpleCheck();
@@ -117,7 +113,12 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
     private void setLayout() {
         setContentView(R.layout.activity_juicer);
         ViewPager = findViewById(R.id.ViewPager);
+        ViewPager.setSaveFromParentEnabled(false);
         rvCharger = findViewById(R.id.rvCharger);
+
+        aLKUs = new Adapter_Pager_ModelColorShape(lModelColorShapeIds, getSupportFragmentManager());
+        ViewPager.setAdapter(aLKUs);
+
     }
 
     @Override
@@ -129,12 +130,18 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
     public void removeIdModelColorShape(int idModelColorShape) {
 
         lModelColorShapeIds.remove(new Integer(idModelColorShape));
+        aLKUs.deleteFragment(idModelColorShape);
+        aLKUs.notifyDataSetChanged();
+
+        /*
         if (lModelColorShapeIds.size() == 0 || false) {
             onChargerChanged(lChargerUnselected);
         } else {
             aLKUs = new Adapter_Pager_ModelColorShape(lModelColorShapeIds, getSupportFragmentManager());
             ViewPager.setAdapter(aLKUs);
         }
+        */
+
         //aLKUs.updateData(lModelColorShapeIds);
     }
 
@@ -193,6 +200,9 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
 
     @Override
     public void onChargerChanged(ArrayList<Charger> chargerUnselected) {
+        lModelColorShapeIds.clear();
+        aLKUs.clear();
+        aLKUs.notifyDataSetChanged();
         ViewPager.setBackgroundColor(getResources().getColor(R.color.color_primary_dark));
         Log.i("Activity_Juicer", "onChargerChanged");
         ArrayList<Charger> list = new ArrayList<>();
@@ -201,7 +211,6 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
         }
         lChargerUnselected = list;
         JSONObject jsonBody = new JSONObject();
-        JSONArray jsonArray = new JSONArray();
         String test = "{";
         for (int i = 0; i < list.size(); i++) {
             Charger charger = list.get(i);
@@ -209,16 +218,10 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
                 test = test + ",";
             }
             test = test + "\"" + Integer.toString(i) + "\"" + " : " + Integer.toString(charger.getId());
-            JSONObject json = new JSONObject();
-            try {
-                json.put(Integer.toString(i), Integer.toString(charger.getId()));
-                jsonArray.put(json);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
             //jsonBody.put(Integer.toString(i), Integer.toString(charger.getId()));
 
         }
+        /*
         JSONArray jsonArrayObjectModelColorShapeIds = new JSONArray();
         for (int i = 0; i < lModelColorShapeIds.size(); i++) {
             try {
@@ -229,13 +232,14 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
                 e.printStackTrace();
             }
         }
+        */
+
         test = test + "}";
         Log.i("Charger not selected", test);
         JSONObject json = null;
         try {
             json = new JSONObject(test);
-            jsonBody.put(Constants_Extern.LIST_CHOICE_CHARGER, jsonArray);
-            jsonBody.put(Constants_Extern.LIST_MODEL_COLOR_SHAPE_IDS, jsonArrayObjectModelColorShapeIds);
+            //jsonBody.put(Constants_Extern.LIST_MODEL_COLOR_SHAPE_IDS, jsonArrayObjectModelColorShapeIds);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -247,15 +251,22 @@ public class Activity_Juicer extends AppCompatActivity implements Interface_Juic
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
                 JSONArray jsonArray = oJson.getJSONArray(Constants_Extern.IDS);
-                lModelColorShapeIds = new ArrayList<>();
                 for (int i = 0; i < jsonArray.length(); i++) {
                     Log.i("Looping", "Array");
                     JSONObject json = jsonArray.getJSONObject(i);
                     lModelColorShapeIds.add(new Integer(json.getInt(Constants_Extern.ID)));
+                    Log.i("LoopiLoop:", Integer.toString(json.getInt(Constants_Extern.ID)));
                 }
+                Log.i("Sizzzze: ", ""+lModelColorShapeIds.size());
                 ViewPager.setBackgroundColor(getResources().getColor(R.color.color_white));
+                FragmentManager fm = getSupportFragmentManager();
+                for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+                    fm.popBackStack();
+                }
+                aLKUs = null;
                 aLKUs = new Adapter_Pager_ModelColorShape(lModelColorShapeIds, getSupportFragmentManager());
                 ViewPager.setAdapter(aLKUs);
+                ViewPager.getAdapter().notifyDataSetChanged();
             }
         });
 

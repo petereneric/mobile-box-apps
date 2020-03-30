@@ -43,7 +43,8 @@ public class Adapter_Juicer_Charger extends RecyclerView.Adapter<RecyclerView.Vi
                 }
 
                 //chargersUnselected.add(new Charger(1, "Nokia Eins"));
-
+                Log.i("What Charger: ", charger.getName());
+                Log.i("What Charger Id: ", ""+charger.getId());
                 Log.i("Charger", "channnged"+chargersUnselected.size());
                 iListener.onChargerChanged(chargersUnselected);
                 notifyDataSetChanged();

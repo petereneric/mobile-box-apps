@@ -31,6 +31,8 @@ public class Fragment_Overview_Selection extends Fragment implements View.OnClic
     TextView tvCounterRecycling;
     TextView tvCounterTotal;
 
+    TextView tvTitle;
+
     TableRow trCounterReuse;
     TableRow trCounterRecycling;
     TableRow trCounterTotal;
@@ -85,6 +87,7 @@ public class Fragment_Overview_Selection extends Fragment implements View.OnClic
         tvCounterReuse = Layout.findViewById(R.id.tvCounterReuse);
         tvCounterRecycling = Layout.findViewById(R.id.tvCounterRecycling);
         tvCounterTotal = Layout.findViewById(R.id.tvCounterTotal);
+        tvTitle = Layout.findViewById(R.id.tvTitle);
 
         bPause = Layout.findViewById(R.id.bPause);
         bFinish = Layout.findViewById(R.id.bFinish);
@@ -93,6 +96,8 @@ public class Fragment_Overview_Selection extends Fragment implements View.OnClic
         trCounterReuse = Layout.findViewById(R.id.trCounterReuse);
         trCounterRecycling = Layout.findViewById(R.id.trCounterRecycling);
         trCounterTotal = Layout.findViewById(R.id.trCounterTotal);
+
+        tvTitle.setText(getString(R.string.overview));
 
         bPause.setOnClickListener(this);
         bFinish.setOnClickListener(this);

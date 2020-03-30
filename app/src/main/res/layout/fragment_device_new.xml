@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <include
+        layout="@layout/layout_header_left"
+        android:id="@+id/tvTitle"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvTitle"
+        android:orientation="horizontal">
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content">
+
+            <TableRow android:id="@+id/trColor">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/color" />
+
+                <TextView
+                    android:id="@+id/tvColor"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Weiß" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trCondition">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/condition" />
+
+                <TextView
+                    android:id="@+id/tvCondition"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Ok" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trShape">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/shape" />
+
+                <TextView
+                    android:id="@+id/tvShape"
+                    style="@style/tv_tableRow_Value"
+                    android:text="@string/shape_very_good" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trDamages">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/damages" />
+
+                <TextView
+                    android:id="@+id/tvDamages"
+                    style="@style/tv_tableRow_Value"
+                    android:text="4" />
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayoutTwo"
+            android:layout_width="0dp"
+            android:layout_weight="10"
+            android:layout_height="wrap_content">
+
+            <TableRow android:id="@+id/trStation">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/oStation" />
+
+                <TextView
+                    android:id="@+id/tvStation"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Selektion" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trLKU">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/lku" />
+
+                <TextView
+                    android:id="@+id/tvLKU"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Nicht vergeben" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trBattery">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/battery_contained" />
+
+                <TextView
+                    android:id="@+id/tvBattery"
+                    style="@style/tv_tableRow_Value"
+                    android:text="true" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trBackcoverContained">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/backcover_contained" />
+
+                <TextView
+                    android:id="@+id/tvBackcoverContained"
+                    style="@style/tv_tableRow_Value"
+                    android:text="true" />
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

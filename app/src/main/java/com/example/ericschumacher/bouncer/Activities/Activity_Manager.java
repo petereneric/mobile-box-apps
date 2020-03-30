@@ -279,7 +279,7 @@ public class Activity_Manager extends AppCompatActivity implements View.OnClickL
             case Constants_Intern.FRAGMENT_MARKETING_UNSHIPPED_RECORDS:
                 Marketing_Shipping oMarketingShipping = new Marketing_Shipping(this, jsonObject);
                 //oMarketingShipping.setbSent(true);
-                //iFragmentList.update();
+                //iFragmentList.updateLayout();
                 break;
             case Constants_Intern.FRAGMENT_DEVICES_NO_COLOR_LKU:
                 Device oDevice = new Device(jsonObject, this);

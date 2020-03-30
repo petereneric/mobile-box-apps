@@ -10,12 +10,12 @@ import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Activities.Parent.Activity_Device;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Interaction;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Overview.Fragment_Overview_Selection;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Record.Fragment_Record_Existing;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Record.Fragment_Record_Menu;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Record.Fragment_Record_New;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Result_New;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_DeviceManager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Dialog;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Overview_Selection;
@@ -29,6 +29,8 @@ import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
+import com.example.ericschumacher.bouncer.Objects.Unit_Backcover;
+import com.example.ericschumacher.bouncer.Objects.Unit_Battery;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
@@ -44,6 +46,10 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     // Objects
     Record oRecord;
 
+    // Units
+    Unit_Battery uBattery;
+    Unit_Backcover uBackcover;
+
     // Connection
     Volley_Connection vConnection;
     private final static String URL_ADD_DEVICE = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/device/add/2";
@@ -57,6 +63,9 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
 
         // Objects
         oDevice = new Device();
+        uBattery = null;
+        uBackcover = null;
+
         oRecord = null;
 
         // Layout
@@ -137,14 +146,14 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
     @Override
     public void showResult() {
         /*
-        Fragment_Interaction fResult = new Fragment_Interaction();
+        Fragment_Interaction_Simple_Choice fResult = new Fragment_Interaction_Simple_Choice();
         Bundle bundle = new Bundle();
         bundle.putString(Constants_Intern.TITLE_MAIN, getString(R.string.result));
         String[] lTitle;
         String[] lButtons;
         if (oDevice.getCondition() == Constants_Intern.CONDITION_BROKEN ) {
             if (oDevice.getoModel().getoBattery() != null) {
-                if (oDevice.getoModel().getoBattery().getExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
+                if (oDevice.getoModel().getoBattery().gettState() == Constants_Intern.EXPLOITATION_RECYCLING) {
                     lTitle = new String[1];
                     lTitle[0] = getString(R.string.recycling);
                     lButtons = new String[2];
@@ -155,10 +164,16 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
         */
 
 
-        Fragment_Interaction fResult = new Fragment_Interaction();
+        Fragment_Result_New fResult = new Fragment_Result_New();
         Bundle bundle = new Bundle();
-        bundle.putString(Constants_Intern.TITLE_MAIN, getString(R.string.result));
+        bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
+        //bundle.putSerializable(Constants_Intern.UNIT_BATTERY, uBattery);
+        //bundle.putSerializable(Constants_Intern.UNIT_BACKCOVER, uBackcover);
 
+        fResult.setArguments(bundle);
+        //fManager.beginTransaction().replace(R.id.flFragmentInteraction, fResult, Constants_Intern.FRAGMENT_REQUEST_BATTERY_REMOVABLE).commit();
+
+        /*
         String[] lTitle;
         String[] lButtons;
         int[] lColorIds;
@@ -203,6 +218,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
 
 
         }
+        /*
         String[] lTitle = new String[1];
         lTitle[0] = getString(R.string.request_battery_removable_title);
         bundle.putStringArray(Constants_Intern.LIST_TITLE, lTitle);
@@ -214,56 +230,102 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
         bundle.putIntArray(Constants_Intern.LIST_COLOR_IDS, lColorIds);
         fResult.setArguments(bundle);
         fManager.beginTransaction().replace(R.id.flFragmentInteraction, fResult, Constants_Intern.FRAGMENT_REQUEST_BATTERY_REMOVABLE).commit();
+        */
+
 
         Fragment_Result f = new Fragment_Result();
         Bundle b = new Bundle();
         b.putSerializable(Constants_Intern.OBJECT_MODEL, oDevice);
         f.setArguments(b);
-        fManager.beginTransaction().replace(R.id.flFragmentInteraction, f, Constants_Intern.FRAGMENT_REQUEST).commit();
+        fManager.beginTransaction().replace(R.id.flFragmentInteraction, fResult, Constants_Intern.FRAGMENT_REQUEST).commit();
     }
 
     // Logic of Bouncer
     public void bounce() {
         updateUI();
-        if (oDevice.getoModel().getkModel() == Constants_Intern.ID_UNKNOWN) {
-            iDevice.requestName();
+        if (oDevice.gettState() == Constants_Intern.STATE_MODEL_UNKNOWN) {
+            showResult();
         } else {
-            if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_RECYCLING) {
-                oDevice.setDestination(Constants_Intern.EXPLOITATION_RECYCLING);
-                showResult();
+            if (oDevice.getoModel().getkModel() == Constants_Intern.ID_UNKNOWN) {
+                iDevice.requestName();
             } else {
-                if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_NULL) {
-                    iDevice.requestDefaultExploitation(oDevice.getoModel());
+                if (oDevice.getoModel().gettPhone() == null) {
+                    iDevice.requestTypePhone();
                 } else {
-                    if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_REUSE) {
-                        if (oDevice.getoModel().getoManufacturer() == null) {
-                            iDevice.requestManufacturer();
+                    if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_RECYCLING || oDevice.gettState() == Constants_Intern.STATE_RECYCLING) {
+                        oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                        if (oDevice.getoModel().isBatteryRemovable() == null && oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING) {
+                            iDevice.requestBatteryRemovable(oDevice);
                         } else {
-                            if (oDevice.getoModel().getoCharger() == null) {
-                                iDevice.requestCharger(oDevice);
+                            if (oDevice.getoModel().isBackcoverRemovable() == null && oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING) {
+                                iDevice.requestBackcoverRemovable(oDevice);
                             } else {
-                                if (oDevice.getoModel().isBatteryRemovable() == null) {
-                                    iDevice.requestBatteryRemovable(oDevice);
+                                if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() == null) {
+                                    iDevice.requestBatteryContained();
                                 } else {
-                                    if (oDevice.getoModel().isBatteryRemovable() && (oDevice.isBatteryContained() == null || oDevice.isBatteryContained() == true) && oDevice.getoModel().getoBattery() == null) {
+                                    if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() == true && oDevice.getoModel().getoBattery() == null) {
                                         iDevice.requestBattery(oDevice);
                                     } else {
-                                        if (oDevice.getCondition() == Constants_Intern.CONDITION_UNKNOWN) {
-                                            iDevice.requestCondition();
+                                        if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() == true && oDevice.getoModel().getlModelBatteries().size()>1 && oDevice.getoBattery() == null) {
+                                            requestDeviceBattery();
                                         } else {
-                                            if (oDevice.getoColor() == null) {
-                                                iDevice.requestColor(oDevice);
+                                            if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBackcoverRemovable() && oDevice.isBackcoverContained() == null) {
+                                                iDevice.requestBackcoverContained();
                                             } else {
-                                                if (oDevice.getoShape() == null) {
-                                                    iDevice.requestShape();
+                                                showResult();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_NULL) {
+                            showResult();
+                        } else {
+                            if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_INTACT_REUSE || oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_DEFECT_REUSE) {
+                                if (oDevice.getoModel().getoManufacturer() == null) {
+                                    iDevice.requestManufacturer();
+                                } else {
+                                    if (oDevice.getoModel().getoCharger() == null) {
+                                        iDevice.requestCharger(oDevice);
+                                    } else {
+                                        if (oDevice.getoModel().isBatteryRemovable() == null) {
+                                            iDevice.requestBatteryRemovable(oDevice);
+                                        } else {
+                                            if (oDevice.getoModel().isBackcoverRemovable() == null) {
+                                                iDevice.requestBackcoverRemovable(oDevice);
+                                            } else {
+                                                if (oDevice.getoModel().isBatteryRemovable() && (oDevice.isBatteryContained() != null && oDevice.isBatteryContained() == true) && oDevice.getoModel().getoBattery() == null) {
+                                                    iDevice.requestBattery(oDevice);
                                                 } else {
-                                                    if (oDevice.getoColor().getkModelColor() == 0 && mSharedPreferences.getBoolean(Constants_Intern.USE_CAMERA_MODEL_COLOR, false) && oDevice.getoColor().getkModelColor() != Constants_Intern.TAKE_NO_PICTURE) {
-                                                        takePictures(IMAGE_FRONT);
+                                                    if (oDevice.getCondition() == Constants_Intern.CONDITION_UNKNOWN && false) { // not used anymore
+                                                        iDevice.requestCondition();
                                                     } else {
-                                                        if (oDevice.isBatteryContained() == null) {
-                                                            iDevice.requestBatteryContained();
+                                                        if (oDevice.getoShape() == null) {
+                                                            iDevice.requestShape();
                                                         } else {
-                                                            showResult();
+                                                            if (oDevice.getoColor() == null) {
+                                                                iDevice.requestColor(oDevice);
+                                                            } else {
+                                                                if (oDevice.getoColor().getkModelColor() == 0 && mSharedPreferences.getBoolean(Constants_Intern.USE_CAMERA_MODEL_COLOR, false) && oDevice.getoColor().getkModelColor() != Constants_Intern.TAKE_NO_PICTURE) {
+                                                                    takePictures(IMAGE_FRONT);
+                                                                } else {
+                                                                    if (oDevice.isBatteryContained() == null) {
+                                                                        iDevice.requestBatteryContained();
+                                                                    } else {
+                                                                        if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() == null) {
+                                                                            requestDeviceBattery();
+                                                                        } else {
+                                                                            if (oDevice.isBackcoverContained() == null) { // Backcover
+                                                                                iDevice.requestBackcoverContained();
+                                                                            } else {
+                                                                                showResult();
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
@@ -281,6 +343,94 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
 
     @Override
     public void afterBounce() {
+        switch (oDevice.gettState()) {
+            case Constants_Intern.STATE_UNKNOWN:
+                if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_UNKNOWN) {
+                    cVolley.execute(Request.Method.PUT, Urls.URL_INCREMENT_RECORD_RECYCLING + oRecord.getId(), null);
+                    oRecord.incrementRecycling();
+                    updateUI();
+                    resetDevice();
+                }
+                break;
+            case Constants_Intern.STATE_MODEL_UNKNOWN:
+                oRecord.incrementRecycling();
+                updateUI();
+                resetDevice();
+                break;
+            case Constants_Intern.STATE_RECYCLING:
+                cVolley.execute(Request.Method.PUT, Urls.URL_INCREMENT_RECORD_RECYCLING + oRecord.getId(), null);
+                oRecord.incrementRecycling();
+                if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() < 2) {
+                    // Print Label for Battery
+                    //Toast.makeText(this, getString(R.string.label_print_battery), Toast.LENGTH_LONG).show();
+                    mPrinter.printBattery(oDevice.getoModel().getoBattery());
+                    updateUI();
+                    resetDevice();
+                } else {
+                    if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() > 1) {
+                        //Toast.makeText(this, getString(R.string.no_label_print_battery), Toast.LENGTH_LONG).show();
+                    }
+                    updateUI();
+                    resetDevice();
+                }
+
+
+                break;
+            case Constants_Intern.STATE_DEFECT_REPAIR:
+            case Constants_Intern.STATE_DEFECT_REUSE:
+                cVolley.execute(Request.Method.PUT, Urls.URL_INCREMENT_RECORD_RECYCLING + oRecord.getId(), null);
+                oRecord.incrementRecycling();
+                oDevice.setoStation(new Station(Constants_Intern.STATION_PRE_STOCK));
+                vConnection.getResponse(Request.Method.PUT, URL_ADD_DEVICE, oDevice.getJson(), new Interface_VolleyResult() {
+                    @Override
+                    public void onResult(JSONObject oJson) {
+                        Log.i("Raus damit", oJson.toString());
+                        try {
+                            if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                                oDevice.setIdDevice(oJson.getInt(Constants_Extern.ID_DEVICE));
+                                //Toast.makeText(Activity_Bouncer.this, getString(R.string.label_print_device), Toast.LENGTH_LONG).show();
+                                mPrinter.printDevice(oDevice);
+                                resetDevice();
+                                updateUI();
+                            } else {
+                                //Toast.makeText(Activity_Bouncer.this, "IMEI exists", Toast.LENGTH_LONG).show();
+                                resetDevice();
+                                updateUI();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                break;
+            case Constants_Intern.STATE_INTACT_REUSE:
+                cVolley.execute(Request.Method.PUT, Urls.URL_INCREMENT_RECORD_REUSE + oRecord.getId(), null);
+                oRecord.incrementReuse();
+                oDevice.setoStation(new Station(Constants_Intern.STATION_PRE_STOCK));
+                vConnection.getResponse(Request.Method.PUT, URL_ADD_DEVICE, oDevice.getJson(), new Interface_VolleyResult() {
+                    @Override
+                    public void onResult(JSONObject oJson) {
+                        Log.i("Raus damit", oJson.toString());
+                        try {
+                            if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                                oDevice.setIdDevice(oJson.getInt(Constants_Extern.ID_DEVICE));
+                                mPrinter.printDevice(oDevice);
+                                resetDevice();
+                                updateUI();
+                            } else {
+                                //Toast.makeText(Activity_Bouncer.this, "IMEI exists", Toast.LENGTH_LONG).show();
+                                resetDevice();
+                                updateUI();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                break;
+
+        }
+        /*
         switch (oDevice.getoModel().gettDefaultExploitation()) {
             case Constants_Intern.EXPLOITATION_RECYCLING:
 
@@ -300,7 +450,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
                     }
                 });
                 break;
-            case Constants_Intern.EXPLOITATION_REUSE:
+            case Constants_Intern.EXPLOITATION_INTACT_REUSE:
 
                 uNetwork.recordReuse(oRecord.getId(), new Interface_VolleyCallback() {
                     @Override
@@ -342,6 +492,11 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
 
                 break;
         }
+
+         */
+/*        Toast.makeText(Activity_Bouncer.this, "works so far", Toast.LENGTH_LONG).show();
+        resetDevice();
+        updateUI();*/
     }
 
     public void prepareBounce() {
@@ -497,6 +652,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
 
     @Override
     public void handledReturnBattery() {
+        super.handledReturnBattery();
         bounce();
     }
 
@@ -505,12 +661,38 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
         bounce();
     }
 
+    @Override
+    public void handledReturnTypePhone() {
+        bounce();
+    }
+
     public void handledReturnDefaultExploitation() {
+        if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_UNKNOWN) {
+            oRecord.incrementRecycling();
+            resetDevice();
+
+        }
+        bounce();
+    }
+
+    public void handledReturnDeviceBattery() {
+        super.handledReturnDeviceBattery();
+        bounce();
+    }
+
+    @Override
+    public void continueWithRoutine() {
         bounce();
     }
 
     @Override
     public void handledReturnAddColor() {
+        bounce();
+    }
+
+    @Override
+    public void handledReturnModelBatteries() {
+        super.handledReturnModelBatteries();
         bounce();
     }
 
@@ -526,11 +708,34 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
 
     @Override
     public void handledReturnBatteryContained() {
+        super.handledReturnBatteryContained();
         bounce();
     }
 
     @Override
     public void handledReturnBatteryRemovable() {
+        bounce();
+    }
+
+    @Override
+    public void handledReturnBackcoverRemovable() {
+        bounce();
+    }
+
+    @Override
+    public void handledReturnShape() {
+        bounce();
+    }
+
+    @Override
+    public void handledReturnBackcoverContained() {
+        super.handledReturnBackcoverContained();
+        bounce();
+    }
+
+    @Override
+    public void handledReturnDeviceDamages() {
+        super.handledReturnDeviceDamages();
         bounce();
     }
 
@@ -556,7 +761,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
         switch (view.getId()) {
             case R.id.ivHelp:
                 etScan.setText(Constants_Intern.UNKNOWN_IMEI);
-                Log.i("onClick", "ivHelp");
+                Log.i("onAdapterClick", "ivHelp");
                 break;
         }
     }

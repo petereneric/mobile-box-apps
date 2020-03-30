@@ -47,4 +47,8 @@ public class Charger extends Additive {
 
         return oJson;
     }
+
+    public String getUrlIcon() {
+        return "http://svp-server.com/svp-gmbh/erp/files/images_chargers/" + Integer.toString(Id) + ".jpg";
+    }
 }

@@ -1,12 +1,18 @@
 package com.example.ericschumacher.bouncer.Interfaces;
 
+import com.example.ericschumacher.bouncer.Objects.Additive.Additive;
+import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
-import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
-import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.Objects.Additive.Color;
+import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
+import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
+import com.example.ericschumacher.bouncer.Objects.Model_Battery;
+import com.example.ericschumacher.bouncer.Objects.Object_Device_Damage;
+
+import java.util.ArrayList;
 
 public interface Interface_DeviceManager {
     Model getModel();
@@ -22,11 +28,13 @@ public interface Interface_DeviceManager {
     void returnManufacturer(Manufacturer manufacturer);
     void returnCharger(Charger charger);
     void returnBattery(String name);
+    void returnDamages(ArrayList<Object_Device_Damage> lDeviceDamages);
     void unknownBattery();
     void onClickLKU();
     void onScan(String text);
     void returnCondition(int condition);
-    void onClickRequestButton(String tFragment, int tButton);
+    void onClickInteractionButton(String tFragment, int tButton);
+    void onClickInteractionMultipleChoiceCommit(String tFragment, ArrayList<Additive> lAdditive);
     void bookDeviceIntoLKUStock();
     void bookDeviceOutOfLKUStock();
     void returnStation(Station station);
@@ -34,7 +42,11 @@ public interface Interface_DeviceManager {
     void updateColor(Color color);
     void fragmentColorUpdate();
     void fragmentColorAdd();
+    void requestDamages();
+    void returnDeviceBattery(Battery oBattery);
+    void returnModelBatteries(ArrayList<Model_Battery> lModelBatteries);
 
     void returnShape(Shape shape);
     void returnColor(Color color);
+    void continueWithRoutine();
 }

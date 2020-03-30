@@ -7,15 +7,18 @@ import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Exceptions.LocationException;
+import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Color;
 import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Eric Schumacher on 21.05.2018.
@@ -31,15 +34,19 @@ public class Device implements Serializable {
     private int IdDevice = 0;
     private int kRecord = 0;
     private Boolean bBatteryContained = null;
+    private Boolean bBackcoverContained = null;
     private String cNotes = null;
     private double nRpd = 0;
+    private Battery oBattery = null;
 
     private String IMEI = Constants_Intern.IMEI_UNKNOWN;
     private int LKU = Constants_Intern.LKU_UNKNOWN;
     private int Condition = Constants_Intern.CONDITION_UNKNOWN;
-    private int Exploitation = Constants_Intern.EXPLOITATION_UNKNOWN;
+    private int tState = Constants_Intern.STATE_UNKNOWN;
+    private Boolean bSoftwareIntact = null;
 
-    private int Destination = Constants_Intern.DESTINATION_UNKNOWN;
+    private ArrayList<Object_Device_Damage> lDeviceDamages = new ArrayList<>();
+
     private Station oStation = new Station(0, "null");
     private StoragePlace oStoragePlace = null;
 
@@ -47,6 +54,8 @@ public class Device implements Serializable {
     private Shape oShape = null;
 
     private Model oModel = null;
+
+    Context Context;
 
     public Device() {
         super();
@@ -59,18 +68,36 @@ public class Device implements Serializable {
     }
 
     public Device(JSONObject oJson, Context context) {
+        Context = context;
         vConnection = new Volley_Connection(context);
         try {
             IdDevice = oJson.getInt(Constants_Extern.ID_DEVICE);
             IMEI = oJson.getString(Constants_Extern.IMEI);
             if (!oJson.isNull(Constants_Extern.ID_RECORD))
                 kRecord = oJson.getInt(Constants_Extern.ID_RECORD);
-            if (!oJson.isNull(Constants_Extern.BOOLEAN_BATTERY_CONTAINED))
+            if (!oJson.isNull(Constants_Extern.OBJECT_MODEL)) {
+                oModel = new Model(context, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
+            }
+            if (!oJson.isNull(Constants_Extern.BOOLEAN_BATTERY_CONTAINED)) {
                 bBatteryContained = (oJson.getInt(Constants_Extern.BOOLEAN_BATTERY_CONTAINED) == 1) ? true : false;
+            } else {
+                if (oModel != null && oModel.isBatteryRemovable() != null && !oModel.isBatteryRemovable()) {
+                    bBatteryContained = true;
+                }
+            }
+            if (!oJson.isNull(Constants_Extern.BOOLEAN_BACKCOVER_CONTAINED)) {
+                bBackcoverContained = (oJson.getInt(Constants_Extern.BOOLEAN_BACKCOVER_CONTAINED) == 1) ? true : false;
+            } else {
+                if (oModel != null && oModel.isBackcoverRemovable() != null && !oModel.isBackcoverRemovable()) {
+                    bBackcoverContained = true;
+                }
+            }
             if (!oJson.isNull(Constants_Extern.CONDITION))
                 Condition = oJson.getInt(Constants_Extern.CONDITION);
-            if (!oJson.isNull(Constants_Extern.EXPLOITATION))
-                Exploitation = oJson.getInt(Constants_Extern.EXPLOITATION);
+            if (!oJson.isNull(Constants_Extern.TYPE_STATE))
+                tState = oJson.getInt(Constants_Extern.TYPE_STATE);
+            if (!oJson.isNull(Constants_Extern.BOOLEAN_SOFTWARE_INTACT))
+                bSoftwareIntact = oJson.getBoolean(Constants_Extern.BOOLEAN_SOFTWARE_INTACT);
             if (!oJson.isNull(Constants_Extern.RPD))
                 nRpd = oJson.getDouble(Constants_Extern.RPD);
             if (!oJson.isNull(Constants_Extern.OBJECT_STATION))
@@ -81,11 +108,13 @@ public class Device implements Serializable {
                 oShape = new Shape(oJson.getJSONObject(Constants_Extern.OBJECT_SHAPE));
             if (!oJson.isNull(Constants_Extern.OBJECT_COLOR))
                 oColor = new Color(context, oJson.getJSONObject(Constants_Extern.OBJECT_COLOR));
-            if (!oJson.isNull(Constants_Extern.OBJECT_MODEL)) {
-                oModel = new Model(context, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
+            if (!oJson.isNull(Constants_Extern.LIST_DEVICE_DAMAGES)) {
+                JSONArray aJson = oJson.getJSONArray(Constants_Extern.LIST_DEVICE_DAMAGES);
+                for (int i = 0; i < aJson.length(); i++) {
+                    Object_Device_Damage oDeviceDamage = new Object_Device_Damage(Context, aJson.getJSONObject(i));
+                    lDeviceDamages.add(oDeviceDamage);
+                }
             }
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -97,12 +126,17 @@ public class Device implements Serializable {
             oJson.put(Constants_Extern.IMEI, IMEI);
             oJson.put(Constants_Extern.ID_DEVICE, IdDevice);
             oJson.put(Constants_Extern.ID_RECORD, kRecord);
-            oJson.put(Constants_Extern.EXPLOITATION, Exploitation);
+            oJson.put(Constants_Extern.TYPE_STATE, tState);
             oJson.put(Constants_Extern.CONDITION, Condition);
-            if (bBatteryContained != null) {
-                oJson.put(Constants_Extern.BOOLEAN_BATTERY_CONTAINED, bBatteryContained ? 1 : 0);
+            if (bBackcoverContained != null) {
+                oJson.put(Constants_Extern.BOOLEAN_BACKCOVER_CONTAINED, bBackcoverContained ? 1 : 0);
             } else {
-                oJson.put(Constants_Extern.BOOLEAN_BATTERY_CONTAINED, null);
+                oJson.put(Constants_Extern.BOOLEAN_BACKCOVER_CONTAINED, JSONObject.NULL);
+            }
+            if (bSoftwareIntact != null) {
+                oJson.put(Constants_Extern.BOOLEAN_SOFTWARE_INTACT, bSoftwareIntact ? 1 : 0);
+            } else {
+                oJson.put(Constants_Extern.BOOLEAN_SOFTWARE_INTACT, JSONObject.NULL);
             }
             if (oStation != null) {
                 oJson.put(Constants_Extern.ID_STATION, oStation.getId());
@@ -113,6 +147,11 @@ public class Device implements Serializable {
                 oJson.put(Constants_Extern.ID_MODEL, oModel.getkModel());
             } else {
                 oJson.put(Constants_Extern.ID_MODEL, JSONObject.NULL);
+            }
+            if (bBatteryContained != null) {
+                oJson.put(Constants_Extern.BOOLEAN_BATTERY_CONTAINED, bBatteryContained ? 1 : 0);
+            } else {
+                oJson.put(Constants_Extern.BOOLEAN_BATTERY_CONTAINED, JSONObject.NULL);
             }
             if (oColor != null) {
                 oJson.put(Constants_Extern.ID_COLOR, oColor.getId());
@@ -128,6 +167,15 @@ public class Device implements Serializable {
                 oJson.put(Constants_Extern.NOTES, cNotes);
             } else {
                 oJson.put(Constants_Extern.NOTES, JSONObject.NULL);
+            }
+            if (lDeviceDamages.size() > 0) {
+                JSONArray aJson = new JSONArray();
+                for (Object_Device_Damage oDeviceDamage : lDeviceDamages) {
+                    aJson.put(oDeviceDamage.getJson());
+                }
+                oJson.put(Constants_Extern.LIST_DEVICE_DAMAGES, aJson);
+            } else {
+                oJson.put(Constants_Extern.LIST_DEVICE_DAMAGES, JSONObject.NULL);
             }
             JSONObject oJsonStoragePlace = new JSONObject();
             if (oStoragePlace != null) {
@@ -149,9 +197,17 @@ public class Device implements Serializable {
     public void updateDevice() {
         Log.i("UPDATE_DEVICE:", getJson().toString());
         if (IdDevice > 0) {
-            Log.i("update json", getJson().toString());
+            Log.i("updateLayout json", getJson().toString());
             vConnection.execute(Request.Method.PUT, URL_UPDATE_DEVICE, getJson());
         }
+    }
+
+    public Battery getoBattery() {
+        return oBattery;
+    }
+
+    public void setoBattery(Battery oBattery) {
+        this.oBattery = oBattery;
     }
 
     public StoragePlace getoStoragePlace() {
@@ -178,7 +234,12 @@ public class Device implements Serializable {
     public void setoModel(Model oModel) {
         this.oModel = oModel;
         if (isBatteryContained() == null) {
-            if (!oModel.isBatteryRemovable()) setBatteryContained(true);
+            if (oModel.bBatteryRemovable != null && !oModel.isBatteryRemovable())
+                setBatteryContained(true);
+        }
+        if (isBackcoverContained() == null) {
+            if (oModel.bBackcoverRemovable != null && !oModel.isBatteryRemovable())
+                setbBackcoverContained(true);
         }
         updateDevice();
     }
@@ -191,6 +252,13 @@ public class Device implements Serializable {
         this.kRecord = kRecord;
         updateDevice();
     }
+
+//    public void addModelDamages(ArrayList<Object_Model_Damage> lModelDamages) {
+//        for (Object_Model_Damage oModelDamage : lModelDamages) {
+//            lDeviceDamages.add(new Object_Device_Damage(Context, IdDevice, oModelDamage));
+//        }
+//        updateDevice();
+//    }
 
     public int getIdDevice() {
         return IdDevice;
@@ -225,16 +293,12 @@ public class Device implements Serializable {
         Condition = condition;
     }
 
-    public int getDestination() {
-        return Destination;
-    }
-
-    public void setDestination(int destination) {
-        Destination = destination;
-    }
-
     public Station getoStation() {
         return oStation;
+    }
+
+    public String getStateName() {
+        return Integer.toString(tState);
     }
 
     public void setoStation(Station oStation) {
@@ -250,6 +314,24 @@ public class Device implements Serializable {
             }
         }
 
+    }
+
+
+    public Boolean isBackcoverContained() {
+        return bBackcoverContained;
+    }
+
+    public void setbBackcoverContained(Boolean bBackcoverContained) {
+        this.bBackcoverContained = bBackcoverContained;
+        updateDevice();
+    }
+
+    public Boolean getbSoftwareIntact() {
+        return bSoftwareIntact;
+    }
+
+    public void setbSoftwareIntact(Boolean bSoftwareIntact) {
+        this.bSoftwareIntact = bSoftwareIntact;
     }
 
     public Color getoColor() {
@@ -270,12 +352,21 @@ public class Device implements Serializable {
         updateDevice();
     }
 
-    public int getExploitation() {
-        return Exploitation;
+    public ArrayList<Object_Device_Damage> getlDeviceDamages() {
+        return lDeviceDamages;
     }
 
-    public void setExploitation(int exploitation) {
-        Exploitation = exploitation;
+    public void setlDeviceDamages(ArrayList<Object_Device_Damage> lDeviceDamages) {
+        this.lDeviceDamages = lDeviceDamages;
+        updateDevice();
+    }
+
+    public int gettState() {
+        return tState;
+    }
+
+    public void settState(int tState) {
+        this.tState = tState;
     }
 
     public Boolean isBatteryContained() {
