@@ -231,7 +231,7 @@ public class Constants_Intern {
     public static final int TYPE_MODE_EDIT = 0;
     public static final int TYPE_MODE_SELECT = 1;
     public static final String FRAGMENT_MULTIPLE_CHOICE_MODEL_BATTERY_SELECT = "FRAGMENT_MULTIPLE_CHOICE_MODEL_BATTERY_SELECT";
-    public static final String FRAGMENT_MULTIPLE_CHOICE_MODEL_BATTERY_EDIT = "FRAGMENT_MULTIPLE_CHOICE_MODEL_BATTERY_EDIT";
+    public static final String FRAGMENT_EDIT_MODEL_BATTERY = "FRAGMENT_EDIT_MODEL_BATTERY";
     public static final String FRAGMENT_REQUEST_MODEL_BATTERY = "FRAGMENT_REQUEST_MODEL_BATTERY";
     public static final int MODEL_BATTERY_STATUS_NORMAL = 0;
     public static final int MODEL_BATTERY_STATUS_PRIME = 1;
@@ -248,4 +248,14 @@ public class Constants_Intern {
     public static final String FRAGMENT_CHOICE_IMAGE_MANUFACTURER = "FRAGMENT_CHOICE_IMAGE_MANUFACTURER";
     public static final String FRAGMENT_CHOICE_IMAGE_CHARGER = "FRAGMENT_CHOICE_IMAGE_CHARGER";
     public static final String FRAGMENT_INPUT_MODEL = "FRAGMENT_INPUT_MODEL";
+    public static final String TEXT_INSTRUCTION = "TEXT_INSTRUCTION";
+    public static final String FRAGMENT_INPUT_MODEL_NAME = "FRAGMENT_INPUT_MODEL_NAME";
+    public static final String FRAGMENT_INPUT_BATTERY = "FRAGMENT_INPUT_BATTERY";
+    public static final String FRAGMENT_SELECT_PHONE_TYPE = "FRAGMENT_SELECT_PHONE_TYPE";
+    public static final int NO = 0;
+    public static final int YES = 1;
+    public static final String FRAGMENT_SELECT_EXPLOITATION = "FRAGMENT_SELECT_EXPLOITATION";
+    public static final String FRAGMENT_INPUT_DPS = "FRAGMENT_INPUT_DPS";
+    public static final String FRAGMENT_SELECT_BATTERY_REMOVABLE = "FRAGMENT_SELECT_BATTERY_REMOVABLE";
+    public static final String FRAGMENT_SELECT_BACKCOVER_REMOVABLE = "FRAGMENT_SELECT_BACKCOVER_REMOVABLE";
 }

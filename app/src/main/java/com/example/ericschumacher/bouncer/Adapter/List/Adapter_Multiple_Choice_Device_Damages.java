@@ -20,7 +20,7 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Choice;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Interaction_Multiple_Choice_Device_Damages;
+import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Device_Damages;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Long_Click;
 import com.example.ericschumacher.bouncer.Objects.Object_Device_Damage;
 import com.example.ericschumacher.bouncer.Objects.Object_Model_Damage;
@@ -50,9 +50,9 @@ public class Adapter_Multiple_Choice_Device_Damages extends RecyclerView.Adapter
     RequestQueue rQueue;
 
     // Interface
-    Fragment_Interaction_Multiple_Choice_Device_Damages iFragment;
+    Fragment_Edit_Device_Damages iFragment;
 
-    public Adapter_Multiple_Choice_Device_Damages(android.content.Context context, ArrayList<Object_Device_Damage> lDeviceDamages, ArrayList<Object_Model_Damage> lModelDamages, int kDevice, Fragment_Interaction_Multiple_Choice_Device_Damages iFragment) {
+    public Adapter_Multiple_Choice_Device_Damages(android.content.Context context, ArrayList<Object_Device_Damage> lDeviceDamages, ArrayList<Object_Model_Damage> lModelDamages, int kDevice, Fragment_Edit_Device_Damages iFragment) {
         this.Context = context;
         queue = Volley.newRequestQueue(Context);
         this.iFragment = iFragment;

@@ -36,7 +36,6 @@ public class Fragment_Select extends Fragment implements View.OnClickListener {
     Button bEight;
     Button bNine;
 
-
     // Data
     public Bundle bData;
     String cTitle;

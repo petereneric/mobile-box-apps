@@ -14,7 +14,7 @@ import com.example.ericschumacher.bouncer.R;
 
 public class Fragment_SimpleText extends Fragment implements View.OnClickListener, View.OnLongClickListener {
 
-    // Layout
+    // vLayout
     View vLayout;
     TextView tvText;
 
@@ -31,7 +31,7 @@ public class Fragment_SimpleText extends Fragment implements View.OnClickListene
         // Data
         cText = getArguments().getString(Constants_Intern.TEXT_VALUE);
 
-        // Layout
+        // vLayout
         setLayout(inflater, container);
 
         // Interface

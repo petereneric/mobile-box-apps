@@ -29,7 +29,8 @@ public class Fragment_Choice extends Fragment {
     String cTitle;
 
     // Layout
-    View vLayout;
+    int kLayout = R.layout.fragment_choice;
+    public View vLayout;
     TextView tvTitle;
     public RecyclerView rvData;
 
@@ -41,9 +42,6 @@ public class Fragment_Choice extends Fragment {
 
     // Interface
     public Interface_Choice iChoice;
-
-    // Constants
-    public static final int SPAN_COUNT = 4;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -64,21 +62,18 @@ public class Fragment_Choice extends Fragment {
         // Layout
         setLayout(inflater, container);
 
-        // RecyclerView
-        rvData.setLayoutManager(new GridLayoutManager(getActivity(), SPAN_COUNT));
-        rvData.setAdapter(aChoice);
-        aChoice.notifyDataSetChanged();
-
-
         return vLayout;
     }
 
     // Layout
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
         // Initiate
-        vLayout = inflater.inflate(R.layout.fragment_choice, container, false);
+        vLayout = inflater.inflate(kLayout, container, false);
         tvTitle = vLayout.findViewById(R.id.tvTitle);
         rvData = vLayout.findViewById(R.id.rvData);
+
+        // RecyclerView
+        rvData.setLayoutManager(new GridLayoutManager(getActivity(), getSpanCount()));
 
         // Fill with arguments
         tvTitle.setText(cTitle);
@@ -87,5 +82,9 @@ public class Fragment_Choice extends Fragment {
     // Interface
     public interface Interface_Choice {
         public void returnChoice(String cTag, Object object);
+    }
+
+    public int getSpanCount() {
+        return 3;
     }
 }

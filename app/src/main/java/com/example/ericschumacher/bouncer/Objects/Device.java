@@ -42,7 +42,7 @@ public class Device implements Serializable {
     private String IMEI = Constants_Intern.IMEI_UNKNOWN;
     private int LKU = Constants_Intern.LKU_UNKNOWN;
     private int Condition = Constants_Intern.CONDITION_UNKNOWN;
-    private int tState = Constants_Intern.STATE_UNKNOWN;
+    private Integer tState = Constants_Intern.STATE_UNKNOWN;
     private Boolean bSoftwareIntact = null;
 
     private ArrayList<Object_Device_Damage> lDeviceDamages = new ArrayList<>();
@@ -361,7 +361,7 @@ public class Device implements Serializable {
         updateDevice();
     }
 
-    public int gettState() {
+    public Integer gettState() {
         return tState;
     }
 

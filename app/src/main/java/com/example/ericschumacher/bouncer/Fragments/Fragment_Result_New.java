@@ -25,7 +25,7 @@ public class Fragment_Result_New extends Fragment implements View.OnClickListene
     Unit_Battery uBattery;
     Unit_Backcover uBackcover;
 
-    // Layout
+    // vLayout
     View vLayout;
     TextView tvInteractionTitle;
     TextView tvInteractionType;
@@ -64,7 +64,7 @@ public class Fragment_Result_New extends Fragment implements View.OnClickListene
         uBattery = (Unit_Battery) bArguments.getSerializable(Constants_Intern.UNIT_BATTERY);
         uBackcover = (Unit_Backcover) bArguments.getSerializable(Constants_Intern.UNIT_BACKCOVER);
 
-        // Layout
+        // vLayout
         setLayout(inflater, container);
 
         // Interface

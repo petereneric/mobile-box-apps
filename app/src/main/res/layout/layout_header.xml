@@ -2,21 +2,31 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="40dp"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="16dp">
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/background_stroke_retangle_grey"
             android:gravity="center"
             android:text="Simple Choice"
             android:textAllCaps="true"
             android:textColor="@color/color_grey"
-            android:textSize="@dimen/size_text_subtitle" />
+            android:textSize="@dimen/size_text_header_title"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_grey"
+            android:layout_below="@id/tvTitle"
+            android:id="@+id/vDividerTitle"
+            android:paddingBottom="8dp"/>
 
 </LinearLayout>
 
+    <!--android:background="@drawable/background_stroke_retangle_grey" -->
 

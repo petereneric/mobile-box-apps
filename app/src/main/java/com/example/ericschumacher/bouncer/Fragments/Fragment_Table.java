@@ -11,14 +11,14 @@ import com.example.ericschumacher.bouncer.R;
 
 public class Fragment_Table extends Fragment {
 
-    // Layout
+    // vLayout
     View Layout;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        // Layout
+        // vLayout
         setLayout(inflater, container);
 
 

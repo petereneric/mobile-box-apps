@@ -163,7 +163,7 @@
     <string name="defect_reuse">Defect - Reuse</string>
     <string name="interaction_simple_choice">Simple Choice</string>
     <string name="intact_reuse">Intact - Reuse</string>
-    <string name="backcover_contained">Is Backcover contained</string>
+    <string name="backcover_contained">Backcover contained</string>
     <string name="backcover_removable">Backcover removable</string>
     <string name="interaction_multiple_choice">Multiple Choice</string>
     <string name="not_repairable">Not repairable</string>
@@ -213,6 +213,10 @@
     <string name="id_unknown">Id unknown</string>
     <string name="name_unknown">Name unknown</string>
     <string name="tac_unknown">Tac unknown</string>
+    <string name="id_record">Record id</string>
+    <string name="phone_type">Phone type</string>
+    <string name="model_manager">Model-Manager</string>
+    <string name="state">State</string>
     />
 
     // Not translated

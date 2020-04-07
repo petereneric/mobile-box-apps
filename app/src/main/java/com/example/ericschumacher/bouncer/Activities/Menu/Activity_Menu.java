@@ -19,6 +19,7 @@ import com.example.ericschumacher.bouncer.Activities.Activity_Bouncer;
 import com.example.ericschumacher.bouncer.Activities.Activity_Juicer;
 import com.example.ericschumacher.bouncer.Activities.Activity_LKU_Booker;
 import com.example.ericschumacher.bouncer.Activities.Activity_Manager;
+import com.example.ericschumacher.bouncer.Activities.Activity_Model;
 import com.example.ericschumacher.bouncer.Activities.Activity_Turing;
 import com.example.ericschumacher.bouncer.Activities.Activity_Zwegat;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Menu;
@@ -114,6 +115,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
     }
 
     private void createMenuData() {
+        lMenu.add(new Object_Menu(getString(R.string.model_manager), new Intent(this, Activity_Model.class), R.color.color_defect_reuse));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_bouncer), new Intent(this, Activity_Bouncer.class), R.color.color_primary));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_manager), new Intent(this, Activity_Manager.class), R.color.color_primary_light));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_juicer), new Intent(this, Activity_Juicer.class), R.color.color_primary_dark));

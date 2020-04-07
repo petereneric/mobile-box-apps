@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 public class Fragment_Devices extends Fragment implements Interface_Fragment_Devices {
 
-    // Layout
+    // vLayout
     View Layout;
     RecyclerView rvDevices;
     EditText etScan;
@@ -49,7 +49,7 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Layout
+        // vLayout
         setLayout(inflater, container);
 
         // Interface
@@ -100,7 +100,7 @@ public class Fragment_Devices extends Fragment implements Interface_Fragment_Dev
         etScan.requestFocus();
         Utility_Keyboard.hideKeyboardFrom(getContext(), etScan);
 
-        // RecyclerView
+        // rvList
         rvDevices.setLayoutManager(new LinearLayoutManager(getActivity()));
         aDevices = new Adapter_Devices(getActivity(), lDevices, Fragment_Devices.this);
         rvDevices.setAdapter(aDevices);

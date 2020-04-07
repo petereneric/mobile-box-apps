@@ -8,5 +8,6 @@ public class Fragment_Choice_Image extends Fragment_Choice {
     public interface Interface_Adapter_Choice_Image extends Adapter_List_Choice.Interface_Adapter_Choice {
         public String getUrlIconOne(int position);
         public String getUrlIconTwo(int position);
+        int getItemViewType(int position);
     }
 }

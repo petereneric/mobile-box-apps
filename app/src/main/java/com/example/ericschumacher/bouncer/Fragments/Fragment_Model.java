@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Battery;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Battery;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Model;
@@ -36,7 +37,7 @@ import java.util.ArrayList;
 
 public class Fragment_Model extends Fragment implements View.OnClickListener, Interface_Model {
 
-    // Layout
+    // vLayout
     View Layout;
 
     TableRow trName;
@@ -75,7 +76,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        // Layout
+        // vLayout
         setLayout(inflater, container);
 
         // Interface
@@ -365,12 +366,12 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
             fManager.beginTransaction().replace(R.id.flFragmentInteraction, fragment, Constants_Intern.FRAGMENT_REQUEST_MODEL_BATTERY).commit();
             Log.i("HHHHHE", "jo");
         } else {
-            Fragment_Interaction_Multiple_Choice_Model_Battery_Edit fragment = new Fragment_Interaction_Multiple_Choice_Model_Battery_Edit();
+            Fragment_Edit_Model_Battery fragment = new Fragment_Edit_Model_Battery();
             Bundle bData = new Bundle();
             bData.putString(Constants_Intern.INTERACTION_TITLE, getString(R.string.interaction_title_edit_model_battery));
             bData.putInt(Constants_Intern.ID_MODEL, model.getkModel());
             fragment.setArguments(bData);
-            fManager.beginTransaction().replace(R.id.flFragmentInteraction, fragment, Constants_Intern.FRAGMENT_MULTIPLE_CHOICE_MODEL_BATTERY_EDIT).commit();
+            fManager.beginTransaction().replace(R.id.flFragmentInteraction, fragment, Constants_Intern.FRAGMENT_EDIT_MODEL_BATTERY).commit();
         }
 
         /*

@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.example.ericschumacher.bouncer.Adapter.List.Choice.Adapter_List_Choice;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Keyboard;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
@@ -79,6 +80,18 @@ public class Fragment_Input extends Fragment implements View.OnClickListener, Te
         rvSearch.setAdapter(aSearch);
 
         return vLayout;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Utility_Keyboard.openKeyboard(getActivity(), etSearch);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Utility_Keyboard.hideKeyboardFrom(getActivity(), etSearch);
     }
 
     // Layout

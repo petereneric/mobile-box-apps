@@ -15,18 +15,22 @@ public class Fragment_Input_Model extends Fragment_Input {
     // Class methods
     public void onSearchChanged(String cSearch) {
         super.onSearchChanged(cSearch);
+        final String cSearchSaved = cSearch;
         cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODELS_BY_NAMEPART+cSearch, null, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
-                if (Volley_Connection.successfulResponse(oJson)) {
-                    lSearch.clear();
-                    JSONArray jsonArray = oJson.getJSONArray(Constants_Extern.LIST_MODELS);
-                    for (int i = 0; i<jsonArray.length(); i++) {
-                        lSearch.add(jsonArray.getJSONObject(i).getString(Constants_Extern.NAME_MODEL));
+                if (etSearch.getText().toString().equals(cSearchSaved)) {
+                    if (Volley_Connection.successfulResponse(oJson)) {
+                        lSearch.clear();
+                        // check if getEditText equals saved edittext
+                        JSONArray jsonArray = oJson.getJSONArray(Constants_Extern.LIST_MODELS);
+                        for (int i = 0; i<jsonArray.length(); i++) {
+                            lSearch.add(jsonArray.getJSONObject(i).getString(Constants_Extern.NAME_MODEL));
+                        }
+                        aSearch.notifyDataSetChanged();
+                    } else {
+                        clearSearch();
                     }
-                    aSearch.notifyDataSetChanged();
-                } else {
-                    clearSearch();
                 }
             }
         });

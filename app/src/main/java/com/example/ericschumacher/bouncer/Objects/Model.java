@@ -29,6 +29,7 @@ import java.util.ArrayList;
 public class Model implements Parcelable, Serializable {
 
     // Variables
+    Context Context;
     int kModel = Constants_Intern.ID_UNKNOWN;
     int nDps;
     Integer tDefaultExploitation;
@@ -53,12 +54,14 @@ public class Model implements Parcelable, Serializable {
     }
 
     public Model(Context context) {
+        Context = context;
         this.cVolley = new Volley_Connection(context);
     }
 
 
 
     public Model(Context context, JSONObject oJson) {
+        Context = context;
         cVolley = new Volley_Connection(context);
         try {
             kModel = oJson.getInt(Constants_Extern.ID_MODEL);
@@ -143,6 +146,10 @@ public class Model implements Parcelable, Serializable {
 
     public ArrayList<Model_Battery> getlModelBatteries() {
         return lModelBatteries;
+    }
+
+    public void addModelBattery(Model_Battery oModelBattery) {
+        lModelBatteries.add(oModelBattery);
     }
 
     public void setlModelBatteries(ArrayList<Model_Battery> lModelBatteries) {

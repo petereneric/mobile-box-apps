@@ -15,12 +15,12 @@ import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Activities.Activity_Model;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Battery;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Battery;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Model;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_DeviceManager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Model;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Model_New;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
@@ -38,7 +38,7 @@ import java.util.ArrayList;
 
 public class Fragment_Model_New extends Fragment implements View.OnClickListener, Interface_Model {
 
-    // Layout
+    // vLayout
     View Layout;
 
     TableRow trName;
@@ -52,6 +52,7 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
     TableRow trDps;
     TableRow trPhoneType;
 
+    TextView tvTitle;
     TextView tvName;
     TextView tvManufacturer;
     TextView tvCharger;
@@ -78,7 +79,7 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        // Layout
+        // vLayout
         setLayout(inflater, container);
 
         // Interface
@@ -90,6 +91,7 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
     private void setLayout(LayoutInflater inflater, ViewGroup container) {
         Layout = inflater.inflate(R.layout.fragment_model, container, false);
 
+        tvTitle = Layout.findViewById(R.id.tvTitle);
         trName = Layout.findViewById(R.id.trName);
         trManufacturer = Layout.findViewById(R.id.trManufacturer);
         trCharger = Layout.findViewById(R.id.trCharger);
@@ -111,6 +113,8 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
         tvDefaultExploitation = Layout.findViewById(R.id.tvDefaultExploitation);
         tvDps = Layout.findViewById(R.id.tvDps);
         tvPhoneType = Layout.findViewById(R.id.tvPhone);
+
+        tvTitle.setText(getString(R.string.model));
 
         trName.setOnClickListener(this);
         trManufacturer.setOnClickListener(this);
@@ -166,12 +170,12 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
             if (model.isBatteryRemovable() != null) {
                 tvBatteryRemovable.setText((model.isBatteryRemovable()) ? getString(R.string.yes) : getString(R.string.no));
             } else {
-                tvBatteryRemovable.setText(getString(R.string.unknown);
+                tvBatteryRemovable.setText(getString(R.string.unknown));
             }
             if (model.isBackcoverRemovable() != null) {
                 tvBackcoverRemovable.setText((model.isBackcoverRemovable()) ? getString(R.string.yes) : getString(R.string.no));
             } else {
-                tvBackcoverRemovable.setText(getString(R.string.unknown);
+                tvBackcoverRemovable.setText(getString(R.string.unknown));
             }
             if (model.getoBattery() != null && model.getoBattery().getLku() != null) {
                 tvBatteryLku.setText(model.getoBattery().getoManufacturer().getcShortcut()+"-"+Integer.toString(model.getoBattery().getLku()));
@@ -194,48 +198,47 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
     }
 
     private void setClickable (boolean clickable) {
-        tvName.setClickable(clickable);
-        tvManufacturer.setClickable(clickable);
-        tvCharger.setClickable(clickable);
-        tvBattery.setClickable(clickable);
-        tvPhoneType.setClickable(clickable);
-        tvDefaultExploitation.setClickable(clickable);
-        tvDps.setClickable(clickable);
-        tvBatteryRemovable.setClickable(clickable);
-        tvBackcoverRemovable.setClickable(clickable);
-        tvBatteryLku.setClickable(clickable);
+        trName.setClickable(clickable);
+        trManufacturer.setClickable(clickable);
+        trCharger.setClickable(clickable);
+        trBattery.setClickable(clickable);
+        trPhoneType.setClickable(clickable);
+        trDefaultExploitation.setClickable(clickable);
+        trDps.setClickable(clickable);
+        trBatteryRemovable.setClickable(clickable);
+        trBackcoverRemovable.setClickable(clickable);
+        trBatteryLku.setClickable(clickable);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.trName:
-                requestName();
+                activityModel.onClickModelName();
                 break;
             case R.id.trManufacturer:
-                requestManufacturer();
+                activityModel.onClickManufacturer();
                 break;
             case R.id.trCharger:
-                requestCharger(iManager.getModel());
-                break;
-            case R.id.trPhone:
-                requestTypePhone();
-                break;
-            case R.id.trBatteryRemovable:
-                requestBatteryRemovable(iManager.getModel());
-                break;
-            case R.id.trBackcoverRemovable:
-                requestBackcoverRemovable(iManager.getModel());
+                activityModel.onClickCharger();
                 break;
             case R.id.trBattery:
-                // make a choice here - If not Battery connected (null) or one - Just show editText - Else if more than one option show list
-                requestBattery(iManager.getModel());
+                activityModel.onClickBattery();
+                break;
+            case R.id.trPhone:
+                activityModel.onClickPhoneType();
                 break;
             case R.id.trDefaultExploitation:
-                requestDefaultExploitation(iManager.getModel());
+                activityModel.onClickDefaultExploitation();
+                break;
+            case R.id.trBatteryRemovable:
+                activityModel.onClickBatteryRemovable();
+                break;
+            case R.id.trBackcoverRemovable:
+                activityModel.onClickBackcoverRemovable();
                 break;
             case R.id.trDps:
-                //requestDefaultExploitation(iManager.getModel());
+                activityModel.onClickDps();
                 break;
         }
     }
@@ -391,12 +394,12 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
             fManager.beginTransaction().replace(R.id.flFragmentInteraction, fragment, Constants_Intern.FRAGMENT_REQUEST_MODEL_BATTERY).commit();
             Log.i("HHHHHE", "jo");
         } else {
-            Fragment_Interaction_Multiple_Choice_Model_Battery_Edit fragment = new Fragment_Interaction_Multiple_Choice_Model_Battery_Edit();
+            Fragment_Edit_Model_Battery fragment = new Fragment_Edit_Model_Battery();
             Bundle bData = new Bundle();
             bData.putString(Constants_Intern.INTERACTION_TITLE, getString(R.string.interaction_title_edit_model_battery));
             bData.putInt(Constants_Intern.ID_MODEL, model.getkModel());
             fragment.setArguments(bData);
-            fManager.beginTransaction().replace(R.id.flFragmentInteraction, fragment, Constants_Intern.FRAGMENT_MULTIPLE_CHOICE_MODEL_BATTERY_EDIT).commit();
+            fManager.beginTransaction().replace(R.id.flFragmentInteraction, fragment, Constants_Intern.FRAGMENT_EDIT_MODEL_BATTERY).commit();
         }
 
         /*

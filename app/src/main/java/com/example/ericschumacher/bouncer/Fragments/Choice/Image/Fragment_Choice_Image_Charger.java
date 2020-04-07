@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Adapter_Choice_Image_Charger extends Fragment_Choice_Image implements Fragment_Choice_Image.Interface_Adapter_Choice_Image {
+public class Fragment_Choice_Image_Charger extends Fragment_Choice_Image implements Fragment_Choice_Image.Interface_Adapter_Choice_Image {
 
     // Data
     ArrayList<Charger> lCharger = new ArrayList<>();
@@ -32,33 +32,52 @@ public class Adapter_Choice_Image_Charger extends Fragment_Choice_Image implemen
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Set Adapter
-        aChoice = new Adapter_List_Choice_Image(getActivity(), this);
-
         // Arguments
         kManufacturer = bData.getInt(Constants_Intern.ID_MANUFACTURER);
-
-        // Load Data
-        if (kManufacturer != null) {
-            cVolley.getResponse(Request.Method.GET, Urls.URL_GET_CHARGER_BY_MANUFACTURER+kManufacturer, null, new Interface_VolleyResult() {
-                @Override
-                public void onResult(JSONObject oJson) throws JSONException {
-                    JSONArray jsonArray = oJson.getJSONArray(Constants_Extern.LIST_MANUFACTURER);
-                    for (int i = 0; i<jsonArray.length(); i++) {
-                        lCharger.add(new Charger(jsonArray.getJSONObject(i)));
-                    }
-                }
-            });
-        } else {
-            // Get all chargers here
-        }
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+        super.onCreateView(inflater, container, savedInstanceState);
+        // Set Adapter
+        aChoice = new Adapter_List_Choice_Image(getActivity(), this);
+        rvData.setAdapter(aChoice);
+
+        // Load Data
+        if (kManufacturer > 0) {
+            cVolley.getResponse(Request.Method.GET, Urls.URL_GET_CHARGER_BY_MANUFACTURER+kManufacturer, null, new Interface_VolleyResult() {
+                @Override
+                public void onResult(JSONObject oJson) throws JSONException {
+                    JSONArray jsonArray = oJson.getJSONArray(Constants_Extern.LIST_CHARGER);
+                    for (int i = 0; i<jsonArray.length(); i++) {
+                        lCharger.add(new Charger(jsonArray.getJSONObject(i)));
+                    }
+                    aChoice.notifyDataSetChanged();
+                }
+            });
+        } else {
+            cVolley.getResponse(Request.Method.GET, Urls.URL_GET_CHARGER_ALL, null, new Interface_VolleyResult() {
+                @Override
+                public void onResult(JSONObject oJson) throws JSONException {
+                    JSONArray jsonArray = oJson.getJSONArray(Constants_Extern.LIST_CHARGER);
+                    for (int i = 0; i<jsonArray.length(); i++) {
+                        lCharger.add(new Charger(jsonArray.getJSONObject(i)));
+                    }
+                    aChoice.notifyDataSetChanged();
+                }
+            });
+        }
+
+        return vLayout;
+    }
+
+    // Class methods
+
+
+    @Override
+    public int getSpanCount() {
+        return 3;
     }
 
     // Interface Methods
@@ -70,6 +89,11 @@ public class Adapter_Choice_Image_Charger extends Fragment_Choice_Image implemen
     @Override
     public String getUrlIconTwo(int position) {
         return null;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return 0;
     }
 
     @Override

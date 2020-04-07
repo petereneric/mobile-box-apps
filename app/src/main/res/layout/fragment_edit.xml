@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="8dp">
+
+    <include
+        layout="@layout/layout_header"
+        android:id="@+id/lHeader"/>
+
+    <Button
+        style="@style/button_main"
+        android:text="@string/commit"
+        android:id="@+id/bCommit"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rvData"
+        android:layout_below="@id/lHeader"
+        android:layout_above="@id/bCommit"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="32dp"/>
+
+
+
+</RelativeLayout>

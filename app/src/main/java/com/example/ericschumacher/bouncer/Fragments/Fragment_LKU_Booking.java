@@ -26,7 +26,7 @@ public class Fragment_LKU_Booking extends Fragment implements View.OnClickListen
     private final static String urlSuggestedLkuStock = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/suggestion/storage_place/";
     private final static String urlFull = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/lku/full/";
 
-    // Layout
+    // vLayout
     View Layout;
     TextView tvSuggestedLKU;
     Button bBooked;

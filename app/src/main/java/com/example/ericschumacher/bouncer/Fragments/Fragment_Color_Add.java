@@ -34,7 +34,7 @@ import java.util.ArrayList;
 
 public class Fragment_Color_Add extends Fragment implements View.OnClickListener, Interface_Search_Manufacturer, Interface_Search_Model {
 
-    // Layout
+    // vLayout
     View Layout;
     Button bCommit;
     EditText etModelName;
@@ -69,7 +69,7 @@ public class Fragment_Color_Add extends Fragment implements View.OnClickListener
         iManager = (Interface_DeviceManager) getActivity();
         oColor = new Color();
 
-        // Layout
+        // vLayout
         aManufacturer = new Adapter_SearchResults(getActivity(), new ArrayList<Object_SearchResult>(), new Interface_SearchResults() {
             @Override
             public void onResultClick(Object_SearchResult o) {

@@ -5,13 +5,13 @@
     android:orientation="horizontal">
 
     <include
-        layout="@layout/layout_header_left"
-        android:id="@+id/tvTitle"/>
+        layout="@layout/layout_header"
+        android:id="@+id/lHeader"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvTitle"
+        android:layout_below="@id/lHeader"
         android:orientation="horizontal">
 
         <TableLayout
@@ -32,18 +32,6 @@
                     android:text="Weiß" />
             </TableRow>
 
-            <TableRow android:id="@+id/trCondition">
-
-                <TextView
-                    style="@style/tv_tableRow_Key"
-                    android:text="@string/condition" />
-
-                <TextView
-                    android:id="@+id/tvCondition"
-                    style="@style/tv_tableRow_Value"
-                    android:text="Ok" />
-            </TableRow>
-
             <TableRow android:id="@+id/trShape">
 
                 <TextView
@@ -56,7 +44,21 @@
                     android:text="@string/shape_very_good" />
             </TableRow>
 
-            <TableRow android:id="@+id/trDamages">
+            <TableRow android:id="@+id/trState">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/state" />
+
+                <TextView
+                    android:id="@+id/tvState"
+                    style="@style/tv_tableRow_Value"
+                    android:text="@string/reuse" />
+
+            </TableRow>
+
+            <TableRow android:id="@+id/trDamages"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
@@ -88,7 +90,8 @@
                     android:text="Selektion" />
             </TableRow>
 
-            <TableRow android:id="@+id/trLKU">
+            <TableRow android:id="@+id/trLKU"
+                android:visibility="gone">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
@@ -100,11 +103,24 @@
                     android:text="Nicht vergeben" />
             </TableRow>
 
-            <TableRow android:id="@+id/trBattery">
+            <TableRow android:id="@+id/trBatteryContained">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
                     android:text="@string/battery_contained" />
+
+                <TextView
+                    android:id="@+id/tvBatteryContained"
+                    style="@style/tv_tableRow_Value"
+                    android:text="true" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trBattery"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/battery" />
 
                 <TextView
                     android:id="@+id/tvBattery"

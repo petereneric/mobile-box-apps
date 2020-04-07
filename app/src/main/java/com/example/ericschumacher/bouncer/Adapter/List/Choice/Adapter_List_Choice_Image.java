@@ -1,7 +1,9 @@
 package com.example.ericschumacher.bouncer.Adapter.List.Choice;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -12,7 +14,6 @@ import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Choice_Image;
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Choice_New;
-import com.example.ericschumacher.bouncer.Fragments.Choice.Fragment_Choice;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image;
 
 public class Adapter_List_Choice_Image extends Adapter_List_Choice {
@@ -20,7 +21,7 @@ public class Adapter_List_Choice_Image extends Adapter_List_Choice {
     RequestQueue rQueue;
 
     public Adapter_List_Choice_Image(android.content.Context context, Fragment_Choice_Image.Interface_Adapter_Choice_Image iFragmentChoice) {
-        super(context, (Fragment_Choice.Interface_Fragment_Choice)iFragmentChoice);
+        super(context, iFragmentChoice);
         rQueue = Volley.newRequestQueue(Context);
     }
 
@@ -40,6 +41,8 @@ public class Adapter_List_Choice_Image extends Adapter_List_Choice {
 
         // Image request one
         if (iFragmentChoiceImage.getUrlIconOne(position) != null) {
+            vhChoiceImage.ivIconOne.setVisibility(View.VISIBLE);
+            Log.i("IMMAGE: ", iFragmentChoiceImage.getUrlIconOne(position));
             ImageRequest request = new ImageRequest(iFragmentChoiceImage.getUrlIconOne(position),
                     new Response.Listener<Bitmap>() {
                         @Override
@@ -60,6 +63,7 @@ public class Adapter_List_Choice_Image extends Adapter_List_Choice {
 
         // Image request two
         if (iFragmentChoiceImage.getUrlIconTwo(position) != null){
+            vhChoiceImage.ivIconTwo.setVisibility(View.VISIBLE);
             ImageRequest request = new ImageRequest(iFragmentChoiceImage.getUrlIconTwo(position),
                     new Response.Listener<Bitmap>() {
                         @Override
@@ -77,5 +81,10 @@ public class Adapter_List_Choice_Image extends Adapter_List_Choice {
             rQueue.add(request);
             rQueue.getCache().clear();
         }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return ((Fragment_Choice_Image.Interface_Adapter_Choice_Image)iFragmentChoice).getItemViewType(position);
     }
 }

@@ -28,15 +28,15 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Color_Add;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Simple;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Interaction_Multiple_Choice_Device_Damages;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Interaction_Multiple_Choice_Model_Battery;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Interaction_Multiple_Choice_Model_Battery_Select;
+import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Device_Damages;
+import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Battery;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Edit_Model_Battery_Select;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_SimpleText;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Device;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_DeviceManager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Dialog;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_SimpleText;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_ModelBatteryManager;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Edit_Model_Battery;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Request_Name;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Search_Manufacturer;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Search_Model;
@@ -73,7 +73,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Activity_Device extends AppCompatActivity implements Interface_DeviceManager, View.OnClickListener, Interface_Dialog, Interface_Fragment_SimpleText, Interface_ModelBatteryManager,
+public class Activity_Device extends AppCompatActivity implements Interface_DeviceManager, View.OnClickListener, Interface_Dialog, Interface_Fragment_SimpleText, Interface_Edit_Model_Battery,
         Interface_Request_Name {
 
     // Interfaces
@@ -413,7 +413,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
 
     public void requestDeviceBattery() {
         if (oDevice.getoModel().getlModelBatteries().size() > 1) {
-            Fragment_Interaction_Multiple_Choice_Model_Battery_Select fragment = new Fragment_Interaction_Multiple_Choice_Model_Battery_Select();
+            Fragment_Edit_Model_Battery_Select fragment = new Fragment_Edit_Model_Battery_Select();
             Bundle bData = new Bundle();
             bData.putString(Constants_Intern.INTERACTION_TITLE, getString(R.string.interaction_title_select_device_battery));
             bData.putInt(Constants_Intern.ID_MODEL, oDevice.getoModel().getkModel());
@@ -616,7 +616,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
                                 bData.putInt(Constants_Intern.ID_DEVICE, oDevice.getIdDevice());
                                 bData.putString(Constants_Intern.STRING_MODEL_DAMAGES, aJsonModelDamages.toString());
                                 bData.putString(Constants_Intern.STRING_DEVICE_DAMAGES, aJsonDeviceDamages.toString());
-                                fragmentInteraction(new Fragment_Interaction_Multiple_Choice_Device_Damages(), bData, Constants_Intern.FRAGMENT_INTERACTION_DEVICE_DAMAGES);
+                                fragmentInteraction(new Fragment_Edit_Device_Damages(), bData, Constants_Intern.FRAGMENT_INTERACTION_DEVICE_DAMAGES);
 
                             } else {
                                 // No damages found
@@ -809,7 +809,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
                     bData.putInt(Constants_Intern.ID_DEVICE, oDevice.getIdDevice());
                     bData.putString(Constants_Intern.STRING_MODEL_DAMAGES, aJsonModelDamages.toString());
                     bData.putString(Constants_Intern.STRING_DEVICE_DAMAGES, aJsonDeviceDamages.toString());
-                    fragmentInteraction(new Fragment_Interaction_Multiple_Choice_Device_Damages(), bData, Constants_Intern.FRAGMENT_INTERACTION_DEVICE_DAMAGES);
+                    fragmentInteraction(new Fragment_Edit_Device_Damages(), bData, Constants_Intern.FRAGMENT_INTERACTION_DEVICE_DAMAGES);
 
                 } else {
                     // No damages found
@@ -1281,7 +1281,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
     }
 
     @Override
-    public void connectModelBattery(int kModel, int kBattery, Fragment_Interaction_Multiple_Choice_Model_Battery fragment) {
+    public void connectModelBattery(int kModel, int kBattery, Fragment_Edit_Model_Battery fragment) {
 
     }
 

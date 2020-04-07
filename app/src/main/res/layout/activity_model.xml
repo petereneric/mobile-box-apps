@@ -1,26 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <include
-        layout="@layout/layout_search_main"
-        android:id="@+id/lSearch"/>
-
-    <fragment
-        android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Model_New"
-        android:id="@+id/fModel"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/vToolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/lSearch"
-        android:layout_marginTop="16dp"/>
+        android:layout_height="?attr/actionBarSize"
+        android:backgroundTint="@color/color_primary"/>
 
-    <FrameLayout
+    <View
+        android:id="@+id/toolbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_dropshadow" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/fModel"
-        android:id="@+id/flInteraction"/>
+        android:layout_margin="8dp">
 
-</RelativeLayout>
+        <fragment
+            android:id="@+id/fModel"
+            android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Model_New"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lSearch"
+            android:layout_marginTop="16dp" />
+
+        <FrameLayout
+            android:id="@+id/flInteraction"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/fModel" />
+
+        <include
+            android:id="@+id/lSearch"
+            layout="@layout/layout_search_main"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_layout_search"
+            android:layout_marginTop="16dp" />
+
+    </RelativeLayout>
+
+</LinearLayout>

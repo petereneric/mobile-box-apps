@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Choice_Simple;
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Choice_Simple_Add;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Interaction_Multiple_Choice_Model_Battery;
+import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Battery;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Long_Click;
 import com.example.ericschumacher.bouncer.Objects.Model_Battery;
@@ -21,7 +21,7 @@ import com.example.ericschumacher.bouncer.Utilities.Utility_Density;
 
 import java.util.ArrayList;
 
-public class Adapter_Multiple_Choice_Model_Battery extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class Adapter_Edit_Model_Battery extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // Else
     Context Context;
@@ -31,9 +31,9 @@ public class Adapter_Multiple_Choice_Model_Battery extends RecyclerView.Adapter<
     int tMode;
 
     // Instance
-    Fragment_Interaction_Multiple_Choice_Model_Battery iFragment;
+    Fragment_Edit_Model_Battery iFragment;
 
-    public Adapter_Multiple_Choice_Model_Battery(Context context, ArrayList<Model_Battery> lModelBatteries, Fragment_Interaction_Multiple_Choice_Model_Battery iFragment, int tMode) {
+    public Adapter_Edit_Model_Battery(Context context, ArrayList<Model_Battery> lModelBatteries, Fragment_Edit_Model_Battery iFragment, int tMode) {
         Context = context;
         this.tMode = tMode;
         this.iFragment = iFragment;
@@ -73,7 +73,7 @@ public class Adapter_Multiple_Choice_Model_Battery extends RecyclerView.Adapter<
             ViewHolder_Choice_Simple_Add vhChoiceSimpleAdd = new ViewHolder_Choice_Simple_Add(LayoutInflater.from(Context).inflate(R.layout.item_choice_simple_add, parent, false), new Interface_Click() {
                 @Override
                 public void onClick(int position) {
-                    iFragment.showFragmentRequestNameBattery();
+                    iFragment.showFragmentInputBattery();
 
                 }
             });

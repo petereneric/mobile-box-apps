@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public class Fragment_Zwegat extends Fragment {
 
-    // Layout
+    // vLayout
     View Layout;
     RecyclerView rvBillPayee;
 
@@ -36,7 +36,7 @@ public class Fragment_Zwegat extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        // Layout
+        // vLayout
         setLayout(container);
 
         // Utility

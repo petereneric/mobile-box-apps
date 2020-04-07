@@ -26,6 +26,7 @@
         <activity android:name=".Activities.Activity_Manager"></activity>
         <activity android:name=".Activities.Activity_Battery"></activity>
         <activity android:name=".Activities.Activity_Model"></activity>
+        <activity android:name=".Activities.Activity_Device_New"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

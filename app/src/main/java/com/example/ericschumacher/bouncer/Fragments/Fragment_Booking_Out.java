@@ -15,7 +15,7 @@ import com.example.ericschumacher.bouncer.R;
 
 public class Fragment_Booking_Out extends Fragment implements View.OnClickListener {
 
-    // Layout
+    // vLayout
     View Layout;
     Button bBookedOut;
     Button bCancel;
@@ -31,7 +31,7 @@ public class Fragment_Booking_Out extends Fragment implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        // Layout
+        // vLayout
         setLayout(inflater, container);
 
         // Interface

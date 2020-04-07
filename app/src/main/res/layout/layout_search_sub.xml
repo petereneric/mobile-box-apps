@@ -29,7 +29,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:id="@+id/ivSearch"
+        android:id="@+id/ivCommit"
         android:src="@drawable/ic_commit_24dp"
         android:tint="@color/color_green"
         android:layout_alignParentRight="true"
@@ -43,7 +43,7 @@
         android:paddingLeft="0dp"
         android:paddingRight="8dp"
         android:background="@color/color_grey"
-        android:layout_toLeftOf="@id/ivSearch"
+        android:layout_toLeftOf="@id/ivCommit"
         android:id="@+id/vDivicerRight"/>
 
     <EditText

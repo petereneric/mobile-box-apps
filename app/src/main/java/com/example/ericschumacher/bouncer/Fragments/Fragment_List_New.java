@@ -25,9 +25,9 @@ import org.json.JSONObject;
 
 public class Fragment_List_New extends Fragment implements Interface_Fragment_List, Interface_Click {
 
-    // Layout
-    View Layout;
-    RecyclerView RecyclerView;
+    // vLayout
+    View vLayout;
+    RecyclerView rvList;
 
     // Data
     JSONArray jsonArrayData = new JSONArray();
@@ -45,13 +45,13 @@ public class Fragment_List_New extends Fragment implements Interface_Fragment_Li
         // Interface
         iActivityList = (Interface_Activity_List)getActivity();
 
-        // Layout
+        // vLayout
         setLayout(inflater, container);
 
         // Adapter
         Log.i("TAGG", getTag());
 
-        return Layout;
+        return vLayout;
     }
 
     @Override
@@ -62,10 +62,10 @@ public class Fragment_List_New extends Fragment implements Interface_Fragment_Li
     }
 
     private void setLayout(LayoutInflater inflater, ViewGroup container) {
-        Layout = inflater.inflate(R.layout.fragment_list_new, container, false);
+        vLayout = inflater.inflate(R.layout.fragment_list_new, container, false);
 
-        RecyclerView = Layout.findViewById(R.id.vRecyclerView);
-        RecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvList = vLayout.findViewById(R.id.rvList);
+        rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, iActivityList.getSwipeBehaviour(getTag())) {
             @Override
@@ -116,7 +116,7 @@ public class Fragment_List_New extends Fragment implements Interface_Fragment_Li
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(RecyclerView);
+        itemTouchHelper.attachToRecyclerView(rvList);
 
     }
 
@@ -141,7 +141,7 @@ public class Fragment_List_New extends Fragment implements Interface_Fragment_Li
     public void setData(JSONArray jsonArrayData) {
         this.jsonArrayData = jsonArrayData;
         aList = new Adapter_List(getActivity(), iActivityList.bHeader(getTag()), this, this.jsonArrayData, iActivityList.getAnn(getTag()));
-        RecyclerView.setAdapter(aList);
+        rvList.setAdapter(aList);
     }
 
     public JSONObject getJsonObject(int position) {

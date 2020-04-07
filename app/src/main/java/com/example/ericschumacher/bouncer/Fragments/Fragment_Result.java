@@ -19,7 +19,7 @@ import com.example.ericschumacher.bouncer.R;
 
 public class Fragment_Result extends Fragment implements View.OnClickListener {
 
-    // Layout
+    // vLayout
     View Layout;
     TextView tvResult;
 
@@ -34,7 +34,7 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Layout = inflater.inflate(R.layout.fragment_result, container, false);
 
-        // Layout
+        // vLayout
         setLayout();
 
         // Data
@@ -47,7 +47,7 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
         return Layout;
     }
 
-    // Layout
+    // vLayout
     private void setLayout() {
         tvResult = Layout.findViewById(R.id.tvResult);
 

@@ -35,7 +35,7 @@ import java.util.ArrayList;
 
 public class Fragment_Device extends Fragment implements View.OnClickListener, Interface_Device {
 
-    // Layout
+    // vLayout
     View Layout;
     TableRow trLKU;
     TableRow trStation;
