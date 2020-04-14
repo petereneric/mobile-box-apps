@@ -15,7 +15,8 @@
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"
-        android:textSize="@dimen/size_text_default"/>
+        android:textSize="@dimen/size_text_default"
+        android:focusable="true"/>
 
     <View
         android:layout_width="1dp"
@@ -26,7 +27,8 @@
         android:paddingRight="8dp"
         android:background="@color/color_primary"
         android:layout_toRightOf="@id/tvSearchType"
-        android:id="@+id/vDivicerLeft"/>
+        android:id="@+id/vDivicerLeft"
+        android:focusableInTouchMode="true"/>
 
 
     <ImageView
@@ -62,6 +64,7 @@
         android:paddingRight="16dp"
         android:textSize="@dimen/size_text_default"
         android:gravity="center_vertical"
-        android:background="@color/color_transparent" />
+        android:background="@color/color_transparent"
+        android:selectAllOnFocus="true"/>
 
 </RelativeLayout>

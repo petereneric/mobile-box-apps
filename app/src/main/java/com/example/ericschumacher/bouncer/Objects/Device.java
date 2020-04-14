@@ -11,6 +11,7 @@ import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Color;
 import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
+import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
 import org.json.JSONArray;
@@ -298,7 +299,21 @@ public class Device implements Serializable {
     }
 
     public String getStateName() {
-        return Integer.toString(tState);
+        switch (tState) {
+            case Constants_Intern.STATE_INTACT_REUSE:
+                return Context.getString(R.string.intact_reuse);
+            case Constants_Intern.STATE_DEFECT_REPAIR:
+                return Context.getString(R.string.defect_repair);
+            case Constants_Intern.STATE_DEFECT_REUSE:
+                return Context.getString(R.string.defect_reuse);
+            case Constants_Intern.STATE_MODEL_UNKNOWN:
+                return Context.getString(R.string.model_unknown);
+            case Constants_Intern.STATE_RECYCLING:
+                return Context.getString(R.string.recycling);
+            case Constants_Intern.STATE_UNKNOWN:
+            default:
+                return Context.getString(R.string.unknown);
+        }
     }
 
     public void setoStation(Station oStation) {

@@ -95,7 +95,6 @@ public class Fragment_Select extends Fragment implements View.OnClickListener {
 
         // Fill with arguments
         tvTitle.setText(cTitle);
-
     }
 
     // Class methods

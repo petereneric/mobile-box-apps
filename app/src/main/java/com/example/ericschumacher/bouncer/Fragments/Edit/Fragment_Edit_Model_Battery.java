@@ -52,6 +52,14 @@ public class Fragment_Edit_Model_Battery extends Fragment_Edit implements Interf
     }
 
     @Override
+    public void setLayout(LayoutInflater inflater, ViewGroup container) {
+        super.setLayout(inflater, container);
+
+        // Visibility
+        bCommit.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         lModelBatteries = iModel.getModel().getlModelBatteries();
@@ -64,14 +72,12 @@ public class Fragment_Edit_Model_Battery extends Fragment_Edit implements Interf
     }
 
     public void addBattery(Battery oBattery) {
-        lModelBatteries.add(new Model_Battery(getActivity(), iModel.getModel().getkModel(), oBattery, 0));
-        iModel.getModel().update();
+        iModel.getModel().addModelBattery(new Model_Battery(getActivity(), iModel.getModel().getkModel(), oBattery, 0));
         aModelBatteries.notifyDataSetChanged();
     }
 
     public void deleteModelBattery(Model_Battery oModelBattery) {
-        iModel.getModel().getlModelBatteries().remove(oModelBattery);
-        iModel.getModel().update();
+        iModel.getModel().removeModelBattery(oModelBattery);
         aModelBatteries.notifyDataSetChanged();
     }
 
@@ -80,16 +86,23 @@ public class Fragment_Edit_Model_Battery extends Fragment_Edit implements Interf
     }
 
     public void onClick(Model_Battery oModelBattery) {
-        oModelBattery.changeStatus();
-        if (oModelBattery.gettStatus() == Constants_Intern.MODEL_BATTERY_STATUS_PRIME) {
+
+        if (oModelBattery.getNewStatus() == Constants_Intern.MODEL_BATTERY_STATUS_PRIME) {
+            oModelBattery.changeStatus();
             for (Model_Battery modelBattery : lModelBatteries) {
                 if (modelBattery.getkId() != oModelBattery.getkId() && modelBattery.gettStatus() == Constants_Intern.MODEL_BATTERY_STATUS_PRIME) {
                     modelBattery.settStatus(Constants_Intern.MODEL_BATTERY_STATUS_NORMAL );
                 }
             }
+            iModel.getModel().update();
+            aModelBatteries.notifyDataSetChanged();
+        } else {
+            oModelBattery.changeStatus();
+            iModel.getModel().update();
+            aModelBatteries.notifyDataSetChanged();
         }
-        iModel.getModel().update();
-        aModelBatteries.notifyDataSetChanged();
+
+
     }
 
     @Override

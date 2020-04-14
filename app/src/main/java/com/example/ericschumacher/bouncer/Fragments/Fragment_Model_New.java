@@ -160,7 +160,7 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
                 tvPhoneType.setText(getString(R.string.unknown));
             }
             if (model.gettDefaultExploitation() != null) {
-                tvDefaultExploitation.setText(model.getExploitationForScreen(getActivity()));
+                tvDefaultExploitation.setText(model.getExploitationName(getActivity()));
             } else {
                 tvDefaultExploitation.setText(getString(R.string.unknown));
             }
@@ -178,7 +178,7 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
                 tvBackcoverRemovable.setText(getString(R.string.unknown));
             }
             if (model.getoBattery() != null && model.getoBattery().getLku() != null) {
-                tvBatteryLku.setText(model.getoBattery().getoManufacturer().getcShortcut()+"-"+Integer.toString(model.getoBattery().getLku()));
+                tvBatteryLku.setText(model.getoBattery().getoManufacturer().getcShortcut()+" - "+Integer.toString(model.getoBattery().getLku()));
             } else {
                 tvBattery.setText("-");
             }

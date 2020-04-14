@@ -24,7 +24,9 @@
             android:background="@color/color_grey"
             android:layout_below="@id/tvTitle"
             android:id="@+id/vDividerTitle"
-            android:paddingBottom="8dp"/>
+            android:paddingBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
 
 </LinearLayout>
 

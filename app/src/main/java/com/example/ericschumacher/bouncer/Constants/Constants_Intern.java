@@ -240,11 +240,11 @@ public class Constants_Intern {
     public static final String FRAGMENT_REQUEST_NAME_BATTERY_IN_EDIT_MODE = "FRAGMENT_REQUEST_NAME_BATTERY_IN_EDIT_MODE";
     public static final String FRAGMENT_REQUEST_NAME_MODEL = "FRAGMENT_REQUEST_NAME_MODEL";
 
-    public static final String SEARCH_TYPE_MODEL = "SEARCH_TYPE_MODEL";
-    public static final int MAIN_SEARCH_TYPE_ID_MODEL = 0;
-    public static final int MAIN_SEARCH_TYPE_NAME_MODEL = 1;
-    public static final int MAIN_SEARCH_TYPE_TAC = 2;
-    public static final int MAIN_SEARCH_TYPE_IMEI = 3;
+    public static final String SEARCH_MODEL_TYPE = "SEARCH_MODEL_TYPE";
+    public static final int MAIN_SEARCH_MODEL_TYPE_ID_MODEL = 0;
+    public static final int MAIN_SEARCH_MODEL_TYPE_NAME_MODEL = 1;
+    public static final int MAIN_SEARCH_MODEL_TYPE_TAC = 2;
+    public static final int MAIN_SEARCH_MODEL_TYPE_IMEI = 3;
     public static final String FRAGMENT_CHOICE_IMAGE_MANUFACTURER = "FRAGMENT_CHOICE_IMAGE_MANUFACTURER";
     public static final String FRAGMENT_CHOICE_IMAGE_CHARGER = "FRAGMENT_CHOICE_IMAGE_CHARGER";
     public static final String FRAGMENT_INPUT_MODEL = "FRAGMENT_INPUT_MODEL";
@@ -258,4 +258,20 @@ public class Constants_Intern {
     public static final String FRAGMENT_INPUT_DPS = "FRAGMENT_INPUT_DPS";
     public static final String FRAGMENT_SELECT_BATTERY_REMOVABLE = "FRAGMENT_SELECT_BATTERY_REMOVABLE";
     public static final String FRAGMENT_SELECT_BACKCOVER_REMOVABLE = "FRAGMENT_SELECT_BACKCOVER_REMOVABLE";
+    public static final String SEARCH_DEVICE_TYPE = "SEARCH_DEVICE_TYPE";
+    public static final int MAIN_SEARCH_DEVICE_TYPE_ID_DEVICE = 0;
+    public static final int MAIN_SEARCH_DEVICE_TYPE_IMEI = 1;
+    public static final String FRAGMENT_CHOICE_IMAGE_COLOR = "FRAGMENT_CHOICE_IMAGE_COLOR";
+    public static final String FRAGMENT_EDIT_DEVICE_DAMAGES = "DEVICE_DAMAGES";
+    public static final String FRAGMENT_SELECT_BATTERY_CONTAINED = "FRAGMENT_SELECT_BATTERY_CONTAINED";
+    public static final String FRAGMENT_SELECT_BACKCOVER_CONTAINED = "FRAGMENT_SELECT_BACKCOVER_CONTAINED";
+    public static final String FRAGMENT_CHOICE_DEVICE_BATTERY = "FRAGMENT_CHOICE_DEVICE_BATTERY";
+    public static final String FRAGMENT_SELECT_SHAPE = "FRAGMENT_SELECT_SHAPE";
+    public static final String TEXT = "TEXT";
+    public static final String FRAGMENT_DISPLAY_EDIT_NEW_MODEL = "FRAGMENT_DISPLAY_EDIT_NEW_MODEL";
+    public static final String FRAGMENT_DISPLAY_EDIT_NEW_DEVICE = "FRAGMENT_DISPLAY_EDIT_NEW_DEVICE";
+    public static final String STOCK_SIDE = "STOCK_SIDE";
+    public static final int STOCK_SIDE_FRONT = 0;
+    public static final int STOCK_SIDE_BACK = 1;
+
 }

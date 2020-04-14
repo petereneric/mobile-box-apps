@@ -45,7 +45,7 @@ public class Model implements Parcelable, Serializable {
     ArrayList<Model_Battery> lModelBatteries = new ArrayList<>();
     Charger oCharger = null;
     Manufacturer oManufacturer = null;
-    ArrayList<Object_Model_Damage> lModelDamages = null;
+    ArrayList<Object_Model_Damage> lModelDamages = new ArrayList<>();
 
     // Connection
     Volley_Connection cVolley;
@@ -100,6 +100,14 @@ public class Model implements Parcelable, Serializable {
                     lModelBatteries.add(oModelBattery);
                 }
             }
+
+            if (!oJson.isNull(Constants_Extern.LIST_MODEL_DAMAGES)) {
+                JSONArray jsonArray = oJson.getJSONArray(Constants_Extern.LIST_MODEL_DAMAGES);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    Object_Model_Damage oModelDamage = new Object_Model_Damage(context, jsonArray.getJSONObject(i));
+                    lModelDamages.add(oModelDamage);
+                }
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -150,6 +158,18 @@ public class Model implements Parcelable, Serializable {
 
     public void addModelBattery(Model_Battery oModelBattery) {
         lModelBatteries.add(oModelBattery);
+        if (lModelBatteries.size() == 1) {
+            oModelBattery.settStatus(Constants_Intern.MODEL_BATTERY_STATUS_PRIME);
+        }
+        update();
+    }
+
+    public void removeModelBattery(Model_Battery oModelBattery) {
+        lModelBatteries.remove(oModelBattery);
+        if (lModelBatteries.size() == 1) {
+            lModelBatteries.get(0).settStatus(Constants_Intern.MODEL_BATTERY_STATUS_PRIME);
+        }
+        update();
     }
 
     public void setlModelBatteries(ArrayList<Model_Battery> lModelBatteries) {
@@ -331,16 +351,16 @@ public class Model implements Parcelable, Serializable {
         return oJson;
     }
 
-    public String getExploitationForScreen(Context context) {
+    public String getExploitationName(Context context) {
         switch (tDefaultExploitation) {
             case Constants_Intern.EXPLOITATION_NULL:
                 return Constants_Intern.UNKOWN;
             case Constants_Intern.EXPLOITATION_RECYCLING:
-                return "recycling";
+                return context.getString(R.string.recycling);
             case Constants_Intern.EXPLOITATION_INTACT_REUSE:
-                return "reuse";
+                return context.getString(R.string.reuse);
             case Constants_Intern.EXPLOITATION_DEFECT_REUSE:
-                return context.getString(R.string.defect_reuse);
+                return context.getString(R.string.repair);
         }
         return null;
     }

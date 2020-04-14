@@ -105,7 +105,7 @@ public class Adapter_Multiple_Choice_Device_Damages extends RecyclerView.Adapter
                 if (viewType == TYPE_OVERBROKEN) {
                     ivIconOne.setImageDrawable(ContextCompat.getDrawable(Context, R.drawable.icon_damage_overbroken_highlighted));
                     lDeviceDamages.clear();
-                    iFragment.clickOtherDamages();
+                    iFragment.clickOverbroken();
                 }
                 notifyDataSetChanged();
             }

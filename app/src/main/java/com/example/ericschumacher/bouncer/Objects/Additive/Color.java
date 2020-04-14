@@ -19,6 +19,7 @@ public class Color extends Additive implements Serializable {
 
     String HexCode;
     Manufacturer Manufacturer;
+    String cNameDE;
     Model Model;
     int kModelColor = 0;
 
@@ -38,6 +39,7 @@ public class Color extends Additive implements Serializable {
         try {
             Id = oJson.getInt(Constants_Extern.ID_COLOR);
             Name = oJson.getString(Constants_Extern.NAME_COLOR);
+            cNameDE = oJson.getString(Constants_Extern.NAME_COLOR_DE);
             HexCode = oJson.getString(Constants_Extern.HEX_CODE);
             if (!oJson.isNull(Constants_Extern.OBJECT_MANUFACTURER))
                 Manufacturer = new Manufacturer(oJson.getJSONObject(Constants_Extern.OBJECT_MANUFACTURER));
@@ -56,6 +58,14 @@ public class Color extends Additive implements Serializable {
         HexCode = Constants_Intern.NAME_NULL;
         Manufacturer = null;
         Model = null;
+    }
+
+    public String getcNameDE() {
+        return cNameDE;
+    }
+
+    public void setcNameDE(String cNameDE) {
+        this.cNameDE = cNameDE;
     }
 
     public int getkModelColor() {

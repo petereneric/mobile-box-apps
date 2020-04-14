@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -104,6 +105,9 @@ public class Fragment_Input extends Fragment implements View.OnClickListener, Te
         etSearch = vLayout.findViewById(R.id.etSearch);
         rvSearch = vLayout.findViewById(R.id.rvSearch);
 
+        // InputFilter
+        etSearch.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS);
+
         // OnClickListener & TextWatcher
         ivUnknown.setOnClickListener(this);
         ivCommit.setOnClickListener(this);
@@ -169,7 +173,7 @@ public class Fragment_Input extends Fragment implements View.OnClickListener, Te
     // Interface FragmentChoice
     @Override
     public void onAdapterClick(int position) {
-        etSearch.setText(lSearch.get(position));
+        iInput.returnInput(getTag(), lSearch.get(position));
     }
 
     @Override

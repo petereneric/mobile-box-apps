@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
@@ -73,11 +74,30 @@ public class Model_Battery {
 
     }
 
+    public int getNewStatus() {
+        switch (gettStatus()) {
+
+            case Constants_Intern.MODEL_BATTERY_STATUS_PRIME:
+                return Constants_Intern.MODEL_BATTERY_STATUS_NORMAL;
+            case Constants_Intern.MODEL_BATTERY_STATUS_NOT_WANTED:
+                return Constants_Intern.MODEL_BATTERY_STATUS_PRIME;
+            case Constants_Intern.MODEL_BATTERY_STATUS_NORMAL:
+            default:
+                return Constants_Intern.MODEL_BATTERY_STATUS_NOT_WANTED;
+        }
+    }
+
     public void changeStatus() {
-        if (tStatus == 2) {
-            settStatus(0);
-        } else {
-            settStatus(gettStatus()+1);
+        switch (gettStatus()) {
+            case Constants_Intern.MODEL_BATTERY_STATUS_PRIME:
+                settStatus(Constants_Intern.MODEL_BATTERY_STATUS_NORMAL);
+                break;
+            case Constants_Intern.MODEL_BATTERY_STATUS_NOT_WANTED:
+                settStatus(Constants_Intern.MODEL_BATTERY_STATUS_PRIME);
+                break;
+            case Constants_Intern.MODEL_BATTERY_STATUS_NORMAL:
+            default:
+                settStatus(Constants_Intern.MODEL_BATTERY_STATUS_NOT_WANTED);
         }
     }
 

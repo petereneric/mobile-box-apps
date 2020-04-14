@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="300dp">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/llFrom"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/from"
+            android:textColor="@color/color_grey"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:layout_margin="16dp"
+            android:textSize="@dimen/size_text_booking_from_to"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Pre-Stock"
+            android:id="@+id/tvStationFrom"
+            android:gravity="center"
+            android:textSize="@dimen/size_text_booking_station"
+            android:textColor="@color/color_grey"
+            android:background="@drawable/background_rounded_corners_grey"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:id="@+id/llTo"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/to"
+            android:textColor="@color/color_grey_secondary"
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:layout_margin="16dp"
+            android:textSize="@dimen/size_text_booking_from_to"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@drawable/background_rounded_corners_grey_secondary"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pre-Stock"
+                android:gravity="center"
+                android:id="@+id/tvStorageTo"
+                android:textSize="@dimen/size_text_booking_station"
+                android:textColor="@color/color_grey_secondary" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/color_grey"
+                android:layout_margin="16dp"
+                android:id="@+id/vDividerStorageNumber"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_grey_secondary"
+                android:textSize="24sp"
+                android:text="2938"
+                android:id="@+id/tvStorageNumber"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

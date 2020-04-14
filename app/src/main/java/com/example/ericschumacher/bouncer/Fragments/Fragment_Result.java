@@ -39,7 +39,7 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
 
         // Data
         oModel = (Device)getArguments().getSerializable(Constants_Intern.OBJECT_MODEL);
-        tvResult.setText(oModel.getoModel().getExploitationForScreen(getActivity()));
+        tvResult.setText(oModel.getoModel().getExploitationName(getActivity()));
 
         // Interface
         iSelection = (Interface_Selection) getActivity();

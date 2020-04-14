@@ -175,4 +175,8 @@ public class Constants_Extern extends Constants_Intern {
     public static final String LIST_MODEL_BATTERIES = "LIST_MODEL_BATTERIES";
     public static final String OBJECT_MODEL_BATTERY = "OBJECT_MODEL_BATTERY";
     public static final String LIST_RECORDS = "LIST_RECORDS";
+    public static final String LIST_MODEL_DAMAGES = "LIST_MODEL_DAMAGES";
+    public static final String NAME_COLOR_DE = "NAME_COLOR_DE";
+    public static final String HIGHEST_LKU = "HIGHEST_LKU";
+    public static final String IS_FULL = "IS_FULL";
 }

@@ -93,24 +93,21 @@ public class Fragment_Edit_Device_Damages extends Fragment_Edit {
 
     @Override
     public void onCommit() {
-        iEditDeviceDamages.returnEditDeviceDamages_DeviceDamages(lDeviceDamages);
-        //iDeviceManager.returnDamages(aModelDamages.getlDeviceDamages());
+        iEditDeviceDamages.returnEditDeviceDamages_DeviceDamages(getTag());
     }
 
     public void clickOtherDamages() {
-        iEditDeviceDamages.returnEditDeviceDamages_OtherDamages();
-        //iDeviceManager.onClickInteractionButton(Constants_Intern.FRAGMENT_MULTIPLE_CHOICE_DEVICE_DAMAGES, Constants_Intern.BUTTON_OTHER_DAMAGES);
+        iEditDeviceDamages.returnEditDeviceDamages_OtherDamages(getTag());
     }
 
     public void clickOverbroken() {
-        iEditDeviceDamages.returnEditDeviceDamages_Overbroken();
-        //iDeviceManager.onClickInteractionButton(Constants_Intern.FRAGMENT_MULTIPLE_CHOICE_DEVICE_DAMAGES, Constants_Intern.BUTTON_OVERBROKEN);
+        iEditDeviceDamages.returnEditDeviceDamages_Overbroken(getTag());
     }
 
     public interface Interface_Edit_Device_Damages {
-        void returnEditDeviceDamages_DeviceDamages(ArrayList<Object_Device_Damage> lDeviceDamages);
-        void returnEditDeviceDamages_Overbroken();
-        void returnEditDeviceDamages_OtherDamages();
+        void returnEditDeviceDamages_DeviceDamages(String cTag);
+        void returnEditDeviceDamages_Overbroken(String cTag);
+        void returnEditDeviceDamages_OtherDamages(String cTag);
     }
 
 }

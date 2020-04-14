@@ -38,7 +38,7 @@
 
     <style name="tv_tableRow_Value" parent="tv_tableRow">
         <item name="android:layout_weight">4</item>
-        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingLeft">8dp</item>
         <item name="android:textColor">@color/color_text_secondary</item>
     </style>
 
@@ -110,7 +110,7 @@
 
     // Button
 
-    <style name="button_main">
+    <style name="button_main" parent="@style/Widget.AppCompat.Button.Borderless">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/background_solid_round_color_primary</item>
@@ -118,7 +118,7 @@
         <item name="android:textSize">@dimen/size_text_default</item>
         <item name="android:gravity">center</item>
         <item name="colorButtonNormal">@color/color_white</item>
-        <item name="android:layout_margin">8dp</item>
+        <item name="android:padding">12dp</item>
     </style>
 
     <style name="button_sub" parent="button_main">
@@ -151,14 +151,14 @@
         <item name="android:text">@string/commit</item>
     </style>
 
-    <style name="button_request">
+    <style name="button_select">
         <item name="android:layout_margin">4dp</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textColor">@color/color_text_primary</item>
-        <item name="android:textSize">@dimen/size_text_default</item>
-        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">@dimen/size_text_button_select</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     // ImageView

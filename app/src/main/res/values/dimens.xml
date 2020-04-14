@@ -2,4 +2,22 @@
 <resources>
     <dimen name="height_layout_search">60dp</dimen>
     <dimen name="size_text_header_title">24sp</dimen>
+
+    // FragmentModel
+    <dimen name="layout_weight_model_row_one">5</dimen>
+    <dimen name="layout_weight_model_row_two">5</dimen>
+    <dimen name="layout_weight_model_key_one">1</dimen>
+    <dimen name="layout_weight_model_key_two">1</dimen>
+    <dimen name="layout_weight_model_value_one">1</dimen>
+    <dimen name="layout_weight_model_value_two">1</dimen>
+
+    // FragmentDevice
+    <dimen name="layout_weight_device_row_one">7</dimen>
+    <dimen name="layout_weight_device_row_two">9</dimen>
+    <dimen name="layout_weight_device_key_one">3</dimen>
+    <dimen name="layout_weight_device_key_two">4</dimen>
+    <dimen name="layout_weight_device_value_one">4</dimen>
+    <dimen name="layout_weight_device_value_two">3</dimen>
+    <dimen name="size_text_booking_from_to">18sp</dimen>
+    <dimen name="size_text_booking_station">36sp</dimen>
 </resources>

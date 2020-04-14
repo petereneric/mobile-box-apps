@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:orientation="horizontal"
+        android:layout_margin="8dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/llSettings">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="16dp"
+                android:layout_marginRight="8dp">
+
+                <TextView
+                    android:id="@+id/tvTitleSide"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/current_stock_side"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_grey"
+                    android:textSize="@dimen/size_text_header_title"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_grey"
+                    android:layout_below="@id/tvTitleSide"
+                    android:paddingBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tvSide"
+                android:background="@drawable/background_rounded_corners_grey"
+                android:text="@string/frontside"
+                android:textAllCaps="true"
+                android:textColor="@color/color_text_tertiary"
+                android:textSize="18sp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginLeft="8dp">
+
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="16dp">
+
+                <TextView
+                    android:id="@+id/tvTitleCapacity"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/stock_capacity"
+                    android:textAllCaps="true"
+                    android:textColor="@color/color_grey"
+                    android:textSize="@dimen/size_text_header_title"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="8dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/color_grey"
+                    android:layout_below="@id/tvTitleCapacity"
+                    android:paddingBottom="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/tvCapacity"
+                android:background="@drawable/background_rounded_corners_negative"
+                android:text="3051"
+                android:textAllCaps="true"
+                android:textColor="@color/color_choice_negative"
+                android:textSize="18sp"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/activity_device_new"
+        android:layout_above="@id/llSettings"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+
+
+</RelativeLayout>

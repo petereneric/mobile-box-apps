@@ -217,6 +217,22 @@
     <string name="phone_type">Phone type</string>
     <string name="model_manager">Model-Manager</string>
     <string name="state">State</string>
+    <string name="device_manager">Device-Manager</string>
+    <string name="imei_unknown">Imei unknown</string>
+    <string name="none">None</string>
+    <string name="device_battery">Device battery</string>
+    <string name="edit_new_model">Edit new model</string>
+    <string name="edit_new_device">Edit new device</string>
+    <string name="model_battery_prime_warning">Not possible - There must be one prime battery.</string>
+    <string name="defect_repair">Defect repair</string>
+    <string name="model_unknown">Model unknown</string>
+    <string name="current_stock_side">Current side of stock</string>
+    <string name="frontside">Frontside</string>
+    <string name="stock_capacity">Stock capacity</string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="other_side">Other side</string>
+    <string name="backside">Backside</string>
     />
 
     // Not translated

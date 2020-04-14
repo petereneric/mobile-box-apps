@@ -16,6 +16,7 @@ import android.widget.RadioGroup;
 
 import com.example.ericschumacher.bouncer.Activities.Activity_Battery;
 import com.example.ericschumacher.bouncer.Activities.Activity_Bouncer;
+import com.example.ericschumacher.bouncer.Activities.Activity_Device_New;
 import com.example.ericschumacher.bouncer.Activities.Activity_Juicer;
 import com.example.ericschumacher.bouncer.Activities.Activity_LKU_Booker;
 import com.example.ericschumacher.bouncer.Activities.Activity_Manager;
@@ -116,13 +117,14 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
 
     private void createMenuData() {
         lMenu.add(new Object_Menu(getString(R.string.model_manager), new Intent(this, Activity_Model.class), R.color.color_defect_reuse));
+        lMenu.add(new Object_Menu(getString(R.string.device_manager), new Intent(this, Activity_Device_New.class), R.color.color_intact_reuse));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_bouncer), new Intent(this, Activity_Bouncer.class), R.color.color_primary));
-        lMenu.add(new Object_Menu(getString(R.string.activity_name_manager), new Intent(this, Activity_Manager.class), R.color.color_primary_light));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_juicer), new Intent(this, Activity_Juicer.class), R.color.color_primary_dark));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_lku_booker), new Intent(this, Activity_LKU_Booker.class), R.color.color_secondary));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_turing), new Intent(this, Activity_Turing.class), R.color.color_primary_turing));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_zwegat), new Intent(this, Activity_Zwegat.class), R.color.color_divider));
         lMenu.add(new Object_Menu(getString(R.string.activity_battery), new Intent(this, Activity_Battery.class), R.color.color_primary));
+        lMenu.add(new Object_Menu(getString(R.string.activity_name_manager), new Intent(this, Activity_Manager.class), R.color.color_primary));
     }
 
     @Override

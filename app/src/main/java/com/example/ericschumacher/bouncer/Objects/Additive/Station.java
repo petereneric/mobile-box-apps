@@ -18,9 +18,9 @@ public class Station extends Additive {
         if (id == Constants_Intern.STATION_RECYCLING) Name = "Recycling";
         if (id == Constants_Intern.STATION_EXCESS_STOCK) Name = "Excess Stock";
         if (id == Constants_Intern.STATION_PRIME_STOCK) Name = "Prime Stock";
-        if (id == Constants_Intern.STATION_REUSE) Name = "Reuse";
+        if (id == Constants_Intern.STATION_REUSE) Name = "Wiederverwendung";
         if (id == Constants_Intern.STATION_PRE_STOCK) Name = "Pre-Stock";
-        if (id == Constants_Intern.STATION_UNKNOWN) Name = "Unknown";
+        if (id == Constants_Intern.STATION_UNKNOWN) Name = "Unbekannt";
     }
 
     public Station(JSONObject oJson) {

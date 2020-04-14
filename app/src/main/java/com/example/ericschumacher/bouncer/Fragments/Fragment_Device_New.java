@@ -10,7 +10,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Activities.Activity_Device_New;
-import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 
@@ -29,7 +28,7 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
     TableRow trBattery;
     TableRow trBackcoverContained;
 
-
+    TextView tvTitle;
     TextView tvLKU;
     TextView tvStation;
     TextView tvColor;
@@ -63,6 +62,7 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
         vLayout = inflater.inflate(R.layout.fragment_device_new, container, false);
 
+        tvTitle = vLayout.findViewById(R.id.tvTitle);
         trLKU = vLayout.findViewById(R.id.trLKU);
         trStation = vLayout.findViewById(R.id.trStation);
         trColor = vLayout.findViewById(R.id.trColor);
@@ -83,6 +83,8 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
         tvDamages = vLayout.findViewById(R.id.tvDamages);
         tvState = vLayout.findViewById(R.id.tvState);
 
+        tvTitle.setText(getString(R.string.device));
+
         trLKU.setOnClickListener(this);
         trStation.setOnClickListener(this);
         trColor.setOnClickListener(this);
@@ -94,12 +96,13 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
     }
 
     public void updateLayout() {
+        oDevice = activityDevice.getDevice();
 
         setClickable(oDevice != null);
 
         if (oDevice != null) {
             if (oDevice.getoColor() != null) {
-                tvColor.setText(oDevice.getoColor().getName());
+                tvColor.setText(oDevice.getoColor().getcNameDE());
             } else {
                 tvColor.setText(getString(R.string.unknown));
             }
@@ -113,11 +116,11 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
             } else {
                 tvState.setText(getString(R.string.unknown));
             }
-            if (oDevice.getlDeviceDamages().size() > 0) {
+            if (true) {
                 tvDamages.setVisibility(View.VISIBLE);
                 tvDamages.setText(Integer.toString(oDevice.getlDeviceDamages().size()));
             } else {
-                tvDamages.setVisibility(View.GONE);
+                tvDamages.setText(getString(R.string.none));
             }
             if (oDevice.getoStation() != null) {
                 tvStation.setText(oDevice.getoStation().getName());
@@ -137,12 +140,12 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
                 tvBatteryContained.setText(getString(R.string.unknown));
             }
             if (oDevice.isBatteryContained() != null) {
-                tvBatteryContained.setText(oDevice.isBatteryContained() ? getString(R.string.yes) : getString(R.string.yes));
+                tvBatteryContained.setText(oDevice.isBatteryContained() ? getString(R.string.yes) : getString(R.string.no));
             } else {
                 tvBatteryContained.setText(getString(R.string.unknown));
             }
-            if (oDevice.isBatteryContained() != null) {
-                tvBackcoverContained.setText(oDevice.isBackcoverContained() ? getString(R.string.yes) : getString(R.string.yes));
+            if (oDevice.isBackcoverContained() != null) {
+                tvBackcoverContained.setText(oDevice.isBackcoverContained() ? getString(R.string.yes) : getString(R.string.no));
             } else {
                 tvBackcoverContained.setText(getString(R.string.unknown));
             }
@@ -161,15 +164,15 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
     }
 
     private void setClickable (boolean clickable) {
-        trLKU.setClickable(clickable);
-        trStation.setClickable(clickable);
+        trLKU.setClickable(false);
+        trStation.setClickable(false);
         trColor.setClickable(clickable);
         trShape.setClickable(clickable);
         trBatteryContained.setClickable(clickable);
         trBattery.setClickable(clickable);
         trBackcoverContained.setClickable(clickable);
         trDamages.setClickable(clickable);
-        trState.setClickable(clickable);
+        trState.setClickable(false);
     }
 
     @Override
@@ -200,7 +203,7 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
             case R.id.trDamages:
                 activityDevice.onClickDamages();
                 break;
-            case R.id.trDamages:
+            case R.id.trState:
                 activityDevice.onClickState();
                 break;
         }

@@ -169,7 +169,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
                 tvBattery.setText("-");
             }
             tvDps.setText(Integer.toString(model.getnDps()));
-            tvDefaultExploitation.setText(model.getExploitationForScreen(getActivity()));
+            tvDefaultExploitation.setText(model.getExploitationName(getActivity()));
         } else {
             tvName.setText(Constants_Intern.UNKOWN);
             tvManufacturer.setText(Constants_Intern.UNKOWN);

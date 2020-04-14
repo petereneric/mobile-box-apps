@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="8dp">
+    android:layout_height="match_parent">
 
     <include
         layout="@layout/layout_header"
@@ -12,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_below="@id/lHeader">
+        android:layout_below="@id/lHeader"
+        android:layout_marginTop="8dp">
 
         <LinearLayout
             android:id="@+id/llOne"
@@ -24,21 +24,21 @@
 
             <Button
                 android:id="@+id/bOne"
-                style="@style/button_request"
+                style="@style/button_select"
                 android:background="@color/color_choice_positive"
                 android:text="button one"
                 android:visibility="gone" />
 
             <Button
                 android:id="@+id/bTwo"
-                style="@style/button_request"
+                style="@style/button_select"
                 android:background="@color/color_choice_negative"
                 android:text="button two"
                 android:visibility="gone" />
 
             <Button
                 android:id="@+id/bThree"
-                style="@style/button_request"
+                style="@style/button_select"
                 android:background="@color/color_choice_negative"
                 android:text="button three"
                 android:visibility="gone" />
@@ -57,21 +57,21 @@
 
             <Button
                 android:id="@+id/bFour"
-                style="@style/button_request"
+                style="@style/button_select"
                 android:background="@color/color_choice_positive"
                 android:text="button three"
                 android:visibility="gone" />
 
             <Button
                 android:id="@+id/bFive"
-                style="@style/button_request"
+                style="@style/button_select"
                 android:background="@color/color_choice_negative"
                 android:text="button four"
                 android:visibility="gone" />
 
             <Button
                 android:id="@+id/bSix"
-                style="@style/button_request"
+                style="@style/button_select"
                 android:background="@color/color_choice_negative"
                 android:text="button three"
                 android:visibility="gone" />
@@ -88,21 +88,21 @@
 
             <Button
                 android:id="@+id/bSeven"
-                style="@style/button_request"
+                style="@style/button_select"
                 android:background="@color/color_choice_positive"
                 android:text="button three"
                 android:visibility="gone" />
 
             <Button
                 android:id="@+id/bEight"
-                style="@style/button_request"
+                style="@style/button_select"
                 android:background="@color/color_choice_negative"
                 android:text="button four"
                 android:visibility="gone" />
 
             <Button
                 android:id="@+id/bNine"
-                style="@style/button_request"
+                style="@style/button_select"
                 android:background="@color/color_choice_negative"
                 android:text="button three"
                 android:visibility="gone" />

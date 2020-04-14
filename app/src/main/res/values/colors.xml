@@ -16,6 +16,9 @@
     <color name="color_text_tertiary">#9D9DAF</color>
     <color name="color_text_hint">#9D9DAF</color>
 
+    // Grey
+    <color name="color_grey_secondary">#585863</color>
+
     // Color Set - Turing
     <color name="color_primary_turing">#217fd6</color>
     <color name="color_primary_dark_turing">#0f4f8b</color>
