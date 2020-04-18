@@ -235,6 +235,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                 try {
                                     oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
                                     updateLayout();
+                                    onSearchFinished();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -254,6 +255,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                 try {
                                     oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
                                     updateLayout();
+                                    onSearchFinished();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -274,6 +276,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                 try {
                                     oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
                                     updateLayout();
+                                    onSearchFinished();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -294,6 +297,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                 try {
                                     oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
                                     updateLayout();
+                                    onSearchFinished();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -305,6 +309,10 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                 });
                 break;
         }
+    }
+
+    public void onSearchFinished() {
+
     }
 
     // Get

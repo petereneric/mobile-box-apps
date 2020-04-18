@@ -43,6 +43,7 @@ public class Urls {
     public final static String URL_GET_MODEL_BATTERY_BY_MODEL = URL_REST_API+"model_battery/model/";
     public final static String URL_GET_COLLECTOR_BY_NAMEPART = URL_REST_API+"collector/namepart/";
     public final static String URL_GET_RECORDS_INPROGRESS = URL_REST_API+"record/inprogress";
-    public final static String URL_GET_INFORMATION_STOCK_PRIME_HIGHEST_LKU = URL_REST_API+"information/stock_prime/highest_lku";
-    public final static String URL_GET_INFORMATION_STOCK_PRIME_IS_FULL = URL_REST_API+"information/stock_prime/is_full";
+    public final static String URL_GET_INFORMATION_STOCK_PRIME_INFORMATION = URL_REST_API+"information/stock_prime";
+    public final static String URL_PUT_STOCK_PRIME_HIGHEST_LKU = URL_REST_API+"stock_prime/highest_lku/";
+    public final static String URL_GET_STOCK_PRIME_LKU_SUGGESTION = URL_REST_API+"stock_prime/lku/suggestion/";
 }

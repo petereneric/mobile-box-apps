@@ -11,11 +11,14 @@ import android.view.View;
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Fragments.Booking.Fragment_Booking;
+import com.example.ericschumacher.bouncer.Fragments.Booking.Fragment_Booking_In_Lku_Stock;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Fragment_Choice_DeviceBattery;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Color;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Device_Damages;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New;
+import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_StockPrimeCapacity;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_Shape;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_YesNo;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
@@ -35,7 +38,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Activity_Device_New extends Activity_Model implements Fragment_Edit_Device_Damages.Interface_Edit_Device_Damages {
+public class Activity_Device_New extends Activity_Model implements Fragment_Edit_Device_Damages.Interface_Edit_Device_Damages, Fragment_Booking.Interface_Booking {
 
     // Object
     Device oDevice;
@@ -123,6 +126,7 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
                                     oDevice = new Device( oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device_New.this);
                                     oModel = oDevice.getoModel();
                                     updateLayout();
+                                    onSearchFinished();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -143,6 +147,7 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
                                     oDevice = new Device( oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device_New.this);
                                     oModel = oDevice.getoModel();
                                     updateLayout();
+                                    onSearchFinished();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -164,6 +169,19 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
 
     public Model getModel() {
         return (oDevice != null) ? oDevice.getoModel() : null;
+    }
+
+    // Show
+    public void showFragmentBookingInStockPrime() {
+        Bundle bData = new Bundle();
+        bData.putString(Constants_Intern.TITLE, getString(R.string.booking));
+        showFragment(new Fragment_Booking_In_Lku_Stock(), bData, Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME);
+    }
+
+    public void showFragmentBookingOutStockPrime() {
+        Bundle bData = new Bundle();
+        bData.putString(Constants_Intern.TITLE, getString(R.string.stock_prime_booking_in));
+        showFragment(new Fragment_Booking_In_Lku_Stock(), bData, Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME);
     }
 
     // Edit
@@ -216,6 +234,12 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         showFragment(new Fragment_Select_YesNo(), bData, Constants_Intern.FRAGMENT_SELECT_BACKCOVER_CONTAINED);
     }
 
+    public void onClickStockPrimeCapacity() {
+        Bundle bData = new Bundle();
+        bData.putString(Constants_Intern.TITLE, getString(R.string.stock_prime_capacity));
+        showFragment(new Fragment_Input_StockPrimeCapacity(), bData, Constants_Intern.FRAGMENT_INPUT_STOCK_PRIME_CAPACITY);
+    }
+
     // Return
     @Override
     public void returnSelect(String cTag, int tSelect) {
@@ -257,11 +281,65 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         jobFinished();
     }
 
+    public void returnInput(final String cTag, final String cInput) {
+        switch (cTag) {
+            case Constants_Intern.FRAGMENT_INPUT_STOCK_PRIME_CAPACITY:
+                cVolley.execute(Request.Method.PUT, Urls.URL_PUT_STOCK_PRIME_HIGHEST_LKU+cInput, null);
+                removeFragment(cTag);
+                showFragmentBookingInStockPrime();
+                break;
+        }
+    }
+
     @Override
     public void returnDisplay(String cTag) {
         switch (cTag) {
             case Constants_Intern.FRAGMENT_DISPLAY_EDIT_NEW_DEVICE:
                 reset();
+            case Constants_Intern.FRAGMENT_DISPLAY_STOCK_PRIME_FULL:
+                jobFinished();
+        }
+    }
+
+    @Override
+    public void returnBooking(String cTag) {
+        updateLayout();
+        removeFragment(cTag);
+        jobFinished();
+    }
+
+    @Override
+    public void returnEditDeviceDamages_DeviceDamages(String cTag) {
+        oDevice.settState(Constants_Intern.STATE_DEFECT_REPAIR);
+        removeFragment(cTag);
+        jobFinished();
+    }
+
+    @Override
+    public void returnEditDeviceDamages_Overbroken(String cTag) {
+        oDevice.setlDeviceDamages(new ArrayList<Object_Device_Damage>());
+        oDevice.settState(Constants_Intern.STATE_RECYCLING);
+        removeFragment(cTag);
+        jobFinished();
+    }
+
+    @Override
+    public void returnEditDeviceDamages_OtherDamages(String cTag) {
+        returnEditDeviceDamages_Overbroken(cTag);
+    }
+
+    @Override
+    public void errorBooking(String cTag, String cError) {
+        switch (cTag) {
+            case Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME:
+                switch (cError) {
+                    case Constants_Intern.TYPE_ERROR_STOCK_PRIME_FULL:
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constants_Intern.TEXT, getString(R.string.stock_prime_full));
+                        showFragment(new Fragment_Display(), bundle, Constants_Intern.FRAGMENT_DISPLAY_STOCK_PRIME_FULL);
+                        break;
+                }
+                break;
         }
     }
 
@@ -362,25 +440,5 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         } else {
             reset();
         }
-    }
-
-    @Override
-    public void returnEditDeviceDamages_DeviceDamages(String cTag) {
-        oDevice.settState(Constants_Intern.STATE_DEFECT_REPAIR);
-        removeFragment(cTag);
-        jobFinished();
-    }
-
-    @Override
-    public void returnEditDeviceDamages_Overbroken(String cTag) {
-        oDevice.setlDeviceDamages(new ArrayList<Object_Device_Damage>());
-        oDevice.settState(Constants_Intern.STATE_RECYCLING);
-        removeFragment(cTag);
-        jobFinished();
-    }
-
-    @Override
-    public void returnEditDeviceDamages_OtherDamages(String cTag) {
-        returnEditDeviceDamages_Overbroken(cTag);
     }
 }

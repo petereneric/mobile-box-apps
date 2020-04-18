@@ -273,5 +273,9 @@ public class Constants_Intern {
     public static final String STOCK_SIDE = "STOCK_SIDE";
     public static final int STOCK_SIDE_FRONT = 0;
     public static final int STOCK_SIDE_BACK = 1;
-
+    public static final String FRAGMENT_INPUT_STOCK_PRIME_CAPACITY = "FRAGMENT_INPUT_STOCK_PRIME_CAPACITY";
+    public static final String FRAGMENT_BOOKING_IN_STOCK_PRIME = "FRAGMENT_BOOKING_IN_STOCK_PRIME";
+    public static final String FRAGMENT_DISPLAY_STOCK_PRIME_FULL = "FRAGMENT_DISPLAY_STOCK_PRIME_FULL";
+    public static final String TYPE_ERROR_STOCK_PRIME_FULL = "TYPE_ERROR_STOCK_PRIME_FULL";
+    public static final String FRAGMENT_DISPLAY_LIFT_NEW_DEVICE = "FRAGMENT_DISPLAY_LIFT_NEW_DEVICE";
 }

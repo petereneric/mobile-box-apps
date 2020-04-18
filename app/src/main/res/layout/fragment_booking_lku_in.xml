@@ -37,25 +37,21 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:id="@+id/llAction"
+                android:gravity="center">
 
-                <include
+                <Button
                     android:id="@+id/bCommit"
-                    layout="@layout/button_one"
-                    android:layout_weight="3"
-                    android:layout_height="0dp"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"/>
+                    style="@style/button_main_new"
+                    android:text="@string/book_in"
+                    android:layout_marginBottom="32dp"
+                    android:visibility="visible"/>
 
-                <include
+                <Button
                     android:id="@+id/bSpaceFull"
-                    layout="@layout/button_two"
-                    android:layout_weight="1"
-                    android:layout_height="0dp"
-                    android:layout_width="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"/>
+                    style="@style/button_sub_new"
+                    android:text="@string/space_full"/>
 
             </LinearLayout>
 
@@ -66,7 +62,7 @@
     <LinearLayout
         android:id="@+id/llSettings"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
         android:layout_alignParentBottom="true"
         android:layout_margin="8dp"
         android:orientation="horizontal">
@@ -75,7 +71,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
@@ -123,7 +120,6 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="8dp"
             android:layout_weight="1"
             android:orientation="vertical">
 

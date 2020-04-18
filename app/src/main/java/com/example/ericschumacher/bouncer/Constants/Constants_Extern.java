@@ -179,4 +179,5 @@ public class Constants_Extern extends Constants_Intern {
     public static final String NAME_COLOR_DE = "NAME_COLOR_DE";
     public static final String HIGHEST_LKU = "HIGHEST_LKU";
     public static final String IS_FULL = "IS_FULL";
+    public static final String STOCK_PRIME_LOAD_FACTOR = "STOCK_PRIME_LOAD_FACTOR";
 }

@@ -74,5 +74,6 @@ public class Fragment_Booking extends Fragment {
 
     public interface Interface_Booking {
         void returnBooking(String cTag);
+        void errorBooking(String cTag, String cError);
     }
 }

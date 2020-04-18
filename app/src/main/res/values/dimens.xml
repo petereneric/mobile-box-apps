@@ -19,5 +19,5 @@
     <dimen name="layout_weight_device_value_one">4</dimen>
     <dimen name="layout_weight_device_value_two">3</dimen>
     <dimen name="size_text_booking_from_to">18sp</dimen>
-    <dimen name="size_text_booking_station">36sp</dimen>
+    <dimen name="size_text_booking_station">24sp</dimen>
 </resources>

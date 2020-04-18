@@ -121,6 +121,23 @@
         <item name="android:padding">12dp</item>
     </style>
 
+    <style name="button_main_new" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:layout_width">400dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/background_solid_rounded_corners_grey_secondary</item>
+        <item name="android:textColor">@color/color_white</item>
+        <item name="android:textSize">@dimen/size_text_button</item>
+        <item name="android:gravity">center</item>
+        <item name="colorButtonNormal">@color/color_white</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="button_sub_new" parent="button_main_new">
+        <item name="android:background">@drawable/background_stroke_round_grey_secondary</item>
+        <item name="android:textColor">@color/color_grey_secondary</item>
+    </style>
+
     <style name="button_sub" parent="button_main">
         <item name="android:background">@drawable/background_stroke_round_color_primary</item>
     </style>

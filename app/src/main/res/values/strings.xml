@@ -233,6 +233,14 @@
     <string name="to">To</string>
     <string name="other_side">Other side</string>
     <string name="backside">Backside</string>
+    <string name="stock_prime_capacity">Stock-Prime Capacity</string>
+    <string name="stock_prime_booking_in">Stock-Prime - Booking In</string>
+    <string name="stock_prime_full">Stock-Prime is full</string>
+    <string name="lift_new_device">Lift new device</string>
+    <string name="activity_lifter_stock_prime">Lifter - Stock-Prime</string>
+    <string name="activity_lifter_stock_lku">Lifter - Lku-Stock</string>
+    <string name="book_in">Book in</string>
+    <string name="booking">Booking</string>
     />
 
     // Not translated
