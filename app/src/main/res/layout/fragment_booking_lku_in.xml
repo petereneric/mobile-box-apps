@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:layout_above="@id/llSettings"
         android:layout_below="@id/lHeader"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp">
 
         <TextView
@@ -26,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/llBooking"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <include
                 android:id="@+id/lBooking"
@@ -35,17 +36,17 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="128dp"
                 android:layout_marginBottom="16dp"
                 android:orientation="vertical"
                 android:id="@+id/llAction"
-                android:gravity="center">
+                android:gravity="center_horizontal">
 
                 <Button
                     android:id="@+id/bCommit"
                     style="@style/button_main_new"
                     android:text="@string/book_in"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginBottom="48dp"
                     android:visibility="visible"/>
 
                 <Button

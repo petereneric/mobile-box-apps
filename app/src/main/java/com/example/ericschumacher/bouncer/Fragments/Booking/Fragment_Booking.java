@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Activities.Activity_Device_New;
@@ -14,7 +16,10 @@ import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
-public class Fragment_Booking extends Fragment {
+public class Fragment_Booking extends Fragment implements View.OnClickListener {
+
+    // Context
+    android.content.Context Context;
 
     // Data
     Bundle bData;
@@ -24,6 +29,12 @@ public class Fragment_Booking extends Fragment {
     public int kLayout;
     View vLayout;
     TextView tvTitle;
+    TextView tvStationFrom;
+    TextView tvStockTo;
+    TextView tvStockNumber;
+    View vDividerStorageNumber;
+    Button bCommit;
+    LinearLayout llBooking;
 
     // Connection
     Volley_Connection cVolley;
@@ -39,6 +50,9 @@ public class Fragment_Booking extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        // Context
+        Context = getActivity();
+
         // Instances
         activityDevice = (Activity_Device_New)getActivity();
         oDevice = activityDevice.getDevice();
@@ -52,6 +66,7 @@ public class Fragment_Booking extends Fragment {
 
         // vLayout
         setLayout(inflater, container);
+        update();
 
         // Interface
         iBooking = (Interface_Booking)getActivity();
@@ -63,9 +78,23 @@ public class Fragment_Booking extends Fragment {
         // vLayout
         vLayout = inflater.inflate(getkLayout(), container, false);
         tvTitle = vLayout.findViewById(R.id.tvTitle);
+        tvStationFrom = vLayout.findViewById(R.id.tvStationFrom);
+        tvStockTo = vLayout.findViewById(R.id.tvStockTo);
+        tvStockNumber = vLayout.findViewById(R.id.tvStorageNumber);
+        vDividerStorageNumber = vLayout.findViewById(R.id.vDividerStorageNumber);
+        bCommit = vLayout.findViewById(R.id.bCommit);
+        llBooking = vLayout.findViewById(R.id.llBooking);
 
         // Data
         tvTitle.setText(cTitle);
+        tvStationFrom.setText(oDevice.getoStation().getName());
+
+        // OnClickListener
+        bCommit.setOnClickListener(this);
+    }
+
+    public void update() {
+
     }
 
     public int getkLayout() {
@@ -75,5 +104,20 @@ public class Fragment_Booking extends Fragment {
     public interface Interface_Booking {
         void returnBooking(String cTag);
         void errorBooking(String cTag, String cError);
+    }
+
+
+    // ClickListener
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bCommit:
+                onCommit();
+                break;
+        }
+    }
+
+    public void onCommit() {
+
     }
 }

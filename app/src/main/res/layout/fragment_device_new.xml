@@ -51,13 +51,13 @@
             <TableRow android:id="@+id/trState">
 
                 <TextView
-                    style="@style/tv_tableRow_Key"
+                    style="@style/tv_tableRow_Key_Small"
                     android:text="@string/state"
                     android:layout_weight="@dimen/layout_weight_device_key_one"/>
 
                 <TextView
                     android:id="@+id/tvState"
-                    style="@style/tv_tableRow_Value"
+                    style="@style/tv_tableRow_Value_Small"
                     android:text="@string/reuse"
                     android:layout_weight="@dimen/layout_weight_device_value_one"/>
 
@@ -118,14 +118,13 @@
             <TableRow android:id="@+id/trBatteryContained">
 
                 <TextView
-                    style="@style/tv_tableRow_Key"
+                    style="@style/tv_tableRow_Key_Small"
                     android:text="@string/battery_contained"
-                    android:textSize="10sp"
                     android:layout_weight="@dimen/layout_weight_device_key_two"/>
 
                 <TextView
                     android:id="@+id/tvBatteryContained"
-                    style="@style/tv_tableRow_Value"
+                    style="@style/tv_tableRow_Value_Small"
                     android:text="true"
                     android:layout_weight="@dimen/layout_weight_device_value_two"
                     />
@@ -149,14 +148,13 @@
             <TableRow android:id="@+id/trBackcoverContained">
 
                 <TextView
-                    style="@style/tv_tableRow_Key"
+                    style="@style/tv_tableRow_Key_Small"
                     android:text="@string/backcover_contained"
-                    android:textSize="10sp"
                     android:layout_weight="@dimen/layout_weight_device_key_two"/>
 
                 <TextView
                     android:id="@+id/tvBackcoverContained"
-                    style="@style/tv_tableRow_Value"
+                    style="@style/tv_tableRow_Value_Small"
                     android:text="true"
                     android:layout_weight="@dimen/layout_weight_device_value_two"/>
             </TableRow>

@@ -14,7 +14,6 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -58,7 +57,6 @@ import org.json.JSONObject;
 public class Activity_Model extends AppCompatActivity implements View.OnClickListener, TextWatcher, Fragment_Choice.Interface_Choice, Fragment_Input.Interface_Input, Fragment_Select.Interface_Select, Fragment_Edit_Model_Battery.Interface_Edit_Model_Battery, Interface_Model_New_New, Fragment_Display.Interface_Display {
 
     // Layout
-    int kLayout = R.layout.activity_device_new;
     Toolbar vToolbar;
     FrameLayout flInteraction;
     TextView tvSearchType;
@@ -66,13 +64,13 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
     EditText etSearch;
     View vDividerLeft;
 
-    // Objects
+    // Data
     Model oModel;
 
     // Variables
     boolean bSearchSelected;
 
-    // Interaction
+    // Fragments
     FragmentManager fManager;
     Fragment_Model_New fModel;
 
@@ -82,11 +80,19 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
     // SharedPreferences
     SharedPreferences SharedPreferences;
 
+
+
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+    // Lifecycle-Methods
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Interaction
+        // Fragments
         fManager = getSupportFragmentManager();
 
         // Layout
@@ -109,13 +115,29 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
         updateLayout();
     }
 
+
+
+    // Fragments
+
     public void initiateFragments() {
         fModel = (Fragment_Model_New) fManager.findFragmentById(R.id.fModel);
     }
 
+    public void showFragment(Fragment fragment, Bundle bData, String cTag, boolean bCloseKeyboard) {
+        updateKeyboardSearch(!bCloseKeyboard);
+        fragment.setArguments(bData);
+        fManager.beginTransaction().replace(R.id.flInteraction, fragment, cTag).commit();
+    }
+
+    public void removeFragment(String cTag) {
+        fManager.beginTransaction().remove(fManager.findFragmentByTag(cTag)).commit();
+    }
+
+
+
     // Layout
+
     public void setLayout() {
-        Log.i("LAYYOUT22: ", Integer.toString(getIdLayout()));
         setContentView(getIdLayout());
         vToolbar = findViewById(R.id.vToolbar);
         flInteraction = findViewById(R.id.flInteraction);
@@ -143,8 +165,11 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
         return R.layout.activity_model;
     }
 
+
+    // Update
+
     public void updateLayout() {
-        // Fragment model
+        // Fragments
         fModel.updateLayout();
 
         // TextViewSearch & EditTextSearch
@@ -192,21 +217,15 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    // Interaction
-    public void showFragment(Fragment fragment, Bundle bData, String cTag) {
-        updateKeyboardSearch(false);
-        fragment.setArguments(bData);
-        fManager.beginTransaction().replace(R.id.flInteraction, fragment, cTag).commit();
-    }
 
-    public void removeFragment(String cTag) {
-        fManager.beginTransaction().remove(fManager.findFragmentByTag(cTag)).commit();
-    }
 
-    public void jobFinished() {
+    // Base & Reset
+
+    public void base() {
+        updateLayout();
         Bundle bundle = new Bundle();
         bundle.putString(Constants_Intern.TEXT, getString(R.string.edit_new_model));
-        showFragment(new Fragment_Display(), bundle, Constants_Intern.FRAGMENT_DISPLAY_EDIT_NEW_MODEL);
+        showFragment(new Fragment_Display(), bundle, Constants_Intern.FRAGMENT_DISPLAY_EDIT_NEW_MODEL, Constants_Intern.CLOSE_KEYBOARD);
         updateKeyboardSearch(false);
     }
 
@@ -222,7 +241,10 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+
+
     // Search
+
     public void onSearch() {
         final String cSearchSaved = etSearch.getText().toString();
         switch (SharedPreferences.getInt(Constants_Intern.SEARCH_MODEL_TYPE, 2)) {
@@ -234,8 +256,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                             if (Volley_Connection.successfulResponse(oJson)) {
                                 try {
                                     oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
-                                    updateLayout();
-                                    onSearchFinished();
+                                    returnFromSearch();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -254,8 +275,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                             if (Volley_Connection.successfulResponse(oJson)) {
                                 try {
                                     oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
-                                    updateLayout();
-                                    onSearchFinished();
+                                    returnFromSearch();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -275,8 +295,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                             if (Volley_Connection.successfulResponse(oJson)) {
                                 try {
                                     oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
-                                    updateLayout();
-                                    onSearchFinished();
+                                    returnFromSearch();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -296,8 +315,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                             if (Volley_Connection.successfulResponse(oJson)) {
                                 try {
                                     oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
-                                    updateLayout();
-                                    onSearchFinished();
+                                    returnFromSearch();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -311,78 +329,91 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    public void onSearchFinished() {
-
+    public void returnFromSearch() {
+        updateLayout();
     }
 
+
+
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
     // Get
+
     public Model getModel() {
         return oModel;
     }
 
+
+
     // Edit
+
     public void onClickModelName() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.interaction_title_request_name_model));
-        showFragment(new Fragment_Input_Model(), bData, Constants_Intern.FRAGMENT_INPUT_MODEL_NAME);
+        showFragment(new Fragment_Input_Model(), bData, Constants_Intern.FRAGMENT_INPUT_MODEL_NAME, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickManufacturer() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.manufacturer));
-        showFragment(new Fragment_Choice_Image_Manufacturer(), bData, Constants_Intern.FRAGMENT_CHOICE_IMAGE_MANUFACTURER);
+        showFragment(new Fragment_Choice_Image_Manufacturer(), bData, Constants_Intern.FRAGMENT_CHOICE_IMAGE_MANUFACTURER, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickCharger() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.charger));
         bData.putInt(Constants_Intern.ID_MANUFACTURER, oModel.getoManufacturer() != null ? oModel.getoManufacturer().getId() : Constants_Intern.ID_UNKNOWN);
-        showFragment(new Fragment_Choice_Image_Charger(), bData, Constants_Intern.FRAGMENT_CHOICE_IMAGE_CHARGER);
+        showFragment(new Fragment_Choice_Image_Charger(), bData, Constants_Intern.FRAGMENT_CHOICE_IMAGE_CHARGER, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickBattery() {
         if (oModel.getlModelBatteries().size() == 0) {
             Bundle bData = new Bundle();
             bData.putString(Constants_Intern.TITLE, getString(R.string.battery));
-            showFragment(new Fragment_Input_Battery(), bData, Constants_Intern.FRAGMENT_INPUT_BATTERY);
+            showFragment(new Fragment_Input_Battery(), bData, Constants_Intern.FRAGMENT_INPUT_BATTERY, Constants_Intern.CLOSE_KEYBOARD);
         } else {
             Bundle bData = new Bundle();
             bData.putString(Constants_Intern.TITLE, getString(R.string.interaction_title_edit_model_battery));
-            showFragment(new Fragment_Edit_Model_Battery(), bData, Constants_Intern.FRAGMENT_EDIT_MODEL_BATTERY);
+            showFragment(new Fragment_Edit_Model_Battery(), bData, Constants_Intern.FRAGMENT_EDIT_MODEL_BATTERY, Constants_Intern.CLOSE_KEYBOARD);
         }
     }
 
     public void onClickPhoneType() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.phone_type));
-        showFragment(new Fragment_Select_PhoneType(), bData, Constants_Intern.FRAGMENT_SELECT_PHONE_TYPE);
+        showFragment(new Fragment_Select_PhoneType(), bData, Constants_Intern.FRAGMENT_SELECT_PHONE_TYPE, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickDefaultExploitation() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.exploitation));
-        showFragment(new Fragment_Select_Exploitation(), bData, Constants_Intern.FRAGMENT_SELECT_EXPLOITATION);
+        showFragment(new Fragment_Select_Exploitation(), bData, Constants_Intern.FRAGMENT_SELECT_EXPLOITATION, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickDps() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.dps));
-        showFragment(new Fragment_Input_Dps(), bData, Constants_Intern.FRAGMENT_INPUT_DPS);
+        showFragment(new Fragment_Input_Dps(), bData, Constants_Intern.FRAGMENT_INPUT_DPS, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickBatteryRemovable() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.battery_removable));
-        showFragment(new Fragment_Select_YesNo(), bData, Constants_Intern.FRAGMENT_SELECT_BATTERY_REMOVABLE);
+        showFragment(new Fragment_Select_YesNo(), bData, Constants_Intern.FRAGMENT_SELECT_BATTERY_REMOVABLE, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickBackcoverRemovable() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.backcover_removable));
-        showFragment(new Fragment_Select_YesNo(), bData, Constants_Intern.FRAGMENT_SELECT_BACKCOVER_REMOVABLE);
+        showFragment(new Fragment_Select_YesNo(), bData, Constants_Intern.FRAGMENT_SELECT_BACKCOVER_REMOVABLE, Constants_Intern.CLOSE_KEYBOARD);
     }
 
+
+
     // Return
+
     @Override
     public void returnChoice(String cTag, Object object) {
         switch (cTag) {
@@ -395,7 +426,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
         }
         updateLayout();
         removeFragment(cTag);
-        jobFinished();
+        base();
     }
 
     @Override
@@ -409,7 +440,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                             oModel.setName(cInput);
                             updateLayout();
                             removeFragment(cTag);
-                            jobFinished();
+                            base();
                         }
                         break;
                     case Constants_Intern.MAIN_SEARCH_MODEL_TYPE_IMEI:
@@ -430,7 +461,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                             oModel.connectTac(tac);
                                             updateLayout();
                                             removeFragment(cTag);
-                                            jobFinished();
+                                            base();
                                         }
                                     });
                                 }
@@ -443,7 +474,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                 oModel.setnDps(Integer.parseInt(cInput));
                 updateLayout();
                 removeFragment(cTag);
-                jobFinished();
+                base();
                 break;
             case Constants_Intern.FRAGMENT_INPUT_BATTERY:
                 cVolley.getResponse(Request.Method.GET, Urls.URL_GET_BATTERY_BY_NAME + cInput, null, new Interface_VolleyResult() {
@@ -460,7 +491,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                     if (oModel.getlModelBatteries().size() > 1) {
                                         onClickBattery();
                                     } else {
-                                        jobFinished();
+                                        base();
                                     }
                                 }
                             });
@@ -479,7 +510,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                                 if (oModel.getlModelBatteries().size() > 1) {
                                                     onClickBattery();
                                                 } else {
-                                                    jobFinished();
+                                                    base();
                                                 }
                                             }
                                         });
@@ -497,9 +528,8 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
     public void returnEditModelBattery(String cTag) {
         updateLayout();
         removeFragment(cTag);
-        jobFinished();
+        base();
     }
-
 
     @Override
     public void returnSelect(String cTag, int tSelect) {
@@ -519,7 +549,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
         }
         updateLayout();
         removeFragment(cTag);
-        jobFinished();
+        base();
     }
 
     @Override
@@ -548,17 +578,20 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
         }
         updateLayout();
         removeFragment(cTag);
-        jobFinished();
+        base();
     }
 
     @Override
     public void addModelBattery() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.battery));
-        showFragment(new Fragment_Input_Battery(), bData, Constants_Intern.FRAGMENT_INPUT_BATTERY);
+        showFragment(new Fragment_Input_Battery(), bData, Constants_Intern.FRAGMENT_INPUT_BATTERY, Constants_Intern.CLOSE_KEYBOARD);
     }
 
+
+
     // ClickListener & TextWatcher
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -605,8 +638,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                     if (Volley_Connection.successfulResponse(oJson)) {
                                         try {
                                             oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
-                                            updateLayout();
-                                            jobFinished();
+                                            base();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -625,8 +657,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                     if (Volley_Connection.successfulResponse(oJson)) {
                                         try {
                                             oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
-                                            updateLayout();
-                                            jobFinished();
+                                            base();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -646,8 +677,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                     if (Volley_Connection.successfulResponse(oJson)) {
                                         try {
                                             oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
-                                            updateLayout();
-                                            jobFinished();
+                                            base();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -667,8 +697,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                     if (Volley_Connection.successfulResponse(oJson)) {
                                         try {
                                             oModel = new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL));
-                                            updateLayout();
-                                            jobFinished();
+                                            base();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -717,6 +746,9 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
     }
 
 
+
+    // Menu
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -727,25 +759,4 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    /*
-    @Override
-    public void onFocusChange(View view, boolean b) {
-        switch (view.getId()) {
-            case R.id.etSearch:
-                switch (SharedPreferences.getInt(Constants_Intern.SEARCH_MODEL_TYPE, 2)) {
-                    case Constants_Intern.MAIN_SEARCH_MODEL_TYPE_ID_MODEL:
-                    case Constants_Intern.MAIN_SEARCH_MODEL_TYPE_IMEI:
-                        Utility_Keyboard.hideKeyboardFrom(this, etSearch);
-                        break;
-                    case Constants_Intern.MAIN_SEARCH_MODEL_TYPE_NAME_MODEL:
-                    case Constants_Intern.MAIN_SEARCH_MODEL_TYPE_TAC:
-                        Utility_Keyboard.openKeyboard(this, etSearch);
-                        break;
-                }
-                break;
-        }
-    }
-
-     */
 }

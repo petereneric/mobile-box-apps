@@ -278,4 +278,9 @@ public class Constants_Intern {
     public static final String FRAGMENT_DISPLAY_STOCK_PRIME_FULL = "FRAGMENT_DISPLAY_STOCK_PRIME_FULL";
     public static final String TYPE_ERROR_STOCK_PRIME_FULL = "TYPE_ERROR_STOCK_PRIME_FULL";
     public static final String FRAGMENT_DISPLAY_LIFT_NEW_DEVICE = "FRAGMENT_DISPLAY_LIFT_NEW_DEVICE";
+    public static final boolean CLOSE_KEYBOARD = true;
+    public static final boolean DONT_CLOSE_KEYBOARD = false;
+    public static final String STATION_ID = "STATION_ID";
+    public static final int STATION_CHECK_ONE = 10;
+    public static final String FRAGMENT_BOOKING_OUT_STOCK_PRIME = "FRAGMENT_BOOKING_OUT_STOCK_PRIME";
 }

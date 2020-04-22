@@ -26,7 +26,7 @@
 
                 <TextView
                     style="@style/tv_tableRow_Key"
-                    android:text="@string/model_name"
+                    android:text="@string/name"
                     android:layout_weight="@dimen/layout_weight_model_key_one"/>
 
                 <TextView
@@ -110,13 +110,13 @@
                 android:id="@+id/trDefaultExploitation">
 
                 <TextView
-                    style="@style/tv_tableRow_Key"
+                    style="@style/tv_tableRow_Key_Small"
                     android:text="@string/default_exploitation"
                     android:layout_weight="@dimen/layout_weight_model_key_two"/>
 
                 <TextView
                     android:id="@+id/tvDefaultExploitation"
-                    style="@style/tv_tableRow_Value"
+                    style="@style/tv_tableRow_Value_Small"
                     android:text="@string/recycling"
                     android:layout_weight="@dimen/layout_weight_model_value_two"/>
             </TableRow>

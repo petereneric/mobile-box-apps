@@ -15,7 +15,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/from"
-            android:textColor="@color/color_grey"
+            android:textColor="@color/color_grey_secondary"
             android:textAllCaps="true"
             android:gravity="center"
             android:layout_margin="16dp"
@@ -28,8 +28,8 @@
             android:id="@+id/tvStationFrom"
             android:gravity="center"
             android:textSize="@dimen/size_text_booking_station"
-            android:textColor="@color/color_grey"
-            android:background="@drawable/background_stroke_round_grey"/>
+            android:textColor="@color/color_grey_secondary"
+            android:background="@drawable/background_stroke_round_grey_secondary"/>
     </LinearLayout>
 
     <LinearLayout
@@ -75,9 +75,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/color_grey_secondary"
+                android:textColor="@color/color_primary"
                 android:textSize="24sp"
                 android:text="2938"
+                android:textStyle="bold"
                 android:id="@+id/tvStorageNumber"/>
 
         </LinearLayout>

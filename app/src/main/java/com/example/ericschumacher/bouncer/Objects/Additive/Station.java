@@ -16,11 +16,12 @@ public class Station extends Additive {
         Id = id;
         if (id == Constants_Intern.STATION_SCREENING) Name = "Screening";
         if (id == Constants_Intern.STATION_RECYCLING) Name = "Recycling";
-        if (id == Constants_Intern.STATION_EXCESS_STOCK) Name = "Excess Stock";
-        if (id == Constants_Intern.STATION_PRIME_STOCK) Name = "Prime Stock";
+        if (id == Constants_Intern.STATION_EXCESS_STOCK) Name = "Vorrats-Lager";
+        if (id == Constants_Intern.STATION_PRIME_STOCK) Name = "Haupt-Lager";
         if (id == Constants_Intern.STATION_REUSE) Name = "Wiederverwendung";
         if (id == Constants_Intern.STATION_PRE_STOCK) Name = "Pre-Stock";
         if (id == Constants_Intern.STATION_UNKNOWN) Name = "Unbekannt";
+        if (id == Constants_Intern.STATION_CHECK_ONE) Name = "Prüfung I";
     }
 
     public Station(JSONObject oJson) {

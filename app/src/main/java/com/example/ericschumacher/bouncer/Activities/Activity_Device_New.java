@@ -13,6 +13,7 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Booking.Fragment_Booking;
 import com.example.ericschumacher.bouncer.Fragments.Booking.Fragment_Booking_In_Lku_Stock;
+import com.example.ericschumacher.bouncer.Fragments.Booking.Fragment_Booking_Out_Lku_Stock;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Fragment_Choice_DeviceBattery;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Color;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
@@ -40,11 +41,19 @@ import java.util.ArrayList;
 
 public class Activity_Device_New extends Activity_Model implements Fragment_Edit_Device_Damages.Interface_Edit_Device_Damages, Fragment_Booking.Interface_Booking {
 
-    // Object
+    // Data
     Device oDevice;
 
-    // Interaction
+    // Fragments
     Fragment_Device_New fDevice;
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+    // Lifecycle-Methods
 
     @Override
     protected void onStart() {
@@ -52,12 +61,30 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         etSearch.requestFocus();
     }
 
+
+
+    // Fragments
+
     public void initiateFragments() {
         super.initiateFragments();
         fDevice = (Fragment_Device_New) fManager.findFragmentById(R.id.fDevice);
     }
 
+    public void showFragmentBookingInStockPrime(boolean bCloseKeyboard) {
+        Bundle bData = new Bundle();
+        bData.putString(Constants_Intern.TITLE, getString(R.string.booking));
+        showFragment(new Fragment_Booking_In_Lku_Stock(), bData, Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME, bCloseKeyboard);
+
+    }
+
+    public void showFragmentBookingOutStockPrime(boolean bCloseKeyboard) {
+        Bundle bData = new Bundle();
+        bData.putString(Constants_Intern.TITLE, getString(R.string.booking));
+        showFragment(new Fragment_Booking_Out_Lku_Stock(), bData, Constants_Intern.FRAGMENT_BOOKING_OUT_STOCK_PRIME, bCloseKeyboard);
+    }
+
     // Layout
+
     public void setLayout() {
         super.setLayout();
 
@@ -68,6 +95,10 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     public int getIdLayout() {
         return R.layout.activity_device_new;
     }
+
+
+
+    // Update
 
     public void updateLayout() {
         // Fragments
@@ -91,28 +122,24 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         }
     }
 
-    // Interaction
-    public void jobFinished() {
-        Bundle bundle = new Bundle();
-        bundle.putString(Constants_Intern.TEXT, getString(R.string.edit_new_device));
-        showFragment(new Fragment_Display(), bundle, Constants_Intern.FRAGMENT_DISPLAY_EDIT_NEW_DEVICE);
-        updateKeyboardSearch(false);
+
+
+    // Base & Reset
+
+    @Override
+    public void base() {
+        super.base();
     }
 
     public void reset() {
         oDevice = null;
-        oModel = null;
-        updateLayout();
-        updateKeyboardSearch(null);
-        if (!etSearch.getText().toString().equals("")) {
-            etSearch.setText("");
-        }
-        if (fManager.findFragmentByTag(Constants_Intern.FRAGMENT_DISPLAY_EDIT_NEW_MODEL) != null) {
-            removeFragment(Constants_Intern.FRAGMENT_DISPLAY_EDIT_NEW_MODEL);
-        }
+        super.reset();
     }
 
+
+
     // Search
+
     public void onSearch() {
         final String cSearchSaved = etSearch.getText().toString();
         switch (SharedPreferences.getInt(Constants_Intern.SEARCH_DEVICE_TYPE, 0)) {
@@ -123,10 +150,9 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
                         if (cSearchSaved.equals(etSearch.getText().toString())) {
                             if (Volley_Connection.successfulResponse(oJson)) {
                                 try {
-                                    oDevice = new Device( oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device_New.this);
+                                    oDevice = new Device(oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device_New.this);
                                     oModel = oDevice.getoModel();
-                                    updateLayout();
-                                    onSearchFinished();
+                                    returnFromSearch();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -144,10 +170,9 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
                         if (cSearchSaved.equals(etSearch.getText().toString())) {
                             if (Volley_Connection.successfulResponse(oJson)) {
                                 try {
-                                    oDevice = new Device( oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device_New.this);
+                                    oDevice = new Device(oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device_New.this);
                                     oModel = oDevice.getoModel();
-                                    updateLayout();
-                                    onSearchFinished();
+                                    returnFromSearch();
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
@@ -162,7 +187,19 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         }
     }
 
+    @Override
+    public void returnFromSearch() {
+        super.returnFromSearch();
+    }
+
+
+
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
     // Get
+
     public Device getDevice() {
         return oDevice;
     }
@@ -171,31 +208,21 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         return (oDevice != null) ? oDevice.getoModel() : null;
     }
 
-    // Show
-    public void showFragmentBookingInStockPrime() {
-        Bundle bData = new Bundle();
-        bData.putString(Constants_Intern.TITLE, getString(R.string.booking));
-        showFragment(new Fragment_Booking_In_Lku_Stock(), bData, Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME);
-    }
 
-    public void showFragmentBookingOutStockPrime() {
-        Bundle bData = new Bundle();
-        bData.putString(Constants_Intern.TITLE, getString(R.string.stock_prime_booking_in));
-        showFragment(new Fragment_Booking_In_Lku_Stock(), bData, Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME);
-    }
 
     // Edit
+
     public void onClickColor() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.color));
         bData.putInt(Constants_Intern.ID_MODEL, oDevice.getoModel().getkModel());
-        showFragment(new Fragment_Choice_Image_Color(), bData, Constants_Intern.FRAGMENT_CHOICE_IMAGE_COLOR);
+        showFragment(new Fragment_Choice_Image_Color(), bData, Constants_Intern.FRAGMENT_CHOICE_IMAGE_COLOR, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickShape() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.shape));
-        showFragment(new Fragment_Select_Shape(), bData, Constants_Intern.FRAGMENT_SELECT_SHAPE);
+        showFragment(new Fragment_Select_Shape(), bData, Constants_Intern.FRAGMENT_SELECT_SHAPE, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickState() {
@@ -205,7 +232,7 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     public void onClickDamages() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.damages));
-        showFragment(new Fragment_Edit_Device_Damages(), bData, Constants_Intern.FRAGMENT_EDIT_DEVICE_DAMAGES);
+        showFragment(new Fragment_Edit_Device_Damages(), bData, Constants_Intern.FRAGMENT_EDIT_DEVICE_DAMAGES, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickStation() {
@@ -219,28 +246,31 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     public void onClickBatteryContained() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.battery_contained));
-        showFragment(new Fragment_Select_YesNo(), bData, Constants_Intern.FRAGMENT_SELECT_BATTERY_CONTAINED);
+        showFragment(new Fragment_Select_YesNo(), bData, Constants_Intern.FRAGMENT_SELECT_BATTERY_CONTAINED, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickDeviceBattery() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.device_battery));
-        showFragment(new Fragment_Choice_DeviceBattery(), bData, Constants_Intern.FRAGMENT_CHOICE_DEVICE_BATTERY);
+        showFragment(new Fragment_Choice_DeviceBattery(), bData, Constants_Intern.FRAGMENT_CHOICE_DEVICE_BATTERY, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickBackcoverContained() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.backcover_contained));
-        showFragment(new Fragment_Select_YesNo(), bData, Constants_Intern.FRAGMENT_SELECT_BACKCOVER_CONTAINED);
+        showFragment(new Fragment_Select_YesNo(), bData, Constants_Intern.FRAGMENT_SELECT_BACKCOVER_CONTAINED, Constants_Intern.CLOSE_KEYBOARD);
     }
 
     public void onClickStockPrimeCapacity() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.stock_prime_capacity));
-        showFragment(new Fragment_Input_StockPrimeCapacity(), bData, Constants_Intern.FRAGMENT_INPUT_STOCK_PRIME_CAPACITY);
+        showFragment(new Fragment_Input_StockPrimeCapacity(), bData, Constants_Intern.FRAGMENT_INPUT_STOCK_PRIME_CAPACITY, Constants_Intern.CLOSE_KEYBOARD);
     }
 
+
+
     // Return
+
     @Override
     public void returnSelect(String cTag, int tSelect) {
         super.returnSelect(cTag, tSelect);
@@ -262,7 +292,7 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         }
         updateLayout();
         removeFragment(cTag);
-        jobFinished();
+        base();
     }
 
     @Override
@@ -270,23 +300,23 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         super.returnChoice(cTag, object);
         switch (cTag) {
             case Constants_Intern.FRAGMENT_CHOICE_IMAGE_COLOR:
-                oDevice.setoColor((Color)object);
+                oDevice.setoColor((Color) object);
                 break;
             case Constants_Intern.FRAGMENT_CHOICE_DEVICE_BATTERY:
-                oDevice.setoBattery((Battery)object);
+                oDevice.setoBattery((Battery) object);
                 break;
         }
         updateLayout();
         removeFragment(cTag);
-        jobFinished();
+        base();
     }
 
     public void returnInput(final String cTag, final String cInput) {
         switch (cTag) {
             case Constants_Intern.FRAGMENT_INPUT_STOCK_PRIME_CAPACITY:
-                cVolley.execute(Request.Method.PUT, Urls.URL_PUT_STOCK_PRIME_HIGHEST_LKU+cInput, null);
+                cVolley.execute(Request.Method.PUT, Urls.URL_PUT_STOCK_PRIME_HIGHEST_LKU + cInput, null);
                 removeFragment(cTag);
-                showFragmentBookingInStockPrime();
+                showFragmentBookingInStockPrime(Constants_Intern.CLOSE_KEYBOARD);
                 break;
         }
     }
@@ -297,22 +327,21 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
             case Constants_Intern.FRAGMENT_DISPLAY_EDIT_NEW_DEVICE:
                 reset();
             case Constants_Intern.FRAGMENT_DISPLAY_STOCK_PRIME_FULL:
-                jobFinished();
+                base();
         }
     }
 
     @Override
     public void returnBooking(String cTag) {
-        updateLayout();
         removeFragment(cTag);
-        jobFinished();
+        base();
     }
 
     @Override
     public void returnEditDeviceDamages_DeviceDamages(String cTag) {
         oDevice.settState(Constants_Intern.STATE_DEFECT_REPAIR);
         removeFragment(cTag);
-        jobFinished();
+        base();
     }
 
     @Override
@@ -320,7 +349,7 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         oDevice.setlDeviceDamages(new ArrayList<Object_Device_Damage>());
         oDevice.settState(Constants_Intern.STATE_RECYCLING);
         removeFragment(cTag);
-        jobFinished();
+        base();
     }
 
     @Override
@@ -336,14 +365,17 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
                     case Constants_Intern.TYPE_ERROR_STOCK_PRIME_FULL:
                         Bundle bundle = new Bundle();
                         bundle.putString(Constants_Intern.TEXT, getString(R.string.stock_prime_full));
-                        showFragment(new Fragment_Display(), bundle, Constants_Intern.FRAGMENT_DISPLAY_STOCK_PRIME_FULL);
+                        showFragment(new Fragment_Display(), bundle, Constants_Intern.FRAGMENT_DISPLAY_STOCK_PRIME_FULL, Constants_Intern.CLOSE_KEYBOARD);
                         break;
                 }
                 break;
         }
     }
 
+
+
     // ClickListener & TextWatcher
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -383,10 +415,9 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
                                 if (cSearchSaved.equals(etSearch.getText().toString())) {
                                     if (Volley_Connection.successfulResponse(oJson)) {
                                         try {
-                                            oDevice = new Device( oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device_New.this);
+                                            oDevice = new Device(oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device_New.this);
                                             oModel = oDevice.getoModel();
-                                            updateLayout();
-                                            jobFinished();
+                                            base();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -404,10 +435,9 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
                                 if (cSearchSaved.equals(etSearch.getText().toString())) {
                                     if (Volley_Connection.successfulResponse(oJson)) {
                                         try {
-                                            oDevice = new Device( oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device_New.this);
+                                            oDevice = new Device(oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device_New.this);
                                             oModel = oDevice.getoModel();
-                                            updateLayout();
-                                            jobFinished();
+                                            base();
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -432,7 +462,7 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
                     onSearch();
                     break;
                 case Constants_Intern.MAIN_SEARCH_DEVICE_TYPE_IMEI:
-                    if (editable.toString().length()==15) {
+                    if (editable.toString().length() == 15) {
                         onSearch();
                     }
                     break;
