@@ -389,7 +389,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
                             if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
                                 oDevice.setIdDevice(oJson.getInt(Constants_Extern.ID_DEVICE));
                                 //Toast.makeText(Activity_Bouncer.this, getString(R.string.label_print_device), Toast.LENGTH_LONG).show();
-                                mPrinter.printDevice(oDevice);
+                                mPrinter.printDeviceId(oDevice);
                                 resetDevice();
                                 updateUI();
                             } else {
@@ -414,7 +414,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
                         try {
                             if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
                                 oDevice.setIdDevice(oJson.getInt(Constants_Extern.ID_DEVICE));
-                                mPrinter.printDevice(oDevice);
+                                mPrinter.printDeviceId(oDevice);
                                 resetDevice();
                                 updateUI();
                             } else {
@@ -465,7 +465,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
                                 try {
                                     if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
                                         oDevice.setIdDevice(oJson.getInt(Constants_Extern.ID_DEVICE));
-                                        mPrinter.printDevice(oDevice);
+                                        mPrinter.printDeviceId(oDevice);
                                         resetDevice();
                                         updateUI();
                                     } else {
@@ -581,7 +581,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
                 @Override
                 public void onSuccess(int i) {
                     //oDevice.setIdDevice(i);
-                    mPrinter.printDevice(oDevice);
+                    mPrinter.printDeviceId(oDevice);
                     resetDevice();
                     updateUI();
                     /*
@@ -590,7 +590,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
                         public void onSuccess(int i) {
                             oDevice.setLKU(i);
                             Toast.makeText(Activity_Device.this, "LKU: " + Integer.toString(i), Toast.LENGTH_LONG).show();
-                            if (usePrinter) mPrinter.printDevice(oDevice);
+                            if (usePrinter) mPrinter.printDeviceId(oDevice);
                             resetDevice();
                         }
 

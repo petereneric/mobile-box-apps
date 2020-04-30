@@ -122,7 +122,7 @@ public class Fragment_Device extends Fragment implements View.OnClickListener, I
         } else {
             tvColor.setText(Constants_Intern.UNKOWN);
         }
-        if (device.getoStoragePlace() != null) {
+        if (device.getoStoragePlace() != null && (device.getoStoragePlace().getkStock() == Constants_Intern.STATION_PRIME_STOCK || device.getoStoragePlace().getkStock() == Constants_Intern.STATION_EXCESS_STOCK)) {
             trLKU.setVisibility(View.VISIBLE);
             tvLKU.setText(Integer.toString(device.getoStoragePlace().getkLku()));
             if (device.getoStoragePlace().getkStock() == Constants_Intern.STATION_PRIME_STOCK) {

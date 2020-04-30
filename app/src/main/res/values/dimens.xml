@@ -1,23 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    // Height - Layout
     <dimen name="height_layout_search">60dp</dimen>
+    <dimen name="height_layout_footer">200dp</dimen>
+
+    // Size - Text
     <dimen name="size_text_header_title">24sp</dimen>
+    <dimen name="size_text_footer">24sp</dimen>
+
+    // Size - Text | Item
+    <dimen name="size_text_item_main">20sp</dimen>
+    <dimen name="size_text_item_description">15sp</dimen>
+    <dimen name="size_text_item_description_sub">13sp</dimen>
 
     // FragmentModel
     <dimen name="layout_weight_model_row_one">5</dimen>
-    <dimen name="layout_weight_model_row_two">7</dimen>
+    <dimen name="layout_weight_model_row_two">5</dimen>
+    <dimen name="layout_weight_model_row_three">5</dimen>
     <dimen name="layout_weight_model_key_one">5</dimen>
     <dimen name="layout_weight_model_key_two">5</dimen>
+    <dimen name="layout_weight_model_key_three">5</dimen>
     <dimen name="layout_weight_model_value_one">6</dimen>
     <dimen name="layout_weight_model_value_two">7</dimen>
+    <dimen name="layout_weight_model_value_three">4</dimen>
 
     // FragmentDevice
-    <dimen name="layout_weight_device_row_one">10</dimen>
-    <dimen name="layout_weight_device_row_two">8</dimen>
-    <dimen name="layout_weight_device_key_one">3</dimen>
-    <dimen name="layout_weight_device_key_two">3</dimen>
-    <dimen name="layout_weight_device_value_one">6</dimen>
-    <dimen name="layout_weight_device_value_two">4</dimen>
+    <dimen name="layout_weight_device_row_one">5</dimen>
+    <dimen name="layout_weight_device_row_two">5</dimen>
+    <dimen name="layout_weight_device_row_three">5</dimen>
+    <dimen name="layout_weight_device_key_one">5</dimen>
+    <dimen name="layout_weight_device_key_two">5</dimen>
+    <dimen name="layout_weight_device_key_three">5</dimen>
+    <dimen name="layout_weight_device_value_one">7</dimen>
+    <dimen name="layout_weight_device_value_two">8</dimen>
+    <dimen name="layout_weight_device_value_three">3</dimen>
+
+    // FragmentBooking
     <dimen name="size_text_booking_from_to">18sp</dimen>
     <dimen name="size_text_booking_station">24sp</dimen>
+
+    // FragmentVerifiySku
+    <dimen name="layout_weight_table_article_key">3</dimen>
+    <dimen name="layout_weight_table_article_value">18</dimen>
+    <dimen name="layout_margin_top_buttons_interaction">32dp</dimen>
+
+
+
+
 </resources>

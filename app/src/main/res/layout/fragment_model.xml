@@ -68,21 +68,6 @@
                     android:layout_weight="@dimen/layout_weight_model_value_one"/>
             </TableRow>
 
-            <TableRow
-                android:id="@+id/trBattery">
-
-                <TextView
-                    style="@style/tv_tableRow_Key"
-                    android:text="@string/oBattery"
-                    android:layout_weight="@dimen/layout_weight_model_key_one"/>
-
-                <TextView
-                    android:id="@+id/tvBattery"
-                    style="@style/tv_tableRow_Value"
-                    android:text="BL-4C"
-                    android:layout_weight="@dimen/layout_weight_model_value_one"/>
-            </TableRow>
-
         </TableLayout>
 
         <TableLayout
@@ -136,21 +121,62 @@
                     android:layout_weight="@dimen/layout_weight_model_value_two"/>
             </TableRow>
 
+
+
+
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayoutThree"
+            android:layout_width="0dp"
+            android:layout_weight="@dimen/layout_weight_model_row_three"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:id="@+id/trBattery">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/oBattery"
+                    android:layout_weight="@dimen/layout_weight_model_key_three"/>
+
+                <TextView
+                    android:id="@+id/tvBattery"
+                    style="@style/tv_tableRow_Value"
+                    android:text="BL-4C"
+                    android:layout_weight="@dimen/layout_weight_model_value_three"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trBatteryLku">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/battery_lku"
+                    android:layout_weight="@dimen/layout_weight_model_key_three"/>
+
+                <TextView
+                    android:id="@+id/tvBatteryLku"
+                    style="@style/tv_tableRow_Value"
+                    android:text="NOK - 34"
+                    android:layout_weight="@dimen/layout_weight_model_value_three"/>
+            </TableRow>
+
             <TableRow
                 android:id="@+id/trBatteryRemovable"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
                     android:text="@string/battery_removable"
-                    android:textSize="11sp"
-                    android:layout_weight="@dimen/layout_weight_model_key_two"/>
+                    android:layout_weight="@dimen/layout_weight_model_key_three"/>
 
                 <TextView
                     android:id="@+id/tvBatteryRemovable"
                     style="@style/tv_tableRow_Value"
                     android:text="Yes"
-                    android:layout_weight="@dimen/layout_weight_model_value_two"
+                    android:layout_weight="@dimen/layout_weight_model_value_three"
                     />
             </TableRow>
 
@@ -161,29 +187,13 @@
                 <TextView
                     style="@style/tv_tableRow_Key"
                     android:text="@string/backcover_removable"
-                    android:textSize="11sp"
-                    android:layout_weight="@dimen/layout_weight_model_key_two"/>
+                    android:layout_weight="@dimen/layout_weight_model_key_three"/>
 
                 <TextView
                     android:id="@+id/tvBackcoverRemovable"
                     style="@style/tv_tableRow_Value"
                     android:text="Yes"
-                    android:layout_weight="@dimen/layout_weight_model_value_two"/>
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/trBatteryLku">
-
-                <TextView
-                    style="@style/tv_tableRow_Key"
-                    android:text="@string/battery_lku"
-                    android:layout_weight="@dimen/layout_weight_model_key_two"/>
-
-                <TextView
-                    android:id="@+id/tvBatteryLku"
-                    style="@style/tv_tableRow_Value"
-                    android:text="NOK - 34"
-                    android:layout_weight="@dimen/layout_weight_model_value_two"/>
+                    android:layout_weight="@dimen/layout_weight_model_value_three"/>
             </TableRow>
 
         </TableLayout>

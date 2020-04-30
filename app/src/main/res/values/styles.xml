@@ -28,7 +28,7 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:padding">8dp</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="tv_tableRow_Key" parent="tv_tableRow">
@@ -37,7 +37,7 @@
     </style>
 
     <style name="tv_tableRow_Key_Small" parent="tv_tableRow_Key">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="tv_tableRow_Value" parent="tv_tableRow">
@@ -47,7 +47,7 @@
     </style>
 
     <style name="tv_tableRow_Value_Small" parent="tv_tableRow_Value">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="tv_itemRow" parent="tv_default">
@@ -125,6 +125,7 @@
         <item name="android:textColor">@color/color_white</item>
         <item name="android:textSize">@dimen/size_text_default</item>
         <item name="android:gravity">center</item>
+        <item name="android:layout_margin">8dp</item>
         <item name="colorButtonNormal">@color/color_white</item>
         <item name="android:padding">12dp</item>
     </style>
@@ -137,6 +138,7 @@
         <item name="android:textSize">@dimen/size_text_button</item>
         <item name="android:gravity">center</item>
         <item name="colorButtonNormal">@color/color_white</item>
+        <item name="android:layout_margin">12dp</item>
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingBottom">20dp</item>
         <item name="android:textStyle">normal</item>
@@ -145,6 +147,10 @@
     <style name="button_sub_new" parent="button_main_new">
         <item name="android:background">@drawable/background_stroke_round_grey_secondary</item>
         <item name="android:textColor">@color/color_grey_secondary</item>
+    </style>
+
+    <style name="button_sub_small" parent="button_sub_new">
+        <item name="android:layout_width">213dp</item>
     </style>
 
     <style name="button_sub" parent="button_main">
@@ -204,6 +210,19 @@
         <item name="android:layout_centerInParent">true</item>
         <item name="android:padding">16dp</item>
         <!-- <item name="app:android:srcCompat">@drawable/ic_clear_24dp</item> -->
+    </style>
+
+    // Footer
+
+    <style name="tv_footer_print">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/background_rounded_corners_grey_secondary</item>
+        <item name="android:textSize">@dimen/size_text_footer</item>
+        <item name="android:textColor">@color/color_text_secondary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">4dp</item>
     </style>
 
 </resources>

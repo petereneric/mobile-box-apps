@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
+import com.example.ericschumacher.bouncer.Objects.Article;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 import com.zebra.sdk.btleComm.BluetoothLeConnection;
@@ -52,11 +53,24 @@ public class ManagerPrinter {
     }
 
 
-    public void printDevice(Device device) {
+    public void printDeviceId(Device device) {
         if (usePrinter(Context) && Connection != null) {
             try {
                 if (Printer != null && readyToPrint()) {
                     Connection.write(getDeviceLabel(device));
+                    Log.i("What", "should work");
+                }
+            } catch (ConnectionException e1) {
+                Log.d("JOOO","Error sending file to printer");
+            }
+        }
+    }
+
+    public void printDeviceSku(Article oArticle, Device oDevice) {
+        if (usePrinter(Context) && Connection != null) {
+            try {
+                if (Printer != null && readyToPrint()) {
+                    Connection.write(getDeviceSku(oArticle, oDevice));
                     Log.i("What", "should work");
                 }
             } catch (ConnectionException e1) {
@@ -119,6 +133,75 @@ public class ManagerPrinter {
                 "^XZ";
 
         return label.getBytes();
+    }
+
+    private byte[] getDeviceSku(Article oArticle, Device oDevice) {
+
+        String labelNew = "\u0010CT~~CD,~CC^~CT~\n" +
+                "^XA\n" +
+                "~TA000\n" +
+                "~JSN\n" +
+                "^LT0\n" +
+                "^MNW\n" +
+                "^MTT\n" +
+                "^PON\n" +
+                "^PMN\n" +
+                "^LH0,0\n" +
+                "^JMA\n" +
+                "^PR6,6\n" +
+                "~SD15\n" +
+                "^JUS\n" +
+                "^LRN\n" +
+                "^CI27\n" +
+                "^PA0,1,1,0\n" +
+                "^XZ\n" +
+                "^XA\n" +
+                "^MMT\n" +
+                "^PW408\n" +
+                "^LL200\n" +
+                "^LS0\n" +
+                "^FO19,150^GB366,0,1^FS\n" +
+                "^FO20,78^GFA,29,48,48,:Z64:eJxb1KWxiHjEwAAAD1IUjw==:9549\n" +
+                "^FPH,3^FT146,55^A@N,25,25,TT0003M_^FH\\^CI28^FD"+oArticle.getkSku()+"^FS^CI27\n" +
+                "^BY2,3,20^FT133,185^BCN,,N,N\n" +
+                "^FH\\^FD>:"+oDevice.getIdDevice()+"^FS\n" +
+                "^FT180,141^BQN,2,2\n" +
+                "^FH\\^FDLA,"+oArticle.getkSku()+"^FS\n" +
+                "^PQ1,0,1,Y\n" +
+                "^XZ\n";
+        String label = "\u0010CT~~CD,~CC^~CT~\n" +
+                "^XA\n" +
+                "~TA000\n" +
+                "~JSN\n" +
+                "^LT0\n" +
+                "^MNW\n" +
+                "^MTT\n" +
+                "^PON\n" +
+                "^PMN\n" +
+                "^LH0,0\n" +
+                "^JMA\n" +
+                "^PR6,6\n" +
+                "~SD15\n" +
+                "^JUS\n" +
+                "^LRN\n" +
+                "^CI27\n" +
+                "^PA0,1,1,0\n" +
+                "^XZ\n" +
+                "^XA\n" +
+                "^MMT\n" +
+                "^PW408\n" +
+                "^LL200\n" +
+                "^LS0\n" +
+                "^FO19,150^GFA,29,48,48,:Z64:eJxb1KWxiGi0gIEBAA9MFI0=:2CE5\n" +
+                "^FPH,3^FT55,126^A@N,17,18,TT0003M_^FH\\^CI28^FD"+oArticle.getkSku()+"^FS^CI27\n" +
+                "^BY2,3,20^FT133,186^BCN,,N,N\n" +
+                "^FH\\^FD>:"+oDevice.getIdDevice()+"^FS\n" +
+                "^FT170,96^BQN,2,3\n" +
+                "^FH\\^FDLA,"+oArticle.getkSku()+"^FS\n" +
+                "^PQ1,0,1,Y\n" +
+                "^XZ\n";
+
+        return labelNew.getBytes();
     }
 
     private byte[] getDeviceLabel(Device device) {
@@ -286,10 +369,12 @@ public class ManagerPrinter {
         new Thread(new Runnable() {
             public void run() {
                 Log.i("Zebra connects", "jo");
+                Log.i("Das isser", SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, "28:EC:9A:21:30:55"));
                 if (usePrinter(Context)) {
                     if (Printer == null) {
                         Connection = null;
                         Connection = new BluetoothLeConnection(SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, "28:EC:9A:21:30:55"), Context);
+                        Log.i("Das isser", SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, "28:EC:9A:21:30:55"));
 
                         try {
                             Connection.open();

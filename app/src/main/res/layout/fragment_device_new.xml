@@ -4,10 +4,6 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <include
-        layout="@layout/layout_header"
-        android:id="@+id/lHeader"/>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,58 +20,46 @@
 
                 <TextView
                     style="@style/tv_tableRow_Key"
-                    android:text="@string/color"
-                    android:layout_weight="@dimen/layout_weight_device_key_one"/>
+                    android:layout_weight="@dimen/layout_weight_device_key_one"
+                    android:text="@string/color" />
 
                 <TextView
                     android:id="@+id/tvColor"
                     style="@style/tv_tableRow_Value"
-                    android:text="Weiß"
-                    android:layout_weight="@dimen/layout_weight_device_value_one"/>
+                    android:layout_weight="@dimen/layout_weight_device_value_one"
+                    android:text="Weiß" />
             </TableRow>
 
             <TableRow android:id="@+id/trShape">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
-                    android:text="@string/shape"
-                    android:layout_weight="@dimen/layout_weight_device_key_one"/>
+                    android:layout_weight="@dimen/layout_weight_device_key_one"
+                    android:text="@string/shape" />
 
                 <TextView
                     android:id="@+id/tvShape"
                     style="@style/tv_tableRow_Value"
-                    android:text="@string/shape_very_good"
-                    android:layout_weight="@dimen/layout_weight_device_value_one"/>
+                    android:layout_weight="@dimen/layout_weight_device_value_one"
+                    android:text="@string/shape_very_good" />
             </TableRow>
 
-            <TableRow android:id="@+id/trState">
 
-                <TextView
-                    style="@style/tv_tableRow_Key_Small"
-                    android:text="@string/state"
-                    android:layout_weight="@dimen/layout_weight_device_key_one"/>
 
-                <TextView
-                    android:id="@+id/tvState"
-                    style="@style/tv_tableRow_Value_Small"
-                    android:text="@string/reuse"
-                    android:layout_weight="@dimen/layout_weight_device_value_one"/>
-
-            </TableRow>
-
-            <TableRow android:id="@+id/trDamages"
-                android:visibility="gone">
+            <TableRow
+                android:id="@+id/trDamages"
+                android:visibility="visible">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
-                    android:text="@string/damages"
-                    android:layout_weight="@dimen/layout_weight_device_key_one"/>
+                    android:layout_weight="@dimen/layout_weight_device_key_one"
+                    android:text="@string/damages" />
 
                 <TextView
                     android:id="@+id/tvDamages"
                     style="@style/tv_tableRow_Value"
-                    android:text="4"
-                    android:layout_weight="@dimen/layout_weight_device_value_one"/>
+                    android:layout_weight="@dimen/layout_weight_device_value_one"
+                    android:text="4" />
             </TableRow>
 
         </TableLayout>
@@ -83,85 +67,115 @@
         <TableLayout
             android:id="@+id/tableLayoutTwo"
             android:layout_width="0dp"
-            android:layout_weight="@dimen/layout_weight_device_row_two"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_weight="@dimen/layout_weight_device_row_two">
+
+            <TableRow android:id="@+id/trState">
+
+                <TextView
+                    style="@style/tv_tableRow_Key_Small"
+                    android:layout_weight="@dimen/layout_weight_device_key_two"
+                    android:text="@string/state" />
+
+                <TextView
+                    android:id="@+id/tvState"
+                    style="@style/tv_tableRow_Value_Small"
+                    android:layout_weight="@dimen/layout_weight_device_value_two"
+                    android:text="@string/reuse" />
+
+            </TableRow>
 
             <TableRow android:id="@+id/trStation">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
-                    android:text="@string/oStation"
-                    android:layout_weight="@dimen/layout_weight_device_key_two"/>
+                    android:layout_weight="@dimen/layout_weight_device_key_two"
+                    android:text="@string/oStation" />
 
                 <TextView
                     android:id="@+id/tvStation"
                     style="@style/tv_tableRow_Value"
-                    android:text="Selektion"
-                    android:layout_weight="@dimen/layout_weight_device_value_two"/>
+                    android:layout_weight="@dimen/layout_weight_device_value_two"
+                    android:text="Selektion" />
             </TableRow>
 
-            <TableRow android:id="@+id/trLKU"
+            <TableRow
+                android:id="@+id/trLKU"
                 android:visibility="gone">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
-                    android:text="@string/lku"
-                    android:layout_weight="@dimen/layout_weight_device_key_two"/>
+                    android:layout_weight="@dimen/layout_weight_device_key_two"
+                    android:text="@string/lku" />
 
                 <TextView
                     android:id="@+id/tvLKU"
                     style="@style/tv_tableRow_Value"
-                    android:text="Nicht vergeben"
-                    android:layout_weight="@dimen/layout_weight_device_value_two"/>
+                    android:layout_weight="@dimen/layout_weight_device_value_two"
+                    android:text="Nicht vergeben" />
             </TableRow>
+
+
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayoutThree"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="@dimen/layout_weight_device_row_three">
 
             <TableRow android:id="@+id/trBatteryContained">
 
                 <TextView
                     style="@style/tv_tableRow_Key_Small"
-                    android:text="@string/battery_contained"
-                    android:layout_weight="@dimen/layout_weight_device_key_two"/>
+                    android:layout_weight="@dimen/layout_weight_device_key_three"
+                    android:text="@string/battery_contained" />
 
                 <TextView
                     android:id="@+id/tvBatteryContained"
                     style="@style/tv_tableRow_Value_Small"
-                    android:text="true"
-                    android:layout_weight="@dimen/layout_weight_device_value_two"
-                    />
+                    android:layout_weight="@dimen/layout_weight_device_value_three"
+                    android:text="true" />
             </TableRow>
 
-            <TableRow android:id="@+id/trBattery"
-                android:visibility="gone">
+            <TableRow
+                android:id="@+id/trBattery"
+                android:visibility="visible">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
-                    android:text="@string/battery"
-                    android:layout_weight="@dimen/layout_weight_device_key_two"/>
+                    android:layout_weight="@dimen/layout_weight_device_key_three"
+                    android:text="@string/battery" />
 
                 <TextView
                     android:id="@+id/tvBattery"
                     style="@style/tv_tableRow_Value"
-                    android:text="true"
-                    android:layout_weight="@dimen/layout_weight_device_value_two"/>
+                    android:layout_weight="@dimen/layout_weight_device_value_three"
+                    android:text="true" />
             </TableRow>
 
             <TableRow android:id="@+id/trBackcoverContained">
 
                 <TextView
                     style="@style/tv_tableRow_Key_Small"
-                    android:text="@string/backcover_contained"
-                    android:layout_weight="@dimen/layout_weight_device_key_two"/>
+                    android:layout_weight="@dimen/layout_weight_device_key_three"
+                    android:text="@string/backcover_contained" />
 
                 <TextView
                     android:id="@+id/tvBackcoverContained"
                     style="@style/tv_tableRow_Value_Small"
-                    android:text="true"
-                    android:layout_weight="@dimen/layout_weight_device_value_two"/>
+                    android:layout_weight="@dimen/layout_weight_device_value_three"
+                    android:text="true" />
             </TableRow>
 
         </TableLayout>
 
     </LinearLayout>
+
+    <include
+        android:id="@+id/lHeader"
+        layout="@layout/layout_header" />
 
 
 </RelativeLayout>

@@ -67,7 +67,7 @@ public class Fragment_Display extends Fragment implements View.OnClickListener {
         shape.setShape(GradientDrawable.RECTANGLE);
         shape.setCornerRadii(new float[] {Utility_Density.getDp(getActivity(), 16),Utility_Density.getDp(getActivity(), 16), Utility_Density.getDp(getActivity(), 16), Utility_Density.getDp(getActivity(), 16), Utility_Density.getDp(getActivity(), 16), Utility_Density.getDp(getActivity(), 16), Utility_Density.getDp(getActivity(), 16), Utility_Density.getDp(getActivity(), 16)});
         //shape.setColor(ContextCompat.getColor(Context, R.color.color_green));
-        shape.setStroke(1, ResourcesCompat.getColor(getActivity().getResources(), R.color.color_grey_secondary, null));
+        shape.setStroke(1, ResourcesCompat.getColor(getActivity().getResources(), R.color.color_grey, null));
         tvText.setBackground(shape);
 
         // ClickListener

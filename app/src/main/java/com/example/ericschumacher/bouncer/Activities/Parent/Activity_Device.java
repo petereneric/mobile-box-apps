@@ -331,7 +331,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
                     public void onSuccess() {
                         updateUI();
                         Log.i("tagg", "bookDeviceIntoOfLKUSTock - Failure");
-                        mPrinter.printDevice(oDevice);
+                        mPrinter.printDeviceId(oDevice);
                         etScan.setText("");
                         openKeyboard(etScan);
                     }
@@ -357,7 +357,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
                     }
                 });
                 Toast.makeText(Activity_Device.this, getString(R.string.device_stored_excess_stock), Toast.LENGTH_LONG).show();
-                //if (usePrinter) mPrinter.printDevice(oDevice);
+                //if (usePrinter) mPrinter.printDeviceId(oDevice);
 
             }
         });
@@ -373,7 +373,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
                 //oDevice.setLKU(Constants_Intern.ID_UNKNOWN);
                 updateUI();
                 Log.i("tagg", "bookDeviceOutOfLKUSTock");
-                mPrinter.printDevice(oDevice);
+                mPrinter.printDeviceId(oDevice);
                 etScan.setText("");
                 openKeyboard(etScan);
             }

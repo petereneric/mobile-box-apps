@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="@dimen/height_layout_footer"
+    android:id="@+id/rlFooter">
+
+    <include
+        layout="@layout/layout_header"
+        android:id="@+id/lHeader"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_below="@id/lHeader">
+
+        <TextView
+            style="@style/tv_footer_print"
+            android:text="@string/device"
+            android:id="@+id/tvPrintDevice"
+            android:visibility="gone"/>
+
+        <TextView
+            style="@style/tv_footer_print"
+            android:text="@string/article"
+            android:id="@+id/tvPrintArticle"
+            android:visibility="gone"/>
+
+        <TextView
+            style="@style/tv_footer_print"
+            android:text="@string/battery"
+            android:id="@+id/tvPrintBattery"
+            android:visibility="gone"/>
+
+        <TextView
+            style="@style/tv_footer_print"
+            android:text="@string/backcover"
+            android:id="@+id/tvPrintBackcover"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

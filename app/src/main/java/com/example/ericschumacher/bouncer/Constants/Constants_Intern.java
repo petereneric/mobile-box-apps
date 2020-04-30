@@ -11,6 +11,8 @@ public class Constants_Intern {
     public final static String ID_PRINTER_TWO = "6C:C3:74:E2:42:00";
     public final static String ID_PRINTER_THREE = "90:E2:02:2B:6D:75";
     public final static String ID_PRINTER_FOUR = "50:8C:B1:4F:B1:EE";
+    public static final String ID_PRINTER_FIVE = "4C:24:98:AB:93:79";
+    //public static final String ID_PRINTER_FIVE = "00:07:4D:99:BA:7E";
 
 
     public final static String SELECTION_RESULT = "SELECTION_RESULT";
@@ -278,9 +280,25 @@ public class Constants_Intern {
     public static final String FRAGMENT_DISPLAY_STOCK_PRIME_FULL = "FRAGMENT_DISPLAY_STOCK_PRIME_FULL";
     public static final String TYPE_ERROR_STOCK_PRIME_FULL = "TYPE_ERROR_STOCK_PRIME_FULL";
     public static final String FRAGMENT_DISPLAY_LIFT_NEW_DEVICE = "FRAGMENT_DISPLAY_LIFT_NEW_DEVICE";
-    public static final boolean CLOSE_KEYBOARD = true;
-    public static final boolean DONT_CLOSE_KEYBOARD = false;
+    public static final boolean CLOSE_KEYBOARD = false;
+    public static final boolean DONT_CLOSE_KEYBOARD = true;
     public static final String STATION_ID = "STATION_ID";
     public static final int STATION_CHECK_ONE = 10;
     public static final String FRAGMENT_BOOKING_OUT_STOCK_PRIME = "FRAGMENT_BOOKING_OUT_STOCK_PRIME";
+    public static final String FRAGMENT_PRINT_DEVICE = "FRAGMENT_PRINT_DEVICE";
+    public static final String FRAGMENT_VERIFY_ARTICLE = "FRAGMENT_VERIFY_ARTICLE";
+    public static final String FRAGMENT_DISPLAY_ARTICLE_NOT_FOUND = "FRAGMENT_DISPLAY_ARTICLE_NOT_FOUND";
+    public static final Boolean DONT_SHOW_KEYBOARD = false;
+    public static final Boolean SHOW_KEYBOARD = true;
+    public static final int TYPE_PRINT_DEVICE = 0;
+    public static final int TYPE_PRINT_ARTICLE = 1;
+    public static final int TYPE_PRINT_BATTERY = 2;
+    public static final int TYPE_PRINT_BACKCOVER = 3;
+    public static final String SEARCH_ARTICLE_TYPE = "SEARCH_ARTICLE_TYPE";
+    public static final int MAIN_SEARCH_ARTICLE_TYPE_ID_DEVICE = 0;
+    public static final int MAIN_SEARCH_ARTICLE_TYPE_IMEI = 1;
+    public static final String FRAGMENT_DISPLAY_EDIT_NEW_ARTICLE = "FRAGMENT_DISPLAY_EDIT_NEW_ARTICLE";
+
+    public static final int TYPE_ERROR_RECLEAN = 0;
+    public static final int TYPE_ERROR_DEFECT = 1;
 }

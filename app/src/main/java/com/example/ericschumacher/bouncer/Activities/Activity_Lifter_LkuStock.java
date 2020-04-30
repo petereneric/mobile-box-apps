@@ -1,26 +1,55 @@
 package com.example.ericschumacher.bouncer.Activities;
 
+import android.support.design.widget.FloatingActionButton;
+import android.view.View;
+
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.R;
 
 public class Activity_Lifter_LkuStock extends Activity_Device_New {
 
+    // Layout
+    FloatingActionButton fabReset;
 
+
+
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+    // Fragments
+
+    public void removeFragments() {
+        super.removeFragments();
+        if (getSupportFragmentManager().findFragmentByTag(Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME) != null) {
+            removeFragment(Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME);
+        }
+        if (getSupportFragmentManager().findFragmentByTag(Constants_Intern.FRAGMENT_BOOKING_OUT_STOCK_PRIME) != null) {
+            removeFragment(Constants_Intern.FRAGMENT_BOOKING_OUT_STOCK_PRIME);
+        }
+
+    }
 
     // Layout
 
     public void setLayout() {
         super.setLayout();
+        fabReset = findViewById(R.id.fabReset);
 
         // Toolbar
         getSupportActionBar().setTitle(getString(R.string.activity_lifter_stock_lku));
+
+        // OnClickListener & TextWatcher
+        fabReset.setOnClickListener(this);
     }
 
-
+    public int getIdLayout() {
+        return R.layout.activity_lifter;
+    }
 
     // Update
 
-    public void updateLayout(boolean bCloseKeyboard) {
+    public void updateLayout() {
         super.updateLayout();
 
         // Show no fragment while loading
@@ -31,10 +60,11 @@ public class Activity_Lifter_LkuStock extends Activity_Device_New {
             removeFragment(Constants_Intern.FRAGMENT_BOOKING_OUT_STOCK_PRIME);
         }
 
-        if (oDevice != null && oDevice.getoStation().getId() == Constants_Intern.STATION_PRIME_STOCK) {
-            showFragmentBookingOutStockPrime(bCloseKeyboard);
-        } else {
-            showFragmentBookingInStockPrime(bCloseKeyboard);
+        if (oDevice != null && (oDevice.getoStation().getId() == Constants_Intern.STATION_PRIME_STOCK || oDevice.getoStation().getId() == Constants_Intern.STATION_EXCESS_STOCK)) {
+            showFragmentBookingOutStockPrime(null);
+        }
+        if (oDevice != null && oDevice.getoStation().getId() != Constants_Intern.STATION_PRIME_STOCK && oDevice.getoStation().getId() != Constants_Intern.STATION_EXCESS_STOCK){
+            showFragmentBookingInStockPrime(null);
         }
     }
 
@@ -43,26 +73,7 @@ public class Activity_Lifter_LkuStock extends Activity_Device_New {
     // Base & Reset
 
     public void base() {
-        updateLayout(Constants_Intern.CLOSE_KEYBOARD);
-    }
-
-    public void reset() {
-        oDevice = null;
-        oModel = null;
         updateLayout();
-        updateKeyboardSearch(null);
-        if (!etSearch.getText().toString().equals("")) {
-            etSearch.setText("");
-        }
-    }
-
-
-
-    // Search
-
-    @Override
-    public void returnFromSearch() {
-        updateLayout(Constants_Intern.DONT_CLOSE_KEYBOARD);
     }
 
 
@@ -77,5 +88,16 @@ public class Activity_Lifter_LkuStock extends Activity_Device_New {
     public void returnBooking(String cTag) {
         removeFragment(cTag);
         reset();
+    }
+
+    // ClickListener & TextWatcher
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()) {
+            case R.id.fabReset:
+                reset();
+        }
     }
 }

@@ -23,10 +23,10 @@
         android:layout_margin="8dp">
 
         <fragment
-            android:id="@+id/fPrintDevice"
-            android:name="com.example.ericschumacher.bouncer.Fragments.Print.Fragment_Print_Device"
+            android:id="@+id/fPrintArticle"
+            android:name="com.example.ericschumacher.bouncer.Fragments.Print.Fragment_Print_Article"
             android:layout_width="match_parent"
-            android:tag="FRAGMENT_PRINT_DEVICE"
+            android:tag="FRAGMENT_PRINT_ARTICLE"
             android:layout_height="@dimen/height_layout_footer"
             android:layout_alignParentBottom="true"/>
 
@@ -50,8 +50,14 @@
                 android:id="@+id/fDevice"
                 android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New"
                 android:layout_width="match_parent"
-                android:layout_weight="2"
                 android:tag="FRAGMENT_DEVICE_NEW"
+                android:layout_height="wrap_content" />
+
+            <fragment
+                android:id="@+id/fArticle"
+                android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Article"
+                android:layout_width="match_parent"
+                android:tag="FRAGMENT_ARTICLE"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>
@@ -69,7 +75,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/llFragments"
-            android:layout_above="@id/fPrintDevice"/>
+            android:layout_above="@id/fPrintArticle"/>
 
     </RelativeLayout>
 

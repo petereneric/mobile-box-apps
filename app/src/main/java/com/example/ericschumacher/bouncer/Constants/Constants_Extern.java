@@ -180,4 +180,13 @@ public class Constants_Extern extends Constants_Intern {
     public static final String HIGHEST_LKU = "HIGHEST_LKU";
     public static final String IS_FULL = "IS_FULL";
     public static final String STOCK_PRIME_LOAD_FACTOR = "STOCK_PRIME_LOAD_FACTOR";
+    public static final String OBJECT_ARTICLE = "OBJECT_ARTICLE";
+    public static final String ID_SKU = "ID_SKU";
+
+    public static final String NAME_ARTICLE = "NAME_ARTICLE";
+    public static final String IMAGE_ONE = "IMAGE_ONE";
+    public static final String IMAGE_TWO = "IMAGE_TWO";
+    public static final String STOCK_AMOUNT = "STOCK_AMOUNT";
+    public static final String AMOUNT_GB = "AMOUNT_GB";
+    public static final String ID_ARTIKEL = "ID_ARTIKEL";
 }

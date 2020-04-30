@@ -121,7 +121,7 @@
     <string name="toast_request_permission_camera">Please permit camera usage.</string>
     <string name="click_for_back_picture">Click for back picture (Long Click for skipping)</string>
     <string name="battery">Battery</string>
-    <string name="unknown">Unknown</string>
+    <string name="unknown">-</string>
     <string name="charger">Charger</string>
     <string name="doubleModel">Double Models</string>
     <string name="devices_no_model_color_shape_lku">Devices without model, color, shape in Lku</string>
@@ -241,6 +241,24 @@
     <string name="activity_lifter_stock_lku">Lifter - Lku-Stock</string>
     <string name="book_in">Book in</string>
     <string name="booking">Booking</string>
+    <string name="print_id_label">Id-Label</string>
+    <string name="print_sku_label">Sku</string>
+    <string name="print">Print</string>
+    <string name="article">Article</string>
+    <string name="sku">Sku</string>
+    <string name="commit_and_print"><![CDATA[Commit & Print]]></string>
+    <string name="verify_article">Verify Article</string>
+    <string name="activity_lifter_article_stock">Lifter - Article-Stock</string>
+    <string name="activity_verify_article">Louper</string>
+    <string name="article_not_found">Article not found</string>
+    <string name="no_value">-</string>
+    <string name="stock_amount">Stock-Amount</string>
+    <string name="article_manager">Article-Manager</string>
+    <string name="edit_new_article">Edit new article</string>
+    <string name="article_unknown">Article unknown</string>
+    <string name="device_unknown">Device unknown</string>
+    <string name="reclean">Reclean</string>
+    <string name="defect">Defect</string>
     />
 
     // Not translated

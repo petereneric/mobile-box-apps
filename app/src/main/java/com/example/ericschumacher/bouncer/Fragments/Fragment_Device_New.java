@@ -3,13 +3,13 @@ package com.example.ericschumacher.bouncer.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.example.ericschumacher.bouncer.Activities.Activity_Device_New;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 
@@ -39,17 +39,20 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
     TextView tvDamages;
     TextView tvState;
 
-    // Instances
-    Activity_Device_New activityDevice;
+    // Interface
+    Interface_Fragment_Device iFragmentDevice;
+
+    // Object
     Device oDevice;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        // Interface
+        iFragmentDevice = (Interface_Fragment_Device)getActivity();
 
-        // Instances
-        activityDevice = (Activity_Device_New)getActivity();
-        oDevice = activityDevice.getDevice();
+        // Object
+        oDevice = iFragmentDevice.getDevice();
 
         // Layout
         setLayout(inflater, container);
@@ -96,11 +99,13 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
     }
 
     public void updateLayout() {
-        oDevice = activityDevice.getDevice();
+        Log.i("jooo", "hii");
+        oDevice = iFragmentDevice.getDevice();
 
         setClickable(oDevice != null);
 
         if (oDevice != null) {
+            Log.i("jooo", "dasdf ");
             if (oDevice.getoColor() != null) {
                 tvColor.setText(oDevice.getoColor().getcNameDE());
             } else {
@@ -128,11 +133,10 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
                 tvStation.setText(getString(R.string.unknown));
             }
             if (oDevice.getoStoragePlace() != null) {
+                trLKU.setVisibility(View.VISIBLE);
                 tvLKU.setText(Integer.toString(oDevice.getoStoragePlace().getkLku()));
-                tvLKU.setVisibility(View.VISIBLE);
             } else {
-                tvLKU.setText(getString(R.string.unknown));
-                tvLKU.setVisibility(View.GONE);
+                trLKU.setVisibility(View.GONE);
             }
             if (oDevice.isBatteryContained() != null) {
                 tvBatteryContained.setText(oDevice.isBatteryContained() ? getString(R.string.yes) : getString(R.string.yes));
@@ -179,33 +183,46 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.trLKU:
-                activityDevice.onClickLku();
+                iFragmentDevice.onClickLku();
                 //requestLKU();
                 break;
             case R.id.trStation:
-                activityDevice.onClickStation();
+                iFragmentDevice.onClickStation();
                 break;
             case R.id.trColor:
-                activityDevice.onClickColor();
+                iFragmentDevice.onClickColor();
                 break;
             case R.id.trShape:
-                activityDevice.onClickShape();
+                iFragmentDevice.onClickShape();
                 break;
             case R.id.trBatteryContained:
-                activityDevice.onClickBatteryContained();
+                iFragmentDevice.onClickBatteryContained();
                 break;
             case R.id.trBattery:
-                activityDevice.onClickDeviceBattery();
+                iFragmentDevice.onClickDeviceBattery();
                 break;
             case R.id.trBackcoverContained:
-                activityDevice.onClickBackcoverContained();
+                iFragmentDevice.onClickBackcoverContained();
                 break;
             case R.id.trDamages:
-                activityDevice.onClickDamages();
+                iFragmentDevice.onClickDamages();
                 break;
             case R.id.trState:
-                activityDevice.onClickState();
+                iFragmentDevice.onClickState();
                 break;
         }
+    }
+
+    public interface Interface_Fragment_Device {
+        Device getDevice();
+        void onClickLku();
+        void onClickStation();
+        void onClickColor();
+        void onClickShape();
+        void onClickBatteryContained();
+        void onClickDeviceBattery();
+        void onClickBackcoverContained();
+        void onClickDamages();
+        void onClickState();
     }
 }

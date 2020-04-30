@@ -71,7 +71,7 @@ public class Activity_LKU_Device_Manager extends Activity_Device {
                                 }
                             });
                             Toast.makeText(Activity_LKU_Device_Manager.this, getString(R.string.device_written_off), Toast.LENGTH_LONG).show();
-                            mPrinter.printDevice(oDevice);
+                            mPrinter.printDeviceId(oDevice);
                         } else {
                             uNetwork.assignLku(oDevice, new Interface_VolleyCallback_Int() {
                                 @Override
@@ -90,7 +90,7 @@ public class Activity_LKU_Device_Manager extends Activity_Device {
                                         }
                                     });
                                     Toast.makeText(Activity_LKU_Device_Manager.this, getString(R.string.device_stored_lku), Toast.LENGTH_LONG).show();
-                                    mPrinter.printDevice(oDevice);
+                                    mPrinter.printDeviceId(oDevice);
                                 }
 
                                 @Override
@@ -110,7 +110,7 @@ public class Activity_LKU_Device_Manager extends Activity_Device {
                                         }
                                     });
                                     Toast.makeText(Activity_LKU_Device_Manager.this, getString(R.string.device_stored_excess_stock), Toast.LENGTH_LONG).show();
-                                    mPrinter.printDevice(oDevice);
+                                    mPrinter.printDeviceId(oDevice);
                                 }
                             });
 
@@ -159,7 +159,7 @@ public class Activity_LKU_Device_Manager extends Activity_Device {
                     @Override
                     public void onSuccess(int i) {
                         updateUI();
-                        mPrinter.printDevice(oDevice);
+                        mPrinter.printDeviceId(oDevice);
                     }
 
                     @Override

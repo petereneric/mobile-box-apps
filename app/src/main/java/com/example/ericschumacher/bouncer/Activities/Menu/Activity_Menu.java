@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.ericschumacher.bouncer.Activities.Activity_Article;
 import com.example.ericschumacher.bouncer.Activities.Activity_Battery;
 import com.example.ericschumacher.bouncer.Activities.Activity_Bouncer;
 import com.example.ericschumacher.bouncer.Activities.Activity_Device_New;
@@ -23,6 +24,7 @@ import com.example.ericschumacher.bouncer.Activities.Activity_Lifter_LkuStock;
 import com.example.ericschumacher.bouncer.Activities.Activity_Manager;
 import com.example.ericschumacher.bouncer.Activities.Activity_Model;
 import com.example.ericschumacher.bouncer.Activities.Activity_Turing;
+import com.example.ericschumacher.bouncer.Activities.Activity_Article_Verify;
 import com.example.ericschumacher.bouncer.Activities.Activity_Zwegat;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Menu;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
@@ -48,6 +50,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
     RadioButton rbPrinterTwo;
     RadioButton rbPrinterThree;
     RadioButton rbPrinterFour;
+    RadioButton rbPrinterFive;
 
     ArrayList<Object_Menu> lMenu = new ArrayList<>();
 
@@ -99,6 +102,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         rbPrinterTwo = findViewById(R.id.rbPrinterTwo);
         rbPrinterThree = findViewById(R.id.rbPrinterThree);
         rbPrinterFour = findViewById(R.id.rbPrinterFour);
+        rbPrinterFive = findViewById(R.id.rbPrinterFive);
 
         if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_ONE).equals(Constants_Intern.ID_PRINTER_ONE)) {
             rbPrinterOne.setChecked(true);
@@ -112,6 +116,9 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_ONE).equals(Constants_Intern.ID_PRINTER_FOUR)) {
             rbPrinterFour.setChecked(true);
         }
+        if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_ONE).equals(Constants_Intern.ID_PRINTER_FIVE)) {
+            rbPrinterFive.setChecked(true);
+        }
 
         updateUI();
     }
@@ -120,6 +127,8 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         lMenu.add(new Object_Menu(getString(R.string.model_manager), new Intent(this, Activity_Model.class), R.color.color_defect_reuse));
         lMenu.add(new Object_Menu(getString(R.string.device_manager), new Intent(this, Activity_Device_New.class), R.color.color_intact_reuse));
         lMenu.add(new Object_Menu(getString(R.string.activity_lifter_stock_lku), new Intent(this, Activity_Lifter_LkuStock.class), R.color.color_orange));
+        lMenu.add(new Object_Menu(getString(R.string.activity_verify_article), new Intent(this, Activity_Article_Verify.class), R.color.color_defect_reuse_light));
+        lMenu.add(new Object_Menu(getString(R.string.article_manager), new Intent(this, Activity_Article.class), R.color.color_intact_reuse_dark));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_bouncer), new Intent(this, Activity_Bouncer.class), R.color.color_primary));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_juicer), new Intent(this, Activity_Juicer.class), R.color.color_primary_dark));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_lku_booker), new Intent(this, Activity_LKU_Booker.class), R.color.color_secondary));
@@ -164,6 +173,10 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
             case R.id.rbPrinterFour:
                 if (checked)
                     SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_FOUR).commit();
+                break;
+            case R.id.rbPrinterFive:
+                if (checked)
+                    SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_FIVE).commit();
                 break;
         }
     }

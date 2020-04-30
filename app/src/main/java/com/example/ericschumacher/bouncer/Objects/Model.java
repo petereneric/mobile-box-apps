@@ -174,6 +174,7 @@ public class Model implements Parcelable, Serializable {
 
     public void setlModelBatteries(ArrayList<Model_Battery> lModelBatteries) {
         this.lModelBatteries = lModelBatteries;
+        update();
     }
 
     public ArrayList<Model_Battery> addlModelBatteries(Model_Battery oModelBattery) {
@@ -240,6 +241,7 @@ public class Model implements Parcelable, Serializable {
 
     public void setoCharger(com.example.ericschumacher.bouncer.Objects.Additive.Charger oCharger) {
         this.oCharger = oCharger;
+        update();
     }
 
     public com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer getoManufacturer() {
@@ -274,6 +276,7 @@ public class Model implements Parcelable, Serializable {
 
     public void setnDps(int nDps) {
         this.nDps = nDps;
+        update();
     }
 
     public Boolean isBatteryRemovable() {

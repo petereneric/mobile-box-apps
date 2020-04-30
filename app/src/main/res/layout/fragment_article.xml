@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rlMain">
+
+    <RelativeLayout
+        android:id="@+id/rlArticle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lHeader">
+
+        <ImageView
+            android:id="@+id/ivOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tableLayoutOne"
+            android:layout_toLeftOf="@id/ivTwo" />
+
+        <ImageView
+            android:id="@+id/ivTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tableLayoutOne"
+            android:layout_alignParentRight="true" />
+
+        <TableLayout
+            android:id="@+id/tableLayoutOne"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/tvArticle"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_table_article_value"
+                    android:text="Nokia 6300 silber sehr gut"
+                    android:textSize="20sp"
+                    android:textStyle="italic"
+                    android:gravity="center_horizontal"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayoutTwo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tableLayoutOne"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true">
+
+            <TableRow>
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_table_article_key"
+                    android:text="@string/sku" />
+
+                <TextView
+                    android:id="@+id/tvSku"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_table_article_value"
+                    android:text="1-003" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_table_article_key"
+                    android:text="@string/model" />
+
+                <TextView
+                    android:id="@+id/tvModel"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_table_article_value"
+                    android:text="6300" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_table_article_key"
+                    android:text="@string/color" />
+
+                <TextView
+                    android:id="@+id/tvColor"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_table_article_value"
+                    android:text="Silber" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_table_article_key"
+                    android:text="@string/shape" />
+
+                <TextView
+                    android:id="@+id/tvShape"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_table_article_value"
+                    android:text="Silber" />
+            </TableRow>
+
+            <TableRow>
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_table_article_key"
+                    android:text="@string/stock_amount" />
+
+                <TextView
+                    android:id="@+id/tvStockAmount"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_table_article_value"
+                    android:text="0" />
+            </TableRow>
+
+        </TableLayout>
+
+    </RelativeLayout>
+
+
+    <include
+        android:id="@+id/lHeader"
+        layout="@layout/layout_header" />
+
+</RelativeLayout>

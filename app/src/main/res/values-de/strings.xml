@@ -121,7 +121,7 @@
     <string name="toast_request_permission_camera">Kamera-Nutzung erlauben.</string>
     <string name="click_for_back_picture">Bitte kicken für Rückseiten-Bild (Lange drücken zum Überspringen)</string>
     <string name="battery">Batterie</string>
-    <string name="unknown">Unbekannt</string>
+    <string name="unknown">-</string>
     <string name="charger">Ladekabel</string>
     <string name="doubleModel">Doppelte Modele</string>
     <string name="devices_no_model_color_shape_lku">Geräte ohne Model, Farbe und Zustand in Lku</string>

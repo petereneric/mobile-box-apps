@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/llSettings"
+        android:layout_above="@id/llFooter"
         android:layout_below="@id/lHeader"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp">
@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:id="@+id/llBooking"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <include
                 android:id="@+id/lBooking"
@@ -35,11 +35,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="128dp"
-                android:layout_marginBottom="16dp"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/llAction"
+                android:layout_marginTop="64dp"
                 android:gravity="center_horizontal">
 
                 <Button
@@ -61,12 +60,13 @@
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/llSettings"
+        android:id="@+id/llFooter"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_alignParentBottom="true"
         android:layout_margin="8dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="0dp"

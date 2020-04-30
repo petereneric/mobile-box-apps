@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -29,7 +30,9 @@ public class Fragment_Booking_In_Lku_Stock extends Fragment_Booking implements V
     // Layout
     int kLayout = R.layout.fragment_booking_lku_in;
     Button bSpaceFull;
+    LinearLayout llFooter;
     TextView tvStockCapacity;
+
 
     // Data
     StoragePlace oStoragePlaceSuggested;
@@ -46,6 +49,7 @@ public class Fragment_Booking_In_Lku_Stock extends Fragment_Booking implements V
         super.setLayout(inflater, container);
         // Initiate
         bSpaceFull = vLayout.findViewById(R.id.bSpaceFull);
+        llFooter = vLayout.findViewById(R.id.llFooter);
         tvStockCapacity = vLayout.findViewById(R.id.tvStockCapacity);
 
         // OnClickListener
@@ -59,6 +63,7 @@ public class Fragment_Booking_In_Lku_Stock extends Fragment_Booking implements V
         suggestLku();
 
         // StockPrime Capacity
+        llFooter.setVisibility(View.GONE);
         cVolley.getResponse(Request.Method.GET, Urls.URL_GET_INFORMATION_STOCK_PRIME_INFORMATION, null, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
@@ -93,6 +98,9 @@ public class Fragment_Booking_In_Lku_Stock extends Fragment_Booking implements V
                     shape.setCornerRadii(new float[] {Utility_Density.getDp(Context, 16),Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16)});
                     shape.setStroke(Utility_Density.getDp(Context, 1), ResourcesCompat.getColor(Context.getResources(), kColor, null));
                     tvStockCapacity.setBackground(shape);
+
+                    // Visibility
+                    llFooter.setVisibility(View.VISIBLE);
                 }
             }
         });

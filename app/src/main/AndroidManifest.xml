@@ -26,9 +26,10 @@
         <activity android:name=".Activities.Activity_Zwegat"></activity>
         <activity android:name=".Activities.Activity_Manager"></activity>
         <activity android:name=".Activities.Activity_Battery"></activity>
-        <activity android:name=".Activities.Activity_Model">
-        </activity>
+        <activity android:name=".Activities.Activity_Model"></activity>
+        <activity android:name=".Activities.Activity_Article"></activity>
         <activity android:name=".Activities.Activity_Device_New"></activity>
+        <activity android:name=".Activities.Activity_Article_Verify"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

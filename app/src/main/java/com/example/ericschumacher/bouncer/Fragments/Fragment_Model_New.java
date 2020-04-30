@@ -180,7 +180,7 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
             if (model.getoBattery() != null && model.getoBattery().getLku() != null) {
                 tvBatteryLku.setText(model.getoBattery().getoManufacturer().getcShortcut()+" - "+Integer.toString(model.getoBattery().getLku()));
             } else {
-                tvBattery.setText("-");
+                tvBatteryLku.setText(getString(R.string.unknown));
             }
 
         } else {

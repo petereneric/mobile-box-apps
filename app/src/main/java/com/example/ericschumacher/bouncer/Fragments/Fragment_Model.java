@@ -134,48 +134,50 @@ public class Fragment_Model extends Fragment implements View.OnClickListener, In
             if (model.getName() != null) {
                 tvName.setText(model.getName());
             } else {
-                tvName.setText(Constants_Intern.UNKOWN);
+                tvName.setText(getActivity().getString(R.string.no_value));
             }
             if (model.getoManufacturer() != null) {
                 tvManufacturer.setText(model.getoManufacturer().getName());
             } else {
-                tvManufacturer.setText(Constants_Intern.UNKOWN);
+                tvManufacturer.setText(getActivity().getString(R.string.no_value));
             }
             if (model.getoCharger() != null) {
                 tvCharger.setText(model.getoCharger().getName());
             } else {
-                tvCharger.setText(Constants_Intern.UNKOWN);
+                tvCharger.setText(getActivity().getString(R.string.no_value));
             }
             tvPhone.setText(model.gettPhoneName(getActivity()));
             if (model.isBatteryRemovable() != null) {
                 tvBatteryRemovable.setText((model.isBatteryRemovable()) ? getString(R.string.yes) : getString(R.string.no));
             } else {
-                tvBatteryRemovable.setText(Constants_Intern.UNKOWN);
+                tvBatteryRemovable.setText(getActivity().getString(R.string.no_value));
             }
             if (model.isBackcoverRemovable() != null) {
                 tvBackcoverRemovable.setText((model.isBackcoverRemovable()) ? getString(R.string.yes) : getString(R.string.no));
             } else {
-                tvBackcoverRemovable.setText(Constants_Intern.UNKOWN);
+                tvBackcoverRemovable.setText(getActivity().getString(R.string.no_value));
             }
             if (model.getoBattery() != null) {
                 tvBattery.setText(model.getoBattery().getName());
             } else {
-                tvBattery.setText(Constants_Intern.UNKOWN);
+                tvBattery.setText(getActivity().getString(R.string.no_value));
             }
             if (model.getoBattery() != null && model.getoBattery().getLku() != null) {
+                tvBatteryLku.setText("-");
                 Log.i("BBBAT: ", Integer.toString(model.getoBattery().getLku()));
                 tvBatteryLku.setText(model.getoBattery().getoManufacturer().getcShortcut()+"-"+Integer.toString(model.getoBattery().getLku()));
             } else {
-                tvBattery.setText("-");
+                tvBatteryLku.setText("-");
             }
             tvDps.setText(Integer.toString(model.getnDps()));
             tvDefaultExploitation.setText(model.getExploitationName(getActivity()));
         } else {
-            tvName.setText(Constants_Intern.UNKOWN);
-            tvManufacturer.setText(Constants_Intern.UNKOWN);
-            tvCharger.setText(Constants_Intern.UNKOWN);
-            tvBattery.setText(Constants_Intern.UNKOWN);
-            tvDps.setText(Constants_Intern.UNKOWN);
+            tvName.setText(getActivity().getString(R.string.no_value));
+            tvManufacturer.setText(getActivity().getString(R.string.no_value));
+            tvCharger.setText(getActivity().getString(R.string.no_value));
+            tvBattery.setText(getActivity().getString(R.string.no_value));
+            tvBatteryLku.setText(getActivity().getString(R.string.no_value));
+            tvDps.setText(getActivity().getString(R.string.no_value));
 
         }
 

@@ -9,9 +9,9 @@
         android:id="@+id/tvText"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:background="@drawable/background_rounded_corners_grey"
+        android:background="@drawable/background_stroke_round_grey"
         android:text="Finish"
-        android:textColor="@color/color_text_secondary"
+        android:textColor="@color/color_grey"
         android:textSize="24sp"
         android:gravity="center"/>
 

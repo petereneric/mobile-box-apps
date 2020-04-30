@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@drawable/background_rounded_corners_grey_secondary">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/tvLku"
+        android:textSize="@dimen/size_text_item_main"
+        android:textColor="@color/color_text_primary"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:gravity="center_vertical"
+        android:text="5214"
+        />
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:id="@+id/vDividerOne"
+        android:layout_toRightOf="@id/tvLku"
+        android:background="@color/color_text_secondary"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/tvPosition"
+        android:layout_toRightOf="@id/vDividerOne"
+        android:textSize="@dimen/size_text_item_main"
+        android:textColor="@color/color_text_primary"
+        android:paddingLeft="24dp"
+        android:paddingRight="36dp"
+        android:gravity="center_vertical"
+        android:text="5"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:id="@+id/tvLoadingStation"
+        android:textSize="@dimen/size_text_item_main"
+        android:textColor="@color/color_text_primary"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:gravity="center_vertical"
+        android:text="IV"
+        />
+
+    <View
+        android:layout_width="1px"
+        android:layout_height="match_parent"
+        android:id="@+id/vDividerTwo"
+        android:layout_toLeftOf="@id/tvLoadingStation"
+        android:background="@color/color_text_secondary"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/tvPosition"
+        android:layout_toLeftOf="@id/vDividerTwo"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvStock"
+            android:textSize="@dimen/size_text_item_description"
+            android:textColor="@color/color_text_secondary"
+            android:text="Haupt-Lager"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvIdDevice"
+            android:textSize="@dimen/size_text_item_description_sub"
+            android:textColor="@color/color_text_tertiary"
+            android:text="Id: 87384"
+            android:layout_marginTop="8dp"
+            />
+
+    </LinearLayout>
+</RelativeLayout>
