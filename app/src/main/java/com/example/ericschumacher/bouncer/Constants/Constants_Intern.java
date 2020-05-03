@@ -301,4 +301,13 @@ public class Constants_Intern {
 
     public static final int TYPE_ERROR_RECLEAN = 0;
     public static final int TYPE_ERROR_DEFECT = 1;
+    public static final String JUICER_STOCK_PRIME_SELECTED = "JUICER_STOCK_PRIME_SELECTED";
+    public static final String JUICER_STOCK_EXCESS_SELECTED = "JUICER_STOCK_EXCESS_SELECTED";
+    public static final String JUICER_LOADING_STATION_ONE_SELECTED = "JUICER_LOADING_STATION_ONE_SELECTED";
+    public static final String JUICER_LOADING_STATION_TWO_SELECTED = "JUICER_LOADING_STATION_TWO_SELECTED";
+    public static final String JUICER_LOADING_STATION_THREE_SELECTED = "JUICER_LOADING_STATION_THREE_SELECTED";
+    public static final String JUICER_LOADING_STATION_FOUR_SELECTED = "JUICER_LOADING_STATION_FOUR_SELECTED";
+    public static final String SEARCH_JUICER_TYPE = "SEARCH_JUICER_TYPE";
+    public static final int SEARCH_JUICER_TYPE_IMEI_DEVICE = 1;
+    public static final int SEARCH_JUICER_TYPE_ID_DEVICE = 0;
 }

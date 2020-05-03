@@ -47,4 +47,6 @@ public class Urls {
     public final static String URL_PUT_STOCK_PRIME_HIGHEST_LKU = URL_REST_API+"stock_prime/highest_lku/";
     public final static String URL_GET_STOCK_PRIME_LKU_SUGGESTION = URL_REST_API+"stock_prime/lku/suggestion/";
     public final static String URL_GET_ARTICLE = URL_REST_API+"article/";
+    public final static String URL_POST_ID_MODEL_COLOR_SHAPE_FOR_JUICER = URL_REST_API+"id_model_color_shape/juicer";
+    public final static String URL_GET_DEVICES_BY_ID_MODEL_COLOR_SHAPE_FOR_JUICER = URL_REST_API+"devices/juicer/";
 }

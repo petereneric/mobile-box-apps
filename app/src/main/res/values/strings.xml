@@ -259,6 +259,15 @@
     <string name="device_unknown">Device unknown</string>
     <string name="reclean">Reclean</string>
     <string name="defect">Defect</string>
+    <string name="stock_prime_short">Prime</string>
+    <string name="stock_excess_short">Excess</string>
+    <string name="roman_one">I</string>
+    <string name="roman_two">II</string>
+    <string name="roman_three">III</string>
+    <string name="roman_four">IV</string>
+    <string name="juicer">Juicer</string>
+    <string name="stock">Stock</string>
+    <string name="loadingstation">Loadingstation</string>
     />
 
     // Not translated

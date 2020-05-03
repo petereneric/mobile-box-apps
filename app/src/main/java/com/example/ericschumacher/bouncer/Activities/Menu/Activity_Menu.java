@@ -19,6 +19,7 @@ import com.example.ericschumacher.bouncer.Activities.Activity_Battery;
 import com.example.ericschumacher.bouncer.Activities.Activity_Bouncer;
 import com.example.ericschumacher.bouncer.Activities.Activity_Device_New;
 import com.example.ericschumacher.bouncer.Activities.Activity_Juicer;
+import com.example.ericschumacher.bouncer.Activities.Activity_Juicer_New;
 import com.example.ericschumacher.bouncer.Activities.Activity_LKU_Booker;
 import com.example.ericschumacher.bouncer.Activities.Activity_Lifter_LkuStock;
 import com.example.ericschumacher.bouncer.Activities.Activity_Manager;
@@ -129,6 +130,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         lMenu.add(new Object_Menu(getString(R.string.activity_lifter_stock_lku), new Intent(this, Activity_Lifter_LkuStock.class), R.color.color_orange));
         lMenu.add(new Object_Menu(getString(R.string.activity_verify_article), new Intent(this, Activity_Article_Verify.class), R.color.color_defect_reuse_light));
         lMenu.add(new Object_Menu(getString(R.string.article_manager), new Intent(this, Activity_Article.class), R.color.color_intact_reuse_dark));
+        lMenu.add(new Object_Menu(getString(R.string.juicer), new Intent(this, Activity_Juicer_New.class), R.color.color_grey));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_bouncer), new Intent(this, Activity_Bouncer.class), R.color.color_primary));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_juicer), new Intent(this, Activity_Juicer.class), R.color.color_primary_dark));
         lMenu.add(new Object_Menu(getString(R.string.activity_name_lku_booker), new Intent(this, Activity_LKU_Booker.class), R.color.color_secondary));

@@ -189,4 +189,5 @@ public class Constants_Extern extends Constants_Intern {
     public static final String STOCK_AMOUNT = "STOCK_AMOUNT";
     public static final String AMOUNT_GB = "AMOUNT_GB";
     public static final String ID_ARTIKEL = "ID_ARTIKEL";
+    public static final String LIST_ID_MODEL_COLOR_SHAPE = "LIST_ID_MODEL_COLOR_SHAPE";
 }
