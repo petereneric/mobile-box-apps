@@ -82,6 +82,7 @@ public class Fragment_Choice extends Fragment {
     // Interface
     public interface Interface_Choice {
         public void returnChoice(String cTag, Object object);
+        void unknownChoice(String cTag);
     }
 
     public int getSpanCount() {

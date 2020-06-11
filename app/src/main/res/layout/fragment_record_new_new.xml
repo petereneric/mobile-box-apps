@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lHeader"
+        android:orientation="horizontal"
+        android:id="@+id/llTable">
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="@dimen/layout_weight_record_row_one">
+
+            <TableRow android:id="@+id/trNameCollector">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_record_key_one"
+                    android:text="@string/name_collector" />
+                
+                <TextView
+                    android:id="@+id/tvNameCollector"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_record_value_one"
+                    android:text="Bundeswehr Sozialwerk" />
+                
+            </TableRow>
+
+            <TableRow android:id="@+id/trDateCreation">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_record_key_one"
+                    android:text="@string/date_creation" />
+
+                <TextView
+                    android:id="@+id/tvDateCreation"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_record_value_one"
+                    android:text="11.12.2020" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trDateLastUpdate">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_record_key_one"
+                    android:text="@string/date_last_update" />
+
+                <TextView
+                    android:id="@+id/tvDateLastUpdate"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_record_value_one"
+                    android:text="11.12.2020" />
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayoutTwo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="@dimen/layout_weight_record_row_two">
+
+            <TableRow android:id="@+id/trRecycling">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_record_key_two"
+                    android:text="@string/recycling" />
+
+                <TextView
+                    android:id="@+id/tvRecycling"
+                    style="@style/tv_tableRow"
+                    android:layout_weight="@dimen/layout_weight_record_value_two"
+                    android:text="11" />
+
+            </TableRow>
+
+            <TableRow android:id="@+id/trReuse">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_record_key_two"
+                    android:text="@string/reuse" />
+
+                <TextView
+                    android:id="@+id/tvReuse"
+                    style="@style/tv_tableRow"
+                    android:layout_weight="@dimen/layout_weight_record_value_two"
+                    android:text="5" />
+
+            </TableRow>
+
+            <TableRow android:id="@+id/trRepair"
+                android:visibility="gone">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_record_key_two"
+                    android:text="@string/repair" />
+
+                <TextView
+                    android:id="@+id/tvRepair"
+                    style="@style/tv_tableRow"
+                    android:layout_weight="@dimen/layout_weight_record_value_two"
+                    android:text="2" />
+
+            </TableRow>
+
+            <TableRow android:id="@+id/trTotal">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_record_key_two"
+                    android:text="@string/total" />
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    style="@style/tv_tableRow"
+                    android:layout_weight="@dimen/layout_weight_record_value_two"
+                    android:text="18" />
+
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/llTable"
+        android:orientation="horizontal">
+        
+        <Button
+            style="@style/button_main_new"
+            android:layout_weight="1"
+            android:text="@string/pause"
+            android:id="@+id/bPause"
+            android:layout_marginRight="6dp"/>
+
+        <Button
+            style="@style/button_sub_new"
+            android:layout_weight="1"
+            android:text="@string/finish"
+            android:id="@+id/bFinish"
+            android:layout_marginLeft="6dp"/>
+        
+    </LinearLayout>
+
+    <include
+        android:id="@+id/lHeader"
+        layout="@layout/layout_header" />
+
+</RelativeLayout>

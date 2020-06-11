@@ -31,6 +31,7 @@
         <activity android:name=".Activities.Activity_Device_New"></activity>
         <activity android:name=".Activities.Activity_Article_Verify"></activity>
         <activity android:name=".Activities.Activity_Juicer_New"></activity>
+        <activity android:name=".Activities.Activity_Bouncer_New"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -74,6 +74,8 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
     public void setLayout() {
         super.setLayout();
 
+        etSearch.setOnEditorActionListener(this);
+
         // Toolbar
         getSupportActionBar().setTitle(getString(R.string.article_manager));
     }
@@ -128,31 +130,49 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
 
     public void updateArticle() {
         Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                cVolley.getResponse(Request.Method.GET, Urls.URL_GET_ARTICLE + oDevice.getIdDevice(), null, new Interface_VolleyResult() {
+        switch (SharedPreferences.getInt(Constants_Intern.SEARCH_ARTICLE_TYPE, 0)) {
+            case Constants_Intern.MAIN_SEARCH_ARTICLE_TYPE_ID_DEVICE:
+                handler.postDelayed(new Runnable() {
                     @Override
-                    public void onResult(JSONObject oJson) throws JSONException {
-                        if (Volley_Connection.successfulResponse(oJson)) {
-                            if (!etSearch.getText().toString().equals("") && oJson.getInt(Constants_Extern.ID_DEVICE) == Integer.parseInt(etSearch.getText().toString())) {
-                                oArticle = new Article(oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
-                                getSupportFragmentManager().beginTransaction().show(fArticle).commit();
-                                getSupportFragmentManager().beginTransaction().show(fPrintArticle).commit();
-                                fArticle.updateLayout();
+                    public void run() {
+                        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_ARTICLE + oDevice.getIdDevice(), null, new Interface_VolleyResult() {
+                            @Override
+                            public void onResult(JSONObject oJson) throws JSONException {
+                                if (Volley_Connection.successfulResponse(oJson)) {
+                                    if (!etSearch.getText().toString().equals("") && oJson.getInt(Constants_Extern.ID_DEVICE) == Integer.parseInt(etSearch.getText().toString())) {
+                                        oArticle = new Article(oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
+                                    } else {
+                                        oArticle = null;
+                                    }
+                                    updateLayout();
+                                }
+
                             }
-                        } else {
-                            oArticle = null;
-                            if (oDevice != null) {
-                                Bundle bundle = new Bundle();
-                                bundle.putString(Constants_Intern.TEXT, getString(R.string.article_not_found));
-                                showFragment(new Fragment_Display(), bundle, Constants_Intern.FRAGMENT_DISPLAY_ARTICLE_NOT_FOUND, null);
-                            }
-                        }
+                        });
                     }
-                });
-            }
-        }, 2000);
+                }, 2000);
+                break;
+            case Constants_Intern.MAIN_SEARCH_ARTICLE_TYPE_IMEI:
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_ARTICLE + oDevice.getIdDevice(), null, new Interface_VolleyResult() {
+                            @Override
+                            public void onResult(JSONObject oJson) throws JSONException {
+                                if (Volley_Connection.successfulResponse(oJson)) {
+                                        oArticle = new Article(oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
+
+                                } else {
+                                    oArticle = null;
+                                }
+                                updateLayout();
+                            }
+                        });
+                    }
+                }, 2000);
+                break;
+        }
+
     }
 
 
@@ -240,6 +260,7 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
                             } else {
                                 Utility_Toast.show(Activity_Article.this, R.string.imei_unknown);
                                 removeFragments();
+                                reset();
                             }
                         }
                     }
@@ -267,6 +288,7 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
             case Constants_Intern.TYPE_PRINT_ARTICLE:
                 Log.i("jaaa", "kommet");
                 mPrinter.printDeviceSku(oArticle, oDevice);
+                reset();
         }
     }
 
@@ -275,14 +297,26 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
         switch (cTag) {
             case Constants_Intern.FRAGMENT_DISPLAY_EDIT_NEW_ARTICLE:
                 reset();
+            case Constants_Intern.FRAGMENT_DISPLAY_ARTICLE_NOT_FOUND:
+                reset();
         }
     }
 
     @Override
-    public void returnVerifyArticle(String cTag, boolean bPrint) {
-        if (bPrint) mPrinter.printDeviceSku(oArticle, oDevice);
-        reset();
-        removeFragment(cTag);
+    public void returnVerifyArticle(final String cTag, final boolean bPrint) {
+        cVolley.getResponse(Request.Method.PUT, Urls.URL_PUT_ARTICLE_BOOKING_INTO+oArticle.getkArticle()+"/1/7", null, new Interface_VolleyResult() {
+            @Override
+            public void onResult(JSONObject oJson) throws JSONException {
+                if (Volley_Connection.successfulResponse(oJson)) {
+                    if (bPrint) mPrinter.printDeviceSku(oArticle, oDevice);
+                    reset();
+                    removeFragment(cTag);
+                    Utility_Toast.show(Activity_Article.this, R.string.booking_successful);
+                } else {
+                    Utility_Toast.show(Activity_Article.this, R.string.booking_failed);
+                }
+            }
+        });
     }
 
 
@@ -332,14 +366,8 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
                 builder.create().show();
                 break;
             case R.id.etSearch:
-                if (!etSearch.getText().toString().equals("")) {
-                    if (!bSearchSelected) {
-                        etSearch.selectAll();
-                    }
-                    bSearchSelected = !bSearchSelected;
-                }
                 break;
-            case R.id.ivSearch:
+            case R.id.ivAction:
                 setKeyboard(Constants_Intern.CLOSE_KEYBOARD);
                 onSearch();
         }

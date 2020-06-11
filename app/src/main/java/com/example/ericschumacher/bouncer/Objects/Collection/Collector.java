@@ -79,7 +79,7 @@ public class Collector implements Serializable {
                 TitlePerson = oJson.getString(Constants_Extern.TITLE_PERSON);
             }
             if (!oJson.isNull(Constants_Extern.ADDRESS_FORMALLY)) {
-                bAddressFormally = oJson.getBoolean(Constants_Extern.ADDRESS_FORMALLY);
+                bAddressFormally = (oJson.getInt(Constants_Extern.ADDRESS_FORMALLY) == 1) ? true : false;
             }
             if (!oJson.isNull(Constants_Extern.PHONE_FIXED_LINE)) {
                 PhoneHome = oJson.getString(Constants_Extern.PHONE_FIXED_LINE);

@@ -190,4 +190,11 @@ public class Constants_Extern extends Constants_Intern {
     public static final String AMOUNT_GB = "AMOUNT_GB";
     public static final String ID_ARTIKEL = "ID_ARTIKEL";
     public static final String LIST_ID_MODEL_COLOR_SHAPE = "LIST_ID_MODEL_COLOR_SHAPE";
+    public static final String TYPE_LOADING_STATION = "TYPE_LOADING_STATION";
+    public static final String DATE_LAST_UPDATE = "DATE_LAST_UPDATE";
+    public static final String NUMBER_RECYCLING = "NUMBER_RECYCLING";
+    public static final String NUMBER_REUSE = "NUMBER_REUSE";
+    public static final String NUMBER_REPAIR= "NUMBER_REPAIR";
+
+    public static final String LIST_ARTICLES = "LIST_ARTICLES";
 }

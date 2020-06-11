@@ -72,7 +72,7 @@ public class Activity_Battery extends AppCompatActivity implements View.OnClickL
     private void setLayout() {
         setContentView(R.layout.activity_battery);
 
-        ivClear = findViewById(R.id.ivClear);
+        ivClear = findViewById(R.id.ivAction);
         etSearch = findViewById(R.id.etSearch);
         flSearch = findViewById(R.id.flSearch);
         TabLayout = findViewById(R.id.TabLayout);
@@ -155,7 +155,7 @@ public class Activity_Battery extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ivClear:
+            case R.id.ivAction:
                 etSearch.setText("");
                 break;
                 /*

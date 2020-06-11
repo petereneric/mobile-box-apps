@@ -10,6 +10,7 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
@@ -313,6 +314,7 @@ public class Volley_Connection {
         };
 
         Singleton_Request.getInstance(Context).addToRequestQueue(request);
+
     }
 
     public static void largeLog(String tag, String content) {
@@ -331,5 +333,14 @@ public class Volley_Connection {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void stopRequests() {
+        Singleton_Request.getInstance(Context).mRequestQueue.cancelAll(new RequestQueue.RequestFilter() {
+            @Override
+            public boolean apply(Request<?> request) {
+                return true;
+            }
+        });
     }
 }

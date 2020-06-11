@@ -162,7 +162,7 @@
     <string name="repair">Reparatur</string>
     <string name="defect_reuse">Defekt - Wiederverwendung</string>
     <string name="interaction_simple_choice">Einfache Auswahl</string>
-    <string name="intact_reuse">Intakt - Wiederverwendung</string>
+    <string name="intact_reuse">Wiederverwendung</string>
     <string name="backcover_contained">Rückschale enthalten</string>
     <string name="backcover_removable">Rückschale entnehmbar</string>
     <string name="interaction_multiple_choice">Mehrfach-Auswahl</string>

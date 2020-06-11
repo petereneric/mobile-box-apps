@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.widget.ContentLoadingProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/vProgressBar"
+        android:layout_centerInParent="true"
+        style="?android:attr/progressBarStyleLargeInverse"
+        android:layoutDirection="ltr"
+        android:progressTint="@color/color_primary"
+        android:foregroundTint="@color/color_primary"
+        android:backgroundTint="@color/color_primary"
+        android:progressBackgroundTint="@color/color_primary"
+        android:indeterminateTint="@color/color_primary"
+        android:secondaryProgressTint="@color/color_primary"/>
+
+</RelativeLayout>

@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Utility_Date {
+public class Utility_DateTime {
 
     public static Date stringToDate(String string) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -18,6 +18,11 @@ public class Utility_Date {
 
     public static String dateToString (Date date) {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
+        return format.format(date);
+    }
+
+    public static String dateTimeToString (Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy '-' HH:mm 'Uhr'");
         return format.format(date);
     }
 }

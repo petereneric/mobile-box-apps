@@ -355,15 +355,17 @@ public class Model implements Parcelable, Serializable {
     }
 
     public String getExploitationName(Context context) {
-        switch (tDefaultExploitation) {
-            case Constants_Intern.EXPLOITATION_NULL:
-                return Constants_Intern.UNKOWN;
-            case Constants_Intern.EXPLOITATION_RECYCLING:
-                return context.getString(R.string.recycling);
-            case Constants_Intern.EXPLOITATION_INTACT_REUSE:
-                return context.getString(R.string.reuse);
-            case Constants_Intern.EXPLOITATION_DEFECT_REUSE:
-                return context.getString(R.string.repair);
+        if (tDefaultExploitation != null) {
+            switch (tDefaultExploitation) {
+                case Constants_Intern.EXPLOITATION_NULL:
+                    return Constants_Intern.UNKOWN;
+                case Constants_Intern.EXPLOITATION_RECYCLING:
+                    return context.getString(R.string.recycling);
+                case Constants_Intern.EXPLOITATION_INTACT_REUSE:
+                    return context.getString(R.string.reuse);
+                case Constants_Intern.EXPLOITATION_DEFECT_REUSE:
+                    return context.getString(R.string.repair);
+            }
         }
         return null;
     }

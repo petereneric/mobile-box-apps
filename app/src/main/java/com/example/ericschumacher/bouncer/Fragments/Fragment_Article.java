@@ -1,11 +1,8 @@
 package com.example.ericschumacher.bouncer.Fragments;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,13 +85,8 @@ public class Fragment_Article extends Fragment {
             tvStockAmount.setText(Integer.toString(oArticle.getnAmountStock()));
 
             // Images
-            byte[] decodedString = Base64.decode(oArticle.getiOne(), Base64.DEFAULT);
-            Bitmap bitmapOne = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            ivOne.setImageBitmap(bitmapOne);
-
-            byte[] decodedStringTwo = Base64.decode(oArticle.getiTwo(), Base64.DEFAULT);
-            Bitmap bitmapTwo = BitmapFactory.decodeByteArray(decodedStringTwo, 0, decodedStringTwo.length);
-            ivTwo.setImageBitmap(bitmapTwo);
+            ivOne.setImageBitmap(oArticle.getBitmapOne());
+            ivTwo.setImageBitmap(oArticle.getBitmapTwo());
         }
     }
 }

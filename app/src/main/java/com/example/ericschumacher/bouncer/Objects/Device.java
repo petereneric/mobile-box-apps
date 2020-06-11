@@ -20,6 +20,8 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Eric Schumacher on 21.05.2018.
@@ -58,13 +60,15 @@ public class Device implements Serializable {
 
     Context Context;
 
-    public Device() {
+    public Device(Context context) {
         super();
+        Context = context;
         IdDevice = Constants_Intern.ID_UNKNOWN;
         oModel = new Model();
     }
 
-    public Device(String imei) {
+    public Device(Context context, String imei) {
+        Context = context;
         IMEI = imei;
     }
 
@@ -201,6 +205,40 @@ public class Device implements Serializable {
             Log.i("updateLayout json", getJson().toString());
             vConnection.execute(Request.Method.PUT, URL_UPDATE_DEVICE, getJson());
         }
+    }
+
+    public static ArrayList<Device> getDevices(Context context, JSONObject oJson) {
+        ArrayList<Device> lDevices = new ArrayList<>();
+        try {
+            JSONArray jsonArray = oJson.getJSONArray(Constants_Extern.DEVICES);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                lDevices.add(new Device(jsonObject, context));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return lDevices;
+    }
+
+    public static ArrayList<Device> sortByLku(ArrayList<Device> lDevices) {
+        Collections.sort(lDevices, new Comparator() {
+            public int compare(Object o1, Object o2) {
+                Integer lku1 = ((Device)o1).getoStoragePlace().getkLku();
+                Integer lku2 = ((Device)o2).getoStoragePlace().getkLku();
+                int sComp = lku1.compareTo(lku2);
+
+                if (sComp != 0) {
+                    return sComp;
+                }
+
+                Integer pos1 = ((Device)o1).getoStoragePlace().getnPosition();
+                Integer pos2 = ((Device)o2).getoStoragePlace().getnPosition();
+                return pos1.compareTo(pos2);
+
+            }
+        });
+        return lDevices;
     }
 
     public Battery getoBattery() {

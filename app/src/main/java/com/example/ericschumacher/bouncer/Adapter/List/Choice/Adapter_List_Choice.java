@@ -46,12 +46,14 @@ public class Adapter_List_Choice extends RecyclerView.Adapter<ViewHolder_Choice_
 
     @Override
     public boolean onLongClick(int position) {
-        return false;
+        return iFragmentChoice.onAdapterLongClick(position);
     }
 
     public interface Interface_Adapter_Choice {
 
         public void onAdapterClick(int position);
+
+        public boolean onAdapterLongClick(int position);
 
         public Integer getViewHolderLayout();
 

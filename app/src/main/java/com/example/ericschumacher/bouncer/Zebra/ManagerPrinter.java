@@ -20,6 +20,8 @@ import com.zebra.sdk.printer.ZebraPrinterFactory;
 import com.zebra.sdk.printer.ZebraPrinterLanguageUnknownException;
 import com.zebra.sdk.printer.ZebraPrinterLinkOs;
 
+import java.util.ArrayList;
+
 public class ManagerPrinter {
 
     ZebraPrinter Printer;
@@ -136,6 +138,42 @@ public class ManagerPrinter {
     }
 
     private byte[] getDeviceSku(Article oArticle, Device oDevice) {
+        String cId = Integer.toString(oDevice.getIdDevice());
+        String cSku = oArticle.getkSku();
+        String cManufacturer = oDevice.getoModel().getoManufacturer().getName();
+        String cModel = oDevice.getoModel().getName();
+
+        String cNumber;
+        String cTop;
+        String cShape;
+
+        if (oArticle.getkSku().substring(0,1).equals("A")) {
+            // New system
+            String s = "A-5-Space Gray-64 GB-sehr gut";
+            String s2 = "A-1-Schwarz-sehr gut";
+
+            int indexPosition = cSku.indexOf("-");
+            ArrayList<Integer> indexPositions = new ArrayList<>();
+            while (indexPosition >= 0) {
+                indexPositions.add(indexPosition);
+                indexPosition = cSku.indexOf("-", indexPosition+1);
+            }
+            cNumber = cSku.substring(0, indexPositions.get(1));
+            if (indexPositions.size() > 3) {
+                // With GB
+                cTop = cSku.substring(indexPositions.get(1)+1, indexPositions.get(3));
+                cShape = cSku.substring(indexPositions.get(3)+1);
+            } else {
+                // Without GB
+                cTop = cSku.substring(indexPositions.get(1)+1, indexPositions.get(2));
+                cShape = cSku.substring(indexPositions.get(2)+1);
+            }
+        } else {
+            // Old system
+            cTop = cSku;
+            cNumber = "";
+            cShape = "";
+        }
 
         String labelNew = "\u0010CT~~CD,~CC^~CT~\n" +
                 "^XA\n" +
@@ -157,18 +195,23 @@ public class ManagerPrinter {
                 "^XZ\n" +
                 "^XA\n" +
                 "^MMT\n" +
-                "^PW408\n" +
-                "^LL200\n" +
+                "^PW448\n" +
+                "^LL607\n" +
                 "^LS0\n" +
-                "^FO19,150^GB366,0,1^FS\n" +
-                "^FO20,78^GFA,29,48,48,:Z64:eJxb1KWxiHjEwAAAD1IUjw==:9549\n" +
-                "^FPH,3^FT146,55^A@N,25,25,TT0003M_^FH\\^CI28^FD"+oArticle.getkSku()+"^FS^CI27\n" +
-                "^BY2,3,20^FT133,185^BCN,,N,N\n" +
-                "^FH\\^FD>:"+oDevice.getIdDevice()+"^FS\n" +
-                "^FT180,141^BQN,2,2\n" +
-                "^FH\\^FDLA,"+oArticle.getkSku()+"^FS\n" +
+                "^FO386,20^GB0,584,1^FS\n" +
+                "^FO117,18^GFA,57,2344,4,:Z64:eJxjYGBgaGCAABjNgMYfFR8VHxUfFR8VHxUfFR8VH4niAMtoYgE=:D29D\n" +
+                "^FO343,18^GFA,57,2344,4,:Z64:eJxjYGBgaGCAABjNgMYfFR8VHxUfFR8VHxUfFR8VH4niAMtoYgE=:D29D\n" +
+                "^BY2,3,27^FT432,584^BCB,,N,N\n" +
+                "^FH\\^FD>:"+cId+">63^FS\n" +
+                "^FT157,248^BQN,2,6\n" +
+                "^FH\\^FDLA,"+cSku+"^FS\n" +
+                "^FPH,3^FT75,584^A@B,45,45,TT0003M_^FH\\^CI28^FD"+cTop+"^FS^CI27\n" +
+                "^FPH,8^FT228,584^A@B,79,79,TT0003M_^FH\\^CI28^FD"+cNumber+"^FS^CI27\n" +
+                "^FPH,3^FT295,584^A@B,45,45,TT0003M_^FH\\^CI28^FD"+cShape+"^FS^CI27\n" +
+                "^FPH,3^FT372,584^A@B,20,20,TT0003M_^FH\\^CI28^FD"+cManufacturer+" | "+cModel+"^FS^CI27\n" +
                 "^PQ1,0,1,Y\n" +
                 "^XZ\n";
+
         String label = "\u0010CT~~CD,~CC^~CT~\n" +
                 "^XA\n" +
                 "~TA000\n" +
@@ -189,27 +232,28 @@ public class ManagerPrinter {
                 "^XZ\n" +
                 "^XA\n" +
                 "^MMT\n" +
-                "^PW408\n" +
-                "^LL200\n" +
+                "^PW448\n" +
+                "^LL607\n" +
                 "^LS0\n" +
-                "^FO19,150^GFA,29,48,48,:Z64:eJxb1KWxiGi0gIEBAA9MFI0=:2CE5\n" +
-                "^FPH,3^FT55,126^A@N,17,18,TT0003M_^FH\\^CI28^FD"+oArticle.getkSku()+"^FS^CI27\n" +
-                "^BY2,3,20^FT133,186^BCN,,N,N\n" +
-                "^FH\\^FD>:"+oDevice.getIdDevice()+"^FS\n" +
-                "^FT170,96^BQN,2,3\n" +
-                "^FH\\^FDLA,"+oArticle.getkSku()+"^FS\n" +
+                "^FO386,20^GB0,584,1^FS\n" +
+                "^FO117,18^GFA,57,2344,4,:Z64:eJxjYGBgaGCAABjNgMYfFR8VHxUfFR8VHxUfFR8VH4niAMtoYgE=:D29D\n" +
+                "^FO343,18^GFA,57,2344,4,:Z64:eJxjYGBgaGCAABjNgMYfFR8VHxUfFR8VHxUfFR8VH4niAMtoYgE=:D29D\n" +
+                "^BY2,3,27^FT432,519^BCB,,N,N\n" +
+                "^FH\\^FD>:"+cId+">63^FS\n" +
+                "^FT164,255^BQN,2,6\n" +
+                "^FH\\^FDLA,"+cSku+"^FS\n" +
+                "^FPH,3^FT69,519^A@B,39,38,TT0003M_^FH\\^CI28^FD"+cTop+"^FS^CI27\n" +
+                "^FPH,8^FT228,519^A@B,79,79,TT0003M_^FH\\^CI28^FD"+cNumber+"^FS^CI27\n" +
+                "^FPH,3^FT287,519^A@B,37,36,TT0003M_^FH\\^CI28^FD"+cShape+"^FS^CI27\n" +
+                "^FPH,3^FT372,519^A@B,20,20,TT0003M_^FH\\^CI28^FD"+cManufacturer+" | "+cModel+"^FS^CI27\n" +
                 "^PQ1,0,1,Y\n" +
                 "^XZ\n";
 
-        return labelNew.getBytes();
+        return label.getBytes();
     }
 
     private byte[] getDeviceLabel(Device device) {
         String idDevice = Integer.toString(device.getIdDevice());
-        //String LKU = Integer.toString(device.getLKU());
-        String name = device.getoModel().getName();
-        String manufacturer = device.getoModel().getoManufacturer().getName();
-        String color = device.getoColor().getName();
         String shape = device.getoShape().getName();
         String cState = device.getStateName();
         String lkuBattery;
@@ -219,86 +263,9 @@ public class ManagerPrinter {
         } else {
             lkuBattery = "-";
         }
+        String cLoadingStation = device.getoModel().getoCharger().gettLoadingStation();
+        String cCharger = device.getoModel().getoCharger().getName();
 
-
-        String label = "\u0010CT~~CD,~CC^~CT~\n" +
-                "^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR6,6~SD15^JUS^LRN^CI0^XZ\n" +
-                "^XA\n" +
-                "^MMT\n" +
-                "^PW448\n" +
-                "^LL0406\n" +
-                "^LS0\n" +
-                "^FO32,64^GFA,00512,00512,00008,:Z64:\n" +
-                "eJxjYBheQB6IBUC4AUofYGCYAKIdWCB8BSiteMxiIkiNkorOJBBfRUUETKct0QGLu7C4THBgYBBqUsuZBKTlGQ+bgMSHGwAAbUQPDQ==:EF28\n" +
-                "^FO136,146^GB165,49,4^FS\n" +
-                "^FO37,30^GB107,34,4^FS\n" +
-                "^BY2,3,62^FT157,96^BCN,,N,N\n" +
-                "^FD>:"+idDevice+"^FS\n" +
-                "^FT94,53^A0N,20,19^FH\\^FD"+"FEHLT"+"^FS\n" +
-                "^FT314,125^A0N,23,21^FH\\^FD"+name+"^FS\n" +
-                "^FT187,124^A0N,23,19^FH\\^FD"+manufacturer+"^FS\n" +
-                "^FT345,183^A0N,23,16^FH\\^FD"+idDevice+"^FS\n" +
-                "^FT37,136^A0N,20,19^FH\\^FD"+color+"^FS\n" +
-                "^FT37,161^A0N,17,16^FH\\^FD"+shape+"^FS\n" +
-                "^FO33,108^GB92,0,2^FS\n" +
-                "^FT146,181^A0N,28,28^FH\\^FD"+"LKU Lagerung"+"^FS\n" +
-                "^FT43,52^A0N,20,19^FH\\^FDLKU:^FS\n" +
-                "^FO312,134^GE93,64,4^FS\n" +
-                "^FT354,159^A0N,17,14^FH\\^FDID^FS\n" +
-                "^PQ1,0,1,Y^XZ";
-
-
-        String labelSimple = "\u0010CT~~CD,~CC^~CT~\n" +
-                "^XA~TA000~JSN^LT0^MNW^MTD^PON^PMN^LH0,0^JMA^PR6,6~SD15^JUS^LRN^CI0^XZ\n" +
-                "^XA\n" +
-                "^MMT\n" +
-                "^PW448\n" +
-                "^LL0406\n" +
-                "^LS0\n" +
-                "^BY4,3,142^FT25,152^BCN,,Y,N\n" +
-                "^FD>:"+idDevice +"^FS\n" +
-                "^PQ1,0,1,Y^XZ";
-        Log.i("Device Label", labelSimple);
-
-        String labelOld = "\u0010CT~~CD,~CC^~CT~\n" +
-                "^XA\n" +
-                "~TA000\n" +
-                "~JSN\n" +
-                "^LT0\n" +
-                "^MNW\n" +
-                "^MTT\n" +
-                "^PON\n" +
-                "^PMN\n" +
-                "^LH0,0\n" +
-                "^JMA\n" +
-                "^PR6,6\n" +
-                "~SD15\n" +
-                "^JUS\n" +
-                "^LRN\n" +
-                "^CI27\n" +
-                "^PA0,1,1,0\n" +
-                "^XZ\n" +
-                "^XA\n" +
-                "^MMT\n" +
-                "^PW408\n" +
-                "^LL200\n" +
-                "^LS0\n" +
-                "^FPH,3^FT19,84^A@N,17,18,TT0003M_^FH\\^CI28^FDId:^FS^CI27\n" +
-                "^FPH,3^FT19,109^A@N,17,18,TT0003M_^FH\\^CI28^FDFarbe:^FS^CI27\n" +
-                "^FPH,3^FT19,132^A@N,17,18,TT0003M_^FH\\^CI28^FDZustand:^FS^CI27\n" +
-                "^FPH,3^FT254,84^A@N,17,18,TT0003M_^FH\\^CI28^FDLku-Battery:^FS^CI27\n" +
-                "^FPH,3^FT19,156^A@N,17,18,TT0003M_^FH\\^CI28^FDStatus:^FS^CI27\n" +
-                "^BY3,3,20^FT19,191^BCN,,N,N\n" +
-                "^FH\\^FD>:"+idDevice+"^FS\n" +
-                "^FPH,3^FT129,84^A@N,17,18,TT0003M_^FH\\^CI28^FD"+idDevice+"^FS^CI27\n" +
-                "^FPH,3^FT19,38^A@N,20,20,TT0003M_^FH\\^CI28^FD"+name+"^FS^CI27\n" +
-                "^FPH,3^FT129,109^A@N,17,18,TT0003M_^FH\\^CI28^FD"+color+"^FS^CI27\n" +
-                "^FPH,3^FT129,132^A@N,17,18,TT0003M_^FH\\^CI28^FD"+shape+"^FS^CI27\n" +
-                "^FPH,3^FT254,110^A@N,17,18,TT0003M_^FH\\^CI28^FD"+lkuBattery+"^FS^CI27\n" +
-                "^FPH,3^FT19,55^A@N,14,13,TT0003M_^FH\\^CI28^FD"+manufacturer+"^FS^CI27\n" +
-                "^FPH,3^FT129,156^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cState+"^FS^CI27\n" +
-                "^PQ1,0,1,Y\n" +
-                "^XZ\n";
 
         String labelNew = "\u0010CT~~CD,~CC^~CT~\n" +
                 "^XA\n" +
@@ -323,22 +290,23 @@ public class ManagerPrinter {
                 "^PW408\n" +
                 "^LL200\n" +
                 "^LS0\n" +
-                "^FPH,3^FT19,84^A@N,17,18,TT0003M_^FH\\^CI28^FDId:^FS^CI27\n" +
-                "^FPH,3^FT19,108^A@N,17,18,TT0003M_^FH\\^CI28^FDFarbe:^FS^CI27\n" +
-                "^FPH,3^FT19,134^A@N,17,18,TT0003M_^FH\\^CI28^FDZustand:^FS^CI27\n" +
-                "^FPH,3^FT19,187^A@N,17,18,TT0003M_^FH\\^CI28^FDBatterie:^FS^CI27\n" +
-                "^FPH,3^FT19,160^A@N,17,18,TT0003M_^FH\\^CI28^FDStatus:^FS^CI27\n" +
-                "^FPH,3^FT155,84^A@N,17,18,TT0003M_^FH\\^CI28^FD"+idDevice+"^FS^CI27\n" +
-                "^FPH,3^FT19,38^A@N,20,20,TT0003M_^FH\\^CI28^FD"+name+"^FS^CI27\n" +
-                "^FPH,3^FT155,107^A@N,17,18,TT0003M_^FH\\^CI28^FD"+color+"^FS^CI27\n" +
-                "^FPH,3^FT155,134^A@N,17,18,TT0003M_^FH\\^CI28^FD"+shape+"^FS^CI27\n" +
-                "^FPH,3^FT155,187^A@N,17,18,TT0003M_^FH\\^CI28^FD"+lkuBattery+"^FS^CI27\n" +
-                "^FPH,3^FT19,55^A@N,14,13,TT0003M_^FH\\^CI28^FD"+manufacturer+"^FS^CI27\n" +
-                "^FPH,3^FT155,160^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cState+"^FS^CI27\n" +
-                "^BY2,3,20^FT155,48^BCN,,N,N\n" +
-                "^FH\\^FD>:"+idDevice+"^FS\n" +
+                "^FO17,66^GFA,29,48,48,:Z64:eJxb1KWxiGi0gIEBAA9MFI0=:2CE5\n" +
+                "^FO15,109^GFA,29,48,48,:Z64:eJxb1KWxiHjUwAAAEFIVDw==:22CD\n" +
+                "^FO264,118^GFA,29,116,4,:Z64:eJxjYICABjSagYbiABiDBQE=:557A\n" +
+                "^FO264,71^GFA,29,116,4,:Z64:eJxjYICABjSagYbiABiDBQE=:557A\n" +
+                "^FO17,155^GFA,29,48,48,:Z64:eJxb1KWxiHjUwAAAEFIVDw==:22CD\n" +
+                "^FO265,164^GFA,29,112,4,:Z64:eJxjYICABjSagUbiAAR/BIE=:8DFE\n" +
+                "^FPH,3^FT21,50^A@N,31,31,TT0003M_^FH\\^CI28^FD"+idDevice+"^FS^CI27\n" +
+                "^FPH,3^FT21,139^A@N,17,18,TT0003M_^FH\\^CI28^FD"+shape+"^FS^CI27\n" +
+                "^FPH,3^FT293,139^A@N,17,18,TT0003M_^FH\\^CI28^FD"+lkuBattery+"^FS^CI27\n" +
+                "^FPH,3^FT21,93^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cState+"^FS^CI27\n" +
+                "^BY2,3,20^FT168,48^BCN,,N,N\n" +
+                "^FH\\^FD>:"+idDevice+">68^FS\n" +
+                "^FPH,3^FT21,184^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cCharger+"^FS^CI27\n" +
+                "^FPH,3^FT327,93^A@N,17,18,TT0003M_^FH\\^CI28^FD-^FS^CI27\n" +
+                "^FPH,3^FT321,188^A@N,23,22,TT0003M_^FH\\^CI28^FD"+cLoadingStation+"^FS^CI27\n" +
                 "^PQ1,0,1,Y\n" +
-                "^XZ";
+                "^XZ\n";
 
         return labelNew.getBytes();
     }

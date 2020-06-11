@@ -1,91 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:background="@drawable/background_rounded_corners_grey_secondary"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rlMain"
-    android:layout_margin="8dp">
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_marginBottom="8dp">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/tvLku"
-        android:textSize="@dimen/size_text_item_main"
-        android:textColor="@color/color_text_primary"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:gravity="center_vertical"
-        android:text="5214"
-        />
+        android:id="@+id/rlBackground">
 
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:id="@+id/vDividerOne"
-        android:layout_toRightOf="@id/tvLku"
-        android:background="@color/color_text_secondary"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_rounded_corners_negative"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/tvPosition"
-        android:layout_toRightOf="@id/vDividerOne"
-        android:textSize="@dimen/size_text_item_main"
-        android:textColor="@color/color_text_primary"
-        android:paddingLeft="24dp"
-        android:paddingRight="36dp"
-        android:gravity="center_vertical"
-        android:text="5"
-        />
+        <View
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@color/color_background"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:id="@+id/tvLoadingStation"
-        android:textSize="@dimen/size_text_item_main"
-        android:textColor="@color/color_primary"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
-        android:gravity="center_vertical"
-        android:text="IV"
-        />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_unknown_white_24dp"
+            android:tint="@color/color_choice_negative"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="36dp"/>
 
-    <View
-        android:layout_width="1px"
-        android:layout_height="match_parent"
-        android:id="@+id/vDividerTwo"
-        android:layout_toLeftOf="@id/tvLoadingStation"
-        android:background="@color/color_text_secondary"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_toRightOf="@id/tvPosition"
-        android:layout_toLeftOf="@id/vDividerTwo"
         android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:id="@+id/llForeground"
+        android:background="@color/color_background">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvStock"
-            android:textSize="@dimen/size_text_item_description"
-            android:textColor="@color/color_text_secondary"
-            android:text="Haupt-Lager"
-            />
+        <RelativeLayout
 
-        <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvIdDevice"
-            android:textSize="@dimen/size_text_item_description_sub"
-            android:textColor="@color/color_text_tertiary"
-            android:text="Id: 87384"
-            android:layout_marginTop="8dp"
-            />
+            android:layout_height="match_parent"
+            android:id="@+id/rlForeground"
+            android:background="@drawable/background_rounded_corners_grey_secondary">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="36dp"
+                android:layout_toLeftOf="@id/vDividerTwo"
+                android:layout_toRightOf="@id/vDividerThree"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvIdDevice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="Id: 87384"
+                    android:textColor="@color/color_text_secondary"
+                    android:textSize="@dimen/size_text_item_description" />
+
+                <TextView
+                    android:id="@+id/tvStock"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Haupt-Lager"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/color_text_secondary"
+                    android:textSize="@dimen/size_text_item_description_sub" />
+
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvPosition"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/vDividerOne"
+                android:gravity="center_vertical"
+                android:paddingLeft="36dp"
+                android:paddingRight="36dp"
+                android:text="5"
+                android:textColor="@color/color_text_primary"
+                android:textSize="@dimen/size_text_item_main" />
+
+            <TextView
+                android:id="@+id/tvLoadingStation"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:paddingLeft="36dp"
+                android:paddingRight="36dp"
+                android:text="IV"
+                android:textColor="@color/color_text_primary"
+                android:textSize="@dimen/size_text_item_main" />
+
+            <TextView
+                android:id="@+id/tvLku"
+                android:layout_width="128dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="4455"
+                android:textColor="@color/color_text_primary"
+                android:textSize="@dimen/size_text_item_main" />
+
+            <View
+                android:id="@+id/vDividerOne"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_toRightOf="@id/tvLku"
+                android:background="@color/color_text_secondary" />
+
+            <View
+                android:id="@+id/vDividerTwo"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_toLeftOf="@id/tvLoadingStation"
+                android:background="@color/color_text_secondary" />
+
+            <View
+                android:id="@+id/vDividerThree"
+                android:layout_width="1px"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_toRightOf="@id/tvPosition"
+                android:background="@color/color_text_secondary" />
+
+        </RelativeLayout>
+
 
     </LinearLayout>
-</RelativeLayout>
+
+
+</FrameLayout>

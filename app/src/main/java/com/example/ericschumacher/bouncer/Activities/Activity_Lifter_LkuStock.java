@@ -1,6 +1,5 @@
 package com.example.ericschumacher.bouncer.Activities;
 
-import android.support.design.widget.FloatingActionButton;
 import android.view.View;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
@@ -8,8 +7,7 @@ import com.example.ericschumacher.bouncer.R;
 
 public class Activity_Lifter_LkuStock extends Activity_Device_New {
 
-    // Layout
-    FloatingActionButton fabReset;
+
 
 
 
@@ -34,13 +32,9 @@ public class Activity_Lifter_LkuStock extends Activity_Device_New {
 
     public void setLayout() {
         super.setLayout();
-        fabReset = findViewById(R.id.fabReset);
 
         // Toolbar
         getSupportActionBar().setTitle(getString(R.string.activity_lifter_stock_lku));
-
-        // OnClickListener & TextWatcher
-        fabReset.setOnClickListener(this);
     }
 
     public int getIdLayout() {
@@ -72,7 +66,7 @@ public class Activity_Lifter_LkuStock extends Activity_Device_New {
 
     // Base & Reset
 
-    public void base() {
+    public void base(Boolean bKeyboard) {
         updateLayout();
     }
 
@@ -96,8 +90,6 @@ public class Activity_Lifter_LkuStock extends Activity_Device_New {
     public void onClick(View view) {
         super.onClick(view);
         switch (view.getId()) {
-            case R.id.fabReset:
-                reset();
         }
     }
 }

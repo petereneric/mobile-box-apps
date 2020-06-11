@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Objects.Collection.BillPayee;
 import com.example.ericschumacher.bouncer.R;
-import com.example.ericschumacher.bouncer.Utilities.Utility_Date;
+import com.example.ericschumacher.bouncer.Utilities.Utility_DateTime;
 
 import java.util.ArrayList;
 
@@ -32,7 +32,7 @@ public class Adapter_BillPayee extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewHolder_BillPayee vhBillPayee = (ViewHolder_BillPayee)holder;
         BillPayee oBillPayee = lBillPayee.get(position);
-        vhBillPayee.tvDateCreation.setText(Utility_Date.dateToString(oBillPayee.getdCreation()));
+        vhBillPayee.tvDateCreation.setText(Utility_DateTime.dateToString(oBillPayee.getdCreation()));
         vhBillPayee.tvName.setText(oBillPayee.getcName());
         vhBillPayee.tvAccountHolder.setText(oBillPayee.getcAccountHolder());
         vhBillPayee.tvIban.setText(oBillPayee.getcIban());

@@ -13,6 +13,7 @@ public class Charger extends Additive {
 
     private boolean Selected;
     private Manufacturer oManufacturer = null;
+    private int tLoadingStation;
 
     public Charger(int id, String name) {
         super(id, name);
@@ -26,6 +27,7 @@ public class Charger extends Additive {
         try {
             Id = oJson.getInt(Constants_Extern.ID_CHARGER);
             Name = oJson.getString(Constants_Extern.NAME_CHARGER);
+            tLoadingStation = oJson.getInt(Constants_Extern.TYPE_LOADING_STATION);
             if (!oJson.isNull(Constants_Extern.OBJECT_MANUFACTURER))
                 oManufacturer = new Manufacturer(oJson.getJSONObject(Constants_Extern.OBJECT_MANUFACTURER));
 
@@ -50,5 +52,20 @@ public class Charger extends Additive {
 
     public String getUrlIcon() {
         return "http://svp-server.com/svp-gmbh/erp/files/images_chargers/" + Integer.toString(Id) + ".jpg";
+    }
+
+    public String gettLoadingStation() {
+        switch (tLoadingStation) {
+            case 1:
+                return "I";
+            case 2:
+                return "II";
+            case 3:
+                return "III";
+            case 4:
+                return "IV";
+            default:
+                return "0";
+        }
     }
 }

@@ -25,18 +25,19 @@ import android.widget.Toast;
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Color_Add;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Device;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Simple;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Device_Damages;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Battery;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Color_Add;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Simple;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Edit_Model_Battery_Select;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Model_New;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_SimpleText;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Device;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_DeviceManager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Dialog;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_SimpleText;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Edit_Model_Battery;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_SimpleText;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Request_Name;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Search_Manufacturer;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Search_Model;
@@ -98,6 +99,8 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
     public FrameLayout flInteraction;
     public FrameLayout flOverview;
     public FrameLayout flDevice;
+    Fragment_Device_New fDevice;
+    Fragment_Model_New fModel;
 
     // Constants
     public static final int IMAGE_FRONT = 1;
@@ -122,12 +125,15 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
         setLayout();
         handleTextInput();
 
-        // Fragments
-        Fragment fDevice = new Fragment_Device();
-        fManager.beginTransaction().replace(R.id.flFragmentDevice, fDevice, Constants_Intern.FRAGMENT_DEVICE).commit();
-
         // Variables
         mSharedPreferences = getSharedPreferences(Constants_Intern.SHARED_PREFERENCES, 0);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Fragments
+        initiateFragments();
     }
 
     @Override
@@ -179,6 +185,11 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
         ivHelp.setOnClickListener(this);
         fabReset.setOnClickListener(this);
         ivClearScan.setOnClickListener(this);
+    }
+
+    public void initiateFragments() {
+        fModel = (Fragment_Model_New) fManager.findFragmentById(R.id.fModel);
+        fDevice = (Fragment_Device_New) fManager.findFragmentById(R.id.fDevice);
     }
 
     public void handleTextInput() {
@@ -390,7 +401,14 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
     // Updates
     @Override
     public void updateUI() {
-        ((Fragment_Device) fManager.findFragmentByTag(Constants_Intern.FRAGMENT_DEVICE)).updateUI(oDevice);
+        if (oDevice.getoModel() != null) {
+            getSupportFragmentManager().beginTransaction().show(fModel).commit();
+            fModel.updateLayout();
+        }
+        if (oDevice != null) {
+            getSupportFragmentManager().beginTransaction().show(fDevice).commit();
+            fDevice.updateLayout();
+        }
     }
 
     public void updateDevice() {
@@ -1107,7 +1125,7 @@ public class Activity_Device extends AppCompatActivity implements Interface_Devi
 
     // Resets
     public void resetDevice() {
-        oDevice = new Device();
+        oDevice = new Device(this);
         etScan.setText("");
         etScan.requestFocus();
         if (fManager.findFragmentByTag(Constants_Intern.FRAGMENT_REQUEST) != null) {

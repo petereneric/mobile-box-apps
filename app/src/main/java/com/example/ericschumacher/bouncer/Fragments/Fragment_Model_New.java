@@ -214,31 +214,31 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.trName:
-                activityModel.onClickModelName();
+                activityModel.requestModelName();
                 break;
             case R.id.trManufacturer:
-                activityModel.onClickManufacturer();
+                activityModel.requestManufacturer();
                 break;
             case R.id.trCharger:
-                activityModel.onClickCharger();
+                activityModel.requestCharger();
                 break;
             case R.id.trBattery:
-                activityModel.onClickBattery();
+                activityModel.requestBattery();
                 break;
             case R.id.trPhone:
-                activityModel.onClickPhoneType();
+                activityModel.requestPhoneType();
                 break;
             case R.id.trDefaultExploitation:
-                activityModel.onClickDefaultExploitation();
+                activityModel.requestDefaultExploitation();
                 break;
             case R.id.trBatteryRemovable:
-                activityModel.onClickBatteryRemovable();
+                activityModel.requestBatteryRemovable();
                 break;
             case R.id.trBackcoverRemovable:
-                activityModel.onClickBackcoverRemovable();
+                activityModel.requestBackcoverRemovable();
                 break;
             case R.id.trDps:
-                activityModel.onClickDps();
+                activityModel.requestDps();
                 break;
         }
     }

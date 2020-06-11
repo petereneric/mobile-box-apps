@@ -39,7 +39,13 @@ public class Adapter_List_Choice_Image extends Adapter_List_Choice {
         final ViewHolder_Choice_Image vhChoiceImage = (ViewHolder_Choice_Image)vhChoice;
         final Fragment_Choice_Image.Interface_Adapter_Choice_Image iFragmentChoiceImage = (Fragment_Choice_Image.Interface_Adapter_Choice_Image)iFragmentChoice;
 
-        // Image request one
+        // Image one
+        if (iFragmentChoiceImage.getImage(position) != null) {
+            vhChoiceImage.ivIconOne.setVisibility(View.VISIBLE);
+            vhChoiceImage.ivIconOne.setImageBitmap(iFragmentChoiceImage.getImage(position));
+        }
+
+        // Url request one
         if (iFragmentChoiceImage.getUrlIconOne(position) != null) {
             vhChoiceImage.ivIconOne.setVisibility(View.VISIBLE);
             Log.i("IMMAGE: ", iFragmentChoiceImage.getUrlIconOne(position));
@@ -61,7 +67,7 @@ public class Adapter_List_Choice_Image extends Adapter_List_Choice {
             rQueue.getCache().clear();
         }
 
-        // Image request two
+        // Url request two
         if (iFragmentChoiceImage.getUrlIconTwo(position) != null){
             vhChoiceImage.ivIconTwo.setVisibility(View.VISIBLE);
             ImageRequest request = new ImageRequest(iFragmentChoiceImage.getUrlIconTwo(position),

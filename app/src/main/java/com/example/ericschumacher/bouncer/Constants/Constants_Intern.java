@@ -12,6 +12,7 @@ public class Constants_Intern {
     public final static String ID_PRINTER_THREE = "90:E2:02:2B:6D:75";
     public final static String ID_PRINTER_FOUR = "50:8C:B1:4F:B1:EE";
     public static final String ID_PRINTER_FIVE = "4C:24:98:AB:93:79";
+    public static final String ID_PRINTER_SIX = "E4:15:F6:46:E1:C3";
     //public static final String ID_PRINTER_FIVE = "00:07:4D:99:BA:7E";
 
 
@@ -310,4 +311,17 @@ public class Constants_Intern {
     public static final String SEARCH_JUICER_TYPE = "SEARCH_JUICER_TYPE";
     public static final int SEARCH_JUICER_TYPE_IMEI_DEVICE = 1;
     public static final int SEARCH_JUICER_TYPE_ID_DEVICE = 0;
+    public static final String FRAGMENT_LOADING = "FRAGMENT_LOADING";
+    public static final String FRAGMENT_LIST_JUICER = "FRAGMENT_LIST_JUICER";
+    public static final String FRAGMENT_DISPLAY_STOCK_EMPTY = "FRAGMENT_DISPLAY_STOCK_EMPTY";
+    public static final String STRING_BITMAP = "STRING_BITMAP";
+    public static final String ARTIKEL_IMAGE_MAIN = "ARTIKEL_IMAGE_MAIN";
+    public static final String FRAGMENT_DIALOG_IMAGE = "FRAGMENT_DIALOG_IMAGE";
+    public static final String ERROR_BOOKING_SPACE_FULL = "ERROR_BOOKING_SPACE_FULL";
+    public static final String ACTION_FRAGMENT_RECORD_PAUSE = "ACTION_FRAGMENT_RECORD_PAUSE";
+    public static final String ACTION_FRAGMENT_RECORD_FINISH = "ACTION_FRAGMENT_RECORD_FINISH";
+    public static final String FRAGMENT_BOUNCER_RESULT = "FRAGMENT_BOUNCER_RESULT";
+    public static final String FRAGMENT_CHOICE_IMAGE_MODEL = "FRAGMENT_CHOICE_IMAGE_MODEL";
+    public static final String ID_COLOR = "ID_COLOR";
+    public static final String TYPE_PHONE = "TYPE_PHONE";
 }

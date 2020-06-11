@@ -27,13 +27,14 @@
         android:id="@+id/rvMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/ivPrinter"/>
+        android:layout_above="@id/rgPrinter"/>
 
     <RadioGroup
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/ivCamera"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:id="@+id/rgPrinter">
 
         <RadioButton
             android:layout_width="wrap_content"
@@ -68,6 +69,13 @@
             android:layout_height="wrap_content"
             android:id="@+id/rbPrinterFive"
             android:text="Printer 5"
+            android:onClick="onRadioButtonClicked"/>
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rbPrinterSix"
+            android:text="Printer 6"
             android:onClick="onRadioButtonClicked"/>
     </RadioGroup>
 

@@ -162,7 +162,7 @@
     <string name="repair">Repair</string>
     <string name="defect_reuse">Defect - Reuse</string>
     <string name="interaction_simple_choice">Simple Choice</string>
-    <string name="intact_reuse">Intact - Reuse</string>
+    <string name="intact_reuse">Reuse</string>
     <string name="backcover_contained">Backcover contained</string>
     <string name="backcover_removable">Backcover removable</string>
     <string name="interaction_multiple_choice">Multiple Choice</string>
@@ -268,6 +268,16 @@
     <string name="juicer">Juicer</string>
     <string name="stock">Stock</string>
     <string name="loadingstation">Loadingstation</string>
+    <string name="this_stock_is_empty">This stock is empty</string>
+    <string name="booking_successful">Booking successful</string>
+    <string name="booking_failed">Booking failed</string>
+    <string name="book_into">Book into</string>
+    <string name="book_into_and_print"><![CDATA[Book into & Print]]></string>
+    <string name="enter_scan_id_record">Enter or scan Id-Record...</string>
+    <string name="id_record_unknown">Id-Record unknown</string>
+    <string name="bouncer_new">Bouncer New</string>
+    <string name="bouncer">Bouncer</string>
+    <string name="record">Record</string>
     />
 
     // Not translated

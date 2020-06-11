@@ -3,8 +3,10 @@ package com.example.ericschumacher.bouncer.Fragments.Booking;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,6 +116,7 @@ public class Fragment_Booking_In_Lku_Stock extends Fragment_Booking implements V
                     llBooking.setVisibility(View.VISIBLE);
                     StoragePlace oStoragePlaceSuggestedNew = new StoragePlace(oJson.getJSONObject(Constants_Extern.OBJECT_STORAGEPLACE));
                     if (oStoragePlaceSuggested == null || (oStoragePlaceSuggestedNew.getkStock() != oStoragePlaceSuggested.getkStock() && oStoragePlaceSuggestedNew.getkLku() != oStoragePlaceSuggested.getkLku())) {
+                        Log.i("suggestLku", "success");
                         oStoragePlaceSuggested = oStoragePlaceSuggestedNew;
                         tvStockTo.setText(oStoragePlaceSuggested.getcStock());
                         tvStockNumber.setText(Integer.toString(oStoragePlaceSuggested.getkLku()));
@@ -134,16 +137,24 @@ public class Fragment_Booking_In_Lku_Stock extends Fragment_Booking implements V
     @Override
     public void onClick(View view) {
         super.onClick(view);
+        Log.i("onClick", "clicked");
         switch (view.getId()) {
             case R.id.bSpaceFull:
                 oDevice.getoModel().setnDps(oStoragePlaceSuggested.getnPosition()-1);
-                suggestLku();
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        iBooking.errorBooking(getTag(), Constants_Intern.ERROR_BOOKING_SPACE_FULL);
+                    }
+                }, 1000);
+
                 break;
             case R.id.tvStockSide:
                 // not used
                 break;
             case R.id.tvStockCapacity:
-                activityDevice.onClickStockPrimeCapacity();
+                activityDevice.requestStockPrimeCapacity();
                 break;
             case R.id.tvOtherSide:
                 // not used yet

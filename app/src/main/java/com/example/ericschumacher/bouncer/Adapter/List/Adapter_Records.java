@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Adapter_List;
 import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.R;
-import com.example.ericschumacher.bouncer.Utilities.Utility_Date;
 
 import java.util.ArrayList;
 
@@ -51,7 +50,7 @@ public class Adapter_Records extends RecyclerView.Adapter<RecyclerView.ViewHolde
         Record oRecord = lRecords.get(position);
 
         vhRecord.tvId.setText(Integer.toString(oRecord.getId()));
-        vhRecord.tvLastUpdate.setText(Utility_Date.dateToString(oRecord.getdLastUpdate()));
+        //vhRecord.tvLastUpdate.setText(Utility_DateTime.dateToString(oRecord.getdLastUpdate()));
         vhRecord.tvCollector.setText(oRecord.getcCollectorName());
         vhRecord.tvTotal.setText(Integer.toString(oRecord.getnDevices()));
     }

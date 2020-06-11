@@ -1,20 +1,30 @@
 package com.example.ericschumacher.bouncer.Objects.Collection;
 
+import android.content.Context;
+
+import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
+import com.example.ericschumacher.bouncer.Utilities.Utility_DateTime;
+import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
+
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Record implements Serializable{
 
     int Id;
     int kCollector;
+    Collector oCollector;
     String cCollectorName;
     int kPayee;
+    Date dCreation;
     Date dLastUpdate;
     int nDevices;
     int nRecycling;
     int nReuse;
+    int nRepair;
     double pQuote;
     double sPayment;
     double aPayment;
@@ -22,6 +32,9 @@ public class Record implements Serializable{
     boolean bSelected;
     int kBillPayee;
     int kBillCollector;
+
+    Context Context;
+    Volley_Connection vConnection;
 
     public Record(int id, int kCollector, int kPayee, Date dLastUpdate, int nDevices, int nRecycling, int nReuse, double pQuote, double sPayment, double aPayment, String cNotes,
                   boolean bSelected, int kBillPayee, int kBillCollector) {
@@ -57,6 +70,24 @@ public class Record implements Serializable{
         nReuse = 0;
     }
 
+    public Record(Context context, JSONObject jsonObject) {
+        Context = context;
+        vConnection = new Volley_Connection(Context);
+        try {
+            Id = jsonObject.getInt(Constants_Extern.ID_RECORD);
+            oCollector = new Collector(Context, jsonObject.getJSONObject(Constants_Extern.OBJECT_COLLECTOR));
+            SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            dCreation = sdf.parse(jsonObject.getString(Constants_Extern.DATE_CREATION));
+            dLastUpdate = sdf.parse(jsonObject.getString(Constants_Extern.DATE_LAST_UPDATE));
+            nRecycling = jsonObject.getInt(Constants_Extern.NUMBER_RECYCLING);
+            nReuse = jsonObject.getInt(Constants_Extern.NUMBER_REUSE);
+            //nRepair = jsonObject.getInt(Constants_Extern.NUMBER_REPAIR);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public int incrementReuse() {
         return nReuse++;
     }
@@ -64,6 +95,22 @@ public class Record implements Serializable{
     public int incrementRecycling() {
         nRecycling = nRecycling+1;
         return nRecycling;
+    }
+
+    public Collector getoCollector() {
+        return oCollector;
+    }
+
+    public void setoCollector(Collector oCollector) {
+        this.oCollector = oCollector;
+    }
+
+    public String getDateCreation() {
+        return Utility_DateTime.dateTimeToString(dCreation);
+    }
+
+    public void setdCreation(Date dCreation) {
+        this.dCreation = dCreation;
     }
 
     public int getId() {
@@ -98,8 +145,8 @@ public class Record implements Serializable{
         this.kPayee = kPayee;
     }
 
-    public Date getdLastUpdate() {
-        return dLastUpdate;
+    public String getDateLastUpdate() {
+        return Utility_DateTime.dateTimeToString(dLastUpdate);
     }
 
     public void setdLastUpdate(Date dLastUpdate) {

@@ -130,7 +130,7 @@ public class Activity_LKU_Device_Manager extends Activity_Device {
         });
 
         // Fragment Device
-        oDevice = new Device();
+        oDevice = new Device(this);
         fManager = getSupportFragmentManager();
         Fragment fDevice = new Fragment_Device();
         fManager.beginTransaction().replace(R.id.flFragmentDevice, fDevice, Constants_Intern.FRAGMENT_DEVICE).commit();

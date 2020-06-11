@@ -71,6 +71,7 @@ public class Fragment_Record_Existing extends Fragment implements View.OnClickLi
     private void setLayout() {
         bStart = Layout.findViewById(R.id.bStart);
         bBack = Layout.findViewById(R.id.bBack);
+        bBack.setVisibility(View.GONE);
         rvExisting = Layout.findViewById(R.id.rvExisting);
 
         bStart.setOnClickListener(this);
@@ -84,7 +85,7 @@ public class Fragment_Record_Existing extends Fragment implements View.OnClickLi
                 // to be deleted
                 break;
             case R.id.bBack:
-                iBouncer.showFragmentRecordMenu();
+                //iBouncer.showFragmentRecordMenu();
                 break;
         }
     }

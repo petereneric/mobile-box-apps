@@ -57,8 +57,6 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
         // Layout
         setLayout(inflater, container);
 
-
-
         return vLayout;
     }
 
@@ -134,7 +132,7 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
             }
             if (oDevice.getoStoragePlace() != null) {
                 trLKU.setVisibility(View.VISIBLE);
-                tvLKU.setText(Integer.toString(oDevice.getoStoragePlace().getkLku()));
+                tvLKU.setText(Integer.toString(oDevice.getoStoragePlace().getkLku())+" ("+oDevice.getoStoragePlace().getnPosition()+")");
             } else {
                 trLKU.setVisibility(View.GONE);
             }
@@ -183,46 +181,46 @@ public class Fragment_Device_New extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.trLKU:
-                iFragmentDevice.onClickLku();
+                iFragmentDevice.requestLku();
                 //requestLKU();
                 break;
             case R.id.trStation:
-                iFragmentDevice.onClickStation();
+                iFragmentDevice.requestStation();
                 break;
             case R.id.trColor:
-                iFragmentDevice.onClickColor();
+                iFragmentDevice.requestColor();
                 break;
             case R.id.trShape:
-                iFragmentDevice.onClickShape();
+                iFragmentDevice.requestShape();
                 break;
             case R.id.trBatteryContained:
-                iFragmentDevice.onClickBatteryContained();
+                iFragmentDevice.requestBatteryContained();
                 break;
             case R.id.trBattery:
-                iFragmentDevice.onClickDeviceBattery();
+                iFragmentDevice.requestDeviceBattery();
                 break;
             case R.id.trBackcoverContained:
-                iFragmentDevice.onClickBackcoverContained();
+                iFragmentDevice.requestBackcoverContained();
                 break;
             case R.id.trDamages:
-                iFragmentDevice.onClickDamages();
+                iFragmentDevice.requestDamages();
                 break;
             case R.id.trState:
-                iFragmentDevice.onClickState();
+                iFragmentDevice.requestState();
                 break;
         }
     }
 
     public interface Interface_Fragment_Device {
         Device getDevice();
-        void onClickLku();
-        void onClickStation();
-        void onClickColor();
-        void onClickShape();
-        void onClickBatteryContained();
-        void onClickDeviceBattery();
-        void onClickBackcoverContained();
-        void onClickDamages();
-        void onClickState();
+        void requestLku();
+        void requestStation();
+        void requestColor();
+        void requestShape();
+        void requestBatteryContained();
+        void requestDeviceBattery();
+        void requestBackcoverContained();
+        void requestDamages();
+        void requestState();
     }
 }

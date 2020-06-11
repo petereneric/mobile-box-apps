@@ -62,7 +62,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
         vConnection = new Volley_Connection(this);
 
         // Objects
-        oDevice = new Device();
+        oDevice = new Device(this);
         uBattery = null;
         uBackcover = null;
 
@@ -164,15 +164,6 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
         */
 
 
-        Fragment_Result_New fResult = new Fragment_Result_New();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
-        //bundle.putSerializable(Constants_Intern.UNIT_BATTERY, uBattery);
-        //bundle.putSerializable(Constants_Intern.UNIT_BACKCOVER, uBackcover);
-
-        fResult.setArguments(bundle);
-        //fManager.beginTransaction().replace(R.id.flFragmentInteraction, fResult, Constants_Intern.FRAGMENT_REQUEST_BATTERY_REMOVABLE).commit();
-
         /*
         String[] lTitle;
         String[] lButtons;
@@ -231,6 +222,15 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
         fResult.setArguments(bundle);
         fManager.beginTransaction().replace(R.id.flFragmentInteraction, fResult, Constants_Intern.FRAGMENT_REQUEST_BATTERY_REMOVABLE).commit();
         */
+
+        Fragment_Result_New fResult = new Fragment_Result_New();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
+        //bundle.putSerializable(Constants_Intern.UNIT_BATTERY, uBattery);
+        //bundle.putSerializable(Constants_Intern.UNIT_BACKCOVER, uBackcover);
+
+        fResult.setArguments(bundle);
+        //fManager.beginTransaction().replace(R.id.flFragmentInteraction, fResult, Constants_Intern.FRAGMENT_REQUEST_BATTERY_REMOVABLE).commit();
 
 
         Fragment_Result f = new Fragment_Result();
@@ -525,7 +525,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
 
     @Override
     public void setRecord(Record record) {
-        oRecord = new Record(record.getId(), record.getdLastUpdate(), record.getnRecycling(), record.getnReuse(), record.getnDevices(), record.getcCollectorName());
+        //oRecord = new Record(record.getId(), record.getdLastUpdate(), record.getnRecycling(), record.getnReuse(), record.getnDevices(), record.getcCollectorName());
 
         //oRecord = record;
         prepareBounce();

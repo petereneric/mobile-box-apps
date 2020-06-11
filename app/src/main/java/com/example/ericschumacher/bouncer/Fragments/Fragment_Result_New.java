@@ -11,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.ericschumacher.bouncer.Activities.Activity_Bouncer_New;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Unit_Backcover;
 import com.example.ericschumacher.bouncer.Objects.Unit_Battery;
@@ -52,7 +52,7 @@ public class Fragment_Result_New extends Fragment implements View.OnClickListene
     TextView tvUnknownExploitation;
 
     // Interface
-    Interface_Selection iSelection;
+    Activity_Bouncer_New aBouncer;
 
     @Nullable
     @Override
@@ -68,7 +68,7 @@ public class Fragment_Result_New extends Fragment implements View.OnClickListene
         setLayout(inflater, container);
 
         // Interface
-        iSelection = (Interface_Selection) getActivity();
+        aBouncer = (Activity_Bouncer_New)getActivity();
 
         return vLayout;
     }
@@ -225,7 +225,7 @@ public class Fragment_Result_New extends Fragment implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rlResult:
-                iSelection.afterBounce();
+                aBouncer.returnResult(getTag());
                 break;
         }
     }

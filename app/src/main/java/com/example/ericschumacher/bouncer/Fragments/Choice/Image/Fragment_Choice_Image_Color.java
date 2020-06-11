@@ -1,5 +1,6 @@
 package com.example.ericschumacher.bouncer.Fragments.Choice.Image;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -75,6 +76,11 @@ public class Fragment_Choice_Image_Color extends Fragment_Choice_Image implement
     }
 
     @Override
+    public Bitmap getImage(int position) {
+        return null;
+    }
+
+    @Override
     public int getItemViewType(int position) {
         if (lColor.get(position).getkModelColor() > 0) {
             return TYPE_WITH_IMAGE;
@@ -86,6 +92,11 @@ public class Fragment_Choice_Image_Color extends Fragment_Choice_Image implement
     @Override
     public void onAdapterClick(int position) {
         iChoice.returnChoice(getTag(), lColor.get(position));
+    }
+
+    @Override
+    public boolean onAdapterLongClick(int position) {
+        return false;
     }
 
     @Override

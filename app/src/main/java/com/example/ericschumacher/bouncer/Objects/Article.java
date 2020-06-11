@@ -1,11 +1,27 @@
 package com.example.ericschumacher.bouncer.Objects;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.util.Base64;
+
+import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Image;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
+import com.example.ericschumacher.bouncer.Volley.Urls;
+import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Article {
+
+    Context Context;
 
     private int kArticle;
     private String kSku;
@@ -14,11 +30,13 @@ public class Article {
     private String cColor;
     private String cShape;
     private int nGb;
-    private String iOne;
-    private String iTwo;
+    private Bitmap bitmapOne;
+    private Bitmap bitmapTwo;
     private int nAmountStock;
 
-    public Article(JSONObject oJson) {
+    public Article(Context context, JSONObject oJson) {
+        Context = context;
+
         try {
             kArticle = oJson.getInt(Constants_Extern.ID_ARTIKEL);
             if (!oJson.isNull(Constants_Extern.ID_SKU)) {
@@ -40,10 +58,12 @@ public class Article {
                 nGb = oJson.getInt(Constants_Extern.AMOUNT_GB);
             }
             if (!oJson.isNull(Constants_Extern.IMAGE_ONE)) {
-                iOne = oJson.getString(Constants_Extern.IMAGE_ONE);
+                byte[] decodedString = Base64.decode(oJson.getString(Constants_Extern.IMAGE_ONE), Base64.DEFAULT);
+                bitmapOne = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             }
             if (!oJson.isNull(Constants_Extern.IMAGE_TWO)) {
-                iTwo = oJson.getString(Constants_Extern.IMAGE_TWO);
+                byte[] decodedString = Base64.decode(oJson.getString(Constants_Extern.IMAGE_TWO), Base64.DEFAULT);
+                bitmapTwo = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
             }
             if (!oJson.isNull(Constants_Extern.STOCK_AMOUNT)) {
                 nAmountStock = oJson.getInt(Constants_Extern.STOCK_AMOUNT);
@@ -111,20 +131,20 @@ public class Article {
         this.nGb = nGb;
     }
 
-    public String getiOne() {
-        return iOne;
+    public Bitmap getBitmapOne() {
+        return bitmapOne;
     }
 
-    public void setiOne(String iOne) {
-        this.iOne = iOne;
+    public void setBitmapOne(Bitmap bitmapOne) {
+        this.bitmapOne = bitmapOne;
     }
 
-    public String getiTwo() {
-        return iTwo;
+    public Bitmap getBitmapTwo() {
+        return bitmapTwo;
     }
 
-    public void setiTwo(String iTwo) {
-        this.iTwo = iTwo;
+    public void setBitmapTwo(Bitmap bitmapTwo) {
+        this.bitmapTwo = bitmapTwo;
     }
 
     public int getnAmountStock() {
@@ -133,5 +153,23 @@ public class Article {
 
     public void setnAmountStock(int nAmountStock) {
         this.nAmountStock = nAmountStock;
+    }
+
+    public static void showFragmentDialogImage(Context context, Device oDevice, final Fragment fTarget, final FragmentManager fManager) {
+        Volley_Connection cVolley = new Volley_Connection(context);
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_ARTICLE_IMAGE_MAIN + oDevice.getIdDevice(), null, new Interface_VolleyResult() {
+            @Override
+            public void onResult(JSONObject oJson) throws JSONException {
+                if (Volley_Connection.successfulResponse(oJson)) {
+                    String sBitmap = oJson.getString(Constants_Intern.ARTIKEL_IMAGE_MAIN);
+                    Fragment_Dialog_Image fDialogImage = new Fragment_Dialog_Image();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constants_Intern.STRING_BITMAP, sBitmap);
+                    fDialogImage.setArguments(bundle);
+                    fDialogImage.setTargetFragment(fTarget, 0);
+                    fDialogImage.show(fManager, Constants_Intern.FRAGMENT_DIALOG_IMAGE);
+                }
+            }
+        });
     }
 }

@@ -6,6 +6,7 @@
     <color name="color_primary_light">#971DA593</color>
     <color name="color_secondary">#2c8927</color>
     <color name="color_secondary_dark">#3a5e2b</color>
+    <color name="color_background">#FAFAFA</color>
 
     // Text
     <color name="color_text">#4E4E55</color>

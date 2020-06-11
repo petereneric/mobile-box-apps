@@ -131,26 +131,30 @@
     </style>
 
     <style name="button_main_new" parent="@style/Widget.AppCompat.Button.Borderless">
-        <item name="android:layout_width">450dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/background_solid_rounded_corners_grey_secondary</item>
+        <item name="android:background">@drawable/background_solid_round_color_primary</item>
         <item name="android:textColor">@color/color_white</item>
         <item name="android:textSize">@dimen/size_text_button</item>
         <item name="android:gravity">center</item>
         <item name="colorButtonNormal">@color/color_white</item>
-        <item name="android:layout_margin">12dp</item>
+        <item name="android:layout_marginTop">12dp</item>
+        <item name="android:layout_marginBottom">12dp</item>
+        <item name="android:layout_marginLeft">12dp</item>
+        <item name="android:layout_marginRight">12dp</item>
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingBottom">20dp</item>
         <item name="android:textStyle">normal</item>
     </style>
 
     <style name="button_sub_new" parent="button_main_new">
-        <item name="android:background">@drawable/background_stroke_round_grey_secondary</item>
-        <item name="android:textColor">@color/color_grey_secondary</item>
+        <item name="android:background">@drawable/background_stroke_round_color_primary</item>
+        <item name="android:textColor">@color/color_primary</item>
     </style>
 
-    <style name="button_sub_small" parent="button_sub_new">
-        <item name="android:layout_width">213dp</item>
+    <style name="button_sub_error" parent="button_sub_new">
+        <item name="android:background">@drawable/background_rounded_corners_negative</item>
+        <item name="android:textColor">@color/color_choice_negative</item>
     </style>
 
     <style name="button_sub" parent="button_main">

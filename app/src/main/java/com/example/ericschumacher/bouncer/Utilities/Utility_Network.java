@@ -1717,7 +1717,7 @@ public class Utility_Network {
     }
 
     private Device convertJsonToDevice(JSONObject json) {
-        Device device = new Device();
+        Device device = new Device(Context);
         try {
             if (!json.isNull(Constants_Extern.ID_MODEL))
                 device.getoModel().setkModel(json.getInt(Constants_Extern.ID_MODEL));
@@ -1833,7 +1833,7 @@ public class Utility_Network {
                                 JSONObject json = jsonArray.getJSONObject(i);
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 Log.i("DAATE", json.getString(Constants_Extern.LAST_UPDATE));
-                                records.add(new Record(json.getInt(Constants_Extern.ID), Utility_Date.stringToDate(json.getString(Constants_Extern.LAST_UPDATE)), json.getInt(Constants_Extern.COUNT_RECYCLING), json.getInt(Constants_Extern.COUNT_REUSE), json.getInt(Constants_Extern.DEVICES), json.getString(Constants_Extern.NAME)));
+                                records.add(new Record(json.getInt(Constants_Extern.ID), Utility_DateTime.stringToDate(json.getString(Constants_Extern.LAST_UPDATE)), json.getInt(Constants_Extern.COUNT_RECYCLING), json.getInt(Constants_Extern.COUNT_REUSE), json.getInt(Constants_Extern.DEVICES), json.getString(Constants_Extern.NAME)));
                             }
                             iCallback.onSuccess(records);
                         } else {
@@ -2147,7 +2147,7 @@ public class Utility_Network {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 Log.i("Looping", "Array");
                                 JSONObject json = jsonArray.getJSONObject(i);
-                                billPayees.add(new BillPayee(json.getInt(Constants_Extern.ID), Utility_Date.stringToDate(json.getString(Constants_Extern.DATE_CREATION)), json.getString(Constants_Extern.NAME_PAYEE), json.getString(Constants_Extern.ACCOUNTHOLDER), json.getString(Constants_Extern.IBAN), json.getDouble(Constants_Extern.PAYMENT)));
+                                billPayees.add(new BillPayee(json.getInt(Constants_Extern.ID), Utility_DateTime.stringToDate(json.getString(Constants_Extern.DATE_CREATION)), json.getString(Constants_Extern.NAME_PAYEE), json.getString(Constants_Extern.ACCOUNTHOLDER), json.getString(Constants_Extern.IBAN), json.getDouble(Constants_Extern.PAYMENT)));
                             }
                             iCallback.onSuccess(billPayees);
                         } else {
