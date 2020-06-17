@@ -197,4 +197,9 @@ public class Constants_Extern extends Constants_Intern {
     public static final String NUMBER_REPAIR= "NUMBER_REPAIR";
 
     public static final String LIST_ARTICLES = "LIST_ARTICLES";
+    public static final String TYPE_DEFAULT_EXPLOITATION = "TYPE_DEFAULT_EXPLOITATION";
+    public static final String IMAGE_ARTICLE = "IMAGE_ARTICLE";
+    public static final String LIST_COLLECTOR = "LIST_COLLECTOR";
+    public static final String NUMBER_DEVICES = "NUMBER_DEVICES";
+    public static final String BOOLEAN_SELECTED = "BOOLEAN_SELECTED";
 }

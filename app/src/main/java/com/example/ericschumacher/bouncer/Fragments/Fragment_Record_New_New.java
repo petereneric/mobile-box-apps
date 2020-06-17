@@ -10,10 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Fragments.Parent.Fragment_Object;
 import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.R;
 
-public class Fragment_Record_New_New extends Fragment implements View.OnClickListener {
+public class Fragment_Record_New_New extends Fragment_Object implements View.OnClickListener {
 
     // Layout
     View vLayout;
@@ -26,8 +27,6 @@ public class Fragment_Record_New_New extends Fragment implements View.OnClickLis
     TextView tvReuse;
     TextView tvRepair;
     TextView tvTotal;
-    Button bPause;
-    Button bFinish;
 
     // Interface
     Interface_Fragment_Record iFragmentRecord;
@@ -51,10 +50,9 @@ public class Fragment_Record_New_New extends Fragment implements View.OnClickLis
     }
 
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
-        // Inflate
-        vLayout = inflater.inflate(R.layout.fragment_record_new_new, container, false);
+        super.setLayout(inflater, container);
 
-        tvTitle = vLayout.findViewById(R.id.tvTitle);
+
         tvNameCollector = vLayout.findViewById(R.id.tvNameCollector);
         tvDateCreation = vLayout.findViewById(R.id.tvDateCreation);
         tvDateLastUpdate = vLayout.findViewById(R.id.tvDateLastUpdate);
@@ -62,15 +60,17 @@ public class Fragment_Record_New_New extends Fragment implements View.OnClickLis
         tvReuse = vLayout.findViewById(R.id.tvReuse);
         tvRepair = vLayout.findViewById(R.id.tvRepair);
         tvTotal = vLayout.findViewById(R.id.tvTotal);
-        bPause = vLayout.findViewById(R.id.bPause);
-        bFinish = vLayout.findViewById(R.id.bFinish);
 
         // Data
         tvTitle.setText(getString(R.string.record));
 
-        // OnClickListener
-        bPause.setOnClickListener(this);
-        bFinish.setOnClickListener(this);
+        // Visibility
+        ivPrint.setVisibility(View.GONE);
+        ivAdd.setVisibility(View.GONE);
+    }
+
+    public int getIdLayout() {
+        return R.layout.fragment_record_new_new;
     }
 
     public void updateLayout() {
@@ -116,7 +116,7 @@ public class Fragment_Record_New_New extends Fragment implements View.OnClickLis
         }
     }
 
-    public interface Interface_Fragment_Record {
+    public interface Interface_Fragment_Record extends Fragment_Box.Interface_Menu {
         Record getRecord();
         void returnRecord(String cTag, String cAction);
     }

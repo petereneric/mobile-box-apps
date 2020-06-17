@@ -32,6 +32,7 @@
         <activity android:name=".Activities.Activity_Article_Verify"></activity>
         <activity android:name=".Activities.Activity_Juicer_New"></activity>
         <activity android:name=".Activities.Activity_Bouncer_New"></activity>
+        <activity android:name=".Activities.Activity_Box"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

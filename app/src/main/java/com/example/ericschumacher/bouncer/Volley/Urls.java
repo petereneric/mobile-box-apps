@@ -51,9 +51,17 @@ public class Urls {
     public final static String URL_GET_DEVICES_BY_ID_MODEL_COLOR_SHAPE_FOR_JUICER = URL_REST_API+"devices/juicer/";
     public final static String URL_GET_DEVICES_IN_STOCK = URL_REST_API+"devices/stock/";
     public final static String URL_GET_ARTICLE_IMAGE_MAIN = URL_REST_API+"article/image/main/";
+    public final static String URL_GET_DEVICE_IMAGE_MAIN = URL_REST_API+"device/image/main/";
     public final static String URL_PUT_ARTICLE_BOOKING_INTO = URL_REST_API+"article/booking/into/";
     public final static String URL_GET_RECORD_BY_ID = URL_REST_API+"record/id/";
     public final static String URL_ADD_DEVICE = URL_REST_API+"device/add/2";
     public final static String URL_RECORD_FINISH = URL_REST_API+"record/selected/";
     public final static String URL_POST_MODELS_UNKNOWN = URL_REST_API+"models/unknown";
+    public final static String URL_GET_ARTICLE_IMAGE_MAIN_BY_MODEL_COLOR= URL_REST_API+"article/image/main/";
+    public final static String URL_PUT_BOX_UPDATE= URL_REST_API+"box/update";
+    public final static String URL_PUT_BOX_ADD= URL_REST_API+"box/add";
+    public final static String URL_DELETE_BOX_DELETE= URL_REST_API+"box/delete/";
+    public final static String URL_GET_BOX_BY_ID= URL_REST_API+"box/";
+    public final static String URL_GET_COLLECTORS_BY_INPUT= URL_REST_API+"collectors/input/";
+    public final static String URL_PUT_UPDATE_RECORD= URL_REST_API+"record/update";
 }

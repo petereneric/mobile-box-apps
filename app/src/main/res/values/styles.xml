@@ -242,4 +242,21 @@
         <item name="android:gravity">center</item>
     </style>
 
+    // Menu
+
+    <style name="image_view_menu">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">10</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="view_menu_divider">
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/color_grey</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginBottom">8dp</item>
+    </style>
+
+
 </resources>

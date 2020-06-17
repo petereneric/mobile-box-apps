@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Article;
+import com.example.ericschumacher.bouncer.Objects.Collection.Box;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 import com.zebra.sdk.btleComm.BluetoothLeConnection;
@@ -94,6 +95,19 @@ public class ManagerPrinter {
         }
     }
 
+    public void printBox(Box oBox) {
+        if (usePrinter(Context) && Connection != null) {
+            try {
+                if (Printer != null && readyToPrint()) {
+                    Connection.write(getBoxLabel(oBox));
+                    Log.i("What", "should work");
+                }
+            } catch (ConnectionException e1) {
+                Log.d("JOOO","Error sending file to printer");
+            }
+        }
+    }
+
     private byte[] getBatteryLabel(Battery battery) {
         String id = Integer.toString(battery.getId());
         String name = battery.getName();
@@ -133,6 +147,13 @@ public class ManagerPrinter {
                 "^FH\\^FD>:411^FS\n" +
                 "^PQ1,0,1,Y\n" +
                 "^XZ";
+
+        return label.getBytes();
+    }
+
+    private byte[] getBoxLabel(Box oBox) {
+
+        String label = "";
 
         return label.getBytes();
     }

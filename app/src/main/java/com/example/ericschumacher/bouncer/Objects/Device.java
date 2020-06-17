@@ -1,17 +1,24 @@
 package com.example.ericschumacher.bouncer.Objects;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Exceptions.LocationException;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Image;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Color;
+import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
 import org.json.JSONArray;
@@ -41,6 +48,7 @@ public class Device implements Serializable {
     private String cNotes = null;
     private double nRpd = 0;
     private Battery oBattery = null;
+    private Manufacturer oManufacturer = null;
 
     private String IMEI = Constants_Intern.IMEI_UNKNOWN;
     private int LKU = Constants_Intern.LKU_UNKNOWN;
@@ -258,6 +266,14 @@ public class Device implements Serializable {
         updateDevice();
     }
 
+    public Manufacturer getoManufacturer() {
+        return oManufacturer;
+    }
+
+    public void setoManufacturer(Manufacturer oManufacturer) {
+        this.oManufacturer = oManufacturer;
+    }
+
     public double getnRpd() {
         return nRpd;
     }
@@ -429,5 +445,23 @@ public class Device implements Serializable {
     public void setBatteryContained(Boolean bBattery) {
         this.bBatteryContained = bBattery;
         updateDevice();
+    }
+
+    public static void showFragmentDialogImage(Context context, Device oDevice, final Fragment fTarget, final FragmentManager fManager) {
+        Volley_Connection cVolley = new Volley_Connection(context);
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_DEVICE_IMAGE_MAIN + oDevice.getIdDevice(), null, new Interface_VolleyResult() {
+            @Override
+            public void onResult(JSONObject oJson) throws JSONException {
+                if (Volley_Connection.successfulResponse(oJson)) {
+                    String sBitmap = oJson.getString(Constants_Intern.DEVICE_IMAGE_MAIN);
+                    Fragment_Dialog_Image fDialogImage = new Fragment_Dialog_Image();
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constants_Intern.STRING_BITMAP, sBitmap);
+                    fDialogImage.setArguments(bundle);
+                    fDialogImage.setTargetFragment(fTarget, 0);
+                    fDialogImage.show(fManager, Constants_Intern.FRAGMENT_DIALOG_IMAGE);
+                }
+            }
+        });
     }
 }

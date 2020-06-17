@@ -10,9 +10,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
-import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List;
+import com.example.ericschumacher.bouncer.Adapter.Table.Adapter_Table;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
 import com.example.ericschumacher.bouncer.Objects.Ann;
 import com.example.ericschumacher.bouncer.R;
 
@@ -39,7 +38,7 @@ public class Fragment_Request_Input_New extends Fragment implements View.OnClick
     JSONArray jsonArrayData;
 
     // Adapter
-    Adapter_List aList;
+    Adapter_Table aList;
 
     @Nullable
     @Override
@@ -64,7 +63,8 @@ public class Fragment_Request_Input_New extends Fragment implements View.OnClick
         // Adapter
 
 
-        aList = new Adapter_List(getContext(), false, new Interface_Click() {
+        /*
+        aList = new Adapter_Table(getContext(), false, new Interface_Click() {
             @Override
             public void onClick(int position) {
                 try {
@@ -75,7 +75,9 @@ public class Fragment_Request_Input_New extends Fragment implements View.OnClick
             }
         }, jsonArrayData, iRequestInput.getAnn(getTag()));
 
-        return Layout;
+         */
+
+        return null;
     }
 
     // Layout

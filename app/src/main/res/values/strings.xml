@@ -278,6 +278,13 @@
     <string name="bouncer_new">Bouncer New</string>
     <string name="bouncer">Bouncer</string>
     <string name="record">Record</string>
+    <string name="unknown_text">Unknown</string>
+    <string name="tbd">To be decided</string>
+    <string name="activity_box_manager">Box-Manager</string>
+    <string name="prename_person">Prename</string>
+    <string name="surname_person">Surname</string>
+    <string name="city">City</string>
+    <string name="add_box">Add box</string>
     />
 
     // Not translated

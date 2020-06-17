@@ -102,7 +102,7 @@ public class Fragment_Booking_In_Lku_Stock extends Fragment_Booking implements V
                     tvStockCapacity.setBackground(shape);
 
                     // Visibility
-                    llFooter.setVisibility(View.VISIBLE);
+                    llFooter.setVisibility(View.GONE);
                 }
             }
         });

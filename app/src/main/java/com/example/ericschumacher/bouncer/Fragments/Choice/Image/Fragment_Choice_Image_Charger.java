@@ -1,11 +1,11 @@
 package com.example.ericschumacher.bouncer.Fragments.Choice.Image;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Adapter.List.Choice.Adapter_List_Choice_Image;
@@ -93,8 +93,7 @@ public class Fragment_Choice_Image_Charger extends Fragment_Choice_Image impleme
     }
 
     @Override
-    public Bitmap getImage(int position) {
-        return null;
+    public void setImage(ImageView ivOne, ImageView ivTwo, int position) {
     }
 
     @Override

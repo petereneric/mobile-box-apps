@@ -1,4 +1,4 @@
-package com.example.ericschumacher.bouncer.Adapter.List;
+package com.example.ericschumacher.bouncer.Adapter.Table;
 
 import android.content.Context;
 import android.support.v4.content.res.ResourcesCompat;
@@ -23,25 +23,22 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Adapter_List extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int TYPE_HEADER = 0;
     private static final int TYPE_LIST = 1;
 
 
+    // Context
     Context Context;
 
-    boolean bHeader;
-    JSONArray lJson;
-    ArrayList<Ann> lAnn;
-    Interface_Click iClick;
+    // Interface
+    Interface_Adapter_Table iAdapterTable;
 
-    public Adapter_List(Context context, boolean bHeader, Interface_Click iClick, JSONArray lJson, ArrayList<Ann> lAnn) {
+
+    public Adapter_Table(Context context, Interface_Adapter_Table iAdapterTable) {
         Context = context;
-        this.bHeader = bHeader;
-        this.lJson = lJson;
-        this.lAnn = lAnn;
-        this.iClick = iClick;
+        this.iAdapterTable = iAdapterTable;
     }
 
     @Override
@@ -57,9 +54,8 @@ public class Adapter_List extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         linearLayout.setGravity(Gravity.CENTER_VERTICAL);
 
         ArrayList<TextView> lTextView = new ArrayList<>();
-        Log.i("size Ann", Integer.toString(lAnn.size()));
-        for (int i = 0; i < lAnn.size(); i++) {
-            Ann ann = lAnn.get(i);
+        for (int i = 0; i < iAdapterTable.getAnn().size(); i++) {
+            Ann ann = iAdapterTable.getAnn().get(i);
             TextView textView = new TextView(Context);
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, ann.getnWeight());
             textView.setLayoutParams(lp);
@@ -75,7 +71,7 @@ public class Adapter_List extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return new ViewHolder_List(Layout, linearLayout, lTextView, new Interface_Click() {
             @Override
             public void onClick(int position) {
-                iClick.onClick(position);
+                iAdapterTable.onItemSelected(position);
             }
         });
     }
@@ -86,9 +82,9 @@ public class Adapter_List extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         try {
         if (holder.getItemViewType() == TYPE_LIST) {
-                JSONObject oJson = lJson.getJSONObject(bHeader ? position-1 : position);
-                for (int i = 0; i<lAnn.size(); i++) {
-                    Ann oAnn = lAnn.get(i);
+                JSONObject oJson = iAdapterTable.getJsonArray().getJSONObject(iAdapterTable.hasHeader() ? position-1 : position);
+                for (int i = 0; i<iAdapterTable.getAnn().size(); i++) {
+                    Ann oAnn = iAdapterTable.getAnn().get(i);
                     if (oAnn.getJsonKeyGrandParent() != null) {
                         JSONObject oJsonTwo = oJson.getJSONObject(oAnn.getJsonKeyGrandParent());
                         JSONObject oJsonThree = oJsonTwo.getJSONObject(oAnn.getJsonKeyParent());
@@ -111,8 +107,8 @@ public class Adapter_List extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                     }
                 }
         } else {
-            for (int i = 0; i<lAnn.size(); i++) {
-                Ann oAnn = lAnn.get(i);
+            for (int i = 0; i<iAdapterTable.getAnn().size(); i++) {
+                Ann oAnn = iAdapterTable.getAnn().get(i);
                 vhList.lTextView.get(i).setText(oAnn.getcTitle());
             }
         }
@@ -124,7 +120,7 @@ public class Adapter_List extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if (bHeader && position == 0) {
+        if (iAdapterTable.hasHeader() && position == 0) {
             return TYPE_HEADER;
         } else {
             return TYPE_LIST;
@@ -133,17 +129,17 @@ public class Adapter_List extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        Log.i("LEENGHT: ", Integer.toString(lJson.length()));
-        if (bHeader && lJson.length() > 0) {
-            return lJson.length() + 1;
+        Log.i("LEENGHT: ", Integer.toString(iAdapterTable.getJsonArray().length()));
+        if (iAdapterTable.hasHeader() && iAdapterTable.getJsonArray().length() > 0) {
+            return iAdapterTable.getJsonArray().length() + 1;
         } else {
-            return lJson.length();
+            return iAdapterTable.getJsonArray().length();
         }
 
     }
 
     public void update(JSONArray lJson) {
-        this.lJson = lJson;
+        //this.lJson = lJson;
         notifyDataSetChanged();
     }
 
@@ -168,8 +164,15 @@ public class Adapter_List extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
                 }
             });
 
-
             this.iClick = iClick;
         }
+    }
+
+    public interface Interface_Adapter_Table {
+        JSONArray getJsonArray();
+        boolean hasHeader();
+        public ArrayList<Ann> getAnn();
+        void onItemSelected(int position);
+        JSONObject getJsonObject(int position);
     }
 }

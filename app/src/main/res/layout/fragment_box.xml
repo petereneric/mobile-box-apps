@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <include
+        layout="@layout/layout_menu"
+        android:id="@+id/lMenu"
+        android:layout_below="@id/llTable"
+        android:layout_height="@dimen/height_layout_menu"
+        android:layout_width="match_parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lHeader"
+        android:orientation="horizontal"
+        android:id="@+id/llTable">
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="@dimen/layout_weight_box_row_one">
+
+            <TableRow android:id="@+id/trIdBox">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_box_key_one"
+                    android:text="@string/id" />
+
+                <TextView
+                    android:id="@+id/tvIdBox"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_box_value_one"
+                    android:text="5" />
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayoutTwo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="@dimen/layout_weight_box_row_two">
+
+            <TableRow android:id="@+id/trDateCreation">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_box_key_two"
+                    android:text="@string/date_creation" />
+
+                <TextView
+                    android:id="@+id/tvDateCreation"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_box_value_two"
+                    android:text="29.11.2019 um 16:01 Uhr" />
+
+            </TableRow>
+
+            <TableRow android:id="@+id/trDateLastUpdate">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_box_key_two"
+                    android:text="@string/date_last_update" />
+
+                <TextView
+                    android:id="@+id/tvDateLastUpdate"
+                    style="@style/tv_tableRow"
+                    android:layout_weight="@dimen/layout_weight_box_value_two"
+                    android:text="29.11.2019 um 16:01 Uhr" />
+
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/lHeader"
+        layout="@layout/layout_header" />
+
+</RelativeLayout>

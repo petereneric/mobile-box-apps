@@ -1,18 +1,22 @@
 package com.example.ericschumacher.bouncer.Fragments.Choice.Image;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Adapter.List.Choice.Adapter_List_Choice_Image;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Image;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 
 import org.json.JSONArray;
@@ -62,8 +66,7 @@ public class Fragment_Choice_Image_Manufacturer extends Fragment_Choice_Image im
     }
 
     @Override
-    public Bitmap getImage(int position) {
-        return null;
+    public void setImage(ImageView ivOne, ImageView ivTwo, int position) {
     }
 
     @Override

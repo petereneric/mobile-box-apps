@@ -1,11 +1,11 @@
 package com.example.ericschumacher.bouncer.Fragments.Choice.Image;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Adapter.List.Choice.Adapter_List_Choice_Image;
@@ -15,6 +15,7 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Article;
 import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Image;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
@@ -42,7 +43,6 @@ public class Fragment_Choice_Image_Model extends Fragment_Choice_Image implement
 
         // Arguments
         kManufacturer = getArguments().getInt(Constants_Intern.ID_MANUFACTURER);
-        tPhone = getArguments().getInt(Constants_Intern.TYPE_PHONE);
         kColor = getArguments().getInt(Constants_Intern.ID_COLOR);
 
         // Set Adapter
@@ -51,7 +51,7 @@ public class Fragment_Choice_Image_Model extends Fragment_Choice_Image implement
 
         // Load Data
 
-        cVolley.getResponse(Request.Method.GET, Urls.URL_POST_MODELS_UNKNOWN, getJson(), new Interface_VolleyResult() {
+        cVolley.getResponse(Request.Method.POST, Urls.URL_POST_MODELS_UNKNOWN, getJson(), new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
                 if (Volley_Connection.successfulResponse(oJson)) {
@@ -61,7 +61,7 @@ public class Fragment_Choice_Image_Model extends Fragment_Choice_Image implement
                     }
                     JSONArray jsonArrayArticles = oJson.getJSONArray(Constants_Extern.LIST_ARTICLES);
                     for (int i = 0; i<jsonArrayArticles.length(); i++) {
-                        lArticle.add(new Article(jsonArrayArticles.getJSONObject(i)));
+                        lArticle.add(new Article(getActivity(), jsonArrayArticles.getJSONObject(i)));
                     }
                     aChoice.notifyDataSetChanged();
                 } else {
@@ -86,25 +86,46 @@ public class Fragment_Choice_Image_Model extends Fragment_Choice_Image implement
     }
 
     @Override
-    public Bitmap getImage(int position) {
-        return lArticle.get(position).getBitmapOne();
+    public void setImage(ImageView ivOne, ImageView ivTwo, int position) {
+        if (getItemViewType(position) == Constants_Intern.TYPE_ITEM) {
+            ivOne.setVisibility(View.VISIBLE);
+            ivTwo.setVisibility(View.GONE);
+            ivOne.setImageBitmap(lArticle.get(position).getBitmapOne());
+        } else {
+            ivOne.setVisibility(View.VISIBLE);
+            ivTwo.setVisibility(View.GONE);
+            Utility_Image.setImageResource(getActivity(), ivOne, R.drawable.ic_unknown_white_192dp, R.color.color_grey);
+        }
     }
 
     @Override
     public int getItemViewType(int position) {
-        return 0;
+        if (position < lModel.size()) {
+            return Constants_Intern.TYPE_ITEM;
+        } else {
+            return Constants_Intern.TYPE_UNKNOWN;
+        }
     }
 
     @Override
     public void onAdapterClick(int position) {
-        // oArticle.getBitmapTwo()
-        iChoice.returnChoice(getTag(), lModel.get(position));
+        if (getItemViewType(position) == Constants_Intern.TYPE_ITEM) {
+            iChoice.returnChoice(getTag(), lModel.get(position));
+        } else {
+            iChoice.unknownChoice(getTag());
+        }
+
     }
 
     @Override
     public boolean onAdapterLongClick(int position) {
-        Article.showFragmentDialogImage(getActivity(), l);
-        return true;
+        if (getItemViewType(position) == Constants_Intern.TYPE_ITEM) {
+            Article.showFragmentDialogImage(getActivity(), lArticle.get(position), Fragment_Choice_Image_Model.this, getActivity().getSupportFragmentManager());
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     @Override
@@ -114,12 +135,16 @@ public class Fragment_Choice_Image_Model extends Fragment_Choice_Image implement
 
     @Override
     public String getName(int position) {
-        return lModel.get(position).getName();
+        if (getItemViewType(position) == Constants_Intern.TYPE_ITEM) {
+            return lModel.get(position).getName();
+        } else {
+            return getString(R.string.model_unknown);
+        }
     }
 
     @Override
     public Integer getItemCount() {
-        return lModel.size();
+        return lModel.size()+1;
     }
 
     private JSONObject getJson() {
@@ -127,7 +152,6 @@ public class Fragment_Choice_Image_Model extends Fragment_Choice_Image implement
 
         try {
             oJson.put(Constants_Extern.ID_MANUFACTURER, kManufacturer);
-            oJson.put(Constants_Extern.TYPE_PHONE, tPhone);
             oJson.put(Constants_Extern.ID_COLOR, kColor);
         } catch (JSONException e) {
             e.printStackTrace();

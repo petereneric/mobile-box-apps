@@ -155,9 +155,9 @@ public class Article {
         this.nAmountStock = nAmountStock;
     }
 
-    public static void showFragmentDialogImage(Context context, Device oDevice, final Fragment fTarget, final FragmentManager fManager) {
+    public static void showFragmentDialogImage(Context context, Article oArticle, final Fragment fTarget, final FragmentManager fManager) {
         Volley_Connection cVolley = new Volley_Connection(context);
-        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_ARTICLE_IMAGE_MAIN + oDevice.getIdDevice(), null, new Interface_VolleyResult() {
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_ARTICLE_IMAGE_MAIN + oArticle.getkArticle(), null, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
                 if (Volley_Connection.successfulResponse(oJson)) {

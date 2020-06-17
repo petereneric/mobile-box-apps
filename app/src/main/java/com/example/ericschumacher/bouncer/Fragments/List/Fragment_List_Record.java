@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.android.volley.Request;
-import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Ann;
@@ -24,7 +23,7 @@ public class Fragment_List_Record extends Fragment_List {
         super.onCreate(savedInstanceState);
 
         // Set Adapter
-        aList = new Adapter_List(getActivity(), true, this, lData, getListAnn());
+        //aList = new Adapter_Table(getActivity(), true, this, lData, getListAnn());
         rvList.setAdapter(aList);
 
         // Load data

@@ -365,6 +365,8 @@ public class Model implements Parcelable, Serializable {
                     return context.getString(R.string.reuse);
                 case Constants_Intern.EXPLOITATION_DEFECT_REUSE:
                     return context.getString(R.string.repair);
+                case Constants_Intern.DEFAULT_EXPLOITATION_TBD:
+                    return context.getString(R.string.tbd);
             }
         }
         return null;

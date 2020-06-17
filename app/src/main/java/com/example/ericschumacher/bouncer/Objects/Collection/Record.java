@@ -2,73 +2,39 @@ package com.example.ericschumacher.bouncer.Objects.Collection;
 
 import android.content.Context;
 
+import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Utilities.Utility_DateTime;
+import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Record implements Serializable{
+public class Record implements Serializable {
 
     int Id;
-    int kCollector;
     Collector oCollector;
-    String cCollectorName;
-    int kPayee;
+    //Payee oPayee;
     Date dCreation;
     Date dLastUpdate;
     int nDevices;
     int nRecycling;
     int nReuse;
     int nRepair;
-    double pQuote;
-    double sPayment;
-    double aPayment;
-    String cNotes;
+    //double pQuote;
+    //double sPayment;
+    //double aPayment;
+    //String cNotes;
     boolean bSelected;
-    int kBillPayee;
-    int kBillCollector;
+    //int kBillPayee;
+    //int kBillCollector;
 
     Context Context;
     Volley_Connection vConnection;
-
-    public Record(int id, int kCollector, int kPayee, Date dLastUpdate, int nDevices, int nRecycling, int nReuse, double pQuote, double sPayment, double aPayment, String cNotes,
-                  boolean bSelected, int kBillPayee, int kBillCollector) {
-        Id = id;
-        this.kCollector = kCollector;
-        this.kPayee = kPayee;
-        this.dLastUpdate = dLastUpdate;
-        this.nDevices = nDevices;
-        this.nRecycling = nRecycling;
-        this.nReuse = nReuse;
-        this.pQuote = pQuote;
-        this.sPayment = sPayment;
-        this.aPayment = aPayment;
-        this.cNotes = cNotes;
-        this.bSelected = bSelected;
-        this.kBillPayee = kBillPayee;
-        this.kBillCollector = kBillCollector;
-    }
-
-    public Record(int id, Date dLastUpdate, int nRecycling, int nReuse, int nDevices, String cName) {
-        Id = id;
-        this.dLastUpdate = dLastUpdate;
-        this.nRecycling = nRecycling;
-        this.nReuse = nReuse;
-        this.nDevices = nDevices;
-        this.cCollectorName = cName;
-    }
-
-    public Record(int id, String cName) {
-        Id = id;
-        this.cCollectorName = cName;
-        nRecycling = 0;
-        nReuse = 0;
-    }
 
     public Record(Context context, JSONObject jsonObject) {
         Context = context;
@@ -76,25 +42,43 @@ public class Record implements Serializable{
         try {
             Id = jsonObject.getInt(Constants_Extern.ID_RECORD);
             oCollector = new Collector(Context, jsonObject.getJSONObject(Constants_Extern.OBJECT_COLLECTOR));
-            SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            dCreation = sdf.parse(jsonObject.getString(Constants_Extern.DATE_CREATION));
-            dLastUpdate = sdf.parse(jsonObject.getString(Constants_Extern.DATE_LAST_UPDATE));
+            dCreation = Utility_DateTime.stringToDate(jsonObject.getString(Constants_Extern.DATE_CREATION));
+            dLastUpdate = Utility_DateTime.stringToDate(jsonObject.getString(Constants_Extern.DATE_LAST_UPDATE));
+            nDevices = jsonObject.getInt(Constants_Extern.NUMBER_DEVICES);
             nRecycling = jsonObject.getInt(Constants_Extern.NUMBER_RECYCLING);
             nReuse = jsonObject.getInt(Constants_Extern.NUMBER_REUSE);
-            //nRepair = jsonObject.getInt(Constants_Extern.NUMBER_REPAIR);
+            nRepair = jsonObject.getInt(Constants_Extern.NUMBER_REPAIR);
+            bSelected = (jsonObject.getInt(Constants_Extern.BOOLEAN_SELECTED) == 1) ? true : false;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public int incrementReuse() {
-        return nReuse++;
+    public void update() {
+        vConnection.execute(Request.Method.PUT, Urls.URL_PUT_UPDATE_RECORD, getJson());
     }
 
-    public int incrementRecycling() {
-        nRecycling = nRecycling+1;
-        return nRecycling;
+    public void incrementReuse() {
+        nReuse++;
+        sum();
+        update();
+    }
+
+    public void incrementRecycling() {
+        nRecycling++;
+        sum();
+        update();
+    }
+
+    public void incrementRepair() {
+        nRepair++;
+        sum();
+        update();
+    }
+
+    private void sum() {
+        nDevices = nRecycling+nReuse+nRepair;
     }
 
     public Collector getoCollector() {
@@ -121,29 +105,6 @@ public class Record implements Serializable{
         Id = id;
     }
 
-    public int getkCollector() {
-        return kCollector;
-    }
-
-    public void setkCollector(int kCollector) {
-        this.kCollector = kCollector;
-    }
-
-    public String getcCollectorName() {
-        return cCollectorName;
-    }
-
-    public void setcCollectorName(String cCollectorName) {
-        this.cCollectorName = cCollectorName;
-    }
-
-    public int getkPayee() {
-        return kPayee;
-    }
-
-    public void setkPayee(int kPayee) {
-        this.kPayee = kPayee;
-    }
 
     public String getDateLastUpdate() {
         return Utility_DateTime.dateTimeToString(dLastUpdate);
@@ -177,38 +138,6 @@ public class Record implements Serializable{
         this.nReuse = nReuse;
     }
 
-    public double getpQuote() {
-        return pQuote;
-    }
-
-    public void setpQuote(double pQuote) {
-        this.pQuote = pQuote;
-    }
-
-    public double getsPayment() {
-        return sPayment;
-    }
-
-    public void setsPayment(double sPayment) {
-        this.sPayment = sPayment;
-    }
-
-    public double getaPayment() {
-        return aPayment;
-    }
-
-    public void setaPayment(double aPayment) {
-        this.aPayment = aPayment;
-    }
-
-    public String getcNotes() {
-        return cNotes;
-    }
-
-    public void setcNotes(String cNotes) {
-        this.cNotes = cNotes;
-    }
-
     public boolean isbSelected() {
         return bSelected;
     }
@@ -217,25 +146,24 @@ public class Record implements Serializable{
         this.bSelected = bSelected;
     }
 
-    public int getkBillPayee() {
-        return kBillPayee;
-    }
-
-    public void setkBillPayee(int kBillPayee) {
-        this.kBillPayee = kBillPayee;
-    }
-
-    public int getkBillCollector() {
-        return kBillCollector;
-    }
-
-    public void setkBillCollector(int kBillCollector) {
-        this.kBillCollector = kBillCollector;
-    }
-
     public JSONObject getJson() {
         JSONObject oJson = new JSONObject();
+        try {
+            oJson.put(Constants_Extern.ID_RECORD, Id);
+            if (oCollector != null) {
+                oJson.put(Constants_Extern.ID_COLLECTOR, oCollector.getId());
+            } else {
+                oJson.put(Constants_Extern.ID_COLLECTOR, JSONObject.NULL);
+            }
+            oJson.put(Constants_Extern.NUMBER_DEVICES, nDevices);
+            oJson.put(Constants_Extern.NUMBER_RECYCLING, nRecycling);
+            oJson.put(Constants_Extern.NUMBER_REUSE, nReuse);
+            oJson.put(Constants_Extern.NUMBER_REPAIR, nRepair);
+            oJson.put(Constants_Extern.BOOLEAN_SELECTED, bSelected ? 1 : 0);
 
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
         return oJson;
     }
 }

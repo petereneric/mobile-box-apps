@@ -61,7 +61,7 @@ public class Activity_Article_Verify extends Activity_Article {
                     public void onResult(JSONObject oJson) throws JSONException {
                         if (Volley_Connection.successfulResponse(oJson)) {
                             if (!etSearch.getText().toString().equals("") && oJson.getInt(Constants_Extern.ID_DEVICE) == Integer.parseInt(etSearch.getText().toString())) {
-                                oArticle = new Article(oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
+                                oArticle = new Article(Activity_Article_Verify.this, oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
                                 getSupportFragmentManager().beginTransaction().show(fArticle).commit();
                                 fArticle.updateLayout();
                                 Log.i("jOOOO", "jOOO!");

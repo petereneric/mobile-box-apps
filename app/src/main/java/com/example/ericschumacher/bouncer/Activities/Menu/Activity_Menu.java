@@ -15,9 +15,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.ericschumacher.bouncer.Activities.Activity_Article;
+import com.example.ericschumacher.bouncer.Activities.Activity_Article_Verify;
 import com.example.ericschumacher.bouncer.Activities.Activity_Battery;
 import com.example.ericschumacher.bouncer.Activities.Activity_Bouncer;
 import com.example.ericschumacher.bouncer.Activities.Activity_Bouncer_New;
+import com.example.ericschumacher.bouncer.Activities.Activity_Box;
 import com.example.ericschumacher.bouncer.Activities.Activity_Device_New;
 import com.example.ericschumacher.bouncer.Activities.Activity_Juicer;
 import com.example.ericschumacher.bouncer.Activities.Activity_Juicer_New;
@@ -26,7 +28,6 @@ import com.example.ericschumacher.bouncer.Activities.Activity_Lifter_LkuStock;
 import com.example.ericschumacher.bouncer.Activities.Activity_Manager;
 import com.example.ericschumacher.bouncer.Activities.Activity_Model;
 import com.example.ericschumacher.bouncer.Activities.Activity_Turing;
-import com.example.ericschumacher.bouncer.Activities.Activity_Article_Verify;
 import com.example.ericschumacher.bouncer.Activities.Activity_Zwegat;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Menu;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
@@ -135,6 +136,7 @@ public class Activity_Menu extends AppCompatActivity implements View.OnClickList
         lMenu.add(new Object_Menu(getString(R.string.device_manager), new Intent(this, Activity_Device_New.class), R.color.color_intact_reuse));
         lMenu.add(new Object_Menu(getString(R.string.activity_lifter_stock_lku), new Intent(this, Activity_Lifter_LkuStock.class), R.color.color_orange));
         lMenu.add(new Object_Menu(getString(R.string.activity_verify_article), new Intent(this, Activity_Article_Verify.class), R.color.color_defect_reuse_light));
+        lMenu.add(new Object_Menu(getString(R.string.activity_box_manager), new Intent(this, Activity_Box.class), R.color.color_orange));
         lMenu.add(new Object_Menu(getString(R.string.article_manager), new Intent(this, Activity_Article.class), R.color.color_intact_reuse_dark));
         lMenu.add(new Object_Menu(getString(R.string.bouncer_new), new Intent(this, Activity_Bouncer_New.class), R.color.color_primary));
         lMenu.add(new Object_Menu(getString(R.string.juicer), new Intent(this, Activity_Juicer_New.class), R.color.color_grey));

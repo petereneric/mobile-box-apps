@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List;
+import com.example.ericschumacher.bouncer.Adapter.Table.Adapter_Table;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
@@ -29,7 +29,7 @@ public class Fragment_List extends Fragment implements Interface_Click {
     boolean bHeader;
 
     // Adapter
-    Adapter_List aList;
+    Adapter_Table aList;
 
     // Connection
     Volley_Connection cVolley;
@@ -58,7 +58,7 @@ public class Fragment_List extends Fragment implements Interface_Click {
     }
 
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
-        vLayout = inflater.inflate(R.layout.fragment_list_new, container, false);
+        vLayout = inflater.inflate(R.layout.fragment_table_new, container, false);
 
         // RecyclerView
         rvList = vLayout.findViewById(R.id.rvList);

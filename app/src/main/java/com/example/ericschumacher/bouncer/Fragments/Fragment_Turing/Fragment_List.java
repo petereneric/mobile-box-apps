@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List;
+import com.example.ericschumacher.bouncer.Adapter.Table.Adapter_Table;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_List;
@@ -34,7 +34,7 @@ public class Fragment_List extends Fragment implements Interface_Click, Interfac
     JSONArray lJson;
 
     // Adapter
-    Adapter_List aList;
+    Adapter_Table aList;
 
     // Interface
     Interface_List iList;
@@ -63,7 +63,7 @@ public class Fragment_List extends Fragment implements Interface_Click, Interfac
         }
 
         // Adapter
-        aList = new Adapter_List(getActivity(), true, this, lJson, iList.getAnn(Tag));
+        //aList = new Adapter_Table(getActivity(), true, this, lJson, iList.getAnn(Tag));
 
         RecyclerView.setAdapter(aList);
 
@@ -104,8 +104,8 @@ public class Fragment_List extends Fragment implements Interface_Click, Interfac
             }
 
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                final View llForeground = ((Adapter_List.ViewHolder_List) viewHolder).llForeground;
-                final TextView tvBackground = ((Adapter_List.ViewHolder_List) viewHolder).tvBackground;
+                final View llForeground = ((Adapter_Table.ViewHolder_List) viewHolder).llForeground;
+                final TextView tvBackground = ((Adapter_Table.ViewHolder_List) viewHolder).tvBackground;
                 if (dX > 0) {
                     iList.setSwipeViewRight(tvBackground);
                 } else {
@@ -118,13 +118,13 @@ public class Fragment_List extends Fragment implements Interface_Click, Interfac
             public void onChildDrawOver(Canvas c, RecyclerView recyclerView,
                                         RecyclerView.ViewHolder viewHolder, float dX, float dY,
                                         int actionState, boolean isCurrentlyActive) {
-                final View foregroundView = ((Adapter_List.ViewHolder_List) viewHolder).llForeground;
+                final View foregroundView = ((Adapter_Table.ViewHolder_List) viewHolder).llForeground;
                 getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY, actionState, isCurrentlyActive);
             }
 
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                final View foregroundView = ((Adapter_List.ViewHolder_List) viewHolder).llForeground;
+                final View foregroundView = ((Adapter_Table.ViewHolder_List) viewHolder).llForeground;
                 getDefaultUIUtil().clearView(foregroundView);
             }
         };

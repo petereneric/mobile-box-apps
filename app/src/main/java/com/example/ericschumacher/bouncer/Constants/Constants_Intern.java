@@ -324,4 +324,20 @@ public class Constants_Intern {
     public static final String FRAGMENT_CHOICE_IMAGE_MODEL = "FRAGMENT_CHOICE_IMAGE_MODEL";
     public static final String ID_COLOR = "ID_COLOR";
     public static final String TYPE_PHONE = "TYPE_PHONE";
+    public static final String DEVICE_IMAGE_MAIN = "DEVICE_IMAGE_MAIN";
+    public static final int TYPE_ITEM = 0;
+    public static final int TYPE_UNKNOWN = 1;
+    public static final String FRAGMENT_CHOICE_IMAGE_DEVICE_MANUFACTURER = "FRAGMENT_CHOICE_IMAGE_DEVICE_MANUFACTURER";
+    public static final int DEFAULT_EXPLOITATION_RECYCLING = 1;
+    public static final int DEFAULT_EXPLOITATION_TBD = 4;
+    public static final int TYPE_ACTION_PRINT = 0;
+    public static final int MENU_PRINT = 0;
+    public static final int MENU_ADD = 1;
+    public static final int MENU_DELETE = 2;
+    public static final String ID_BOX = "ID_BOX";
+    public static final String NAME = "NAME";
+    public static final String CITY = "CITY";
+    public static final String SURNAME_PERSON = "SURNAME_PERSON";
+    public static final String PRENAME_PERSON = "PRENAME_PERSON";
+    public static final String FRAGMENT_BOX = "FRAGMENT_BOX";
 }

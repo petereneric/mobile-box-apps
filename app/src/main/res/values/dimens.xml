@@ -3,6 +3,7 @@
     // Height - Layout
     <dimen name="height_layout_search">60dp</dimen>
     <dimen name="height_layout_footer">200dp</dimen>
+    <dimen name="height_layout_menu">64dp</dimen>
 
     // Size - Text
     <dimen name="size_text_header_title">24sp</dimen>
@@ -42,6 +43,14 @@
     <dimen name="layout_weight_record_key_two">2</dimen>
     <dimen name="layout_weight_record_value_one">2</dimen>
     <dimen name="layout_weight_record_value_two">1</dimen>
+
+    // FragmentBox
+    <dimen name="layout_weight_box_row_one">1</dimen>
+    <dimen name="layout_weight_box_row_two">3</dimen>
+    <dimen name="layout_weight_box_key_one">1</dimen>
+    <dimen name="layout_weight_box_key_two">1</dimen>
+    <dimen name="layout_weight_box_value_one">1</dimen>
+    <dimen name="layout_weight_box_value_two">2</dimen>
 
     // FragmentBooking
     <dimen name="size_text_booking_from_to">18sp</dimen>

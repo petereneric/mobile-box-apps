@@ -140,7 +140,7 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
                             public void onResult(JSONObject oJson) throws JSONException {
                                 if (Volley_Connection.successfulResponse(oJson)) {
                                     if (!etSearch.getText().toString().equals("") && oJson.getInt(Constants_Extern.ID_DEVICE) == Integer.parseInt(etSearch.getText().toString())) {
-                                        oArticle = new Article(oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
+                                        oArticle = new Article(Activity_Article.this, oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
                                     } else {
                                         oArticle = null;
                                     }
@@ -160,7 +160,7 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
                             @Override
                             public void onResult(JSONObject oJson) throws JSONException {
                                 if (Volley_Connection.successfulResponse(oJson)) {
-                                        oArticle = new Article(oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
+                                        oArticle = new Article(Activity_Article.this, oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
 
                                 } else {
                                     oArticle = null;
@@ -212,7 +212,7 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
                                         public void onResult(JSONObject oJson) throws JSONException {
                                             if (Volley_Connection.successfulResponse(oJson)) {
                                                 if (!etSearch.getText().toString().equals("") && oJson.getInt(Constants_Extern.ID_DEVICE) == Integer.parseInt(etSearch.getText().toString())) {
-                                                    oArticle = new Article(oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
+                                                    oArticle = new Article(Activity_Article.this, oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
                                                     returnFromSearch();
                                                 }
                                             } else {
@@ -246,7 +246,7 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
                                         @Override
                                         public void onResult(JSONObject oJson) throws JSONException {
                                             if (Volley_Connection.successfulResponse(oJson)) {
-                                                oArticle = new Article(oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
+                                                oArticle = new Article(Activity_Article.this, oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
                                                 returnFromSearch();
                                             } else {
                                                 oArticle = null;

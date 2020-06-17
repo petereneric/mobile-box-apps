@@ -106,119 +106,82 @@ public class Fragment_Result_New extends Fragment implements View.OnClickListene
         tvInteractionTitle.setVisibility(View.GONE);
 
         // Depending on data
-        Log.i("Jo", Integer.toString(oDevice.getoModel().gettDefaultExploitation()));
-        switch (oDevice.getoModel().gettDefaultExploitation()) {
-            case Constants_Intern.EXPLOITATION_NULL:
-                switch (oDevice.gettState()) {
-                    case Constants_Intern.STATE_UNKNOWN:
-                        llUnknown.setVisibility(View.VISIBLE);
-                        llUnknownObjects.setVisibility(View.VISIBLE);
-                        tvUnknownExploitation.setVisibility(View.VISIBLE);
-                        break;
-                    case Constants_Intern.STATE_MODEL_UNKNOWN:
-                        llUnknown.setVisibility(View.VISIBLE);
-                        llUnknownObjects.setVisibility(View.VISIBLE);
-                        tvUnknownModel.setVisibility(View.VISIBLE);
-                }
-                break;
-            case Constants_Intern.EXPLOITATION_RECYCLING:
-                Log.i("Jo", "Joo");
-                llRecycling.setVisibility(View.VISIBLE);
-                break;
-            case Constants_Intern.EXPLOITATION_INTACT_REUSE:
-            case  Constants_Intern.EXPLOITATION_DEFECT_REUSE:
-                switch (oDevice.gettState()) {
-                    case Constants_Intern.STATE_INTACT_REUSE:
-                        llReuse.setVisibility(View.VISIBLE);
-                        //tvReuseDevice.setVisibility(View.VISIBLE);
-                        if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained()) {
-                            //tvReuseBattery.setVisibility(View.VISIBLE);
-                        }
-                        if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() != null && oDevice.getoModel().getModelBatteryByBattery(oDevice.getoBattery()).gettStatus() == 2) {
+        if (oDevice.gettState() == Constants_Intern.STATE_MODEL_UNKNOWN) {
+            llUnknown.setVisibility(View.VISIBLE);
+            llUnknownObjects.setVisibility(View.VISIBLE);
+            tvUnknownModel.setVisibility(View.VISIBLE);
+        } else {
+            switch (oDevice.getoModel().gettDefaultExploitation()) {
+                case Constants_Intern.EXPLOITATION_NULL:
+                    switch (oDevice.gettState()) {
+                        case Constants_Intern.STATE_UNKNOWN:
+                            llUnknown.setVisibility(View.VISIBLE);
+                            llUnknownObjects.setVisibility(View.VISIBLE);
+                            tvUnknownExploitation.setVisibility(View.VISIBLE);
+                            break;
+                        case Constants_Intern.STATE_MODEL_UNKNOWN:
+                            llUnknown.setVisibility(View.VISIBLE);
+                            llUnknownObjects.setVisibility(View.VISIBLE);
+                            tvUnknownModel.setVisibility(View.VISIBLE);
+                    }
+                    break;
+                case Constants_Intern.EXPLOITATION_RECYCLING:
+                    Log.i("Jo", "Joo");
+                    llRecycling.setVisibility(View.VISIBLE);
+                    break;
+                case Constants_Intern.EXPLOITATION_INTACT_REUSE:
+                case  Constants_Intern.EXPLOITATION_DEFECT_REUSE:
+                case  Constants_Intern.DEFAULT_EXPLOITATION_TBD:
+                    switch (oDevice.gettState()) {
+                        case Constants_Intern.STATE_INTACT_REUSE:
+                            llReuse.setVisibility(View.VISIBLE);
+                            //tvReuseDevice.setVisibility(View.VISIBLE);
+                            if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained()) {
+                                //tvReuseBattery.setVisibility(View.VISIBLE);
+                            }
+                            if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() != null && oDevice.getoModel().getModelBatteryByBattery(oDevice.getoBattery()).gettStatus() == 2) {
+                                llRecycling.setVisibility(View.VISIBLE);
+                                llRecyclingObjects.setVisibility(View.VISIBLE);
+                                tvRecyclingBattery.setVisibility(View.VISIBLE);
+                                llReuseObjects.setVisibility(View.VISIBLE);
+                                tvReuseDevice.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case Constants_Intern.STATE_RECYCLING:
                             llRecycling.setVisibility(View.VISIBLE);
-                            llRecyclingObjects.setVisibility(View.VISIBLE);
-                            tvRecyclingBattery.setVisibility(View.VISIBLE);
-                            llReuseObjects.setVisibility(View.VISIBLE);
-                            tvReuseDevice.setVisibility(View.VISIBLE);
-                        }
-                        break;
-                    case Constants_Intern.STATE_RECYCLING:
-                        llRecycling.setVisibility(View.VISIBLE);
-                        if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() < 2) {
-                            llRecyclingObjects.setVisibility(View.VISIBLE);
-                            llReuseObjects.setVisibility(View.VISIBLE);
-                            llReuse.setVisibility(View.VISIBLE);
-                            tvReuseBattery.setVisibility(View.VISIBLE);
-                            tvRecyclingDevice.setVisibility(View.VISIBLE);
-                        }
-                        if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() >= 2) {
-                            tvRecyclingBattery.setVisibility(View.VISIBLE);
-                            tvRecyclingDevice.setVisibility(View.VISIBLE);
-                        }
-                        if (oDevice.getoModel().isBackcoverRemovable() && oDevice.isBackcoverContained()) {
-                            llRecyclingObjects.setVisibility(View.VISIBLE);
-                            llReuseObjects.setVisibility(View.VISIBLE);
-                            llReuse.setVisibility(View.VISIBLE);
-                            tvReuseBackcover.setVisibility(View.VISIBLE);
-                            tvRecyclingDevice.setVisibility(View.VISIBLE);
-                        }
-                        break;
-                    case Constants_Intern.STATE_DEFECT_REPAIR:
-                        llDefectRepair.setVisibility(View.VISIBLE);
-                        //tvDefectRepairDevice.setVisibility(View.VISIBLE);
-                        break;
-                    case Constants_Intern.STATE_DEFECT_REUSE:
-                        llDefectReuse.setVisibility(View.VISIBLE);
-                        //tvDefectReuseDevice.setVisibility(View.VISIBLE);
-                        break;
-                }
-//                if (oDevice.gettState() == Constants_Intern.STATE_INTACT_REUSE) {
-//                    tvReuseDevice.setVisibility(View.VISIBLE);
-//                    if (oDevice.isBatteryContained()) {
-//                        tvReuseBattery.setVisibility(View.VISIBLE);
-//                    }
-//                }
-                break;
-
+                            if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() < 2) {
+                                llRecyclingObjects.setVisibility(View.VISIBLE);
+                                llReuseObjects.setVisibility(View.VISIBLE);
+                                llReuse.setVisibility(View.VISIBLE);
+                                tvReuseBattery.setVisibility(View.VISIBLE);
+                                tvRecyclingDevice.setVisibility(View.VISIBLE);
+                            }
+                            if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() >= 2) {
+                                tvRecyclingBattery.setVisibility(View.VISIBLE);
+                                tvRecyclingDevice.setVisibility(View.VISIBLE);
+                            }
+                            if (oDevice.getoModel().isBackcoverRemovable() && oDevice.isBackcoverContained()) {
+                                llRecyclingObjects.setVisibility(View.VISIBLE);
+                                llReuseObjects.setVisibility(View.VISIBLE);
+                                llReuse.setVisibility(View.VISIBLE);
+                                tvReuseBackcover.setVisibility(View.VISIBLE);
+                                tvRecyclingDevice.setVisibility(View.VISIBLE);
+                            }
+                            break;
+                        case Constants_Intern.STATE_DEFECT_REPAIR:
+                            llDefectRepair.setVisibility(View.VISIBLE);
+                            //tvDefectRepairDevice.setVisibility(View.VISIBLE);
+                            break;
+                        case Constants_Intern.STATE_DEFECT_REUSE:
+                            llDefectReuse.setVisibility(View.VISIBLE);
+                            //tvDefectReuseDevice.setVisibility(View.VISIBLE);
+                            break;
+                    }
+                    break;
+            }
         }
-//        switch (oDevice.gettState()) {
-//            case Constants_Intern.STATE_RECYCLING:
-//                llRecycling.setVisibility(View.VISIBLE);
-//                tvRecyclingDevice.setVisibility(View.VISIBLE);
-//                tvRecyclingBattery.setVisibility(View.VISIBLE);
-//                tvRecyclingBackcover.setVisibility(View.VISIBLE);
-//                break;
-//            case Constants_Intern.STATE_INTACT_REUSE:
-//                llReuse.setVisibility(View.VISIBLE);
-//                tvReuseDevice.setVisibility(View.VISIBLE);
-//                if (oDevice.isBatteryContained() && uBattery != null && uBattery.isbBatteryIntact() == false) {
-//                    tvRecyclingBattery.setVisibility(View.VISIBLE);
-//                }
-//                if (oDevice.isBackcoverContained() && uBackcover != null && uBackcover.getkShape() == 5) {
-//                    tvRecyclingBackcover.setVisibility(View.VISIBLE);
-//                }
-//                break;
-//            case Constants_Intern.STATE_DEFECT_REPAIR:
-//                llDefectRepair.setVisibility(View.VISIBLE);
-//                tvDefectRepairDevice.setVisibility(View.VISIBLE);
-//                if (oDevice.isBatteryContained() && uBattery != null && uBattery.isbBatteryIntact() == false) {
-//                    tvRecyclingBattery.setVisibility(View.VISIBLE);
-//                }
-//                if (oDevice.isBackcoverContained() && uBackcover != null && uBackcover.getkShape() == 5) {
-//                    tvRecyclingBackcover.setVisibility(View.VISIBLE);
-//                }
-//                break;
-//            case Constants_Intern.STATE_DEFECT_REUSE:
-//                llDefectReuse.setVisibility(View.VISIBLE);
-//                tvDefectReuseDevice.setVisibility(View.VISIBLE);
-//                if (oDevice.isBatteryContained() && uBattery != null && uBattery.isbBatteryIntact() == false) {
-//                    tvRecyclingBattery.setVisibility(View.VISIBLE);
-//                }
-//                if (oDevice.isBackcoverContained() && uBackcover != null && uBackcover.getkShape() == 5) {
-//                    tvRecyclingBackcover.setVisibility(View.VISIBLE);
-//                }
-//                break;
-//        }
+
+
     }
 
     @Override

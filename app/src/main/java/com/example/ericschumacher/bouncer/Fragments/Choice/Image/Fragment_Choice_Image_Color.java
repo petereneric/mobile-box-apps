@@ -1,11 +1,14 @@
 package com.example.ericschumacher.bouncer.Fragments.Choice.Image;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Adapter.List.Choice.Adapter_List_Choice_Image_Color;
@@ -15,6 +18,7 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Color;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Volley.Urls;
+import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -76,8 +80,20 @@ public class Fragment_Choice_Image_Color extends Fragment_Choice_Image implement
     }
 
     @Override
-    public Bitmap getImage(int position) {
-        return null;
+    public void setImage(final ImageView ivOne, final ImageView ivTwo, final int position) {
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_ARTICLE_IMAGE_MAIN_BY_MODEL_COLOR + kModel + "/" + lColor.get(position).getId(), null, new Interface_VolleyResult() {
+            @Override
+            public void onResult(JSONObject oJson) throws JSONException {
+                if (Volley_Connection.successfulResponse(oJson)) {
+                    byte[] decodedString = Base64.decode(oJson.getString(Constants_Extern.IMAGE_ARTICLE), Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    ivOne.setImageBitmap(bitmap);
+                    ivTwo.setVisibility(View.GONE);
+                } else {
+                    ivOne.setBackgroundColor(getHexColor(position));
+                }
+            }
+        });
     }
 
     @Override

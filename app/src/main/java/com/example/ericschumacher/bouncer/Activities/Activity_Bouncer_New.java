@@ -11,11 +11,14 @@ import android.view.View;
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Manufacturer;
+import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Model;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Model_New;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Record_New_New;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Result_New;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
+import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.Objects.Device;
@@ -59,6 +62,7 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
 
     }
 
+
     // Layout
 
     public void setLayout() {
@@ -72,6 +76,7 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
         return R.layout.activity_bouncer_new;
     }
 
+
     // Update
 
     public void updateLayout() {
@@ -80,7 +85,7 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
             // Fragments
             fManager.beginTransaction().show(fRecord).commit();
             fRecord.updateLayout();
-            if (oModel == null || oDevice == null) {
+            if (getModel() == null || oDevice == null) {
                 getSupportFragmentManager().beginTransaction().hide(fModel).commit();
                 getSupportFragmentManager().beginTransaction().hide(fDevice).commit();
 
@@ -124,88 +129,115 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
         }
     }
 
+
     // Base & Reset
 
     public void base(Boolean bKeyboard) {
         updateLayout();
         if (oRecord != null) {
             if (oDevice != null) {
-                if (oDevice.getoModel() == null) {
-                    requestModelName();
-                } else {
-                    if (oDevice.getoModel().gettPhone() == null) {
-                        requestPhoneType();
+                if (oDevice.gettState() == Constants_Intern.STATE_MODEL_UNKNOWN) {
+                    if (oDevice.getoManufacturer() != null) {
+                        if (oDevice.getoColor() != null) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(Constants_Intern.TITLE, getString(R.string.model));
+                            bundle.putInt(Constants_Intern.ID_MANUFACTURER, oDevice.getoManufacturer().getId());
+                            bundle.putInt(Constants_Intern.ID_COLOR, oDevice.getoColor().getId());
+                            showFragment(new Fragment_Choice_Image_Model(), bundle, Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL, Constants_Intern.CLOSE_KEYBOARD);
+                        } else {
+                            requestColor();
+                        }
                     } else {
-                        if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_RECYCLING || oDevice.gettState() == Constants_Intern.STATE_RECYCLING) {
-                            oDevice.settState(Constants_Intern.STATE_RECYCLING);
-                            if (oDevice.getoModel().isBatteryRemovable() == null && oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING) {
+                        requestDeviceManufacturer();
+                    }
+                } else {
+                    if (oDevice.getoModel() == null) {
+                        requestModelName();
+                    } else {
+                        // Model known
+                        if (oDevice.getoModel().gettPhone() == null) {
+                            requestPhoneType();
+                        } else {
+                            if (oDevice.getoModel().isBatteryRemovable() == null) {
                                 requestBatteryRemovable();
                             } else {
-                                if (oDevice.getoModel().isBackcoverRemovable() == null && oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING) {
+                                if (oDevice.getoModel().isBackcoverRemovable() == null) {
                                     requestBackcoverRemovable();
                                 } else {
-                                    if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() == null) {
-                                        Log.i("Battery", "Contained2");
-                                        requestBatteryContained();
-                                    } else {
-                                        if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() == true && oDevice.getoModel().getoBattery() == null) {
-                                            requestBattery();
+                                    if (oDevice.getoModel().gettDefaultExploitation() == null || oDevice.getoModel().gettDefaultExploitation() == 0) {
+                                        if (oDevice.getoModel().getoManufacturer() == null) {
+                                            requestManufacturer();
                                         } else {
-                                            if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() == true && oDevice.getoModel().getlModelBatteries().size() > 1 && oDevice.getoBattery() == null) {
-                                                requestDeviceBattery();
+                                            if (oDevice.getoModel().getoManufacturer().gettDefaultExploitation() == Constants_Intern.DEFAULT_EXPLOITATION_RECYCLING) {
+                                                oDevice.getoModel().settDefaultExploitation(Constants_Intern.DEFAULT_EXPLOITATION_RECYCLING);
                                             } else {
-                                                if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBackcoverRemovable() && oDevice.isBackcoverContained() == null) {
-                                                    requestBackcoverContained();
-                                                } else {
-                                                    showResult();
-                                                }
+                                                oDevice.getoModel().settDefaultExploitation(Constants_Intern.DEFAULT_EXPLOITATION_TBD);
+                                                base(null);
                                             }
                                         }
-                                    }
-                                }
-                            }
-                        } else {
-                            if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_NULL) {
-                                showResult();
-                            } else {
-                                if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_INTACT_REUSE || oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_DEFECT_REUSE) {
-                                    if (oDevice.getoModel().getoManufacturer() == null) {
-                                        requestManufacturer();
                                     } else {
-                                        if (oDevice.getoModel().getoCharger() == null) {
-                                            requestCharger();
-                                        } else {
-                                            if (oDevice.getoModel().isBatteryRemovable() == null) {
-                                                requestBatteryRemovable();
+                                        if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_RECYCLING || oDevice.gettState() == Constants_Intern.STATE_RECYCLING) {
+                                            oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                                            if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() == null) {
+                                                requestBatteryContained();
                                             } else {
-                                                if (oDevice.getoModel().isBackcoverRemovable() == null) {
-                                                    requestBackcoverRemovable();
+                                                if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() == true && oDevice.getoModel().getoBattery() == null) {
+                                                    requestBattery();
                                                 } else {
-                                                    if (oDevice.getoModel().isBatteryRemovable() && (oDevice.isBatteryContained() != null && oDevice.isBatteryContained() == true) && oDevice.getoModel().getoBattery() == null) {
-                                                        requestBattery();
+                                                    if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() == true && oDevice.getoModel().getlModelBatteries().size() > 1 && oDevice.getoBattery() == null) {
+                                                        requestDeviceBattery();
                                                     } else {
-                                                        if (oDevice.getoShape() == null) {
-                                                            requestShape();
+                                                        if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBackcoverRemovable() && oDevice.isBackcoverContained() == null) {
+                                                            requestBackcoverContained();
                                                         } else {
-                                                            if (oDevice.getoColor() == null) {
-                                                                Log.i("Color", "null");
-                                                                requestColor();
+                                                            showResult();
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        } else {
+                                                if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_INTACT_REUSE || oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_DEFECT_REUSE || oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.DEFAULT_EXPLOITATION_TBD) {
+                                                    if (oDevice.getoModel().getoManufacturer() == null) {
+                                                        requestManufacturer();
+                                                    } else {
+                                                        if (oDevice.getoModel().getoCharger() == null) {
+                                                            requestCharger();
+                                                        } else {
+                                                            if (oDevice.getoModel().isBatteryRemovable() == null) {
+                                                                requestBatteryRemovable();
                                                             } else {
-                                                                Log.i("Color: ", oDevice.getoColor().getcNameDE());
-                                                                if (false && oDevice.getoColor().getkModelColor() == 0 && oDevice.getoColor().getkModelColor() != Constants_Intern.TAKE_NO_PICTURE) { // mSharedPreferences.getBoolean(Constants_Intern.USE_CAMERA_MODEL_COLOR, false) &&
-                                                                    //takePictures(IMAGE_FRONT);
+                                                                if (oDevice.getoModel().isBackcoverRemovable() == null) {
+                                                                    requestBackcoverRemovable();
                                                                 } else {
-                                                                    if (oDevice.isBatteryContained() == null) {
-                                                                        Log.i("Battery", "Contained");
-                                                                        requestBatteryContained();
+                                                                    if (oDevice.getoModel().isBatteryRemovable() && (oDevice.isBatteryContained() != null && oDevice.isBatteryContained() == true) && oDevice.getoModel().getoBattery() == null) {
+                                                                        requestBattery();
                                                                     } else {
-                                                                        if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() == null) {
-                                                                            requestDeviceBattery();
+                                                                        if (oDevice.getoShape() == null) {
+                                                                            requestShape();
                                                                         } else {
-                                                                            if (oDevice.isBackcoverContained() == null) { // Backcover
-                                                                                requestBackcoverContained();
+                                                                            if (oDevice.getoColor() == null) {
+                                                                                Log.i("Color", "null");
+                                                                                requestColor();
                                                                             } else {
-                                                                                showResult();
+                                                                                Log.i("Color: ", oDevice.getoColor().getcNameDE());
+                                                                                if (false && oDevice.getoColor().getkModelColor() == 0 && oDevice.getoColor().getkModelColor() != Constants_Intern.TAKE_NO_PICTURE) { // mSharedPreferences.getBoolean(Constants_Intern.USE_CAMERA_MODEL_COLOR, false) &&
+                                                                                    //takePictures(IMAGE_FRONT);
+                                                                                } else {
+                                                                                    if (oDevice.isBatteryContained() == null) {
+                                                                                        Log.i("Battery", "Contained");
+                                                                                        requestBatteryContained();
+                                                                                    } else {
+                                                                                        if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() == null) {
+                                                                                            requestDeviceBattery();
+                                                                                        } else {
+                                                                                            if (oDevice.isBackcoverContained() == null) { // Backcover
+                                                                                                requestBackcoverContained();
+                                                                                            } else {
+                                                                                                showResult();
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }
                                                                         }
                                                                     }
@@ -214,7 +246,6 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
                                                         }
                                                     }
                                                 }
-                                            }
                                         }
                                     }
                                 }
@@ -234,8 +265,8 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
 
     public void resetDevice() {
         oDevice = null;
-        fModel = (Fragment_Model_New) fManager.findFragmentById(R.id.fModel);
-        fDevice = (Fragment_Device_New) fManager.findFragmentById(R.id.fDevice);
+        //fModel = (Fragment_Model_New) fManager.findFragmentById(R.id.fModel);
+        //fDevice = (Fragment_Device_New) fManager.findFragmentById(R.id.fDevice);
         resetLayout();
     }
 
@@ -247,22 +278,6 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
     public void reset() {
 
     }
-
-    // Result
-
-    public void showResult() {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
-        showFragment( new Fragment_Result_New(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
-    }
-
-    // AfterBounce
-
-    public void afterBounce() {
-
-    }
-
-
 
 
     // Search
@@ -276,11 +291,13 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
                     if (Volley_Connection.successfulResponse(oJson)) {
                         // Device exists
                         oDevice = new Device(oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Bouncer_New.this);
+                        oDevice.setkRecord(oRecord.getId());
                         base(Constants_Intern.CLOSE_KEYBOARD);
                     } else {
                         // Device does not exist
                         oDevice = new Device(Activity_Bouncer_New.this, etSearch.getText().toString());
-                        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_BY_TAC+ etSearch.getText().toString().substring(0, 8), null, new Interface_VolleyResult() {
+                        oDevice.setkRecord(oRecord.getId());
+                        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_BY_TAC + etSearch.getText().toString().substring(0, 8), null, new Interface_VolleyResult() {
                             @Override
                             public void onResult(JSONObject oJson) {
                                 if (cSearchSaved.equals(etSearch.getText().toString())) {
@@ -324,24 +341,11 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
         }
     }
 
-    @Override
-    public void afterTextChanged(Editable editable) {
-        updateLayout();
-        if (!editable.toString().equals("")) {
-            if (oRecord != null) {
-                if (editable.toString().length() == 15) {
-                    onSearch();
-                }
-            } else {
-                if (editable.toString().substring(editable.toString().length()-1).equals("E")) {
-                    etSearch.setText(editable.toString().substring(0, editable.toString().length()-1));
-                    onSearch();
-                }
-            }
-        } else {
-            reset();
-        }
-    }
+
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+    // Get
 
     @Override
     public Record getRecord() {
@@ -349,7 +353,40 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
     }
 
 
+    // Result
+
+    public void showResult() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
+        showFragment(new Fragment_Result_New(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
+    }
+
+
+    // Request
+
+    public void requestDeviceManufacturer() {
+        Bundle bData = new Bundle();
+        bData.putString(Constants_Intern.TITLE, getString(R.string.manufacturer));
+        showFragment(new Fragment_Choice_Image_Manufacturer(), bData, Constants_Intern.FRAGMENT_CHOICE_IMAGE_DEVICE_MANUFACTURER, Constants_Intern.DONT_SHOW_KEYBOARD);
+    }
+
+
     // Return
+
+    @Override
+    public void returnChoice(String cTag, Object object) {
+        switch (cTag) {
+            case Constants_Intern.FRAGMENT_CHOICE_IMAGE_DEVICE_MANUFACTURER:
+                oDevice.setoManufacturer((Manufacturer) object);
+                break;
+            case Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL:
+                setModel((Model) object);
+                oDevice.settState(Constants_Intern.STATE_UNKNOWN);
+                break;
+        }
+        super.returnChoice(cTag, object);
+
+    }
 
     @Override
     public void returnRecord(String cTag, String cAction) {
@@ -369,7 +406,7 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
         }
     }
 
-    public void returnResult(String cTag) {
+    public void returnResult(final String cTag) {
         switch (oDevice.gettState()) {
             case Constants_Intern.STATE_UNKNOWN:
                 if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_UNKNOWN) {
@@ -385,16 +422,8 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
                 cVolley.execute(Request.Method.PUT, Urls.URL_INCREMENT_RECORD_RECYCLING + oRecord.getId(), null);
                 oRecord.incrementRecycling();
                 if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() < 2) {
-                    // Print Label for Battery
-                    //Toast.makeText(this, getString(R.string.label_print_battery), Toast.LENGTH_LONG).show();
                     mPrinter.printBattery(oDevice.getoModel().getoBattery());
-                } else {
-                    if (oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() > 1) {
-                        //Toast.makeText(this, getString(R.string.no_label_print_battery), Toast.LENGTH_LONG).show();
-                    }
                 }
-
-
                 break;
             case Constants_Intern.STATE_DEFECT_REPAIR:
             case Constants_Intern.STATE_DEFECT_REUSE:
@@ -408,11 +437,12 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
                         try {
                             if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
                                 oDevice.setIdDevice(oJson.getInt(Constants_Extern.ID_DEVICE));
-                                //Toast.makeText(Activity_Bouncer.this, getString(R.string.label_print_device), Toast.LENGTH_LONG).show();
                                 mPrinter.printDeviceId(oDevice);
                             } else {
-                                //Toast.makeText(Activity_Bouncer.this, "IMEI exists", Toast.LENGTH_LONG).show();
                             }
+                            removeFragment(cTag);
+                            resetDevice();
+                            updateLayout();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -431,9 +461,10 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
                             if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
                                 oDevice.setIdDevice(oJson.getInt(Constants_Extern.ID_DEVICE));
                                 mPrinter.printDeviceId(oDevice);
-                            } else {
-                                //Toast.makeText(Activity_Bouncer.this, "IMEI exists", Toast.LENGTH_LONG).show();
                             }
+                            removeFragment(cTag);
+                            resetDevice();
+                            updateLayout();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -441,9 +472,32 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
                 });
                 break;
         }
+    }
+
+
+    // Unknown
+
+    @Override
+    public void unknownInput(String cTag) {
+        switch (cTag) {
+            case Constants_Intern.FRAGMENT_INPUT_MODEL:
+                Log.i("jooo", "jo");
+                oDevice.settState(Constants_Intern.STATE_MODEL_UNKNOWN);
+                break;
+            case Constants_Intern.FRAGMENT_INPUT_DPS:
+                break;
+            case Constants_Intern.FRAGMENT_INPUT_BATTERY:
+        }
         removeFragment(cTag);
-        resetDevice();
-        updateLayout();
+        base(Constants_Intern.CLOSE_KEYBOARD);
+    }
+
+    @Override
+    public void unknownChoice(String cTag) {
+        switch (cTag) {
+            case Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL:
+                showResult();
+        }
     }
 
     // ClickListener & TextWatcher
@@ -458,6 +512,7 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
                 if (oRecord != null) {
                     if (etSearch.getText().toString().equals("")) {
                         oDevice = new Device(this, Constants_Intern.UNKNOWN_IMEI);
+                        oDevice.setkRecord(oRecord.getId());
                         base(Constants_Intern.CLOSE_KEYBOARD);
                     } else {
                         resetDevice();
@@ -469,6 +524,25 @@ public class Activity_Bouncer_New extends Activity_Device_New implements Fragmen
                         resetLayout();
                     }
                 }
+        }
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+        updateLayout();
+        if (!editable.toString().equals("")) {
+            if (oRecord != null) {
+                if (editable.toString().length() == 15) {
+                    onSearch();
+                }
+            } else {
+                if (editable.toString().substring(editable.toString().length() - 1).equals("E")) {
+                    etSearch.setText(editable.toString().substring(0, editable.toString().length() - 1));
+                    onSearch();
+                }
+            }
+        } else {
+            reset();
         }
     }
 }

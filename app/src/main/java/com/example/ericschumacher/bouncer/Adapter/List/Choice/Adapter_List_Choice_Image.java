@@ -40,10 +40,7 @@ public class Adapter_List_Choice_Image extends Adapter_List_Choice {
         final Fragment_Choice_Image.Interface_Adapter_Choice_Image iFragmentChoiceImage = (Fragment_Choice_Image.Interface_Adapter_Choice_Image)iFragmentChoice;
 
         // Image one
-        if (iFragmentChoiceImage.getImage(position) != null) {
-            vhChoiceImage.ivIconOne.setVisibility(View.VISIBLE);
-            vhChoiceImage.ivIconOne.setImageBitmap(iFragmentChoiceImage.getImage(position));
-        }
+        iFragmentChoiceImage.setImage(vhChoiceImage.ivIconOne, vhChoiceImage.ivIconTwo, position);
 
         // Url request one
         if (iFragmentChoiceImage.getUrlIconOne(position) != null) {

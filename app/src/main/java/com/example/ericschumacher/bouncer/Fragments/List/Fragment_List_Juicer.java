@@ -22,7 +22,6 @@ import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Jui
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
-import com.example.ericschumacher.bouncer.Objects.Article;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Keyboard;
@@ -233,7 +232,7 @@ public class Fragment_List_Juicer extends Fragment implements View.OnClickListen
         if (device.getoStoragePlace().getkStock() == Constants_Intern.STATION_PRIME_STOCK) {
             loadDevicesExtra(device);
         } else {
-            Article.showFragmentDialogImage(getActivity(), device, Fragment_List_Juicer.this, getActivity().getSupportFragmentManager());
+            Device.showFragmentDialogImage(getActivity(), device, Fragment_List_Juicer.this, getActivity().getSupportFragmentManager());
         }
     }
 

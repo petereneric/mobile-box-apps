@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -132,6 +133,7 @@ public class Fragment_Input extends Fragment implements View.OnClickListener, Te
 
     // Interface
     public void onUnknown() {
+        Log.i("onUnknwon", getTag());
         iInput.unknownInput(getTag());
     }
 
@@ -174,6 +176,11 @@ public class Fragment_Input extends Fragment implements View.OnClickListener, Te
     @Override
     public void onAdapterClick(int position) {
         iInput.returnInput(getTag(), lSearch.get(position));
+    }
+
+    @Override
+    public boolean onAdapterLongClick(int position) {
+        return false;
     }
 
     @Override

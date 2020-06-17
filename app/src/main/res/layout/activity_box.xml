@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/vToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:backgroundTint="@color/color_primary"/>
+
+    <View
+        android:id="@+id/toolbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_dropshadow" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            android:id="@+id/lSearch"
+            layout="@layout/layout_search_main"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_layout_search"
+            android:layout_marginTop="16dp" />
+
+        <fragment
+            android:id="@+id/fBox"
+            android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Box"
+            android:layout_width="match_parent"
+            android:tag="FRAGMENT_BOX"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/lSearch"/>
+
+        <fragment
+            android:id="@+id/fRecord"
+            android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Record_New_New"
+            android:layout_width="match_parent"
+            android:tag="FRAGMENT_RECORD"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fBox"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/fRecord"
+            android:id="@+id/flInteraction"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

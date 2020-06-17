@@ -18,7 +18,6 @@ import com.example.ericschumacher.bouncer.Fragments.Booking.Fragment_Booking_In_
 import com.example.ericschumacher.bouncer.Fragments.Booking.Fragment_Booking_Out_Lku_Stock;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Fragment_Choice_DeviceBattery;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Color;
-import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Model;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Device_Damages;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New;
@@ -279,7 +278,11 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     public void requestColor() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.color));
-        bData.putInt(Constants_Intern.ID_MODEL, oDevice.getoModel().getkModel());
+        if (oDevice.getoModel() != null) {
+            bData.putInt(Constants_Intern.ID_MODEL, oDevice.getoModel().getkModel());
+        } else {
+            bData.putInt(Constants_Intern.ID_MODEL, Constants_Intern.ID_UNKNOWN);
+        }
         showFragment(new Fragment_Choice_Image_Color(), bData, Constants_Intern.FRAGMENT_CHOICE_IMAGE_COLOR, Constants_Intern.DONT_SHOW_KEYBOARD);
     }
 
@@ -379,9 +382,6 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
             case Constants_Intern.FRAGMENT_CHOICE_DEVICE_BATTERY:
                 oDevice.setoBattery((Battery) object);
                 break;
-            case Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL:
-                setModel((Model)object);
-                break;
         }
         updateLayout();
         removeFragment(cTag);
@@ -468,8 +468,7 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     @Override
     public void unknownInput(String cTag) {
         switch (cTag) {
-            case Constants_Intern.FRAGMENT_INPUT_MODEL_NAME:
-                showFragment(new Fragment_Choice_Image_Model(), null, Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL, Constants_Intern.CLOSE_KEYBOARD);
+            case Constants_Intern.FRAGMENT_INPUT_MODEL:
                 break;
             case Constants_Intern.FRAGMENT_INPUT_DPS:
                 break;
@@ -483,8 +482,9 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     public void unknownChoice(String cTag) {
         switch (cTag) {
             case Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL:
-
         }
+        removeFragment(cTag);
+        base(Constants_Intern.CLOSE_KEYBOARD);
     }
 
     // Error

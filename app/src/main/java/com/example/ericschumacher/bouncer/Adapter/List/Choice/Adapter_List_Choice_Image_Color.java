@@ -1,18 +1,14 @@
 package com.example.ericschumacher.bouncer.Adapter.List.Choice;
 
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Choice_Image;
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Choice_New;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Color;
-import com.example.ericschumacher.bouncer.Utilities.Utility_Camera;
+import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Layout;
 
 public class Adapter_List_Choice_Image_Color extends Adapter_List_Choice_Image{
 
@@ -34,6 +30,8 @@ public class Adapter_List_Choice_Image_Color extends Adapter_List_Choice_Image{
         if (getItemViewType(position) == Fragment_Choice_Image_Color.TYPE_WITHOUT_IMAGE) {
             // Visibility
             vhChoiceImage.ivIconOne.setVisibility(View.VISIBLE);
+            vhChoiceImage.ivIconOne.setImageBitmap(null);
+            vhChoiceImage.ivIconOne.setImageDrawable(null);
             vhChoiceImage.ivIconTwo.setVisibility(View.GONE);
 
             // Color
@@ -47,7 +45,11 @@ public class Adapter_List_Choice_Image_Color extends Adapter_List_Choice_Image{
         if (getItemViewType(position) == Fragment_Choice_Image_Color.TYPE_WITH_IMAGE) {
             // Visibility
             vhChoiceImage.ivIconOne.setVisibility(View.VISIBLE);
-            vhChoiceImage.ivIconTwo.setVisibility(View.VISIBLE);
+            vhChoiceImage.ivIconTwo.setVisibility(View.GONE);
+            //vhChoiceImage.ivIconTwo.setVisibility(View.VISIBLE);
+            Utility_Layout.setBackground(Context, vhChoiceImage.ivIconOne, R.color.color_transparent);
+            iFragmentChoiceImageColor.setImage(vhChoiceImage.ivIconOne, vhChoiceImage.ivIconTwo, position);
+            /*
             ImageRequest request1 = new ImageRequest(iFragmentChoiceImageColor.getUrlIconOne(position),
                     new Response.Listener<Bitmap>() {
                         @Override
@@ -78,6 +80,7 @@ public class Adapter_List_Choice_Image_Color extends Adapter_List_Choice_Image{
             rQueue.add(request1);
             rQueue.add(request2);
             rQueue.getCache().clear();
+             */
         }
 
     }

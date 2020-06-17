@@ -26,19 +26,19 @@ public class Fragment_List_Advanced extends Fragment_List {
                     switch (direction) {
                         case ItemTouchHelper.LEFT:
 
-                            //iActivityList.onSwipeLeft(viewHolder.getAdapterPosition(), getTag(), getJsonObject(viewHolder.getAdapterPosition()), (com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_List) Fragment_List_New.this);
+                            //iActivityList.onSwipeLeft(viewHolder.getAdapterPosition(), getTag(), getJsonObject(viewHolder.getAdapterPosition()), (com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_List) Fragment_Table.this);
 
                             break;
                         case ItemTouchHelper.RIGHT:
-                            //iActivityList.onSwipeRight(viewHolder.getAdapterPosition(), getTag(), getJsonObject(viewHolder.getAdapterPosition()), (com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_List)Fragment_List_New.this);
+                            //iActivityList.onSwipeRight(viewHolder.getAdapterPosition(), getTag(), getJsonObject(viewHolder.getAdapterPosition()), (com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_List)Fragment_Table.this);
                             break;
                     }
                 }
             }
 
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                final View llForeground = ((Adapter_List.ViewHolder_List) viewHolder).llForeground;
-                final TextView tvBackground = ((Adapter_List.ViewHolder_List) viewHolder).tvBackground;
+                final View llForeground = ((Adapter_Table.ViewHolder_List) viewHolder).llForeground;
+                final TextView tvBackground = ((Adapter_Table.ViewHolder_List) viewHolder).tvBackground;
                 if (dX > 0) {
                     //iList.setViewSwipeRight(getTag(), tvBackground);
                 } else {
@@ -51,13 +51,13 @@ public class Fragment_List_Advanced extends Fragment_List {
             public void onChildDrawOver(Canvas c, RecyclerView recyclerView,
                                         RecyclerView.ViewHolder viewHolder, float dX, float dY,
                                         int actionState, boolean isCurrentlyActive) {
-                final View foregroundView = ((Adapter_List.ViewHolder_List) viewHolder).llForeground;
+                final View foregroundView = ((Adapter_Table.ViewHolder_List) viewHolder).llForeground;
                 getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY, actionState, isCurrentlyActive);
             }
 
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                final View foregroundView = ((Adapter_List.ViewHolder_List) viewHolder).llForeground;
+                final View foregroundView = ((Adapter_Table.ViewHolder_List) viewHolder).llForeground;
                 getDefaultUIUtil().clearView(foregroundView);
             }
         };

@@ -131,28 +131,12 @@
         </TableLayout>
 
     </LinearLayout>
-    
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/llTable"
-        android:orientation="horizontal">
-        
-        <Button
-            style="@style/button_main_new"
-            android:layout_weight="1"
-            android:text="@string/pause"
-            android:id="@+id/bPause"
-            android:layout_marginRight="6dp"/>
 
-        <Button
-            style="@style/button_sub_new"
-            android:layout_weight="1"
-            android:text="@string/finish"
-            android:id="@+id/bFinish"
-            android:layout_marginLeft="6dp"/>
-        
-    </LinearLayout>
+    <include
+        layout="@layout/layout_menu"
+        android:layout_below="@id/llTable"
+        android:layout_height="@dimen/height_layout_menu"
+        android:layout_width="match_parent"/>
 
     <include
         android:id="@+id/lHeader"

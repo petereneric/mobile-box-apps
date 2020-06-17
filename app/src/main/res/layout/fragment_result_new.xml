@@ -180,7 +180,7 @@
                 android:id="@+id/tvUnknown"
                 style="@style/tv_interaction_result_header_exploitation"
                 android:background="@drawable/textview_bouncer_result_title_unknown"
-                android:text="@string/unknown"
+                android:text="@string/unknown_text"
                 android:textColor="@color/color_unknown" />
 
             <LinearLayout

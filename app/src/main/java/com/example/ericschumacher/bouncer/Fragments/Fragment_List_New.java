@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List;
+import com.example.ericschumacher.bouncer.Adapter.Table.Adapter_Table;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Activity_List;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_List;
@@ -33,7 +33,7 @@ public class Fragment_List_New extends Fragment implements Interface_Fragment_Li
     JSONArray jsonArrayData = new JSONArray();
 
     // Adapter
-    Adapter_List aList;
+    Adapter_Table aList;
 
     // Interface
     Interface_Activity_List iActivityList;
@@ -62,7 +62,7 @@ public class Fragment_List_New extends Fragment implements Interface_Fragment_Li
     }
 
     private void setLayout(LayoutInflater inflater, ViewGroup container) {
-        vLayout = inflater.inflate(R.layout.fragment_list_new, container, false);
+        vLayout = inflater.inflate(R.layout.fragment_table_new, container, false);
 
         rvList = vLayout.findViewById(R.id.rvList);
         rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -90,8 +90,8 @@ public class Fragment_List_New extends Fragment implements Interface_Fragment_Li
             }
 
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                final View llForeground = ((Adapter_List.ViewHolder_List) viewHolder).llForeground;
-                final TextView tvBackground = ((Adapter_List.ViewHolder_List) viewHolder).tvBackground;
+                final View llForeground = ((Adapter_Table.ViewHolder_List) viewHolder).llForeground;
+                final TextView tvBackground = ((Adapter_Table.ViewHolder_List) viewHolder).tvBackground;
                 if (dX > 0) {
                     iActivityList.setViewSwipeRight(getTag(), tvBackground);
                 } else {
@@ -104,13 +104,13 @@ public class Fragment_List_New extends Fragment implements Interface_Fragment_Li
             public void onChildDrawOver(Canvas c, RecyclerView recyclerView,
                                         RecyclerView.ViewHolder viewHolder, float dX, float dY,
                                         int actionState, boolean isCurrentlyActive) {
-                final View foregroundView = ((Adapter_List.ViewHolder_List) viewHolder).llForeground;
+                final View foregroundView = ((Adapter_Table.ViewHolder_List) viewHolder).llForeground;
                 getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY, actionState, isCurrentlyActive);
             }
 
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                final View foregroundView = ((Adapter_List.ViewHolder_List) viewHolder).llForeground;
+                final View foregroundView = ((Adapter_Table.ViewHolder_List) viewHolder).llForeground;
                 getDefaultUIUtil().clearView(foregroundView);
             }
         };
@@ -140,7 +140,7 @@ public class Fragment_List_New extends Fragment implements Interface_Fragment_Li
     @Override
     public void setData(JSONArray jsonArrayData) {
         this.jsonArrayData = jsonArrayData;
-        aList = new Adapter_List(getActivity(), iActivityList.bHeader(getTag()), this, this.jsonArrayData, iActivityList.getAnn(getTag()));
+        //aList = new Adapter_Table(getActivity(), iActivityList.bHeader(getTag()), this, this.jsonArrayData, iActivityList.getAnn(getTag()));
         rvList.setAdapter(aList);
     }
 
