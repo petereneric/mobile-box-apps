@@ -42,7 +42,7 @@ public class Device implements Serializable {
     private Volley_Connection vConnection;
 
     private int IdDevice = 0;
-    private int kRecord = 0;
+    private Integer kRecord = null;
     private Boolean bBatteryContained = null;
     private Boolean bBackcoverContained = null;
     private String cNotes = null;
@@ -138,7 +138,11 @@ public class Device implements Serializable {
         try {
             oJson.put(Constants_Extern.IMEI, IMEI);
             oJson.put(Constants_Extern.ID_DEVICE, IdDevice);
-            oJson.put(Constants_Extern.ID_RECORD, kRecord);
+            if (kRecord != null) {
+                oJson.put(Constants_Extern.ID_RECORD, kRecord);
+            } else {
+                oJson.put(Constants_Extern.ID_RECORD, JSONObject.NULL);
+            }
             oJson.put(Constants_Extern.TYPE_STATE, tState);
             oJson.put(Constants_Extern.CONDITION, Condition);
             if (bBackcoverContained != null) {

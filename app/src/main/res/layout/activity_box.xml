@@ -8,7 +8,8 @@
         android:id="@+id/vToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:backgroundTint="@color/color_primary"/>
+        android:backgroundTint="@color/color_primary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
     <View
         android:id="@+id/toolbar_shadow"
@@ -18,7 +19,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="16dp">
 
         <include
             android:id="@+id/lSearch"
@@ -37,7 +39,7 @@
 
         <fragment
             android:id="@+id/fRecord"
-            android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Record_New_New"
+            android:name="com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record_New_New"
             android:layout_width="match_parent"
             android:tag="FRAGMENT_RECORD"
             android:layout_height="wrap_content"

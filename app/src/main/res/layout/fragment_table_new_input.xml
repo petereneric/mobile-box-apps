@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">#
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/lHeader"
+        layout="@layout/layout_header" />
 
     <include
         layout="@layout/layout_search_sub_new"
@@ -10,7 +15,7 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/lSearch"
-        android:id="@+id/rvList"/>
+        android:id="@+id/rvList"
+        android:layout_marginTop="16dp"/>
 
-</RelativeLayout>
+</LinearLayout>

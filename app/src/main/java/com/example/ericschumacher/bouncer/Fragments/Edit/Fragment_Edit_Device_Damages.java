@@ -11,7 +11,7 @@ import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Multiple_Choice_Device_Damages;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_DeviceManager;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Object_Device_Damage;
 import com.example.ericschumacher.bouncer.Objects.Object_Model_Damage;
@@ -37,7 +37,7 @@ public class Fragment_Edit_Device_Damages extends Fragment_Edit {
     int kDevice;
 
     // Interface
-    Interface_DeviceManager iDeviceManager;
+    Fragment_Device_New.Interface_Device iDevice;
     Interface_Edit_Device_Damages iEditDeviceDamages;
 
     @Nullable
@@ -46,15 +46,15 @@ public class Fragment_Edit_Device_Damages extends Fragment_Edit {
         super.onCreateView(inflater, container, savedInstanceState);
 
         // Interface
-        iDeviceManager = (Interface_DeviceManager) getActivity();
+        iDevice = (Fragment_Device_New.Interface_Device)getActivity();
         iEditDeviceDamages = (Interface_Edit_Device_Damages) getActivity();
 
         // Data
-        kDevice = bData.getInt(Constants_Intern.ID_DEVICE);
+        kDevice = iDevice.getDevice().getIdDevice();
 
-        lDeviceDamages = iDeviceManager.getDevice().getlDeviceDamages();
+        lDeviceDamages = iDevice.getDevice().getlDeviceDamages();
 
-        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_DAMAGE + iDeviceManager.getDevice().getoModel().getkModel(), null, new Interface_VolleyResult() {
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_DAMAGE + iDevice.getDevice().getoModel().getkModel(), null, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
                 if (Volley_Connection.successfulResponse(oJson)) {
@@ -66,19 +66,20 @@ public class Fragment_Edit_Device_Damages extends Fragment_Edit {
                         lModelDamages.add(oModelDamage);
                     }
                     for (Object_Device_Damage oDeviceDamage : lDeviceDamages) {
-                        for (Object_Model_Damage oModelDamage : lModelDamages) {
+                        for (Object_Model_Damage oModelDamage : new ArrayList<Object_Model_Damage>(lModelDamages)) {
                             if (oDeviceDamage.getoModelDamage().equals(oModelDamage)) {
                                 lModelDamages.remove(oModelDamage);
                             }
                         }
                     }
+                    // Adapter
+                    aModelDamages = new Adapter_Multiple_Choice_Device_Damages(getActivity(), lDeviceDamages, lModelDamages, kDevice, Fragment_Edit_Device_Damages.this);
+                    rvList.setAdapter(aModelDamages);
                 }
             }
         });
 
-        // Adapter
-        aModelDamages = new Adapter_Multiple_Choice_Device_Damages(getActivity(), lDeviceDamages, lModelDamages, kDevice, this);
-        rvList.setAdapter(aModelDamages);
+
 
         return vLayout;
     }
@@ -88,26 +89,27 @@ public class Fragment_Edit_Device_Damages extends Fragment_Edit {
         super.setLayout(inflater, container);
         rvList.setLayoutManager(new GridLayoutManager(getActivity(), 3));
 
+        // Visibility
+        bCommit.setVisibility(View.VISIBLE);
+
     }
 
 
     @Override
     public void onCommit() {
-        iEditDeviceDamages.returnEditDeviceDamages_DeviceDamages(getTag());
+        iEditDeviceDamages.returnEditDeviceDamages(Constants_Intern.TYPE_ACTION_DEVICE_DAMAGES_COMMIT, getTag());
     }
 
     public void clickOtherDamages() {
-        iEditDeviceDamages.returnEditDeviceDamages_OtherDamages(getTag());
+        iEditDeviceDamages.returnEditDeviceDamages(Constants_Intern.TYPE_ACTION_DEVICE_DAMAGES_OTHER_DAMAGES, getTag());
     }
 
     public void clickOverbroken() {
-        iEditDeviceDamages.returnEditDeviceDamages_Overbroken(getTag());
+        iEditDeviceDamages.returnEditDeviceDamages(Constants_Intern.TYPE_ACTION_DEVICE_DAMAGES_OVERBROKEN, getTag());
     }
 
     public interface Interface_Edit_Device_Damages {
-        void returnEditDeviceDamages_DeviceDamages(String cTag);
-        void returnEditDeviceDamages_Overbroken(String cTag);
-        void returnEditDeviceDamages_OtherDamages(String cTag);
+        void returnEditDeviceDamages(int tActionDeviceDamages, String cTag);
     }
 
 }

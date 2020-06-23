@@ -2,7 +2,6 @@ package com.example.ericschumacher.bouncer.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +10,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Activities.Activity_Article;
+import com.example.ericschumacher.bouncer.Fragments.Parent.Fragment_Object;
 import com.example.ericschumacher.bouncer.Objects.Article;
 import com.example.ericschumacher.bouncer.R;
 
-public class Fragment_Article extends Fragment {
+public class Fragment_Article extends Fragment_Object {
 
     // Activity
     Activity_Article activityArticle;
@@ -23,8 +23,6 @@ public class Fragment_Article extends Fragment {
     Article oArticle;
 
     // Layout
-    View vLayout;
-    TextView tvTitle;
     RelativeLayout rlMain;
     ImageView ivOne;
     ImageView ivTwo;
@@ -38,22 +36,15 @@ public class Fragment_Article extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         // Activity
         activityArticle = (Activity_Article) getActivity();
 
-        // Object
-        oArticle = activityArticle.getArticle();
-
-        // Layout
-        setLayout(inflater, container);
-
-        return vLayout;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
         // Layout
-        vLayout = inflater.inflate(R.layout.fragment_article, container, false);
-        tvTitle = vLayout.findViewById(R.id.tvTitle);
         rlMain = vLayout.findViewById(R.id.rlMain);
         tvArticle = vLayout.findViewById(R.id.tvArticle);
         tvSku = vLayout.findViewById(R.id.tvSku);
@@ -67,8 +58,20 @@ public class Fragment_Article extends Fragment {
         // Data
         tvTitle.setText(getString(R.string.article));
 
-        // Article
+        // Visibility
+        ivAdd.setVisibility(View.GONE);
+        ivPause.setVisibility(View.GONE);
+        ivClear.setVisibility(View.GONE);
+        ivDelete.setVisibility(View.GONE);
+        ivDone.setVisibility(View.GONE);
+        if (!(getActivity() instanceof Activity_Article)) {
+            llLayout.setVisibility(View.GONE);
+        }
         rlMain.setVisibility(View.GONE);
+    }
+
+    public int getIdLayout() {
+        return R.layout.fragment_article;
     }
 
     public void updateLayout() {

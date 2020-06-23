@@ -139,7 +139,7 @@ public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     public void update(JSONArray lJson) {
-        //this.lJson = lJson;
+
         notifyDataSetChanged();
     }
 

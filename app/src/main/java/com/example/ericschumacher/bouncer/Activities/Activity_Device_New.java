@@ -4,10 +4,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 
 import com.android.volley.Request;
@@ -23,16 +23,15 @@ import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Device_Da
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_Model;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_StockPrimeCapacity;
-import com.example.ericschumacher.bouncer.Fragments.Print.Fragment_Print;
-import com.example.ericschumacher.bouncer.Fragments.Print.Fragment_Print_Device;
+import com.example.ericschumacher.bouncer.Fragments.Parent.Fragment_Object;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_Shape;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_YesNo;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
-import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Color;
 import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
+import com.example.ericschumacher.bouncer.Objects.Model_Battery;
 import com.example.ericschumacher.bouncer.Objects.Object_Device_Damage;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
@@ -45,7 +44,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Activity_Device_New extends Activity_Model implements Fragment_Edit_Device_Damages.Interface_Edit_Device_Damages, Fragment_Booking.Interface_Booking, Fragment_Print.Interface_Print, Fragment_Device_New.Interface_Fragment_Device {
+public class Activity_Device_New extends Activity_Model implements Fragment_Edit_Device_Damages.Interface_Edit_Device_Damages, Fragment_Booking.Interface_Booking, Fragment_Device_New.Interface_Device, Fragment_Object.Interface_Fragment_Object_Menu {
 
     // Print
     public ManagerPrinter mPrinter;
@@ -55,7 +54,6 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
 
     // Fragments
     Fragment_Device_New fDevice;
-    Fragment_Print_Device fPrintDevice;
 
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -83,7 +81,6 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         if (mPrinter == null) {
             mPrinter = new ManagerPrinter(this);
         }
-
         mPrinter.connect();
     }
 
@@ -99,17 +96,9 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     public void initiateFragments() {
         super.initiateFragments();
         fDevice = (Fragment_Device_New) fManager.findFragmentById(R.id.fDevice);
-        fPrintDevice = (Fragment_Print_Device) fManager.findFragmentById(R.id.fPrintDevice);
-    }
-
-    public void showFragment(Fragment fragment, Bundle bData, String cTag, Boolean bKeyboard) {
-        if (fPrintDevice != null)
-            getSupportFragmentManager().beginTransaction().hide(fPrintDevice).commit();
-        super.showFragment(fragment, bData, cTag, bKeyboard);
     }
 
     public void showFragmentBookingInStockPrime(Boolean bKeyboard) {
-        getSupportFragmentManager().beginTransaction().hide(fPrintDevice).commit();
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.booking));
         showFragment(new Fragment_Booking_In_Lku_Stock(), bData, Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME, bKeyboard);
@@ -117,7 +106,6 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     }
 
     public void showFragmentBookingOutStockPrime(Boolean bKeyboard) {
-        getSupportFragmentManager().beginTransaction().hide(fPrintDevice).commit();
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.booking));
         showFragment(new Fragment_Booking_Out_Lku_Stock(), bData, Constants_Intern.FRAGMENT_BOOKING_OUT_STOCK_PRIME, bKeyboard);
@@ -126,7 +114,6 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     public void removeFragments() {
         super.removeFragments();
         getSupportFragmentManager().beginTransaction().hide(fDevice).commit();
-        getSupportFragmentManager().beginTransaction().hide(fPrintDevice).commit();
     }
 
 
@@ -154,7 +141,6 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
         }
         if (oDevice != null) {
             getSupportFragmentManager().beginTransaction().show(fDevice).commit();
-            getSupportFragmentManager().beginTransaction().show(fPrintDevice).commit();
             fDevice.updateLayout();
         }
 
@@ -183,7 +169,6 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     @Override
     public void base(Boolean bKeyboard) {
         updateLayout();
-        getSupportFragmentManager().beginTransaction().show(fPrintDevice).commit();
     }
 
     public void reset() {
@@ -297,11 +282,9 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     }
 
     public void requestDamages() {
-        /*
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.damages));
         showFragment(new Fragment_Edit_Device_Damages(), bData, Constants_Intern.FRAGMENT_EDIT_DEVICE_DAMAGES, Constants_Intern.DONT_SHOW_KEYBOARD);
-         */
     }
 
     public void requestStation() {
@@ -341,13 +324,26 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
 
     @Override
     public void returnSelect(String cTag, int tSelect) {
-        super.returnSelect(cTag, tSelect);
         switch (cTag) {
+            case Constants_Intern.FRAGMENT_SELECT_PHONE_TYPE:
+                getModel().settPhone(tSelect);
+                break;
+            case Constants_Intern.FRAGMENT_SELECT_EXPLOITATION:
+                getModel().settDefaultExploitation(tSelect);
+                break;
+            case Constants_Intern.FRAGMENT_SELECT_BATTERY_REMOVABLE:
+                getModel().setBatteryRemovable(tSelect == 1);
+                break;
+            case Constants_Intern.FRAGMENT_SELECT_BACKCOVER_REMOVABLE:
+                getModel().setBackcoverRemovable(tSelect == 1);
+                break;
             case Constants_Intern.FRAGMENT_SELECT_SHAPE:
                 oDevice.setoShape(new Shape(tSelect));
-                if (oDevice.getoShape().getId() == Constants_Intern.SHAPE_BROKEN) {
+                if (tSelect == Constants_Intern.SHAPE_BROKEN) {
+                    Log.i("Size Damages: ", oDevice.getoModel().getlModelDamages().size()+"");
                     if (oDevice.getoModel().getlModelDamages().size() > 0) {
                         requestDamages();
+                        return;
                     } else {
                         oDevice.settState(Constants_Intern.STATE_RECYCLING);
                     }
@@ -380,7 +376,7 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
                 onFeatureChanged();
                 break;
             case Constants_Intern.FRAGMENT_CHOICE_DEVICE_BATTERY:
-                oDevice.setoBattery((Battery) object);
+                oDevice.setoBattery(((Model_Battery)object).getoBattery());
                 break;
         }
         updateLayout();
@@ -436,30 +432,27 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
     }
 
     @Override
-    public void returnEditDeviceDamages_DeviceDamages(String cTag) {
-        oDevice.settState(Constants_Intern.STATE_DEFECT_REPAIR);
+    public void returnEditDeviceDamages(int tAction, String cTag) {
+        switch (tAction) {
+            case Constants_Intern.TYPE_ACTION_DEVICE_DAMAGES_COMMIT:
+                oDevice.settState(Constants_Intern.STATE_DEFECT_REPAIR);
+                break;
+            case Constants_Intern.TYPE_ACTION_DEVICE_DAMAGES_OVERBROKEN:
+            case Constants_Intern.TYPE_ACTION_DEVICE_DAMAGES_OTHER_DAMAGES:
+                oDevice.setlDeviceDamages(new ArrayList<Object_Device_Damage>());
+                oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                break;
+        }
         removeFragment(cTag);
         base(Constants_Intern.CLOSE_KEYBOARD);
     }
 
     @Override
-    public void returnEditDeviceDamages_Overbroken(String cTag) {
-        oDevice.setlDeviceDamages(new ArrayList<Object_Device_Damage>());
-        oDevice.settState(Constants_Intern.STATE_RECYCLING);
-        removeFragment(cTag);
-        base(Constants_Intern.CLOSE_KEYBOARD);
-    }
-
-    @Override
-    public void returnEditDeviceDamages_OtherDamages(String cTag) {
-        returnEditDeviceDamages_Overbroken(cTag);
-    }
-
-    @Override
-    public void returnPrint(String cTag, int tPrint) {
-        switch (tPrint) {
-            case Constants_Intern.TYPE_PRINT_DEVICE:
+    public void returnMenu(int tAction, String cTag) {
+        switch (tAction) {
+            case Constants_Intern.TYPE_ACTION_MENU_PRINT:
                 mPrinter.printDeviceId(oDevice);
+                break;
         }
     }
 
@@ -506,6 +499,9 @@ public class Activity_Device_New extends Activity_Model implements Fragment_Edit
                 break;
         }
     }
+
+
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
     // ClickListener & TextWatcher

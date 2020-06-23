@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Keyboard;
 
 import org.json.JSONArray;
 
@@ -21,6 +22,11 @@ public class Fragment_Table_Input extends Fragment_Table implements View.OnClick
     EditText etSearch;
     View vDividerRight;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Utility_Keyboard.openKeyboard(getActivity(), etSearch);
+    }
 
     @Override
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
@@ -30,6 +36,9 @@ public class Fragment_Table_Input extends Fragment_Table implements View.OnClick
         ivAction = vLayout.findViewById(R.id.ivAction);
         vDividerRight = vLayout.findViewById(R.id.vDivicerRight);
         etSearch = vLayout.findViewById(R.id.etSearch);
+
+        // TextWatcher
+        etSearch.addTextChangedListener(this);
     }
 
     public int getIdLayout() {
@@ -44,8 +53,6 @@ public class Fragment_Table_Input extends Fragment_Table implements View.OnClick
             return;
         }
         lData = new JSONArray();
-        lAnn.clear();
-        bHeader = false;
         update();
     }
 
@@ -58,6 +65,8 @@ public class Fragment_Table_Input extends Fragment_Table implements View.OnClick
 
     public void updateLayout() {
         if (etSearch.getText().length() > 0) {
+            ivAction.setVisibility(View.VISIBLE);
+            vDividerRight.setVisibility(View.VISIBLE);
             ivAction.setImageResource(R.drawable.ic_clear_24dp);
         } else {
             ivAction.setVisibility(View.GONE);
@@ -89,7 +98,7 @@ public class Fragment_Table_Input extends Fragment_Table implements View.OnClick
     public void afterTextChanged(Editable editable) {
         updateLayout();
         if (!editable.toString().equals("")) {
-            onSearch();
+            if (editable.toString().length()>2)onSearch();
         } else {
             reset();
         }

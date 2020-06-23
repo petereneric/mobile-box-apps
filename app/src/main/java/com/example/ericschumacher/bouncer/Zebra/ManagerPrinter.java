@@ -153,7 +153,39 @@ public class ManagerPrinter {
 
     private byte[] getBoxLabel(Box oBox) {
 
-        String label = "";
+        String kBox = Integer.toString(oBox.getkId());
+
+        String label = "\u0010CT~~CD,~CC^~CT~\n" +
+                "^XA\n" +
+                "~TA000\n" +
+                "~JSN\n" +
+                "^LT0\n" +
+                "^MNW\n" +
+                "^MTT\n" +
+                "^PON\n" +
+                "^PMN\n" +
+                "^LH0,0\n" +
+                "^JMA\n" +
+                "^PR6,6\n" +
+                "~SD15\n" +
+                "^JUS\n" +
+                "^LRN\n" +
+                "^CI27\n" +
+                "^PA0,1,1,0\n" +
+                "^XZ\n" +
+                "^XA\n" +
+                "^MMT\n" +
+                "^PW408\n" +
+                "^LL200\n" +
+                "^LS0\n" +
+                "^FPH,3^FT19,62^A@N,39,38,TT0003M_^FH\\^CI28^FDBox - Erfassung^FS^CI27\n" +
+                "^FO22,90^GFA,29,48,48,:Z64:eJxb1KWxiGi0gIEBAA9MFI0=:2CE5\n" +
+                "^FPH,3^FT22,185^A@N,25,25,TT0003M_^FH\\^CI28^FDId: ^FS^CI27\n" +
+                "^FPH,3^FT63,185^A@N,25,25,TT0003M_^FH\\^CI28^FD"+kBox+"e^FS^CI27\n" +
+                "^BY3,3,32^FT22,147^BCN,,N,N\n" +
+                "^FH\\^FD>:"+kBox+"e>68^FS\n" +
+                "^PQ1,0,1,Y\n" +
+                "^XZ\n";
 
         return label.getBytes();
     }
@@ -319,13 +351,13 @@ public class ManagerPrinter {
                 "^FO265,164^GFA,29,112,4,:Z64:eJxjYICABjSagUbiAAR/BIE=:8DFE\n" +
                 "^FPH,3^FT21,50^A@N,31,31,TT0003M_^FH\\^CI28^FD"+idDevice+"^FS^CI27\n" +
                 "^FPH,3^FT21,139^A@N,17,18,TT0003M_^FH\\^CI28^FD"+shape+"^FS^CI27\n" +
-                "^FPH,3^FT293,139^A@N,17,18,TT0003M_^FH\\^CI28^FD"+lkuBattery+"^FS^CI27\n" +
+                "^FPH,3^FT284,139^A@N,17,18,TT0003M_^FH\\^CI28^FD"+lkuBattery+"^FS^CI27\n" +
                 "^FPH,3^FT21,93^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cState+"^FS^CI27\n" +
                 "^BY2,3,20^FT168,48^BCN,,N,N\n" +
                 "^FH\\^FD>:"+idDevice+">68^FS\n" +
                 "^FPH,3^FT21,184^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cCharger+"^FS^CI27\n" +
-                "^FPH,3^FT327,93^A@N,17,18,TT0003M_^FH\\^CI28^FD-^FS^CI27\n" +
-                "^FPH,3^FT321,188^A@N,23,22,TT0003M_^FH\\^CI28^FD"+cLoadingStation+"^FS^CI27\n" +
+                "^FPH,3^FT284,93^A@N,17,18,TT0003M_^FH\\^CI28^FD-^FS^CI27\n" +
+                "^FPH,3^FT285,186^A@N,23,22,TT0003M_^FH\\^CI28^FD"+cLoadingStation+"^FS^CI27\n" +
                 "^PQ1,0,1,Y\n" +
                 "^XZ\n";
 

@@ -19,7 +19,6 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_SearchResults;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Selection;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_Input;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_Int;
-import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
@@ -62,7 +61,7 @@ public class Fragment_Record_New extends Fragment implements View.OnClickListene
                 uNetwork.createRecord(o.getId(), new Interface_VolleyCallback_Int() {
                     @Override
                     public void onSuccess(int i) {
-                        iBouncer.setRecord(new Record(i, o.getName()));
+                        //iBouncer.setRecord(new Record(i, o.getName()));
                     }
 
                     @Override

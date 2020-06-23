@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Record implements Serializable {
@@ -36,12 +37,20 @@ public class Record implements Serializable {
     Context Context;
     Volley_Connection vConnection;
 
+    public Record() {
+    }
+
     public Record(Context context, JSONObject jsonObject) {
         Context = context;
         vConnection = new Volley_Connection(Context);
         try {
             Id = jsonObject.getInt(Constants_Extern.ID_RECORD);
-            oCollector = new Collector(Context, jsonObject.getJSONObject(Constants_Extern.OBJECT_COLLECTOR));
+            if (!jsonObject.isNull(Constants_Extern.OBJECT_COLLECTOR)) {
+                oCollector = new Collector(Context, jsonObject.getJSONObject(Constants_Extern.OBJECT_COLLECTOR));
+            } else {
+                oCollector = null;
+            }
+
             dCreation = Utility_DateTime.stringToDate(jsonObject.getString(Constants_Extern.DATE_CREATION));
             dLastUpdate = Utility_DateTime.stringToDate(jsonObject.getString(Constants_Extern.DATE_LAST_UPDATE));
             nDevices = jsonObject.getInt(Constants_Extern.NUMBER_DEVICES);
@@ -52,11 +61,22 @@ public class Record implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public static Record createFreeRecord() {
+        Record oRecord = new Record();
+        oRecord.setId(0);
+        oRecord.setoCollector(null);
+        oRecord.setdCreation(Calendar.getInstance().getTime());
+        oRecord.setdLastUpdate(Calendar.getInstance().getTime());
+        oRecord.setnDevices(0);
+        oRecord.setnRecycling(0);
+        oRecord.setnReuse(0);
+        return oRecord;
     }
 
     public void update() {
-        vConnection.execute(Request.Method.PUT, Urls.URL_PUT_UPDATE_RECORD, getJson());
+        if (getId() > 0)vConnection.execute(Request.Method.PUT, Urls.URL_PUT_UPDATE_RECORD, getJson());
     }
 
     public void incrementReuse() {
@@ -87,6 +107,7 @@ public class Record implements Serializable {
 
     public void setoCollector(Collector oCollector) {
         this.oCollector = oCollector;
+        update();
     }
 
     public String getDateCreation() {
@@ -140,10 +161,6 @@ public class Record implements Serializable {
 
     public boolean isbSelected() {
         return bSelected;
-    }
-
-    public void setbSelected(boolean bSelected) {
-        this.bSelected = bSelected;
     }
 
     public JSONObject getJson() {

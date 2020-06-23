@@ -1833,7 +1833,7 @@ public class Utility_Network {
                                 JSONObject json = jsonArray.getJSONObject(i);
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 Log.i("DAATE", json.getString(Constants_Extern.LAST_UPDATE));
-                                records.add(new Record(json.getInt(Constants_Extern.ID), Utility_DateTime.stringToDate(json.getString(Constants_Extern.LAST_UPDATE)), json.getInt(Constants_Extern.COUNT_RECYCLING), json.getInt(Constants_Extern.COUNT_REUSE), json.getInt(Constants_Extern.DEVICES), json.getString(Constants_Extern.NAME)));
+                                //records.add(new Record(json.getInt(Constants_Extern.ID), Utility_DateTime.stringToDate(json.getString(Constants_Extern.LAST_UPDATE)), json.getInt(Constants_Extern.COUNT_RECYCLING), json.getInt(Constants_Extern.COUNT_REUSE), json.getInt(Constants_Extern.DEVICES), json.getString(Constants_Extern.NAME)));
                             }
                             iCallback.onSuccess(records);
                         } else {

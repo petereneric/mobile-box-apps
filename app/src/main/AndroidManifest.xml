@@ -31,7 +31,7 @@
         <activity android:name=".Activities.Activity_Device_New"></activity>
         <activity android:name=".Activities.Activity_Article_Verify"></activity>
         <activity android:name=".Activities.Activity_Juicer_New"></activity>
-        <activity android:name=".Activities.Activity_Bouncer_New"></activity>
+        <activity android:screenOrientation="portrait" android:name=".Activities.Activity_Bouncer_New"></activity>
         <activity android:name=".Activities.Activity_Box"></activity>
 
         <provider

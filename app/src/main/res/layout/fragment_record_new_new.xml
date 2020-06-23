@@ -16,6 +16,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="@dimen/layout_weight_record_row_one">
 
+            <TableRow android:id="@+id/trIdCollector">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_record_key_one"
+                    android:text="@string/id" />
+
+                <TextView
+                    android:id="@+id/tvIdCollector"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_record_value_one"
+                    android:text="1" />
+
+            </TableRow>
+
             <TableRow android:id="@+id/trNameCollector">
 
                 <TextView

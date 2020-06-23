@@ -3,27 +3,32 @@ package com.example.ericschumacher.bouncer.Fragments.Parent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.R;
 
 public class Fragment_Object extends Fragment implements View.OnClickListener {
 
     // Layout
-    View vLayout;
-    TextView tvTitle;
+    public View vLayout;
+    public TextView tvTitle;
     public ImageView ivPrint;
     public ImageView ivAdd;
+    public ImageView ivPause;
     public ImageView ivDone;
     public ImageView ivClear;
     public ImageView ivDelete;
+    public LinearLayout llLayout;
 
     // Interface
-    Interface_Fragment_Object_Menu iFragmentObjectMenu;
+    public Interface_Fragment_Object_Menu iFragmentObjectMenu;
 
     @Nullable
     @Override
@@ -45,6 +50,7 @@ public class Fragment_Object extends Fragment implements View.OnClickListener {
         tvTitle = vLayout.findViewById(R.id.tvTitle);
         ivPrint = vLayout.findViewById(R.id.ivPrint);
         ivAdd = vLayout.findViewById(R.id.ivAdd);
+        ivPause = vLayout.findViewById(R.id.ivPause);
         ivDone = vLayout.findViewById(R.id.ivDone);
         ivClear = vLayout.findViewById(R.id.ivClear);
         ivDelete = vLayout.findViewById(R.id.ivDelete);
@@ -52,6 +58,7 @@ public class Fragment_Object extends Fragment implements View.OnClickListener {
         // ClickListener
         ivPrint.setOnClickListener(this);
         ivAdd.setOnClickListener(this);
+        ivPause.setOnClickListener(this);
         ivDone.setOnClickListener(this);
         ivClear.setOnClickListener(this);
         ivDelete.setOnClickListener(this);
@@ -65,29 +72,29 @@ public class Fragment_Object extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ivPrint:
-                iFragmentObjectMenu.returnPrint(getTag());
+                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_PRINT, getTag());
                 break;
             case R.id.ivAdd:
-                iFragmentObjectMenu.returnAdd(getTag());
+                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_ADD, getTag());
+                break;
+            case R.id.ivPause:
+                Log.i("Tag: ", getTag());
+                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_PAUSE, getTag());
                 break;
             case R.id.ivDone:
-                iFragmentObjectMenu.returnDone(getTag());
+                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_DONE, getTag());
                 break;
             case R.id.ivClear:
-                iFragmentObjectMenu.returnClear(getTag());
+                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_CLEAR, getTag());
                 break;
             case R.id.ivDelete:
-                iFragmentObjectMenu.returnDelete(getTag());
+                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_DELETE, getTag());
                 break;
         }
     }
 
 
     public interface Interface_Fragment_Object_Menu{
-        void returnPrint(String cTag);
-        void returnAdd(String cTag);
-        void returnDone(String cTag);
-        void returnClear(String cTag);
-        void returnDelete(String cTag);
+        void returnMenu(int tAction, String cTag);
     }
 }

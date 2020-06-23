@@ -64,4 +64,6 @@ public class Urls {
     public final static String URL_GET_BOX_BY_ID= URL_REST_API+"box/";
     public final static String URL_GET_COLLECTORS_BY_INPUT= URL_REST_API+"collectors/input/";
     public final static String URL_PUT_UPDATE_RECORD= URL_REST_API+"record/update";
+    public final static String URL_RECORD_ADD= URL_REST_API+"record/add";
+    public final static String URL_RECORD_DELETE= URL_REST_API+"record/delete/";
 }

@@ -19,14 +19,12 @@ import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Bat
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Choice;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Battery;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Request.Fragment_Request_Name_Model;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_DeviceManager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Model;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.R;
-import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
@@ -38,9 +36,7 @@ import java.util.ArrayList;
 
 public class Fragment_Model_New extends Fragment implements View.OnClickListener, Interface_Model {
 
-    // vLayout
-    View Layout;
-
+    View vLayout;
     TableRow trName;
     TableRow trManufacturer;
     TableRow trCharger;
@@ -66,56 +62,55 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
 
     // Interface
     Activity_Model activityModel;
-    Interface_DeviceManager iManager;
 
     // Ohters
     FragmentManager fManager;
 
     // Connection
     Volley_Connection cVolley;
-    Utility_Network uNetwork;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
-        // vLayout
-        setLayout(inflater, container);
-
         // Interface
         activityModel = (Activity_Model)getActivity();
 
-        return Layout;
+        // Layout
+        setLayout(inflater, container);
+
+        return vLayout;
     }
 
-    private void setLayout(LayoutInflater inflater, ViewGroup container) {
-        Layout = inflater.inflate(R.layout.fragment_model, container, false);
+    public void setLayout(LayoutInflater inflater, ViewGroup container) {
+        // Initiate
+        vLayout = inflater.inflate(getIdLayout(), container, false);
+        tvTitle = vLayout.findViewById(R.id.tvTitle);
+        trName = vLayout.findViewById(R.id.trName);
+        trManufacturer = vLayout.findViewById(R.id.trManufacturer);
+        trCharger = vLayout.findViewById(R.id.trCharger);
+        trBatteryRemovable = vLayout.findViewById(R.id.trBatteryRemovable);
+        trBackcoverRemovable = vLayout.findViewById(R.id.trBackcoverRemovable);
+        trBattery = vLayout.findViewById(R.id.trBattery);
+        trBatteryLku = vLayout.findViewById(R.id.trBatteryLku);
+        trDefaultExploitation = vLayout.findViewById(R.id.trDefaultExploitation);
+        trDps = vLayout.findViewById(R.id.trDps);
+        trPhoneType = vLayout.findViewById(R.id.trPhone);
 
-        tvTitle = Layout.findViewById(R.id.tvTitle);
-        trName = Layout.findViewById(R.id.trName);
-        trManufacturer = Layout.findViewById(R.id.trManufacturer);
-        trCharger = Layout.findViewById(R.id.trCharger);
-        trBatteryRemovable = Layout.findViewById(R.id.trBatteryRemovable);
-        trBackcoverRemovable = Layout.findViewById(R.id.trBackcoverRemovable);
-        trBattery = Layout.findViewById(R.id.trBattery);
-        trBatteryLku = Layout.findViewById(R.id.trBatteryLku);
-        trDefaultExploitation = Layout.findViewById(R.id.trDefaultExploitation);
-        trDps = Layout.findViewById(R.id.trDps);
-        trPhoneType = Layout.findViewById(R.id.trPhone);
+        tvName = vLayout.findViewById(R.id.tvName);
+        tvManufacturer = vLayout.findViewById(R.id.tvManufacturer);
+        tvCharger = vLayout.findViewById(R.id.tvCharger);
+        tvBatteryRemovable = vLayout.findViewById(R.id.tvBatteryRemovable);
+        tvBackcoverRemovable = vLayout.findViewById(R.id.tvBackcoverRemovable);
+        tvBattery = vLayout.findViewById(R.id.tvBattery);
+        tvBatteryLku = vLayout.findViewById(R.id.tvBatteryLku);
+        tvDefaultExploitation = vLayout.findViewById(R.id.tvDefaultExploitation);
+        tvDps = vLayout.findViewById(R.id.tvDps);
+        tvPhoneType = vLayout.findViewById(R.id.tvPhone);
 
-        tvName = Layout.findViewById(R.id.tvName);
-        tvManufacturer = Layout.findViewById(R.id.tvManufacturer);
-        tvCharger = Layout.findViewById(R.id.tvCharger);
-        tvBatteryRemovable = Layout.findViewById(R.id.tvBatteryRemovable);
-        tvBackcoverRemovable = Layout.findViewById(R.id.tvBackcoverRemovable);
-        tvBattery = Layout.findViewById(R.id.tvBattery);
-        tvBatteryLku = Layout.findViewById(R.id.tvBatteryLku);
-        tvDefaultExploitation = Layout.findViewById(R.id.tvDefaultExploitation);
-        tvDps = Layout.findViewById(R.id.tvDps);
-        tvPhoneType = Layout.findViewById(R.id.tvPhone);
-
+        // Data
         tvTitle.setText(getString(R.string.model));
 
+        // OnClickListener
         trName.setOnClickListener(this);
         trManufacturer.setOnClickListener(this);
         trCharger.setOnClickListener(this);
@@ -125,6 +120,10 @@ public class Fragment_Model_New extends Fragment implements View.OnClickListener
         trDefaultExploitation.setOnClickListener(this);
         trDps.setOnClickListener(this);
         trPhoneType.setOnClickListener(this);
+    }
+
+    public int getIdLayout() {
+        return R.layout.fragment_model;
     }
 
     public void updateLayout() {

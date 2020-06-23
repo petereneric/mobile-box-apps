@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/vTitle"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:id="@+id/llTable">
 
         <TableLayout
             android:id="@+id/tableLayoutOne"
@@ -121,10 +122,6 @@
                     android:layout_weight="@dimen/layout_weight_model_value_two"/>
             </TableRow>
 
-
-
-
-
         </TableLayout>
 
         <TableLayout
@@ -198,9 +195,6 @@
 
         </TableLayout>
 
-
     </LinearLayout>
-
-
 
 </RelativeLayout>

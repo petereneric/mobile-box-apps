@@ -16,7 +16,6 @@ import com.example.ericschumacher.bouncer.Utilities.Utility_DateTime;
 public class Fragment_Box extends Fragment_Object implements View.OnClickListener {
 
     // Layout
-    View vLayout;
 
     TableRow trIdBox;
     TableRow trDateCreation;
@@ -38,10 +37,7 @@ public class Fragment_Box extends Fragment_Object implements View.OnClickListene
         // Interface
         iFragmentBox = (Interface_Fragment_Box)getActivity();
 
-        // Layout
-        setLayout(inflater, container);
-
-        return vLayout;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
@@ -55,9 +51,13 @@ public class Fragment_Box extends Fragment_Object implements View.OnClickListene
         tvDateCreation = vLayout.findViewById(R.id.tvDateCreation);
         tvDateLastUpdate = vLayout.findViewById(R.id.tvDateLastUpdate);
 
+        // Data
+        tvTitle.setText(getString(R.string.box));
+
         // Visibility
+        ivPrint.setVisibility(View.GONE);
         ivDone.setVisibility(View.GONE);
-        ivAdd.setVisibility(View.GONE);
+        ivPause.setVisibility(View.GONE);
         ivClear.setVisibility(View.GONE);
     }
 
@@ -72,6 +72,12 @@ public class Fragment_Box extends Fragment_Object implements View.OnClickListene
             tvIdBox.setText(Integer.toString(oBox.getkId()));
             tvDateCreation.setText(Utility_DateTime.dateToString(oBox.getdCreation()));
             tvDateLastUpdate.setText(Utility_DateTime.dateToString(oBox.getdLastUpdate()));
+
+            if (oBox.getoRecord() == null) {
+                ivAdd.setVisibility(View.VISIBLE);
+            } else {
+                ivAdd.setVisibility(View.GONE);
+            }
         }
     }
 

@@ -24,26 +24,26 @@ public class Fragment_Select_YesNo extends Fragment_Select {
         bTwo.setVisibility(View.VISIBLE);
 
         // Text
-        setText(bOne, R.string.no);
-        setText(bTwo, R.string.yes);
+        setText(bOne, R.string.yes);
+        setText(bTwo, R.string.no);
 
         // TextColor
-        setTextColor(bOne, R.color.color_no);
-        setTextColor(bTwo, R.color.color_yes);
+        setTextColor(bOne, R.color.color_yes);
+        setTextColor(bTwo, R.color.color_no);
 
         // Background
-        setBackground(bOne, R.color.color_no);
-        setBackground(bTwo, R.color.color_yes);
+        setBackground(bOne, R.color.color_yes);
+        setBackground(bTwo, R.color.color_no);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bOne:
-                iSelect.returnSelect(getTag(), Constants_Intern.NO);
+                iSelect.returnSelect(getTag(), Constants_Intern.YES);
                 break;
             case R.id.bTwo:
-                iSelect.returnSelect(getTag(), Constants_Intern.YES);
+                iSelect.returnSelect(getTag(), Constants_Intern.NO);
                 break;
         }
     }

@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 
 import com.android.volley.Request;
@@ -283,16 +282,6 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
     // Return
 
     @Override
-    public void returnPrint(String cTag, int tPrint) {
-        switch (tPrint) {
-            case Constants_Intern.TYPE_PRINT_ARTICLE:
-                Log.i("jaaa", "kommet");
-                mPrinter.printDeviceSku(oArticle, oDevice);
-                reset();
-        }
-    }
-
-    @Override
     public void returnDisplay(String cTag) {
         switch (cTag) {
             case Constants_Intern.FRAGMENT_DISPLAY_EDIT_NEW_ARTICLE:
@@ -317,6 +306,15 @@ public class Activity_Article extends Activity_Device_New implements Fragment_Ve
                 }
             }
         });
+    }
+
+    @Override
+    public void returnMenu(int tAction, String cTag) {
+        switch (tAction) {
+            case Constants_Intern.TYPE_ACTION_MENU_PRINT:
+                mPrinter.printDeviceSku(oArticle, oDevice);
+                break;
+        }
     }
 
 

@@ -25,7 +25,8 @@
 
         <View
         style="@style/view_menu_divider"
-            android:id="@+id/vDividerOne"/>
+            android:id="@+id/vDividerOne"
+            android:visibility="gone"/>
 
         <ImageView
             style="@style/image_view_menu"
@@ -35,7 +36,14 @@
 
         <View
             style="@style/view_menu_divider"
-            android:id="@+id/vDividerTwo"/>
+            android:id="@+id/vDividerTwo"
+            android:visibility="gone"/>
+
+        <ImageView
+            style="@style/image_view_menu"
+            android:src="@drawable/ic_pause_white_24dp"
+            android:tint="@color/color_primary"
+            android:id="@+id/ivPause"/>
 
         <ImageView
             style="@style/image_view_menu"

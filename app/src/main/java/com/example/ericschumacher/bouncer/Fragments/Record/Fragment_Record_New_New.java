@@ -1,25 +1,22 @@
-package com.example.ericschumacher.bouncer.Fragments;
+package com.example.ericschumacher.bouncer.Fragments.Record;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Parent.Fragment_Object;
 import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.R;
 
 public class Fragment_Record_New_New extends Fragment_Object implements View.OnClickListener {
 
-    // Layout
-    View vLayout;
-
-    TextView tvTitle;
+    TextView tvIdCollector;
     TextView tvNameCollector;
     TextView tvDateCreation;
     TextView tvDateLastUpdate;
@@ -38,21 +35,18 @@ public class Fragment_Record_New_New extends Fragment_Object implements View.OnC
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Interface
-        iFragmentRecord = (Interface_Fragment_Record)getActivity();
+        iFragmentRecord = (Interface_Fragment_Record) getActivity();
 
         // Object
         oRecord = iFragmentRecord.getRecord();
 
-        // Layout
-        setLayout(inflater, container);
-
-        return vLayout;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
         super.setLayout(inflater, container);
 
-
+        tvIdCollector = vLayout.findViewById(R.id.tvIdCollector);
         tvNameCollector = vLayout.findViewById(R.id.tvNameCollector);
         tvDateCreation = vLayout.findViewById(R.id.tvDateCreation);
         tvDateLastUpdate = vLayout.findViewById(R.id.tvDateLastUpdate);
@@ -67,6 +61,8 @@ public class Fragment_Record_New_New extends Fragment_Object implements View.OnC
         // Visibility
         ivPrint.setVisibility(View.GONE);
         ivAdd.setVisibility(View.GONE);
+        ivPause.setVisibility(View.GONE);
+        ivClear.setVisibility(View.GONE);
     }
 
     public int getIdLayout() {
@@ -77,10 +73,11 @@ public class Fragment_Record_New_New extends Fragment_Object implements View.OnC
         oRecord = iFragmentRecord.getRecord();
 
         if (oRecord != null) {
-            if (oRecord.getoCollector().getName() != null) {
+            tvIdCollector.setText(Integer.toString(oRecord.getId()));
+            if (oRecord.getoCollector() != null && oRecord.getoCollector().getName() != null) {
                 tvNameCollector.setText(oRecord.getoCollector().getName());
             } else {
-                tvNameCollector.setText(getString(R.string.unknown));
+                tvNameCollector.setText(getString(R.string.free_record));
             }
             if (oRecord.getDateCreation() != null) {
                 tvDateCreation.setText(oRecord.getDateCreation());
@@ -94,7 +91,7 @@ public class Fragment_Record_New_New extends Fragment_Object implements View.OnC
             }
             tvRecycling.setText(Integer.toString(oRecord.getnRecycling()));
             tvReuse.setText(Integer.toString(oRecord.getnReuse()));
-            tvTotal.setText(Integer.toString(oRecord.getnRecycling()+oRecord.getnReuse()));
+            tvTotal.setText(Integer.toString(oRecord.getnRecycling() + oRecord.getnReuse()));
         } else {
             tvNameCollector.setText(getString(R.string.unknown));
             tvDateLastUpdate.setText(getString(R.string.unknown));
@@ -107,17 +104,32 @@ public class Fragment_Record_New_New extends Fragment_Object implements View.OnC
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.bPause:
-                iFragmentRecord.returnRecord(getTag(), Constants_Intern.ACTION_FRAGMENT_RECORD_PAUSE);
-                break;
-            case R.id.bFinish:
-                iFragmentRecord.returnRecord(getTag(), Constants_Intern.ACTION_FRAGMENT_RECORD_FINISH);
-                break;
+            case R.id.ivDone:
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                alertDialog.setTitle(getString(R.string.commit));
+                alertDialog.setMessage(getString(R.string.message_commit_done_record));
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.yes),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                //iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_DONE, getTag());
+                                Log.i("yes", "yes");
+                            }
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.no),
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
+                return;
         }
+        super.onClick(view);
     }
 
-    public interface Interface_Fragment_Record extends Fragment_Box.Interface_Menu {
+
+    public interface Interface_Fragment_Record extends Interface_Fragment_Object_Menu {
         Record getRecord();
-        void returnRecord(String cTag, String cAction);
     }
 }

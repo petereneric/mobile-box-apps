@@ -31,11 +31,12 @@ public class Box {
 
     public Box(Context context, JSONObject oJson) {
         Context = context;
+        cVolley = new Volley_Connection(Context);
         try {
             kId = oJson.getInt(Constants_Intern.ID_BOX);
             dCreation = Utility_DateTime.stringToDate(oJson.getString(Constants_Extern.DATE_CREATION));
             dLastUpdate = Utility_DateTime.stringToDate(oJson.getString(Constants_Extern.DATE_LAST_UPDATE));
-            if (!oJson.isNull(Constants_Extern.OBJECT_MANUFACTURER)) {
+            if (!oJson.isNull(Constants_Extern.OBJECT_RECORD)) {
                 oRecord = new Record(Context, oJson.getJSONObject(Constants_Extern.OBJECT_RECORD));
             } else {
                 oRecord = null;
@@ -71,6 +72,7 @@ public class Box {
 
     public void setoRecord(Record oRecord) {
         this.oRecord = oRecord;
+        update();
     }
 
     public void update() {

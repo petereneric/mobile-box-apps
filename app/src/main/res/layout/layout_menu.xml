@@ -4,7 +4,8 @@
     android:layout_height="@dimen/height_layout_menu"
     android:gravity="center_vertical"
     android:background="@color/color_transparent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,6 +29,12 @@
             android:src="@drawable/ic_add_24dp"
             android:tint="@color/color_primary"
             android:id="@+id/ivAdd"/>
+
+        <ImageView
+            style="@style/image_view_menu"
+            android:src="@drawable/ic_pause_white_24dp"
+            android:tint="@color/color_primary"
+            android:id="@+id/ivPause"/>
 
         <View
             style="@style/view_menu_divider"

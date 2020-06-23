@@ -340,4 +340,17 @@ public class Constants_Intern {
     public static final String SURNAME_PERSON = "SURNAME_PERSON";
     public static final String PRENAME_PERSON = "PRENAME_PERSON";
     public static final String FRAGMENT_BOX = "FRAGMENT_BOX";
+    public static final String FRAGMENT_RECORD_BOUNCER = "FRAGMENT_RECORD_BOUNCER";
+    public static final String FRAGMENT_TABLE_INPUT_COLLECTOR = "FRAGMENT_TABLE_INPUT_COLLECTOR";
+    public static final String SHIPPING_CITY = "SHIPPING_CITY";
+    public static final int TYPE_ACTION_MENU_PRINT = 0;
+    public static final int TYPE_ACTION_MENU_ADD = 1;
+    public static final int TYPE_ACTION_MENU_PAUSE = 2;
+    public static final int TYPE_ACTION_MENU_DONE = 3;
+    public static final int TYPE_ACTION_MENU_CLEAR = 4;
+    public static final int TYPE_ACTION_MENU_DELETE = 5;
+    public static final String FRAGMENT_MODEL = "FRAGMENT_MODEL";
+    public static final int TYPE_ACTION_DEVICE_DAMAGES_COMMIT = 0;
+    public static final int TYPE_ACTION_DEVICE_DAMAGES_OTHER_DAMAGES = 1;
+    public static final int TYPE_ACTION_DEVICE_DAMAGES_OVERBROKEN = 2;
 }

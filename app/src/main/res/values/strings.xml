@@ -285,6 +285,11 @@
     <string name="surname_person">Surname</string>
     <string name="city">City</string>
     <string name="add_box">Add box</string>
+    <string name="box">Box</string>
+    <string name="enter_scan_id_box">Enter or scan Id-Box</string>
+    <string name="no_record_connected_to_box">No record connected to box</string>
+    <string name="message_commit_done_record">Do you really want to fnish this record?</string>
+    <string name="free_record">Free Record</string>
     />
 
     // Not translated

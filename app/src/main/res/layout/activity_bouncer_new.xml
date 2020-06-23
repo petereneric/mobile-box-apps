@@ -25,7 +25,7 @@
 
         <fragment
             android:id="@+id/fRecord"
-            android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Record_New_New"
+            android:name="com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record_Bouncer"
             android:layout_width="match_parent"
             android:tag="FRAGMENT_RECORD"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
                 android:id="@+id/fModel"
                 android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Model_New"
                 android:layout_width="match_parent"
-                android:tag="FRAGMENT_MODEL_NEW"
+                android:tag="FRAGMENT_MODEL"
                 android:layout_height="wrap_content"/>
 
 
@@ -52,7 +52,7 @@
                 android:id="@+id/fDevice"
                 android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New"
                 android:layout_width="match_parent"
-                android:tag="FRAGMENT_DEVICE_NEW"
+                android:tag="FRAGMENT_DEVICE"
                 android:layout_height="wrap_content" />
 
         </LinearLayout>

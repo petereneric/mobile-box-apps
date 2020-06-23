@@ -571,7 +571,7 @@ public class Activity_Bouncer extends Activity_Device implements Interface_Selec
 
     @Override
     public String getNameCollector() {
-        return oRecord.getcCollectorName();
+        return null;
     }
 
     // Specific methods

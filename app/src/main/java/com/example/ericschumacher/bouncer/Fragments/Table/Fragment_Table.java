@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Adapter.Table.Adapter_Table;
 import com.example.ericschumacher.bouncer.Objects.Ann;
@@ -24,6 +25,7 @@ public class Fragment_Table extends Fragment implements Adapter_Table.Interface_
 
     // vLayout
     View vLayout;
+    public TextView tvTitle;
     RecyclerView rvList;
 
     // Data
@@ -44,14 +46,14 @@ public class Fragment_Table extends Fragment implements Adapter_Table.Interface_
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // vLayout
-        setLayout(inflater, container);
-
         // Connection
         cVolley = new Volley_Connection(getActivity());
 
         // Adapter
         aTable = new Adapter_Table(getActivity(), this);
+
+        // vLayout
+        setLayout(inflater, container);
 
         // Interface
         iFragmentTable = (Interface_Fragment_Table)getActivity();
@@ -62,9 +64,12 @@ public class Fragment_Table extends Fragment implements Adapter_Table.Interface_
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
         vLayout = inflater.inflate(getIdLayout(), container, false);
 
+        tvTitle = vLayout.findViewById(R.id.tvTitle);
+
         // RecyclerView
         rvList = vLayout.findViewById(R.id.rvList);
         rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvList.setAdapter(aTable);
     }
 
     public int getIdLayout() {

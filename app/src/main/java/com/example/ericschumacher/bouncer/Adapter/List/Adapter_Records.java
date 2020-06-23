@@ -51,7 +51,7 @@ public class Adapter_Records extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         vhRecord.tvId.setText(Integer.toString(oRecord.getId()));
         //vhRecord.tvLastUpdate.setText(Utility_DateTime.dateToString(oRecord.getdLastUpdate()));
-        vhRecord.tvCollector.setText(oRecord.getcCollectorName());
+        //vhRecord.tvCollector.setText(oRecord.getcCollectorName());
         vhRecord.tvTotal.setText(Integer.toString(oRecord.getnDevices()));
     }
 

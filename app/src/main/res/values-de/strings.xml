@@ -189,6 +189,7 @@
     <string name="hint_enter">Namen eingeben..</string>
     <string name="battery_intact_and_contained">Batterie enthalten und intakt?</string>
     <string name="backcover_intact_and_contained">Rückschale enthalten und intakt?</string>
+    <string name="message_commit_done_record">Möchtest du diese Lieferung wirklich abschließen?</string>
 
 
     // Not translated

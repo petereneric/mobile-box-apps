@@ -8,6 +8,8 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -23,10 +25,14 @@ import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Box;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Record_New_New;
 import com.example.ericschumacher.bouncer.Fragments.Parent.Fragment_Object;
+import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record_New_New;
+import com.example.ericschumacher.bouncer.Fragments.Table.Fragment_Table;
+import com.example.ericschumacher.bouncer.Fragments.Table.Fragment_Table_Input_Collector;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Collection.Box;
+import com.example.ericschumacher.bouncer.Objects.Collection.Collector;
+import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Keyboard;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
@@ -37,7 +43,7 @@ import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Activity_Box extends AppCompatActivity implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener, Fragment_Object.Interface_Fragment_Object_Menu, Fragment_Box.Interface_Fragment_Box {
+public class Activity_Box extends AppCompatActivity implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener, Fragment_Object.Interface_Fragment_Object_Menu, Fragment_Box.Interface_Fragment_Box, Fragment_Record_New_New.Interface_Fragment_Record, Fragment_Table.Interface_Fragment_Table {
 
     // Layout
     Toolbar vToolbar;
@@ -84,6 +90,7 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
         initiateFragments();
         removeFragments();
         updateLayout();
+        setKeyboard(Constants_Intern.SHOW_KEYBOARD);
     }
 
     @Override
@@ -146,6 +153,12 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        // EditText
+        tvSearchType.setText(getString(R.string.id_box));
+        etSearch.setHint(getString(R.string.enter_scan_id_box));
+        etSearch.setInputType(InputType.TYPE_CLASS_TEXT);
+        etSearch.setFilters(new InputFilter[]{new InputFilter.LengthFilter(100)});
+
         // OnClickListener, TextWatcher, OnEditorActionListener
         tvSearchType.setOnClickListener(this);
         ivAction.setOnClickListener(this);
@@ -164,7 +177,7 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
         } else {
             getSupportFragmentManager().beginTransaction().hide(fBox).commit();
         }
-        if (oBox.getoRecord() != null) {
+        if (oBox != null && oBox.getoRecord() != null) {
             getSupportFragmentManager().beginTransaction().show(fRecord).commit();
             fRecord.updateLayout();
         } else {
@@ -212,7 +225,7 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
 
     public void onSearch() {
         final String cSearchSaved = etSearch.getText().toString();
-        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_BOX_BY_ID + etSearch.getText().toString(), null, new Interface_VolleyResult() {
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_BOX_BY_ID + etSearch.getText().toString().substring(0, etSearch.getText().toString().length()-1), null, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) {
                 if (cSearchSaved.equals(etSearch.getText().toString())) {
@@ -249,7 +262,10 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
     @Override
     public void afterTextChanged(Editable editable) {
         if (!editable.toString().equals("")) {
-            onSearch();
+            if (editable.toString().length() > 1 && editable.toString().substring(editable.toString().length()-1).equals("e")) {
+                onSearch();
+                setKeyboard(Constants_Intern.CLOSE_KEYBOARD);
+            }
         } else {
             reset();
         }
@@ -284,38 +300,56 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void returnPrint(String cTag) {
-        switch (cTag) {
-            case Constants_Intern.FRAGMENT_BOX:
-                mPrinter.printBox(oBox);
-                break;
+    public Record getRecord() {
+        if (oBox != null) {
+            return oBox.getoRecord();
+        } else {
+            return null;
         }
     }
 
     @Override
-    public void returnAdd(String cTag) {
-    }
-
-    @Override
-    public void returnDone(String cTag) {
-        switch (cTag) {
-            case Constants_Intern.FRAGMENT_RECORD:
-                mPrinter.printBox(oBox);
+    public void returnMenu(int tAction, String cTag) {
+        switch (tAction) {
+            case Constants_Intern.TYPE_ACTION_MENU_PRINT:
+                switch (cTag) {
+                    case Constants_Intern.FRAGMENT_BOX:
+                        mPrinter.printBox(oBox);
+                        mPrinter.printBox(oBox);
+                        break;
+                }
                 break;
-        }
-    }
-
-    @Override
-    public void returnClear(String cTag) {
-
-    }
-
-    @Override
-    public void returnDelete(String cTag) {
-        switch (cTag) {
-            case Constants_Intern.FRAGMENT_BOX:
-                cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_BOX_DELETE+oBox.getkId(), null);
-                reset();
+            case Constants_Intern.TYPE_ACTION_MENU_ADD:
+                switch (cTag) {
+                    case Constants_Intern.FRAGMENT_BOX:
+                        if (oBox.getoRecord() == null) {
+                            showFragment(new Fragment_Table_Input_Collector(), null, Constants_Intern.FRAGMENT_TABLE_INPUT_COLLECTOR, null);
+                        }
+                        break;
+                }
+                break;
+            case Constants_Intern.TYPE_ACTION_MENU_DONE:
+                switch (cTag) {
+                    case Constants_Intern.FRAGMENT_RECORD:
+                        cVolley.execute(Request.Method.PUT, Urls.URL_RECORD_FINISH+oBox.getoRecord().getId(), null);
+                        oBox.setoRecord(null);
+                        updateLayout();
+                        break;
+                }
+                break;
+            case Constants_Intern.TYPE_ACTION_MENU_DELETE:
+                switch (cTag) {
+                    case Constants_Intern.FRAGMENT_BOX:
+                        cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_BOX_DELETE+oBox.getkId(), null);
+                        oBox.setoRecord(null);
+                        reset();
+                        break;
+                    case Constants_Intern.FRAGMENT_RECORD:
+                        cVolley.execute(Request.Method.DELETE, Urls.URL_RECORD_DELETE+oBox.getoRecord().getId(), null);
+                        oBox.setoRecord(null);
+                        updateLayout();
+                        break;
+                }
                 break;
         }
     }
@@ -342,6 +376,8 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
                     public void onResult(JSONObject oJson) throws JSONException {
                         if (Volley_Connection.successfulResponse(oJson)) {
                             oBox = new Box(Activity_Box.this, oJson.getJSONObject(Constants_Extern.OBJECT_BOX));
+                            updateLayout();
+                            setKeyboard(Constants_Intern.CLOSE_KEYBOARD);
                         }
                     }
                 });
@@ -350,4 +386,27 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    @Override
+    public void returnTable(final String cTag, final JSONObject jsonObject) {
+        switch (cTag) {
+            case Constants_Intern.FRAGMENT_TABLE_INPUT_COLLECTOR:
+                if (oBox.getoRecord() == null) {
+                    cVolley.getResponse(Request.Method.PUT, Urls.URL_RECORD_ADD, null, new Interface_VolleyResult() {
+                        @Override
+                        public void onResult(JSONObject oJson) throws JSONException {
+                            if (Volley_Connection.successfulResponse(oJson)) {
+                                oBox.setoRecord(new Record(Activity_Box.this, oJson.getJSONObject(Constants_Extern.OBJECT_RECORD)));
+                                oBox.getoRecord().setoCollector(new Collector(Activity_Box.this, jsonObject));
+                            }
+                            removeFragment(cTag);
+                            updateLayout();
+                        }
+                    });
+                }
+                break;
+        }
+    }
+
+
 }
