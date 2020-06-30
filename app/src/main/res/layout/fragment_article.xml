@@ -131,4 +131,11 @@
         android:id="@+id/lHeader"
         layout="@layout/layout_header" />
 
+    <include
+        layout="@layout/layout_menu"
+        android:id="@+id/lMenu"
+        android:layout_below="@id/rlArticle"
+        android:layout_height="@dimen/height_layout_menu"
+        android:layout_width="match_parent"/>
+
 </RelativeLayout>

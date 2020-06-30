@@ -290,6 +290,17 @@
     <string name="no_record_connected_to_box">No record connected to box</string>
     <string name="message_commit_done_record">Do you really want to fnish this record?</string>
     <string name="free_record">Free Record</string>
+    <string name="printer_one">Printer One</string>
+    <string name="printer_two">Printer Two</string>
+    <string name="printer_three">Printer Three</string>
+    <string name="printer_four">Printer Four</string>
+    <string name="printer_five">Printer Five</string>
+    <string name="printer_six">Printer Six</string>
+    <string name="printer_seven">Printer Seven</string>
+    <string name="printer_eight">Printer Eight</string>
+    <string name="printer_nine">Printer Nine</string>
+    <string name="printer_none">No Printer</string>
+    <string name="mobile_box">Mobile-Box</string>
     />
 
     // Not translated

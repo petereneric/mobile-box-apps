@@ -1,82 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:id="@+id/ivPrinter"
-        android:src="@drawable/ic_printer_24dp"
-        android:padding="32dp"
-        />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/vToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:backgroundTint="@color/color_primary"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/ivCamera"
-        android:src="@drawable/ic_camera_24dp"
-        android:layout_toLeftOf="@id/ivPrinter"
-        android:padding="32dp"
-        />
+    <View
+        android:id="@+id/toolbar_shadow"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_dropshadow" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvMenu"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/rgPrinter"/>
+        android:layout_margin="16dp">
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toLeftOf="@id/ivCamera"
-        android:layout_alignParentBottom="true"
-        android:id="@+id/rgPrinter">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvMenu"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/llRadioGroup"/>
 
-        <RadioButton
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/rbPrinterOne"
-            android:text="Printer 1"
-            android:onClick="onRadioButtonClicked"/>
+            android:orientation="horizontal"
+            android:id="@+id/llRadioGroup"
+            android:layout_alignParentBottom="true"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbPrinterTwo"
-            android:text="Printer 2"
-            android:onClick="onRadioButtonClicked"/>
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/rgOne">
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbPrinterThree"
-            android:text="Printer 3"
-            android:onClick="onRadioButtonClicked"/>
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterOne"
+                    android:text="@string/printer_one"/>
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbPrinterFour"
-            android:text="Printer 4"
-            android:onClick="onRadioButtonClicked"/>
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterTwo"
+                    android:text="@string/printer_two"/>
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbPrinterFive"
-            android:text="Printer 5"
-            android:onClick="onRadioButtonClicked"/>
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterThree"
+                    android:text="@string/printer_three"/>
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/rbPrinterSix"
-            android:text="Printer 6"
-            android:onClick="onRadioButtonClicked"/>
-    </RadioGroup>
+            </RadioGroup>
 
-</RelativeLayout>
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/rgTwo">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterFour"
+                    android:text="@string/printer_four"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterFive"
+                    android:text="@string/printer_five"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterSix"
+                    android:text="@string/printer_six"/>
+
+            </RadioGroup>
+
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/rgThree">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterSeven"
+                    android:text="@string/printer_seven"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterEight"
+                    android:text="@string/printer_eight"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterNone"
+                    android:text="@string/printer_none"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

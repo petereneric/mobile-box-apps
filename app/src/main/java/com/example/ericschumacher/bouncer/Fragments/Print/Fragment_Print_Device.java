@@ -6,12 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ericschumacher.bouncer.Activities.Activity_Device_New;
+import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Device;
 
 public class Fragment_Print_Device extends Fragment_Print implements View.OnClickListener {
 
     // Activity
-    Activity_Device_New activityDevice;
+    Activity_Device activityDevice;
 
     @Nullable
     @Override
@@ -21,7 +21,7 @@ public class Fragment_Print_Device extends Fragment_Print implements View.OnClic
         vLayout = super.onCreateView(inflater, container, savedInstanceState);
 
         // Activity
-        activityDevice = (Activity_Device_New)getActivity();
+        activityDevice = (Activity_Device)getActivity();
 
         return vLayout;
     }

@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.ericschumacher.bouncer.Activities.Activity_Article;
+import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Article;
 
 public class Fragment_Print_Article extends Fragment_Print {
 

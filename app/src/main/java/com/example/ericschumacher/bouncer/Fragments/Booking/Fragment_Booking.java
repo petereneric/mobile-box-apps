@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.ericschumacher.bouncer.Activities.Activity_Device_New;
+import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Device;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
@@ -43,7 +43,7 @@ public class Fragment_Booking extends Fragment implements View.OnClickListener {
     Interface_Booking iBooking;
 
     // Instances
-    Activity_Device_New activityDevice;
+    Activity_Device activityDevice;
     Device oDevice;
 
     @Nullable
@@ -54,7 +54,7 @@ public class Fragment_Booking extends Fragment implements View.OnClickListener {
         Context = getActivity();
 
         // Instances
-        activityDevice = (Activity_Device_New)getActivity();
+        activityDevice = (Activity_Device)getActivity();
         oDevice = activityDevice.getDevice();
 
         // Connection

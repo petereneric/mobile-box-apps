@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.ericschumacher.bouncer.Activities.Activity_Article;
+import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Article;
 import com.example.ericschumacher.bouncer.Fragments.Parent.Fragment_Object;
 import com.example.ericschumacher.bouncer.Objects.Article;
 import com.example.ericschumacher.bouncer.R;
@@ -32,6 +32,7 @@ public class Fragment_Article extends Fragment_Object {
     TextView tvColor;
     TextView tvShape;
     TextView tvStockAmount;
+    public View lMenu;
 
     @Nullable
     @Override
@@ -44,6 +45,7 @@ public class Fragment_Article extends Fragment_Object {
     }
 
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
+        super.setLayout(inflater, container);
         // Layout
         rlMain = vLayout.findViewById(R.id.rlMain);
         tvArticle = vLayout.findViewById(R.id.tvArticle);
@@ -54,6 +56,8 @@ public class Fragment_Article extends Fragment_Object {
         tvStockAmount = vLayout.findViewById(R.id.tvStockAmount);
         ivOne = vLayout.findViewById(R.id.ivOne);
         ivTwo = vLayout.findViewById(R.id.ivTwo);
+
+        lMenu = vLayout.findViewById(R.id.lMenu);
 
         // Data
         tvTitle.setText(getString(R.string.article));

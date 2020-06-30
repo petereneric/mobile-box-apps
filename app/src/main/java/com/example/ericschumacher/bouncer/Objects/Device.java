@@ -98,6 +98,9 @@ public class Device implements Serializable {
                     bBatteryContained = true;
                 }
             }
+            if (bBatteryContained && oModel != null && oModel.getlModelBatteries().size() == 1) {
+                setoBattery(oModel.getoBattery());
+            }
             if (!oJson.isNull(Constants_Extern.BOOLEAN_BACKCOVER_CONTAINED)) {
                 bBackcoverContained = (oJson.getInt(Constants_Extern.BOOLEAN_BACKCOVER_CONTAINED) == 1) ? true : false;
             } else {

@@ -4,12 +4,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Parent.Fragment_Object;
 import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.R;
@@ -112,8 +112,7 @@ public class Fragment_Record_New_New extends Fragment_Object implements View.OnC
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
-                                //iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_DONE, getTag());
-                                Log.i("yes", "yes");
+                                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_DONE, getTag());
                             }
                         });
                 alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.no),

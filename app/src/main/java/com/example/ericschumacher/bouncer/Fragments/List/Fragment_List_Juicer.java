@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
-import com.example.ericschumacher.bouncer.Activities.Activity_Juicer_New;
+import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Juicer;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List_Juicer;
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Juicer;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
@@ -48,7 +48,7 @@ public class Fragment_List_Juicer extends Fragment implements View.OnClickListen
     boolean bSearchSelected;
 
     // Activity
-    Activity_Juicer_New activityJuicer;
+    Activity_Juicer activityJuicer;
 
     // Data
     ArrayList<Device> lDevices;
@@ -82,7 +82,7 @@ public class Fragment_List_Juicer extends Fragment implements View.OnClickListen
         vRecyclerView.setAdapter(aListJuicer);
 
         // Activity
-        activityJuicer = (Activity_Juicer_New) getActivity();
+        activityJuicer = (Activity_Juicer) getActivity();
 
         // Connection
         cVolley = new Volley_Connection(getActivity());

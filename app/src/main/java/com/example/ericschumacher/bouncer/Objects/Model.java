@@ -312,6 +312,11 @@ public class Model implements Parcelable, Serializable {
             oJson.put(Constants_Extern.NAME_MODEL, name);
             oJson.put(Constants_Extern.DPS, nDps);
             oJson.put(Constants_Extern.EXPLOITATION, tDefaultExploitation);
+            if (tDefaultExploitation != null) {
+                oJson.put(Constants_Extern.EXPLOITATION, tDefaultExploitation);
+            } else {
+                oJson.put(Constants_Extern.EXPLOITATION, JSONObject.NULL);
+            }
             if (tPhone != null) {
                 oJson.put(Constants_Extern.TYPE_PHONE, tPhone);
             } else {

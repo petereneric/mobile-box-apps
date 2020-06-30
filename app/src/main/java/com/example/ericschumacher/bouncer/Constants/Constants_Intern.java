@@ -13,6 +13,9 @@ public class Constants_Intern {
     public final static String ID_PRINTER_FOUR = "50:8C:B1:4F:B1:EE";
     public static final String ID_PRINTER_FIVE = "4C:24:98:AB:93:79";
     public static final String ID_PRINTER_SIX = "E4:15:F6:46:E1:C3";
+    public static final String ID_PRINTER_SEVEN = "C4:F3:12:17:D0:2E";
+    public static final String ID_PRINTER_EIGHT = "ID_PRINTER_EIGHT";
+    public static final String ID_PRINTER_NONE = "ID_PRINTER_NONE";
     //public static final String ID_PRINTER_FIVE = "00:07:4D:99:BA:7E";
 
 
@@ -353,4 +356,5 @@ public class Constants_Intern {
     public static final int TYPE_ACTION_DEVICE_DAMAGES_COMMIT = 0;
     public static final int TYPE_ACTION_DEVICE_DAMAGES_OTHER_DAMAGES = 1;
     public static final int TYPE_ACTION_DEVICE_DAMAGES_OVERBROKEN = 2;
+
 }

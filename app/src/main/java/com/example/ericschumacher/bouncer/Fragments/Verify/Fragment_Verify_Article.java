@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.ericschumacher.bouncer.Activities.Activity_Device_New;
+import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Device;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
@@ -30,7 +30,7 @@ public class Fragment_Verify_Article extends Fragment implements View.OnClickLis
     Interface_Verify_Article iVerifyArticle;
 
     // Instances
-    Activity_Device_New activityDevice;
+    Activity_Device activityDevice;
 
     // Connection
     Volley_Connection cVolley;
@@ -40,7 +40,7 @@ public class Fragment_Verify_Article extends Fragment implements View.OnClickLis
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         // Instances
-        activityDevice = (Activity_Device_New)getActivity();
+        activityDevice = (Activity_Device)getActivity();
 
         // Connection
         cVolley = new Volley_Connection(getActivity());

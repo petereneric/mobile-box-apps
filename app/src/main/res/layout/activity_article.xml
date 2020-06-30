@@ -22,14 +22,6 @@
         android:layout_height="match_parent"
         android:layout_margin="8dp">
 
-        <fragment
-            android:id="@+id/fPrintArticle"
-            android:name="com.example.ericschumacher.bouncer.Fragments.Print.Fragment_Print_Article"
-            android:layout_width="match_parent"
-            android:tag="FRAGMENT_PRINT_ARTICLE"
-            android:layout_height="@dimen/height_layout_footer"
-            android:layout_alignParentBottom="true"/>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,8 +66,7 @@
             android:id="@+id/flInteraction"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/llFragments"
-            android:layout_above="@id/fPrintArticle"/>
+            android:layout_below="@id/llFragments"/>
 
     </RelativeLayout>
 
