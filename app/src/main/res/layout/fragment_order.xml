@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lHeader"
+        android:orientation="horizontal"
+        android:id="@+id/llTable">
+
+        <TableLayout
+            android:id="@+id/tableLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="@dimen/layout_weight_shipping_record_row_one">
+
+            <TableRow android:id="@+id/trCollector"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_key_one"
+                    android:text="@string/collector"/>
+
+                <TextView
+                    android:id="@+id/tvCollector"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_value_one"
+                    android:text="Bundeswehr Sozialwerk"/>
+            </TableRow>
+
+            <TableRow android:id="@+id/trMarketingPackage">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_key_one"
+                    android:text="@string/marketing_package" />
+
+                <TextView
+                    android:id="@+id/tvMarketingPackage"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_value_one"
+                    android:text="Sonstige" />
+            </TableRow>
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/tableLayoutTwo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="@dimen/layout_weight_shipping_record_row_two">
+
+            <TableRow android:id="@+id/trAmountBox">
+
+                <TextView
+                    style="@style/tv_tableRow_Key_Small"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_key_two"
+                    android:text="@string/amount_boxes" />
+
+                <TextView
+                    android:id="@+id/tvAmountBox"
+                    style="@style/tv_tableRow_Value_Small"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_value_two"
+                    android:text="1" />
+
+            </TableRow>
+
+            <TableRow android:id="@+id/trAmountBricolage">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_key_two"
+                    android:text="@string/amount_bricolages" />
+
+                <TextView
+                    android:id="@+id/tvAmountBricolage"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_value_two"
+                    android:text="1" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trAmountFlyer">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_key_two"
+                    android:text="@string/amount_flyer" />
+
+                <TextView
+                    android:id="@+id/tvAmountFlyer"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_value_two"
+                    android:text="50" />
+            </TableRow>
+
+            <TableRow android:id="@+id/trAmountPoster">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_key_two"
+                    android:text="@string/amount_bricolages" />
+
+                <TextView
+                    android:id="@+id/tvAmountPoster"
+                    style="@style/tv_tableRow_Value"
+                    android:layout_weight="@dimen/layout_weight_shipping_record_value_two"
+                    android:text="5" />
+            </TableRow>
+
+        </TableLayout>
+
+    </LinearLayout>
+
+    <include
+        android:id="@+id/lHeader"
+        layout="@layout/layout_header" />
+
+    <include
+        layout="@layout/layout_menu"
+        android:id="@+id/lMenu"
+        android:layout_height="@dimen/height_layout_menu"
+        android:layout_width="match_parent"
+        android:layout_below="@id/llTable"/>
+
+
+</RelativeLayout>

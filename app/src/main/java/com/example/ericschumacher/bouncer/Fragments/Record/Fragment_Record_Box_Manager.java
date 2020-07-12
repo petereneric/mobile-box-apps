@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class Fragment_Record_Box_Manager extends Fragment_Record_New_New {
+public class Fragment_Record_Box_Manager extends Fragment_Record {
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
         super.setLayout(inflater, container);
 

@@ -11,7 +11,7 @@ import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Multiple_Choice_Device_Damages;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New;
+import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Object_Device_Damage;
 import com.example.ericschumacher.bouncer.Objects.Object_Model_Damage;
@@ -37,7 +37,7 @@ public class Fragment_Edit_Device_Damages extends Fragment_Edit {
     int kDevice;
 
     // Interface
-    Fragment_Device_New.Interface_Device iDevice;
+    Fragment_Device.Interface_Device iDevice;
     Interface_Edit_Device_Damages iEditDeviceDamages;
 
     @Nullable
@@ -46,7 +46,7 @@ public class Fragment_Edit_Device_Damages extends Fragment_Edit {
         super.onCreateView(inflater, container, savedInstanceState);
 
         // Interface
-        iDevice = (Fragment_Device_New.Interface_Device)getActivity();
+        iDevice = (Fragment_Device.Interface_Device)getActivity();
         iEditDeviceDamages = (Interface_Edit_Device_Damages) getActivity();
 
         // Data

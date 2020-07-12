@@ -31,7 +31,7 @@
 
         <fragment
             android:id="@+id/fBox"
-            android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Box"
+            android:name="com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Box"
             android:layout_width="match_parent"
             android:tag="FRAGMENT_BOX"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
 
         <fragment
             android:id="@+id/fRecord"
-            android:name="com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record_New_New"
+            android:name="com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record"
             android:layout_width="match_parent"
             android:tag="FRAGMENT_RECORD"
             android:layout_height="wrap_content"

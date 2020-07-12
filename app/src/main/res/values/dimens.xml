@@ -52,6 +52,14 @@
     <dimen name="layout_weight_box_value_one">1</dimen>
     <dimen name="layout_weight_box_value_two">1</dimen>
 
+    // FragmentShippingRecord
+    <dimen name="layout_weight_shipping_record_row_one">1</dimen>
+    <dimen name="layout_weight_shipping_record_row_two">1</dimen>
+    <dimen name="layout_weight_shipping_record_key_one">1</dimen>
+    <dimen name="layout_weight_shipping_record_key_two">1</dimen>
+    <dimen name="layout_weight_shipping_record_value_one">1</dimen>
+    <dimen name="layout_weight_shipping_record_value_two">1</dimen>
+
     // FragmentBooking
     <dimen name="size_text_booking_from_to">18sp</dimen>
     <dimen name="size_text_booking_station">24sp</dimen>

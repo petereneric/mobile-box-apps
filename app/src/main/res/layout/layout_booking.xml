@@ -77,7 +77,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/color_primary"
                 android:textSize="24sp"
-                android:text="2938"
+                android:text="-"
                 android:textStyle="bold"
                 android:id="@+id/tvStorageNumber"/>
 

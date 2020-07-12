@@ -20,10 +20,10 @@ import com.example.ericschumacher.bouncer.Fragments.Choice.Fragment_Choice_Devic
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Color;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Device_Damages;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New;
+import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_Model;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_StockPrimeCapacity;
-import com.example.ericschumacher.bouncer.Fragments.Parent.Fragment_Object;
+import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Object;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_Shape;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_YesNo;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
@@ -45,7 +45,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Activity_Device extends Activity_Model implements Fragment_Edit_Device_Damages.Interface_Edit_Device_Damages, Fragment_Booking.Interface_Booking, Fragment_Device_New.Interface_Device, Fragment_Object.Interface_Fragment_Object_Menu {
+public class Activity_Device extends Activity_Model implements Fragment_Edit_Device_Damages.Interface_Edit_Device_Damages, Fragment_Booking.Interface_Booking, Fragment_Device.Interface_Device, Fragment_Object.Interface_Fragment_Object_Menu {
 
     // Print
     public ManagerPrinter mPrinter;
@@ -54,7 +54,7 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
     public Device oDevice;
 
     // Fragments
-    public Fragment_Device_New fDevice;
+    public Fragment_Device fDevice;
 
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -102,7 +102,7 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
 
     public void initiateFragments() {
         super.initiateFragments();
-        fDevice = (Fragment_Device_New) fManager.findFragmentById(R.id.fDevice);
+        fDevice = (Fragment_Device) fManager.findFragmentById(R.id.fDevice);
     }
 
     public void showFragmentBookingInStockPrime(Boolean bKeyboard) {
@@ -142,7 +142,7 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
 
     public void updateLayout() {
         // Fragments
-        if (oModel != null) {
+        if (getModel() != null) {
             getSupportFragmentManager().beginTransaction().show(fModel).commit();
             fModel.updateLayout();
         }
@@ -550,19 +550,22 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
 
     @Override
     public void errorBooking(String cTag, String cError) {
-        switch (cTag) {
-            case Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME:
-                switch (cError) {
-                    case Constants_Intern.TYPE_ERROR_STOCK_PRIME_FULL:
-                        Bundle bundle = new Bundle();
-                        bundle.putString(Constants_Intern.TEXT, getString(R.string.stock_prime_full));
-                        showFragment(new Fragment_Display(), bundle, Constants_Intern.FRAGMENT_DISPLAY_STOCK_PRIME_FULL, Constants_Intern.DONT_SHOW_KEYBOARD);
-                        break;
-                    case Constants_Intern.ERROR_BOOKING_SPACE_FULL:
-                        updateLayout();
-                        break;
-                }
-                break;
+        if (cTag != null) {
+            switch (cTag) {
+                case Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME:
+                    switch (cError) {
+                        case Constants_Intern.TYPE_ERROR_STOCK_PRIME_FULL:
+                            Bundle bundle = new Bundle();
+                            bundle.putString(Constants_Intern.TEXT, getString(R.string.stock_prime_full));
+                            showFragment(new Fragment_Display(), bundle, Constants_Intern.FRAGMENT_DISPLAY_STOCK_PRIME_FULL, Constants_Intern.DONT_SHOW_KEYBOARD);
+                            break;
+                        case Constants_Intern.ERROR_BOOKING_SPACE_FULL:
+                        case Constants_Intern.ERROR_BOOKING_STOCK_EXCESS_LKU_FULL:
+                            updateLayout();
+                            break;
+                    }
+                    break;
+            }
         }
     }
 

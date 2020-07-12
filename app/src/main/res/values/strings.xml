@@ -301,7 +301,19 @@
     <string name="printer_nine">Printer Nine</string>
     <string name="printer_none">No Printer</string>
     <string name="mobile_box">Mobile-Box</string>
-    />
+    <string name="battery_removable_short">Bat. removable</string>
+    <string name="backcover_removable_short">Bac. removable</string>
+    <string name="backcover_contained_short">Bac. contained</string>
+    <string name="battery_contained_short">Bat. contained</string>
+    <string name="marketing_package">Marketing package</string>
+    <string name="amount_boxes">Amount boxes</string>
+    <string name="amount_bricolage">Amount bricolages</string>
+    <string name="amount_bricolages">Amount bricolages</string>
+    <string name="amount_flyer">Amount flyer</string>
+    <string name="order_sent">Order sent</string>
+    <string name="print_shipping_label">Print shipping-label</string>
+    <string name="report_missing_stock">Report missing stock</string>
+    <string name="order">Order</string>
 
     // Not translated
 

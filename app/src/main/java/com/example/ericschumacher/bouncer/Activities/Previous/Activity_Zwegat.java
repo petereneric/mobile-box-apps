@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Zwegat;
+import com.example.ericschumacher.bouncer.Fragments.Old.Fragment_Zwegat;
 import com.example.ericschumacher.bouncer.R;
 
 public class  Activity_Zwegat extends AppCompatActivity {

@@ -32,7 +32,7 @@ import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Manufacturer;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Battery;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Model_New;
+import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Model;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_Battery;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_Dps;
@@ -72,7 +72,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
 
     // Fragments
     public FragmentManager fManager;
-    public Fragment_Model_New fModel;
+    public Fragment_Model fModel;
 
     // Connection
     public Volley_Connection cVolley;
@@ -115,7 +115,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
     // Fragments
 
     public void initiateFragments() {
-        fModel = (Fragment_Model_New) fManager.findFragmentById(R.id.fModel);
+        fModel = (Fragment_Model) fManager.findFragmentById(R.id.fModel);
     }
 
     public void showFragment(Fragment fragment, Bundle bData, String cTag, Boolean bKeyboard) {

@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Batteries;
+import com.example.ericschumacher.bouncer.Fragments.Others.Fragment_Batteries;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 
 import java.util.ArrayList;

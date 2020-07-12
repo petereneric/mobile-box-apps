@@ -42,7 +42,7 @@
 
             <fragment
                 android:id="@+id/fModel"
-                android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Model_New"
+                android:name="com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Model"
                 android:layout_width="match_parent"
                 android:tag="FRAGMENT_MODEL"
                 android:layout_height="wrap_content"/>
@@ -50,7 +50,7 @@
 
             <fragment
                 android:id="@+id/fDevice"
-                android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New"
+                android:name="com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device"
                 android:layout_width="match_parent"
                 android:tag="FRAGMENT_DEVICE"
                 android:layout_height="wrap_content" />

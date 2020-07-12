@@ -24,9 +24,9 @@ import android.widget.TextView;
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Box;
-import com.example.ericschumacher.bouncer.Fragments.Parent.Fragment_Object;
-import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record_New_New;
+import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Box;
+import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Object;
+import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record;
 import com.example.ericschumacher.bouncer.Fragments.Table.Fragment_Table;
 import com.example.ericschumacher.bouncer.Fragments.Table.Fragment_Table_Input_Collector;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
@@ -43,7 +43,7 @@ import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Activity_Box extends AppCompatActivity implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener, Fragment_Object.Interface_Fragment_Object_Menu, Fragment_Box.Interface_Fragment_Box, Fragment_Record_New_New.Interface_Fragment_Record, Fragment_Table.Interface_Fragment_Table {
+public class Activity_Box extends AppCompatActivity implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener, Fragment_Object.Interface_Fragment_Object_Menu, Fragment_Box.Interface_Fragment_Box, Fragment_Record.Interface_Fragment_Record, Fragment_Table.Interface_Fragment_Table {
 
     // Layout
     Toolbar vToolbar;
@@ -62,7 +62,7 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
     // Fragments
     FragmentManager fManager;
     Fragment_Box fBox;
-    Fragment_Record_New_New fRecord;
+    Fragment_Record fRecord;
 
     // Connection
     Volley_Connection cVolley;
@@ -114,7 +114,8 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
 
     public void initiateFragments() {
         fBox = (Fragment_Box) fManager.findFragmentById(R.id.fBox);
-        fRecord = (Fragment_Record_New_New) fManager.findFragmentById(R.id.fRecord);
+        //fBox.lMenu.setVisibility(View.GONE);
+        fRecord = (Fragment_Record) fManager.findFragmentById(R.id.fRecord);
     }
 
     public void showFragment(Fragment fragment, Bundle bData, String cTag, Boolean bKeyboard) {

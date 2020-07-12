@@ -18,6 +18,11 @@ public class Activity_Lifter extends Activity_Device {
 
     // Fragments
 
+    public void initiateFragments() {
+        super.initiateFragments();
+        fDevice.lMenu.setVisibility(View.GONE);
+    }
+
     public void removeFragments() {
         super.removeFragments();
         if (getSupportFragmentManager().findFragmentByTag(Constants_Intern.FRAGMENT_BOOKING_IN_STOCK_PRIME) != null) {

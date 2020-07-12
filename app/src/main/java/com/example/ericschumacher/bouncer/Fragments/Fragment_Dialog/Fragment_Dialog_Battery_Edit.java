@@ -11,7 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Batteries;
+import com.example.ericschumacher.bouncer.Fragments.Others.Fragment_Batteries;
 import com.example.ericschumacher.bouncer.R;
 
 public class Fragment_Dialog_Battery_Edit extends DialogFragment implements View.OnClickListener {

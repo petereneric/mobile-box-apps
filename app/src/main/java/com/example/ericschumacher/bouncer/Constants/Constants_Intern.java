@@ -357,4 +357,10 @@ public class Constants_Intern {
     public static final int TYPE_ACTION_DEVICE_DAMAGES_OTHER_DAMAGES = 1;
     public static final int TYPE_ACTION_DEVICE_DAMAGES_OVERBROKEN = 2;
 
+    public static final String ERROR_BOOKING_STOCK_EXCESS_LKU_FULL = "ERROR_BOOKING_STOCK_EXCESS_LKU_FULL";
+
+    public static final int TYPE_ACTION_FRAGMENT_BUTTON_PRIMARY_ONE = 0;
+    public static final int TYPE_ACTION_FRAGMENT_BUTTON_PRIMARY_TWO = 1;
+    public static final int TYPE_ACTION_FRAGMENT_BUTTON_SECONDARY_ONE = 3;
+    public static final int TYPE_ACTION_FRAGMENT_BUTTON_SECONDARY_TWO = 4;
 }

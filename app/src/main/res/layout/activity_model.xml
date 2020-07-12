@@ -24,7 +24,7 @@
 
         <fragment
             android:id="@+id/fModel"
-            android:name="com.example.ericschumacher.bouncer.Fragments.Fragment_Model_New"
+            android:name="com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Model"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/lSearch"

@@ -10,7 +10,7 @@ import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Article;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
-import com.example.ericschumacher.bouncer.Fragments.Verify.Fragment_Verify_Article;
+import com.example.ericschumacher.bouncer.Fragments.Others.Fragment_Verify_Article;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Article;
 import com.example.ericschumacher.bouncer.R;

@@ -86,7 +86,7 @@ public class Fragment_Booking_In_Lku_Stock extends Fragment_Booking implements V
                     }
 
                     // Text
-                    tvStockCapacity.setText(Integer.toString(highestLku)+" | "+Math.round(loadFactor*100)+" %");
+                    tvStockCapacity.setText(Integer.toString(highestLku) + " | " + Math.round(loadFactor * 100) + " %");
 
                     // TextColor
                     Context context = getContext();
@@ -97,7 +97,7 @@ public class Fragment_Booking_In_Lku_Stock extends Fragment_Booking implements V
                     // Background
                     GradientDrawable shape = new GradientDrawable();
                     shape.setShape(GradientDrawable.RECTANGLE);
-                    shape.setCornerRadii(new float[] {Utility_Density.getDp(Context, 16),Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16)});
+                    shape.setCornerRadii(new float[]{Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16), Utility_Density.getDp(Context, 16)});
                     shape.setStroke(Utility_Density.getDp(Context, 1), ResourcesCompat.getColor(Context.getResources(), kColor, null));
                     tvStockCapacity.setBackground(shape);
 
@@ -140,14 +140,27 @@ public class Fragment_Booking_In_Lku_Stock extends Fragment_Booking implements V
         Log.i("onClick", "clicked");
         switch (view.getId()) {
             case R.id.bSpaceFull:
-                oDevice.getoModel().setnDps(oStoragePlaceSuggested.getnPosition()-1);
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        iBooking.errorBooking(getTag(), Constants_Intern.ERROR_BOOKING_SPACE_FULL);
-                    }
-                }, 1000);
+                if (oStoragePlaceSuggested.getkStock() == Constants_Intern.STATION_PRIME_STOCK) {
+                    oDevice.getoModel().setnDps(oStoragePlaceSuggested.getnPosition() - 1);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            iBooking.errorBooking(getTag(), Constants_Intern.ERROR_BOOKING_SPACE_FULL);
+                        }
+                    }, 1000);
+                }
+                if (oStoragePlaceSuggested.getkStock() == Constants_Intern.STATION_EXCESS_STOCK) {
+                    cVolley.execute(Request.Method.PUT, Urls.URL_PUT_STOCK_EXCESS_LKU_FULL + oStoragePlaceSuggested.getkLku(), null);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            iBooking.errorBooking(getTag(), Constants_Intern.ERROR_BOOKING_STOCK_EXCESS_LKU_FULL);
+                        }
+                    }, 1000);
+                }
+
 
                 break;
             case R.id.tvStockSide:

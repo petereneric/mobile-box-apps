@@ -13,7 +13,7 @@
 
         <Button
             android:id="@+id/bCancel"
-            style="@style/button_default"
+            style="@style/button_primary_one"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -21,7 +21,7 @@
 
         <Button
             android:id="@+id/bApply"
-            style="@style/button_default"
+            style="@style/button_primary_one"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

@@ -4,29 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingBottom="16dp">
+    android:paddingBottom="16dp"
+    android:paddingTop="16dp">
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Simple Choice"
             android:textAllCaps="true"
             android:textColor="@color/color_grey"
             android:textSize="@dimen/size_text_header_title"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp"/>
+            android:layout_centerHorizontal="true"/>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:background="@color/color_grey"
-            android:layout_below="@id/tvTitle"
-            android:id="@+id/vDividerTitle"
-            android:paddingBottom="8dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"/>
+            android:layout_toLeftOf="@id/tvTitle"
+            android:layout_centerVertical="true"
+            android:id="@+id/vDividerTitleLeft"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_grey"
+            android:layout_toRightOf="@id/tvTitle"
+            android:layout_centerVertical="true"
+            android:id="@+id/vDividerTitleRight"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"/>
 
 </RelativeLayout>
 

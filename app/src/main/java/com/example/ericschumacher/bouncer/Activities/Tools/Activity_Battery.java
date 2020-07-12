@@ -18,7 +18,7 @@ import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List_Battery;
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager_Battery;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Batteries;
+import com.example.ericschumacher.bouncer.Fragments.Others.Fragment_Batteries;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Battery;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;

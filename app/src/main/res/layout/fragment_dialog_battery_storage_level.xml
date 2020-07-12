@@ -64,14 +64,14 @@
         android:id="@+id/llButtons">
 
         <Button
-            style="@style/button_default"
+            style="@style/button_primary_one"
             android:layout_height="wrap_content"
             android:text="@string/cancel"
             android:id="@+id/bCancel"
             />
 
         <Button
-            style="@style/button_default"
+            style="@style/button_primary_one"
             android:layout_height="wrap_content"
             android:text="@string/apply"
             android:id="@+id/bApply"

@@ -166,7 +166,7 @@
 
                 <TextView
                     style="@style/tv_tableRow_Key"
-                    android:text="@string/battery_removable"
+                    android:text="@string/battery_removable_short"
                     android:layout_weight="@dimen/layout_weight_model_key_three"/>
 
                 <TextView
@@ -179,11 +179,11 @@
 
             <TableRow
                 android:id="@+id/trBackcoverRemovable"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
-                    android:text="@string/backcover_removable"
+                    android:text="@string/backcover_removable_short"
                     android:layout_weight="@dimen/layout_weight_model_key_three"/>
 
                 <TextView

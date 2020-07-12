@@ -14,9 +14,9 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Manufacturer;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Model;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Result_New;
+import com.example.ericschumacher.bouncer.Fragments.Others.Fragment_Result;
 import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record_Bouncer;
-import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record_New_New;
+import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
@@ -33,7 +33,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class Activity_Bouncer extends Activity_Device implements Fragment_Record_New_New.Interface_Fragment_Record {
+public class Activity_Bouncer extends Activity_Device implements Fragment_Record.Interface_Fragment_Record {
 
     // Data
     Record oRecord;
@@ -331,6 +331,7 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                             // Box not found
                             Utility_Toast.show(Activity_Bouncer.this, R.string.id_unknown);
                         }
+                        Log.i("TEEXT?: ", etSearch.getText().toString());
                         resetLayout();
                         base(null);
                     }
@@ -356,7 +357,7 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
     public void showResult() {
         Bundle bundle = new Bundle();
         bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
-        showFragment(new Fragment_Result_New(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
+        showFragment(new Fragment_Result(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
     }
 
 

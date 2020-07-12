@@ -275,8 +275,10 @@ public class Model implements Parcelable, Serializable {
     }
 
     public void setnDps(int nDps) {
-        this.nDps = nDps;
-        update();
+        if (nDps > 1) {
+            this.nDps = nDps;
+            update();
+        }
     }
 
     public Boolean isBatteryRemovable() {

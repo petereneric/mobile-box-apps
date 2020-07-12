@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Battery;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Batteries;
+import com.example.ericschumacher.bouncer.Fragments.Others.Fragment_Batteries;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Battery_Edit;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Long_Click;

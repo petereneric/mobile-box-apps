@@ -202,4 +202,5 @@ public class Constants_Extern extends Constants_Intern {
     public static final String LIST_COLLECTOR = "LIST_COLLECTOR";
     public static final String NUMBER_DEVICES = "NUMBER_DEVICES";
     public static final String BOOLEAN_SELECTED = "BOOLEAN_SELECTED";
+    public static final String OBJECT_MARKETING_PACKAGE = "OBJECT_MARKETING_PACKAGE";
 }

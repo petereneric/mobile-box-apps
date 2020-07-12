@@ -307,10 +307,11 @@ public class ManagerPrinter {
 
     private byte[] getDeviceLabel(Device device) {
         String idDevice = Integer.toString(device.getIdDevice());
+        String cModelName = device.getoModel().getName();
         String shape = device.getoShape().getName();
         String cState = device.getStateName();
         String lkuBattery;
-        if (device.getoModel().getoBattery() != null) {
+        if (device.getoModel().getoBattery() != null && device.getoModel().getoBattery().getLku() != null) {
             Battery battery = device.getoModel().getoBattery();
             lkuBattery = battery.getoManufacturer().getcShortcut()+"-"+Integer.toString(battery.getLku());
         } else {
@@ -343,21 +344,20 @@ public class ManagerPrinter {
                 "^PW408\n" +
                 "^LL200\n" +
                 "^LS0\n" +
-                "^FO17,66^GFA,29,48,48,:Z64:eJxb1KWxiGi0gIEBAA9MFI0=:2CE5\n" +
-                "^FO15,109^GFA,29,48,48,:Z64:eJxb1KWxiHjUwAAAEFIVDw==:22CD\n" +
-                "^FO264,118^GFA,29,116,4,:Z64:eJxjYICABjSagYbiABiDBQE=:557A\n" +
-                "^FO264,71^GFA,29,116,4,:Z64:eJxjYICABjSagYbiABiDBQE=:557A\n" +
-                "^FO17,155^GFA,29,48,48,:Z64:eJxb1KWxiHjUwAAAEFIVDw==:22CD\n" +
-                "^FO265,164^GFA,29,112,4,:Z64:eJxjYICABjSagUbiAAR/BIE=:8DFE\n" +
-                "^FPH,3^FT21,50^A@N,31,31,TT0003M_^FH\\^CI28^FD"+idDevice+"^FS^CI27\n" +
-                "^FPH,3^FT21,139^A@N,17,18,TT0003M_^FH\\^CI28^FD"+shape+"^FS^CI27\n" +
-                "^FPH,3^FT284,139^A@N,17,18,TT0003M_^FH\\^CI28^FD"+lkuBattery+"^FS^CI27\n" +
-                "^FPH,3^FT21,93^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cState+"^FS^CI27\n" +
-                "^BY2,3,20^FT168,48^BCN,,N,N\n" +
-                "^FH\\^FD>:"+idDevice+">68^FS\n" +
-                "^FPH,3^FT21,184^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cCharger+"^FS^CI27\n" +
-                "^FPH,3^FT284,93^A@N,17,18,TT0003M_^FH\\^CI28^FD-^FS^CI27\n" +
-                "^FPH,3^FT285,186^A@N,23,22,TT0003M_^FH\\^CI28^FD"+cLoadingStation+"^FS^CI27\n" +
+                "^FO17,80^GFA,25,48,48,:Z64:eJxb1KWxiATEAAAQZhUZ:FC47\n" +
+                "^FO15,120^GFA,25,48,48,:Z64:eJxb1KWxiASkAAAQhhU5:68FE\n" +
+                "^FO264,52^GFA,37,560,4,:Z64:eJxrYICABgZU0DAqPiqORRwAQ7YXgQ==:D9B6\n" +
+                "^FO17,159^GFA,25,48,48,:Z64:eJxb1KWxiATEAAAQZhUZ:FC47\n" +
+                "^FPH,3^FT284,68^A@N,17,18,TT0003M_^FH\\^CI28^FD"+idDevice+"^FS^CI27\n" +
+                "^FPH,3^FT21,147^A@N,17,18,TT0003M_^FH\\^CI28^FD"+shape+"^FS^CI27\n" +
+                "^FPH,3^FT284,147^A@N,17,18,TT0003M_^FH\\^CI28^FD"+lkuBattery+"^FS^CI27\n" +
+                "^FPH,3^FT21,108^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cState+"^FS^CI27\n" +
+                "^BY2,3,16^FT21,38^BCN,,N,N\n" +
+                "^FH\\^FD>:"+idDevice+"^FS\n" +
+                "^FPH,3^FT21,188^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cCharger+"^FS^CI27\n" +
+                "^FPH,3^FT284,108^A@N,17,18,TT0003M_^FH\\^CI28^FD-^FS^CI27\n" +
+                "^FPH,3^FT285,189^A@N,23,22,TT0003M_^FH\\^CI28^FD"+cLoadingStation+"^FS^CI27\n" +
+                "^FPH,3^FT21,68^A@N,17,18,TT0003M_^FH\\^CI28^FD"+cModelName+"^FS^CI27\n" +
                 "^PQ1,0,1,Y\n" +
                 "^XZ\n";
 

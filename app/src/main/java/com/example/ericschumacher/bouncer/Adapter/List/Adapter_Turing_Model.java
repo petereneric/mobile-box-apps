@@ -53,7 +53,7 @@ public class Adapter_Turing_Model extends RecyclerView.Adapter<RecyclerView.View
 
             tvManufacturer = itemView.findViewById(R.id.tvManufacturer);
             tvModelName = itemView.findViewById(R.id.tvModel);
-            llItem = itemView.findViewById(R.id.llItem);
+            //llItem = itemView.findViewById(R.id.llItem);
 
             llItem.setOnClickListener(this);
 

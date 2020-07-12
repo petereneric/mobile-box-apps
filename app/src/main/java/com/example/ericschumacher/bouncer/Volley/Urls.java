@@ -66,4 +66,5 @@ public class Urls {
     public final static String URL_PUT_UPDATE_RECORD= URL_REST_API+"record/update";
     public final static String URL_RECORD_ADD= URL_REST_API+"record/add";
     public final static String URL_RECORD_DELETE= URL_REST_API+"record/delete/";
+    public final static String URL_PUT_STOCK_EXCESS_LKU_FULL= URL_REST_API+"stock/excess/lku/full/";
 }

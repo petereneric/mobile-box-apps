@@ -22,14 +22,14 @@ import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List_Navigation;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_List_New;
+import com.example.ericschumacher.bouncer.Fragments.Old.Fragment_List_Two;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Activity_List;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_List;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Ann;
 import com.example.ericschumacher.bouncer.Objects.Device;
-import com.example.ericschumacher.bouncer.Objects.Marketing_Shipping;
+import com.example.ericschumacher.bouncer.Objects.Order;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
@@ -277,7 +277,7 @@ public class Activity_Manager extends AppCompatActivity implements View.OnClickL
                 oDeviceThee.setoStoragePlace(null);
                 break;
             case Constants_Intern.FRAGMENT_MARKETING_UNSHIPPED_RECORDS:
-                Marketing_Shipping oMarketingShipping = new Marketing_Shipping(this, jsonObject);
+                Order oMarketingShipping = new Order(this, jsonObject);
                 //oMarketingShipping.setbSent(true);
                 //iFragmentList.updateLayout();
                 break;
@@ -460,19 +460,19 @@ public class Activity_Manager extends AppCompatActivity implements View.OnClickL
     public void onClick(int position) {
         switch (position) {
             case 0: // Multiple Model
-                replaceFragment(new Fragment_List_New(), Constants_Intern.FRAGMENT_MULTIPLE_MODEL);
+                replaceFragment(new Fragment_List_Two(), Constants_Intern.FRAGMENT_MULTIPLE_MODEL);
                 break;
             case 1: // Devices without model in Lku
-                replaceFragment(new Fragment_List_New(), Constants_Intern.FRAGMENT_DEVICES_NO_MODEL_COLOR_SHAPE_LKU);
+                replaceFragment(new Fragment_List_Two(), Constants_Intern.FRAGMENT_DEVICES_NO_MODEL_COLOR_SHAPE_LKU);
                 break;
             case 2: // Marketing Shipping Records not sent
-                replaceFragment(new Fragment_List_New(), Constants_Intern.FRAGMENT_MARKETING_UNSHIPPED_RECORDS);
+                replaceFragment(new Fragment_List_Two(), Constants_Intern.FRAGMENT_MARKETING_UNSHIPPED_RECORDS);
                 break;
             case 3: // Devices without color in Lku
-                replaceFragment(new Fragment_List_New(), Constants_Intern.FRAGMENT_DEVICES_NO_COLOR_LKU);
+                replaceFragment(new Fragment_List_Two(), Constants_Intern.FRAGMENT_DEVICES_NO_COLOR_LKU);
                 break;
             case 4: // Devices without color in Lku
-                replaceFragment(new Fragment_List_New(), Constants_Intern.FRAGMENT_DEVICES_NO_MODEL_LKU);
+                replaceFragment(new Fragment_List_Two(), Constants_Intern.FRAGMENT_DEVICES_NO_MODEL_LKU);
                 break;
         }
         vDrawer.closeDrawer(Gravity.LEFT);

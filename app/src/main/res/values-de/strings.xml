@@ -234,23 +234,24 @@
     <string name="device_battery">Geräte-Batterie</string>
     <string name="edit_new_model">Neues Model bearbeiten</string>
     <string name="edit_new_device">Neues Gerät bearbeiten</string>
+    <string name="model_battery_prime_warning">Nicht möglich - Eine Batterie pro Model wird mindestens benötigt.</string>
+    <string name="defect_repair">Defekt Reparatur</string>
+    <string name="model_unknown">Model unbekannt</string>
+    <string name="current_stock_side">Aktuelle Lager-Seite</string>
+    <string name="frontside">Vorderseite</string>
+    <string name="stock_capacity">Lager-Kapazität</string>
+    <string name="from">Von</string>
+    <string name="to">Nach</string>
+    <string name="other_side">Andere Seite</string>
+    <string name="backside">Rückseite</string>
+    <string name="stock_prime_capacity">Hauptlager - Kapazität</string>
+    <string name="stock_prime_booking_in">Hauptlager - Einbuchen</string>
+    <string name="stock_prime_full">Hauptlager ist voll</string>
+    <string name="lift_new_device">Neues Gerät buchen</string>
+
 
     // Not translated
 
-    <string name="model_battery_prime_warning">Not possible - There must be one prime battery.</string>
-    <string name="defect_repair">Defect repair</string>
-    <string name="model_unknown">Model unknown</string>
-    <string name="current_stock_side">Current side of stock</string>
-    <string name="frontside">Frontside</string>
-    <string name="stock_capacity">Stock capacity</string>
-    <string name="from">From</string>
-    <string name="to">To</string>
-    <string name="other_side">Other side</string>
-    <string name="backside">Backside</string>
-    <string name="stock_prime_capacity">Stock-Prime Capacity</string>
-    <string name="stock_prime_booking_in">Stock-Prime - Booking In</string>
-    <string name="stock_prime_full">Stock-Prime is full</string>
-    <string name="lift_new_device">Lift new device</string>
     <string name="activity_lifter_stock_prime">Lifter - Stock-Prime</string>
     <string name="activity_lifter_stock_lku">Lifter - Lku-Stock</string>
     <string name="book_in">Book in</string>

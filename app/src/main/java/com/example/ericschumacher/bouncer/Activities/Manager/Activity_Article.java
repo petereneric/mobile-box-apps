@@ -14,10 +14,10 @@ import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Article;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Device_New;
-import com.example.ericschumacher.bouncer.Fragments.Fragment_Model_New;
-import com.example.ericschumacher.bouncer.Fragments.Verify.Fragment_Verify_Article;
+import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Article;
+import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
+import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Model;
+import com.example.ericschumacher.bouncer.Fragments.Others.Fragment_Verify_Article;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Article;
 import com.example.ericschumacher.bouncer.Objects.Device;
@@ -44,8 +44,8 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
     // Fragments
 
     public void initiateFragments() {
-        fModel = (Fragment_Model_New) fManager.findFragmentById(R.id.fModel);
-        fDevice = (Fragment_Device_New) fManager.findFragmentById(R.id.fDevice);
+        fModel = (Fragment_Model) fManager.findFragmentById(R.id.fModel);
+        fDevice = (Fragment_Device) fManager.findFragmentById(R.id.fDevice);
         fArticle = (Fragment_Article) fManager.findFragmentById(R.id.fArticle);
         fDevice.lMenu.setVisibility(View.GONE);
     }
@@ -367,7 +367,7 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
     @Override
     public void afterTextChanged(Editable editable) {
         if (!editable.toString().equals("")) {
-            switch (SharedPreferences.getInt(Constants_Intern.SEARCH_ARTICLE_TYPE, 2)) {
+            switch (SharedPreferences.getInt(Constants_Intern.SEARCH_ARTICLE_TYPE, 0)) {
                 case Constants_Intern.MAIN_SEARCH_ARTICLE_TYPE_ID_DEVICE:
                     onSearch();
                     break;
