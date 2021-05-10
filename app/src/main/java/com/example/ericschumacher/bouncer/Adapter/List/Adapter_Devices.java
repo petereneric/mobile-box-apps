@@ -46,7 +46,11 @@ public class Adapter_Devices extends RecyclerView.Adapter<Adapter_Devices.ViewHo
         holder.tvDeviceId.setText(Context.getString(R.string.item_device_id)+" "+Integer.toString(Devices.get(position).getIdDevice()));
         holder.tvLKU.setText(Context.getString(R.string.item_lku_id)+" "+Integer.toString(Devices.get(position).getoStoragePlace().getkLku()));
         holder.tvPosition.setText(Context.getString(R.string.position)+": "+Integer.toString(Devices.get(position).getoStoragePlace().getnPosition()));
-        holder.tvRpd.setText(Context.getString(R.string.rpd)+": "+Double.toString(Devices.get(position).getnRpd()));
+        if (Devices.get(position).getnRpd() != null) {
+            holder.tvRpd.setText(Context.getString(R.string.rpd)+": "+Double.toString(Devices.get(position).getnRpd()));
+        } else {
+            holder.tvRpd.setText(Context.getString(R.string.unknown));
+        }
         holder.tvBattery.setText(Context.getString(R.string.battery)+": "+(Devices.get(position).getoModel() != null && (Devices.get(position).getoModel().getoBattery() != null) ? Devices.get(position).getoModel().getoBattery().getName() : Context.getString(R.string.unknown)));
         holder.tvCharger.setText(Context.getString(R.string.charger)+": "+(( Devices.get(position).getoModel() != null && Devices.get(position).getoModel().getoCharger() != null) ? Devices.get(position).getoModel().getoCharger() .getName() : Context.getString(R.string.unknown)));
     }

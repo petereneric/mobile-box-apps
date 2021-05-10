@@ -23,7 +23,7 @@
                 <TextView
                     style="@style/tv_tableRow_Key"
                     android:layout_weight="@dimen/layout_weight_shipping_record_key_one"
-                    android:text="@string/collector"/>
+                    android:text="@string/receiver"/>
 
                 <TextView
                     android:id="@+id/tvCollector"
@@ -59,7 +59,7 @@
                 <TextView
                     style="@style/tv_tableRow_Key_Small"
                     android:layout_weight="@dimen/layout_weight_shipping_record_key_two"
-                    android:text="@string/amount_boxes" />
+                    android:text="@string/boxes" />
 
                 <TextView
                     android:id="@+id/tvAmountBox"
@@ -74,7 +74,7 @@
                 <TextView
                     style="@style/tv_tableRow_Key"
                     android:layout_weight="@dimen/layout_weight_shipping_record_key_two"
-                    android:text="@string/amount_bricolages" />
+                    android:text="@string/bricolages" />
 
                 <TextView
                     android:id="@+id/tvAmountBricolage"
@@ -88,7 +88,7 @@
                 <TextView
                     style="@style/tv_tableRow_Key"
                     android:layout_weight="@dimen/layout_weight_shipping_record_key_two"
-                    android:text="@string/amount_flyer" />
+                    android:text="@string/flyer" />
 
                 <TextView
                     android:id="@+id/tvAmountFlyer"
@@ -102,7 +102,7 @@
                 <TextView
                     style="@style/tv_tableRow_Key"
                     android:layout_weight="@dimen/layout_weight_shipping_record_key_two"
-                    android:text="@string/amount_bricolages" />
+                    android:text="@string/poster" />
 
                 <TextView
                     android:id="@+id/tvAmountPoster"

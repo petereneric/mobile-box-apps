@@ -14,16 +14,12 @@ import android.widget.TextView;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Bouncer;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Objects.Device;
-import com.example.ericschumacher.bouncer.Objects.Unit_Backcover;
-import com.example.ericschumacher.bouncer.Objects.Unit_Battery;
 import com.example.ericschumacher.bouncer.R;
 
 public class Fragment_Result extends Fragment implements View.OnClickListener {
 
     // Data
     Device oDevice;
-    Unit_Battery uBattery;
-    Unit_Backcover uBackcover;
 
     // vLayout
     View vLayout;
@@ -40,6 +36,7 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
     LinearLayout llDefectRepairObjects;
     LinearLayout llDefectReuseObjects;
     LinearLayout llUnknownObjects;
+    TextView tvReuse;
     TextView tvReuseDevice;
     TextView tvReuseBattery;
     TextView tvReuseBackcover;
@@ -58,17 +55,14 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        // Interface
+        aBouncer = (Activity_Bouncer)getActivity();
+
         // Data
-        Bundle bArguments = getArguments();
-        oDevice = (Device) bArguments.getSerializable(Constants_Intern.OBJECT_DEVICE);
-        uBattery = (Unit_Battery) bArguments.getSerializable(Constants_Intern.UNIT_BATTERY);
-        uBackcover = (Unit_Backcover) bArguments.getSerializable(Constants_Intern.UNIT_BACKCOVER);
+        oDevice = aBouncer.getDevice();
 
         // vLayout
         setLayout(inflater, container);
-
-        // Interface
-        aBouncer = (Activity_Bouncer)getActivity();
 
         return vLayout;
     }
@@ -89,6 +83,7 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
         llDefectRepairObjects = vLayout.findViewById(R.id.llDefectRepairObjects);
         llDefectReuseObjects = vLayout.findViewById(R.id.llDefectReuseObjects);
         llUnknownObjects = vLayout.findViewById(R.id.llUnknownObjects);
+        tvReuse = vLayout.findViewById(R.id.tvReuse);
         tvReuseDevice = vLayout.findViewById(R.id.tvReuseDevice);
         tvReuseBattery = vLayout.findViewById(R.id.tvReuseBattery);
         tvReuseBackcover = vLayout.findViewById(R.id.tvReuseBackcover);
@@ -136,6 +131,11 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
                         switch (oDevice.gettState()) {
                             case Constants_Intern.STATE_INTACT_REUSE:
                                 llReuse.setVisibility(View.VISIBLE);
+                                if (oDevice.getoStation().getId() == Constants_Intern.STATION_CHECK_ONE) {
+                                    tvReuse.setText(getString(R.string.reuse_station_check_one));
+                                } else {
+                                    tvReuse.setText(getString(R.string.reuse_station_lku_stock));
+                                }
                                 //tvReuseDevice.setVisibility(View.VISIBLE);
                                 if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained()) {
                                     //tvReuseBattery.setVisibility(View.VISIBLE);

@@ -15,10 +15,11 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Manufacturer;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Model;
 import com.example.ericschumacher.bouncer.Fragments.Others.Fragment_Result;
-import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record_Bouncer;
 import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record;
+import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record_Bouncer;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
+import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
 import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.Objects.Device;
@@ -134,18 +135,26 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
         if (oRecord != null) {
             if (oDevice != null) {
                 if (oDevice.gettState() == Constants_Intern.STATE_MODEL_UNKNOWN) {
-                    if (oDevice.getoManufacturer() != null) {
-                        if (oDevice.getoColor() != null) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString(Constants_Intern.TITLE, getString(R.string.model));
-                            bundle.putInt(Constants_Intern.ID_MANUFACTURER, oDevice.getoManufacturer().getId());
-                            bundle.putInt(Constants_Intern.ID_COLOR, oDevice.getoColor().getId());
-                            showFragment(new Fragment_Choice_Image_Model(), bundle, Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL, Constants_Intern.CLOSE_KEYBOARD);
+                    if (oDevice.getoShape() != null) {
+                        if (oDevice.getoManufacturer() != null) {
+                            if (oDevice.gettPhone() != null) {
+                                if (oDevice.getoColor() != null) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString(Constants_Intern.TITLE, getString(R.string.model));
+                                    bundle.putInt(Constants_Intern.ID_MANUFACTURER, oDevice.getoManufacturer().getId());
+                                    bundle.putInt(Constants_Intern.ID_COLOR, oDevice.getoColor().getId());
+                                    showFragment(new Fragment_Choice_Image_Model(), bundle, Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL, Constants_Intern.CLOSE_KEYBOARD);
+                                } else {
+                                    requestColor();
+                                }
+                            } else {
+                                requestPhoneType();
+                            }
                         } else {
-                            requestColor();
+                            requestDeviceManufacturer();
                         }
                     } else {
-                        requestDeviceManufacturer();
+                        requestShape();
                     }
                 } else {
                     if (oDevice.getoModel() == null) {
@@ -355,11 +364,56 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
     // Result
 
     public void showResult() {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
-        showFragment(new Fragment_Result(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
+        switch (oDevice.gettState()) {
+            case Constants_Intern.STATE_DEFECT_REPAIR:
+            case Constants_Intern.STATE_DEFECT_REUSE:
+                oDevice.setoStation(new Station(Constants_Intern.STATION_PRE_STOCK));
+                cVolley.getResponse(Request.Method.PUT, Urls.URL_ADD_DEVICE, oDevice.getJson(), new Interface_VolleyResult() {
+                    @Override
+                    public void onResult(JSONObject oJson) {
+                        Log.i("Raus damit", oJson.toString());
+                        try {
+                            if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                                oDevice = new Device(oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Bouncer.this);
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
+                                showFragment(new Fragment_Result(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
+                                mPrinter.printDeviceId(oDevice);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                break;
+            case Constants_Intern.STATE_INTACT_REUSE:
+                oDevice.setoStation(new Station(Constants_Intern.STATION_PRE_STOCK));
+                cVolley.getResponse(Request.Method.PUT, Urls.URL_ADD_DEVICE, oDevice.getJson(), new Interface_VolleyResult() {
+                    @Override
+                    public void onResult(JSONObject oJson) {
+                        Log.i("Raus damit", oJson.toString());
+                        try {
+                            if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                                oDevice = new Device(oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Bouncer.this);
+                                if (oDevice.getnFutureStock() != null && oDevice.getnFutureStock() == 0)
+                                    oDevice.setoStation(new Station(Constants_Intern.STATION_CHECK_ONE));
+                                Bundle bundle = new Bundle();
+                                bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
+                                showFragment(new Fragment_Result(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
+                                mPrinter.printDeviceId(oDevice);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                break;
+            default:
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
+                showFragment(new Fragment_Result(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
+        }
     }
-
 
     // Request
 
@@ -371,6 +425,33 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
 
 
     // Return
+
+    @Override
+    public void returnSelect(String cTag, int tSelect) {
+        if (oDevice.gettState() == Constants_Intern.STATE_MODEL_UNKNOWN && cTag == Constants_Intern.FRAGMENT_SELECT_SHAPE) {
+            oDevice.setoShape(new Shape(tSelect));
+            if (tSelect == Constants_Intern.SHAPE_BROKEN) {
+                oDevice.settState(Constants_Intern.STATE_RECYCLING);
+            }
+            updateLayout();
+            removeFragment(cTag);
+            base(Constants_Intern.CLOSE_KEYBOARD);
+            return;
+        }
+        if (oDevice.gettState() == Constants_Intern.STATE_MODEL_UNKNOWN && cTag == Constants_Intern.FRAGMENT_SELECT_PHONE_TYPE) {
+            Log.i(oDevice.getoManufacturer().getName() +" "+oDevice.getoManufacturer().gettDefaultExploitation(), tSelect+"");
+            oDevice.settPhone(tSelect);
+            if (tSelect == Constants_Intern.TYPE_PHONE_HANDY && oDevice.getoManufacturer() != null && oDevice.getoManufacturer().gettDefaultExploitation() == 3) {
+                Log.i("why", "hy");
+                oDevice.settState(Constants_Intern.STATE_RECYCLING);
+            }
+            updateLayout();
+            removeFragment(cTag);
+            base(Constants_Intern.CLOSE_KEYBOARD);
+            return;
+        }
+        super.returnSelect(cTag, tSelect);
+    }
 
     @Override
     public void returnChoice(String cTag, Object object) {
@@ -419,69 +500,25 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                 if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_UNKNOWN) {
                     oRecord.incrementRecycling();
                 }
-                removeFragment(cTag);
-                resetDevice();
-                updateLayout();
-                break;
-            case Constants_Intern.STATE_MODEL_UNKNOWN:
-                oRecord.incrementRecycling();
-                removeFragment(cTag);
-                resetDevice();
-                updateLayout();
                 break;
             case Constants_Intern.STATE_RECYCLING:
                 oRecord.incrementRecycling();
                 if (oDevice.getoModel() != null && oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() < 2) {
                     mPrinter.printBattery(oDevice.getoModel().getoBattery());
                 }
-                removeFragment(cTag);
-                resetDevice();
-                updateLayout();
                 break;
+            case Constants_Intern.STATE_MODEL_UNKNOWN:
             case Constants_Intern.STATE_DEFECT_REPAIR:
             case Constants_Intern.STATE_DEFECT_REUSE:
                 oRecord.incrementRecycling();
-                oDevice.setoStation(new Station(Constants_Intern.STATION_PRE_STOCK));
-                cVolley.getResponse(Request.Method.PUT, Urls.URL_ADD_DEVICE, oDevice.getJson(), new Interface_VolleyResult() {
-                    @Override
-                    public void onResult(JSONObject oJson) {
-                        Log.i("Raus damit", oJson.toString());
-                        try {
-                            if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                                oDevice.setIdDevice(oJson.getInt(Constants_Extern.ID_DEVICE));
-                                mPrinter.printDeviceId(oDevice);
-                                removeFragment(cTag);
-                                resetDevice();
-                                updateLayout();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
                 break;
             case Constants_Intern.STATE_INTACT_REUSE:
                 oRecord.incrementReuse();
-                oDevice.setoStation(new Station(Constants_Intern.STATION_PRE_STOCK));
-                cVolley.getResponse(Request.Method.PUT, Urls.URL_ADD_DEVICE, oDevice.getJson(), new Interface_VolleyResult() {
-                    @Override
-                    public void onResult(JSONObject oJson) {
-                        Log.i("Raus damit", oJson.toString());
-                        try {
-                            if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
-                                oDevice.setIdDevice(oJson.getInt(Constants_Extern.ID_DEVICE));
-                                mPrinter.printDeviceId(oDevice);
-                                removeFragment(cTag);
-                                resetDevice();
-                                updateLayout();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
                 break;
         }
+        removeFragment(cTag);
+        resetDevice();
+        updateLayout();
     }
 
 

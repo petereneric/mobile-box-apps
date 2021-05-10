@@ -51,8 +51,8 @@ public class Record implements Serializable {
                 oCollector = null;
             }
 
-            dCreation = Utility_DateTime.stringToDate(jsonObject.getString(Constants_Extern.DATE_CREATION));
-            dLastUpdate = Utility_DateTime.stringToDate(jsonObject.getString(Constants_Extern.DATE_LAST_UPDATE));
+            dCreation = Utility_DateTime.stringToDateTime(jsonObject.getString(Constants_Extern.DATE_CREATION));
+            dLastUpdate = Utility_DateTime.stringToDateTime(jsonObject.getString(Constants_Extern.DATE_LAST_UPDATE));
             nDevices = jsonObject.getInt(Constants_Extern.NUMBER_DEVICES);
             nRecycling = jsonObject.getInt(Constants_Extern.NUMBER_RECYCLING);
             nReuse = jsonObject.getInt(Constants_Extern.NUMBER_REUSE);

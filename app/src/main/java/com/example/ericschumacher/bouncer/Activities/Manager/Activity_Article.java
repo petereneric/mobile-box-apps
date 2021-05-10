@@ -8,12 +8,14 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
+import com.example.ericschumacher.bouncer.Fragments.Loading.Fragment_Loading;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Article;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Model;
@@ -54,12 +56,21 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
         super.showFragment(fragment, bData, cTag, bKeyboard);
     }
 
+    public void showFragmentLoadingArticle() {
+        Log.i("jo", "jooo");
+        showFragment(new Fragment_Loading(), null, Constants_Intern.FRAGMENT_LOADING, null);
+        getSupportFragmentManager().beginTransaction().hide(fArticle).commit();
+    }
+
     public void removeFragments() {
         getSupportFragmentManager().beginTransaction().hide(fModel).commit();
         getSupportFragmentManager().beginTransaction().hide(fDevice).commit();
         getSupportFragmentManager().beginTransaction().hide(fArticle).commit();
         if (fManager.findFragmentByTag(Constants_Intern.FRAGMENT_DISPLAY_ARTICLE_NOT_FOUND) != null) {
             removeFragment(Constants_Intern.FRAGMENT_DISPLAY_ARTICLE_NOT_FOUND);
+        }
+        if (fManager.findFragmentByTag(Constants_Intern.FRAGMENT_LOADING) != null) {
+            removeFragment(Constants_Intern.FRAGMENT_LOADING);
         }
     }
 
@@ -95,15 +106,17 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
             fDevice.updateLayout();
         }
         if (oArticle != null) {
+            Log.i("jjjjooo", "jjooo");
             getSupportFragmentManager().beginTransaction().show(fArticle).commit();
-            fArticle.updateLayout();
         } else {
             if (oDevice != null) {
+                Log.i("joooo", "jo");
                 Bundle bundle = new Bundle();
                 bundle.putString(Constants_Intern.TEXT, getString(R.string.article_not_found));
                 showFragment(new Fragment_Display(), bundle, Constants_Intern.FRAGMENT_DISPLAY_ARTICLE_NOT_FOUND, null);
             }
         }
+        fArticle.updateLayout();
 
         // TextViewSearch & EditTextSearch
         switch (SharedPreferences.getInt(Constants_Intern.SEARCH_ARTICLE_TYPE, 0)) {
@@ -138,13 +151,16 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
                                     } else {
                                         oArticle = null;
                                     }
-                                    updateLayout();
+
+                                } else {
+                                    oArticle = null;
                                 }
+                                updateLayout();
 
                             }
                         });
                     }
-                }, 2000);
+                }, 1000);
                 break;
             case Constants_Intern.MAIN_SEARCH_ARTICLE_TYPE_IMEI:
                 handler.postDelayed(new Runnable() {
@@ -162,7 +178,7 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
                             }
                         });
                     }
-                }, 2000);
+                }, 1000);
                 break;
         }
 
@@ -181,6 +197,7 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
     }
 
     public void reset() {
+
         oArticle = null;
         super.reset();
     }
@@ -307,6 +324,7 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
         switch (tAction) {
             case Constants_Intern.TYPE_ACTION_MENU_PRINT:
                 mPrinter.printDeviceSku(oArticle, oDevice);
+                reset();
                 break;
         }
     }
@@ -330,6 +348,7 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
 
     @Override
     public void onFeatureChanged() {
+        showFragmentLoadingArticle();
         updateArticle();
     }
 

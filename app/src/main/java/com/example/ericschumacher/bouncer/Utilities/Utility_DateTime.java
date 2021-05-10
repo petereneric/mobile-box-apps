@@ -6,8 +6,18 @@ import java.util.Date;
 
 public class Utility_DateTime {
 
-    public static Date stringToDate(String string) {
+    public static Date stringToDateTime(String string) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            return format.parse(string);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static Date stringToDate(String string) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         try {
             return format.parse(string);
         } catch (ParseException e) {

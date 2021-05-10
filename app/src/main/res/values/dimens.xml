@@ -53,19 +53,19 @@
     <dimen name="layout_weight_box_value_two">1</dimen>
 
     // FragmentShippingRecord
-    <dimen name="layout_weight_shipping_record_row_one">1</dimen>
-    <dimen name="layout_weight_shipping_record_row_two">1</dimen>
+    <dimen name="layout_weight_shipping_record_row_one">9</dimen>
+    <dimen name="layout_weight_shipping_record_row_two">4</dimen>
     <dimen name="layout_weight_shipping_record_key_one">1</dimen>
-    <dimen name="layout_weight_shipping_record_key_two">1</dimen>
-    <dimen name="layout_weight_shipping_record_value_one">1</dimen>
-    <dimen name="layout_weight_shipping_record_value_two">1</dimen>
+    <dimen name="layout_weight_shipping_record_key_two">9</dimen>
+    <dimen name="layout_weight_shipping_record_value_one">2</dimen>
+    <dimen name="layout_weight_shipping_record_value_two">3</dimen>
 
     // FragmentBooking
     <dimen name="size_text_booking_from_to">18sp</dimen>
     <dimen name="size_text_booking_station">24sp</dimen>
 
     // FragmentVerifiySku
-    <dimen name="layout_weight_table_article_key">3</dimen>
+    <dimen name="layout_weight_table_article_key">6</dimen>
     <dimen name="layout_weight_table_article_value">18</dimen>
     <dimen name="layout_margin_top_buttons_interaction">32dp</dimen>
 

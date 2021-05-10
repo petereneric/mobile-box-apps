@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Adapter.Table.Adapter_Table;
@@ -27,6 +29,7 @@ public class Fragment_Table extends Fragment implements Adapter_Table.Interface_
     View vLayout;
     public TextView tvTitle;
     RecyclerView rvList;
+    RelativeLayout rlMain;
 
     // Data
     JSONArray lData = new JSONArray();
@@ -56,7 +59,7 @@ public class Fragment_Table extends Fragment implements Adapter_Table.Interface_
         setLayout(inflater, container);
 
         // Interface
-        iFragmentTable = (Interface_Fragment_Table)getActivity();
+        iFragmentTable = (Interface_Fragment_Table) getActivity();
 
         return vLayout;
     }
@@ -65,6 +68,7 @@ public class Fragment_Table extends Fragment implements Adapter_Table.Interface_
         vLayout = inflater.inflate(getIdLayout(), container, false);
 
         tvTitle = vLayout.findViewById(R.id.tvTitle);
+        rlMain = vLayout.findViewById(R.id.rlMain);
 
         // RecyclerView
         rvList = vLayout.findViewById(R.id.rvList);
@@ -74,6 +78,10 @@ public class Fragment_Table extends Fragment implements Adapter_Table.Interface_
 
     public int getIdLayout() {
         return R.layout.fragment_table_new;
+    }
+
+    public void update() {
+        aTable.notifyDataSetChanged();
     }
 
     @Override
@@ -100,14 +108,30 @@ public class Fragment_Table extends Fragment implements Adapter_Table.Interface_
     public JSONObject getJsonObject(int position) {
         JSONObject oJson = null;
         try {
-            oJson = getJsonArray().getJSONObject(hasHeader() ? position-1 : position);
+            oJson = getJsonArray().getJSONObject(hasHeader() ? position - 1 : position);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return oJson;
     }
 
+    @Override
+    public boolean isSelected(int position) {
+        Log.i("hahn", "jo");
+        return false;
+    }
+
     public interface Interface_Fragment_Table {
         void returnTable(String cTag, JSONObject oJson);
     }
+
+    public interface Interface_Fragment_Table_Select extends Interface_Fragment_Table {
+        boolean isSelected(String cTag, int position);
+    }
+
+    public interface Interface_Fragment_Table_Select_DataImport extends Interface_Fragment_Table_Select {
+        JSONArray getData(String cTag);
+
+    }
 }
+

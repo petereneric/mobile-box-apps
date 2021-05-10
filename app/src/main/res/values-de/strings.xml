@@ -248,63 +248,97 @@
     <string name="stock_prime_booking_in">Hauptlager - Einbuchen</string>
     <string name="stock_prime_full">Hauptlager ist voll</string>
     <string name="lift_new_device">Neues Gerät buchen</string>
-
-
-    // Not translated
-
-    <string name="activity_lifter_stock_prime">Lifter - Stock-Prime</string>
-    <string name="activity_lifter_stock_lku">Lifter - Lku-Stock</string>
-    <string name="book_in">Book in</string>
-    <string name="booking">Booking</string>
+    <string name="activity_lifter_stock_prime">Lifter - Haupt-Lager</string>
+    <string name="activity_lifter_stock_lku">Lifter - Lku-Lager</string>
+    <string name="book_in">Einbuchen</string>
+    <string name="booking">Buchung</string>
     <string name="print_id_label">Id-Label</string>
     <string name="print_sku_label">Sku</string>
-    <string name="print">Print</string>
-    <string name="article">Article</string>
+    <string name="print">Drucken</string>
+    <string name="article">Artikel</string>
     <string name="sku">Sku</string>
-    <string name="commit_and_print"><![CDATA[Commit & Print]]></string>
-    <string name="verify_article">Verify Article</string>
-    <string name="activity_lifter_article_stock">Lifter - Article-Stock</string>
+    <string name="commit_and_print"><![CDATA[Bestätigen & Drucken]]></string>
+    <string name="verify_article">Artikel-Prüfung</string>
+    <string name="activity_lifter_article_stock">Lifter - Artikel-Lager</string>
     <string name="activity_verify_article">Louper</string>
-    <string name="article_not_found">Article not found</string>
+    <string name="article_not_found">Artikel nicht gefunden</string>
     <string name="no_value">-</string>
-    <string name="stock_amount">Stock-Amount</string>
-    <string name="article_manager">Article-Manager</string>
-    <string name="edit_new_article">Edit new article</string>
-    <string name="article_unknown">Article unknown</string>
-    <string name="device_unknown">Device unknown</string>
-    <string name="reclean">Reclean</string>
-    <string name="defect">Defect</string>
-    <string name="stock_prime_short">Prime</string>
-    <string name="stock_excess_short">Excess</string>
+    <string name="stock_amount">Lager-Bestand</string>
+    <string name="article_manager">Artikel-Manager</string>
+    <string name="edit_new_article">Neuen Artikel bearbeiten</string>
+    <string name="article_unknown">Artikel unbekannt</string>
+    <string name="device_unknown">Gerät unbekannt</string>
+    <string name="reclean">Erneut reinigen</string>
+    <string name="defect">Defekt</string>
+    <string name="stock_prime_short">Haupt</string>
+    <string name="stock_excess_short">Überbestand</string>
     <string name="roman_one">I</string>
     <string name="roman_two">II</string>
     <string name="roman_three">III</string>
     <string name="roman_four">IV</string>
     <string name="juicer">Juicer</string>
-    <string name="stock">Stock</string>
-    <string name="loadingstation">Loadingstation</string>
-    <string name="this_stock_is_empty">This stock is empty</string>
-    <string name="booking_successful">Booking successful</string>
-    <string name="booking_failed">Booking failed</string>
-    <string name="book_into">Book into</string>
-    <string name="book_into_and_print"><![CDATA[Book into & Print]]></string>
-    <string name="enter_scan_id_record">Enter or scan Id-Record...</string>
-    <string name="id_record_unknown">Id-Record unknown</string>
-    <string name="bouncer_new">Bouncer New</string>
+    <string name="stock">Lager</string>
+    <string name="loadingstation">Lade-Station</string>
+    <string name="this_stock_is_empty">Dieses Lager ist leer</string>
+    <string name="booking_successful">Buchung erfolgreich</string>
+    <string name="booking_failed">Buchung fehlgeschlagen</string>
+    <string name="book_into">Einbuchen</string>
+    <string name="book_into_and_print"><![CDATA[Einbuchen & Drucken]]></string>
+    <string name="enter_scan_id_record">Eingabe oder Scan von Lieferungs-Id...</string>
+    <string name="id_record_unknown">Lieferungs-Id unbekannt</string>
+    <string name="bouncer_new">Bouncer</string>
     <string name="bouncer">Bouncer</string>
-    <string name="record">Record</string>
-    <string name="unknown_text">Unknown</string>
+    <string name="record">Lieferung</string>
+    <string name="unknown_text">Unbekannt</string>
     <string name="tbd">To be decided</string>
     <string name="activity_box_manager">Box-Manager</string>
-    <string name="prename_person">Prename</string>
-    <string name="surname_person">Surname</string>
-    <string name="city">City</string>
-    <string name="add_box">Add box</string>
+    <string name="prename_person">Vorname</string>
+    <string name="surname_person">Nachname</string>
+    <string name="city">Stadt</string>
+    <string name="add_box">Box hinzufügen</string>
     <string name="box">Box</string>
-    <string name="enter_scan_id_box">Enter or scan Id-Box</string>
-    <string name="no_record_connected_to_box">No record connected to box</string>
-    <string name="free_record">Free Record</string>
+    <string name="enter_scan_id_box">Eingabe oder Scan von Box-Id</string>
+    <string name="no_record_connected_to_box">Keine Lieferung verbunden mit Box</string>
+    <string name="free_record">Freier Eingang</string>
     <string name="mobile_box">Mobile-Box</string>
+    <string name="battery_removable_short">Batt. entnehmbar</string>
+    <string name="backcover_removable_short">Rück. entnehmbar</string>
+    <string name="backcover_contained_short">Rück. enthalten</string>
+    <string name="battery_contained_short">Batt. enthalten</string>
+    <string name="marketing_package">Paket</string>
+    <string name="amount_boxes">Anzahl Boxen</string>
+    <string name="amount_bricolage">Anzahl Bastel-Set</string>
+    <string name="amount_bricolages">Anzahl Bastel-Sets</string>
+    <string name="amount_flyer">Anzahl Flyer</string>
+    <string name="order_sent">Bestellung versendet</string>
+    <string name="print_shipping_label">Versandetikett drucken</string>
+    <string name="report_missing_stock">Fehlbestand melden</string>
+    <string name="order">Bestellung</string>
+    <string name="bricolage">Bastel-Set</string>
+    <string name="flyer">Flyer</string>
+    <string name="poster">Poster</string>
+    <string name="no_orders">Keine Bestellungen</string>
+    <string name="activity_name_columba">Columba</string>
+    <string name="reuse_station_check_one"><![CDATA[Wiederverwendung - Prüfen & Laden]]></string>
+    <string name="reuse_station_lku_stock">Wiederverwendung - Lku-Lager</string>
+
+    <string name="receiver">Empfänger</string>
+    <string name="bricolages">Bastel-Sets</string>
+    <string name="mobile_boxes">Mobile-Boxen</string>
+    <string name="all_orders">Alle Bestellungen</string>
+    <string name="printer_not_connected">Drucker nicht verbunden</string>
+    <string name="open_orders">Offene Bestellungen</string>
+    <string name="recent_orders">Versendete Bestellungen</string>
+    <string name="mail_send_again">E-Mail erneut gesendet</string>
+    <string name="cant_find_label">Label konnte nicht gefunden werden</string>
+    <string name="report_low_stock">Niedrigen Lagerbestand melden</string>
+    <string name="boxes">Boxen</string>
+    <string name="choosen_order">Ausgewählte Bestellung</string>
+
+
+    // Not translated
+
+
 
 
 </resources>

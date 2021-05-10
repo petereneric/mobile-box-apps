@@ -19,6 +19,13 @@
             android:tint="@color/color_primary"
             android:id="@+id/ivPrint"/>
 
+        <ImageView
+            style="@style/image_view_menu"
+            android:src="@drawable/ic_email_24dp"
+            android:tint="@color/color_primary"
+            android:id="@+id/ivMail"
+            android:visibility="gone"/>
+
         <View
             style="@style/view_menu_divider"
             android:id="@+id/vDividerOne"

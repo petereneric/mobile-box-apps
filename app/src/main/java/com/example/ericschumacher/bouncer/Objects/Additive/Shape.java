@@ -20,22 +20,22 @@ public class Shape extends Additive {
         String name;
         switch (id) {
             case 1:
-                name = "Cherry";
+                name = "Wie neu";
                 break;
             case 2:
-                name = "Very Good";
+                name = "Sehr gut";
                 break;
             case 3:
-                name = "Good";
+                name = "Gut";
                 break;
             case 4:
-                name = "Acceptable";
+                name = "Akzeptabel";
                 break;
             case 5:
-                name = "Broken";
+                name = "Defekt";
                 break;
             default:
-                name = "Not defined";
+                name = "-";
         }
         this.Name = name;
     }

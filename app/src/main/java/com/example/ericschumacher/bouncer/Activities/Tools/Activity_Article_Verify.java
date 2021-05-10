@@ -22,6 +22,9 @@ import org.json.JSONObject;
 
 public class Activity_Article_Verify extends Activity_Article {
 
+    // Variables
+    private boolean bFeatureChanged = false;
+
     // Fragments
 
     public void initiateFragments() {
@@ -47,8 +50,11 @@ public class Activity_Article_Verify extends Activity_Article {
         getSupportActionBar().setTitle(getString(R.string.activity_verify_article));
     }
 
-
-
+    @Override
+    public void reset() {
+        super.reset();
+        bFeatureChanged = false;
+    }
 
     // Update
 
@@ -56,7 +62,9 @@ public class Activity_Article_Verify extends Activity_Article {
         super.updateLayout();
 
         if (oArticle != null) {
-            showFragment(new Fragment_Verify_Article(), null, Constants_Intern.FRAGMENT_VERIFY_ARTICLE, null);
+            Bundle data = new Bundle();
+            data.putBoolean(Constants_Intern.BOOLEAN_FEATURE_CHANGED, bFeatureChanged);
+            showFragment(new Fragment_Verify_Article(), data, Constants_Intern.FRAGMENT_VERIFY_ARTICLE, null);
         }
     }
 
@@ -69,10 +77,19 @@ public class Activity_Article_Verify extends Activity_Article {
                     @Override
                     public void onResult(JSONObject oJson) throws JSONException {
                         if (Volley_Connection.successfulResponse(oJson)) {
-                            if (!etSearch.getText().toString().equals("") && oJson.getInt(Constants_Extern.ID_DEVICE) == Integer.parseInt(etSearch.getText().toString())) {
+                            boolean bSearchCurrent = false;
+                            switch (SharedPreferences.getInt(Constants_Intern.SEARCH_ARTICLE_TYPE, 0)) {
+                                case Constants_Intern.MAIN_SEARCH_ARTICLE_TYPE_ID_DEVICE:
+                                    bSearchCurrent = oJson.getInt(Constants_Extern.ID_DEVICE) == Integer.parseInt(etSearch.getText().toString());
+                                    break;
+                                case Constants_Intern.MAIN_SEARCH_ARTICLE_TYPE_IMEI:
+                                    bSearchCurrent = oJson.getString(Constants_Extern.IMEI).equals(etSearch.getText().toString());
+                                    break;
+                            }
+                            if (!etSearch.getText().toString().equals("") && bSearchCurrent) {
                                 oArticle = new Article(Activity_Article_Verify.this, oJson.getJSONObject(Constants_Extern.OBJECT_ARTICLE));
                                 getSupportFragmentManager().beginTransaction().show(fArticle).commit();
-                                fArticle.updateLayout();
+                                //fArticle.updateLayout();
                                 Log.i("jOOOO", "jOOO!");
                             }
                         } else {
@@ -83,13 +100,13 @@ public class Activity_Article_Verify extends Activity_Article {
                                 showFragment(new Fragment_Display(), bundle, Constants_Intern.FRAGMENT_DISPLAY_ARTICLE_NOT_FOUND, null);
                             }
                         }
+                        updateLayout();
                     }
                 });
             }
         }, 2000);
 
     }
-
 
 
     // Base & Reset
@@ -99,5 +116,9 @@ public class Activity_Article_Verify extends Activity_Article {
         updateLayout();
     }
 
-
+    @Override
+    public void onFeatureChanged() {
+        super.onFeatureChanged();
+        bFeatureChanged = true;
+    }
 }

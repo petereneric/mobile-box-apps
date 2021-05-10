@@ -26,6 +26,9 @@ public class Fragment_Verify_Article extends Fragment implements View.OnClickLis
     Button bReclean;
     Button bDefect;
 
+    // Variables
+    boolean bFeatureChanged;
+
     // Interface
     Interface_Verify_Article iVerifyArticle;
 
@@ -44,6 +47,9 @@ public class Fragment_Verify_Article extends Fragment implements View.OnClickLis
 
         // Connection
         cVolley = new Volley_Connection(getActivity());
+
+        // Variables
+        bFeatureChanged = getArguments().getBoolean(Constants_Intern.BOOLEAN_FEATURE_CHANGED);
 
         // vLayout
         setLayout(inflater, container);
@@ -76,7 +82,9 @@ public class Fragment_Verify_Article extends Fragment implements View.OnClickLis
     }
 
     public void update() {
-
+        if (bFeatureChanged) {
+            bCommit.setVisibility(View.GONE);
+        }
     }
 
     @Override

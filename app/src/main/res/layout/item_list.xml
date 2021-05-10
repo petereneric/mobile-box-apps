@@ -2,8 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/RelativeLayout"
-    android:background="@color/color_background_white_half_transparent">
+    android:id="@+id/RelativeLayout">
 
     <TextView
         android:id="@+id/tvBackground"

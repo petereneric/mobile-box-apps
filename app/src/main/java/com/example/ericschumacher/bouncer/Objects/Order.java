@@ -4,7 +4,10 @@ import android.content.Context;
 
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Collection.Collector;
+import com.example.ericschumacher.bouncer.Utilities.Utility_DateTime;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
@@ -16,7 +19,7 @@ import java.util.Date;
 public class Order {
 
     private Context context;
-    private Volley_Connection vConnection;
+    private Volley_Connection cVolley;
 
     private int id;
     private Collector oCollector = null;
@@ -32,10 +35,12 @@ public class Order {
     private String kTracking;
     private Date dCreation;
     private Date dShipping;
+    private String zplLabel;
     private boolean bSent = false;
 
     public Order(Context context, JSONObject oJson) {
         this.context = context;
+        cVolley = new Volley_Connection(context);
         try {
             if (!oJson.isNull(Constants_Extern.ID)) {
                 id = oJson.getInt(Constants_Extern.ID);
@@ -73,11 +78,16 @@ public class Order {
             if (!oJson.isNull(Constants_Extern.ID_TRACKING)) {
                 kTracking = oJson.getString(Constants_Extern.ID_TRACKING);
             }
+            if (!oJson.isNull(Constants_Extern.ZPL_LABEL)) {
+                zplLabel = oJson.getString(Constants_Extern.ZPL_LABEL);
+            }
             if (!oJson.isNull(Constants_Extern.DATE_SHIPPING)) {
-                dShipping = new Date(oJson.getString(Constants_Extern.DATE_SHIPPING));
+                dShipping = Utility_DateTime.stringToDate(oJson.getString(Constants_Extern.DATE_SHIPPING));
+            } else {
+                dShipping = null;
             }
             if (!oJson.isNull(Constants_Extern.IS_SENT)) {
-                bSent = oJson.getBoolean(Constants_Extern.IS_SENT);
+                bSent = (oJson.getInt(Constants_Extern.IS_SENT) == 1) ? true : false;
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -85,7 +95,7 @@ public class Order {
     }
 
     public void update() {
-        vConnection.execute(Request.Method.PUT, Urls.URL_UPDATE_MARKETING_SHIPPING, getJson());
+        cVolley.execute(Request.Method.PUT, Urls.URL_UPDATE_MARKETING_SHIPPING, getJson());
     }
 
     public JSONObject getJson() {
@@ -99,9 +109,6 @@ public class Order {
             oJson.put(Constants_Extern.NUMBER_BRICOLAGE, nAmountBricolage);
             oJson.put(Constants_Extern.NUMBER_FLYER, nAmountFlyer);
             oJson.put(Constants_Extern.NUMBER_POSTER, nAmountPoster);
-            oJson.put(Constants_Extern.ID_TRACKING, kTracking);
-            oJson.put(Constants_Extern.DATE_SHIPPING, dShipping);
-            oJson.put(Constants_Extern.IS_SENT, bSent);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -160,13 +167,20 @@ public class Order {
         this.oPoster = oPoster;
     }
 
+    public String getZplLabel() {
+        return zplLabel;
+    }
+
+    public void setZplLabel(String zplLabel) {
+        this.zplLabel = zplLabel;
+    }
+
     public String getkTracking() {
         return kTracking;
     }
 
     public void setkTracking(String kTracking) {
         this.kTracking = kTracking;
-        update();
     }
 
     public Date getdShipping() {
@@ -175,7 +189,6 @@ public class Order {
 
     public void setdShipping(Date dShipping) {
         this.dShipping = dShipping;
-        update();
     }
 
     public boolean isbSent() {
@@ -216,6 +229,17 @@ public class Order {
 
     public void setbSent(boolean bSent) {
         this.bSent = bSent;
-        update();
+    }
+
+    public void mail() {
+        cVolley.getResponse(Request.Method.POST, Urls.URL_POST_ORDER_MAIL + getId(), null, new Interface_VolleyResult() {
+            @Override
+            public void onResult(JSONObject oJson) throws JSONException {
+                if (Volley_Connection.successfulResponse(oJson)) {
+                } else {
+                    Utility_Toast.showString(context, oJson.getString(Constants_Extern.DETAILS));
+                }
+            }
+        });
     }
 }

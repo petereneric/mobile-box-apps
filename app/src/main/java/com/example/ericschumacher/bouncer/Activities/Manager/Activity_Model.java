@@ -266,7 +266,13 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                 });
                 break;
             case Constants_Intern.MAIN_SEARCH_MODEL_TYPE_NAME_MODEL:
-                cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_BY_NAME + etSearch.getText().toString(), null, new Interface_VolleyResult() {
+                JSONObject oJson= new JSONObject();
+                try {
+                    oJson.put(Constants_Intern.NAME_MODEL, etSearch.getText().toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                cVolley.getResponse(Request.Method.POST, Urls.URL_POST_MODEL_BY_NAME, oJson, new Interface_VolleyResult() {
                     @Override
                     public void onResult(JSONObject oJson) {
                         if (cSearchSaved.equals(etSearch.getText().toString())) {
@@ -454,7 +460,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                     case Constants_Intern.MAIN_SEARCH_MODEL_TYPE_IMEI:
                     case Constants_Intern.MAIN_SEARCH_MODEL_TYPE_TAC:
                         final String tac = etSearch.getText().toString().substring(0, 8);
-                        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_BY_NAME + cInput, null, new Interface_VolleyResult() {
+                        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_BY_TAC + tac, null, new Interface_VolleyResult() {
                             @Override
                             public void onResult(JSONObject oJson) throws JSONException {
                                 if (Volley_Connection.successfulResponse(oJson)) {
@@ -506,7 +512,7 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                                 }
                             });
                         } else {
-                            cVolley.getResponse(Request.Method.PUT, Urls.URL_PUT_BATTERY_ADD + cInput + getModel().getoManufacturer().getId(), null, new Interface_VolleyResult() {
+                            cVolley.getResponse(Request.Method.PUT, Urls.URL_PUT_BATTERY_ADD + cInput + "/" + getModel().getoManufacturer().getId(), null, new Interface_VolleyResult() {
                                 @Override
                                 public void onResult(JSONObject oJson) throws JSONException {
                                     if (Volley_Connection.successfulResponse(oJson)) {

@@ -12,4 +12,13 @@ public class Utility_Toast {
     public static void showString(Context context, String text) {
         Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
+
+    //Toast aus dem UI Thread?
+    /*public static void showDebug(final Context context, final String text) {
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override public void run() {
+                showString(context, text);
+            }
+        });
+    }*/
 }

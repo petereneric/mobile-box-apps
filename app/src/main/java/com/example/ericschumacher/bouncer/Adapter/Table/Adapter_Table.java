@@ -1,6 +1,7 @@
 package com.example.ericschumacher.bouncer.Adapter.Table;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -25,8 +26,8 @@ import java.util.ArrayList;
 
 public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final int TYPE_HEADER = 0;
-    private static final int TYPE_LIST = 1;
+    protected static final int TYPE_HEADER = 0;
+    protected static final int TYPE_LIST = 1;
 
 
     // Context
@@ -47,10 +48,10 @@ public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
         RelativeLayout relativeLayout = Layout.findViewById(R.id.RelativeLayout);
         LinearLayout linearLayout = new LinearLayout(Context);
-        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int)Context.getResources().getDimension(R.dimen.item_height_default));
+        LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int) Context.getResources().getDimension(R.dimen.item_height_default));
         linearLayout.setLayoutParams(llp);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
-        linearLayout.setBackgroundColor(ResourcesCompat.getColor(Context.getResources(), R.color.color_white, null));
+        linearLayout.setBackgroundColor(ResourcesCompat.getColor(Context.getResources(), R.color.color_background, null));
         linearLayout.setGravity(Gravity.CENTER_VERTICAL);
 
         ArrayList<TextView> lTextView = new ArrayList<>();
@@ -61,7 +62,7 @@ public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             textView.setLayoutParams(lp);
             textView.setTextAppearance(Context, R.style.tv_itemRow);
             textView.setGravity(Gravity.CENTER_VERTICAL);
-            textView.setPadding(Utility_Density.getDp(Context,8), Utility_Density.getDp(Context,8),Utility_Density.getDp(Context,8),Utility_Density.getDp(Context,8));
+            textView.setPadding(Utility_Density.getDp(Context, 8), Utility_Density.getDp(Context, 8), Utility_Density.getDp(Context, 8), Utility_Density.getDp(Context, 8));
             linearLayout.addView(textView);
             lTextView.add(textView);
         }
@@ -81,9 +82,16 @@ public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         ViewHolder_List vhList = (ViewHolder_List) holder;
 
         try {
-        if (holder.getItemViewType() == TYPE_LIST) {
-                JSONObject oJson = iAdapterTable.getJsonArray().getJSONObject(iAdapterTable.hasHeader() ? position-1 : position);
-                for (int i = 0; i<iAdapterTable.getAnn().size(); i++) {
+            if (holder.getItemViewType() == TYPE_LIST) {
+                if (iAdapterTable.isSelected(getPosition(position))) {
+                    Log.i("jooo", "joo2");
+                    vhList.llForeground.setBackgroundColor(ResourcesCompat.getColor(Context.getResources(), R.color.color_primary_light, null));
+                } else {
+                    vhList.llForeground.setBackgroundColor(ResourcesCompat.getColor(Context.getResources(), R.color.color_background, null));
+                }
+                JSONObject oJson = iAdapterTable.getJsonArray().getJSONObject(iAdapterTable.hasHeader() ? position - 1 : position);
+                for (int i = 0; i < iAdapterTable.getAnn().size(); i++) {
+                    vhList.lTextView.get(i).setTypeface(null, Typeface.NORMAL);
                     Ann oAnn = iAdapterTable.getAnn().get(i);
                     if (oAnn.getJsonKeyGrandParent() != null) {
                         JSONObject oJsonTwo = oJson.getJSONObject(oAnn.getJsonKeyGrandParent());
@@ -106,12 +114,13 @@ public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         }
                     }
                 }
-        } else {
-            for (int i = 0; i<iAdapterTable.getAnn().size(); i++) {
-                Ann oAnn = iAdapterTable.getAnn().get(i);
-                vhList.lTextView.get(i).setText(oAnn.getcTitle());
+            } else {
+                for (int i = 0; i < iAdapterTable.getAnn().size(); i++) {
+                    Ann oAnn = iAdapterTable.getAnn().get(i);
+                    vhList.lTextView.get(i).setText(oAnn.getcTitle());
+                    vhList.lTextView.get(i).setTypeface(null, Typeface.BOLD);
+                }
             }
-        }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -127,20 +136,22 @@ public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         }
     }
 
+    public int getPosition(int position) {
+        if (iAdapterTable.hasHeader() && iAdapterTable.getJsonArray().length() > 0) {
+            return position -1;
+        } else {
+            return position;
+        }
+    }
+
     @Override
     public int getItemCount() {
-        Log.i("LEENGHT: ", Integer.toString(iAdapterTable.getJsonArray().length()));
         if (iAdapterTable.hasHeader() && iAdapterTable.getJsonArray().length() > 0) {
             return iAdapterTable.getJsonArray().length() + 1;
         } else {
             return iAdapterTable.getJsonArray().length();
         }
 
-    }
-
-    public void update(JSONArray lJson) {
-
-        notifyDataSetChanged();
     }
 
     public class ViewHolder_List extends RecyclerView.ViewHolder {
@@ -170,9 +181,15 @@ public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     public interface Interface_Adapter_Table {
         JSONArray getJsonArray();
+
         boolean hasHeader();
+
         public ArrayList<Ann> getAnn();
+
         void onItemSelected(int position);
+
         JSONObject getJsonObject(int position);
+
+        boolean isSelected(int position);
     }
 }

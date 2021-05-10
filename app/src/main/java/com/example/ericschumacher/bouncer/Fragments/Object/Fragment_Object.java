@@ -20,6 +20,7 @@ public class Fragment_Object extends Fragment implements View.OnClickListener {
     public View vLayout;
     public TextView tvTitle;
     public ImageView ivPrint;
+    public ImageView ivMail;
     public ImageView ivAdd;
     public ImageView ivPause;
     public ImageView ivDone;
@@ -49,6 +50,7 @@ public class Fragment_Object extends Fragment implements View.OnClickListener {
 
         tvTitle = vLayout.findViewById(R.id.tvTitle);
         ivPrint = vLayout.findViewById(R.id.ivPrint);
+        ivMail = vLayout.findViewById(R.id.ivMail);
         ivAdd = vLayout.findViewById(R.id.ivAdd);
         ivPause = vLayout.findViewById(R.id.ivPause);
         ivDone = vLayout.findViewById(R.id.ivDone);
@@ -57,6 +59,7 @@ public class Fragment_Object extends Fragment implements View.OnClickListener {
 
         // ClickListener
         ivPrint.setOnClickListener(this);
+        ivMail.setOnClickListener(this);
         ivAdd.setOnClickListener(this);
         ivPause.setOnClickListener(this);
         ivDone.setOnClickListener(this);
@@ -72,13 +75,17 @@ public class Fragment_Object extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ivPrint:
+                Log.i("tag", getTag());
                 iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_PRINT, getTag());
+                break;
+            case R.id.ivMail:
+                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_MAIL, getTag());
                 break;
             case R.id.ivAdd:
                 iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_ADD, getTag());
                 break;
             case R.id.ivPause:
-                Log.i("Tag: ", getTag());
+
                 iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_PAUSE, getTag());
                 break;
             case R.id.ivDone:

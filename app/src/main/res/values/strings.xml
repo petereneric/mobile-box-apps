@@ -305,7 +305,7 @@
     <string name="backcover_removable_short">Bac. removable</string>
     <string name="backcover_contained_short">Bac. contained</string>
     <string name="battery_contained_short">Bat. contained</string>
-    <string name="marketing_package">Marketing package</string>
+    <string name="marketing_package">Packet</string>
     <string name="amount_boxes">Amount boxes</string>
     <string name="amount_bricolage">Amount bricolages</string>
     <string name="amount_bricolages">Amount bricolages</string>
@@ -314,6 +314,28 @@
     <string name="print_shipping_label">Print shipping-label</string>
     <string name="report_missing_stock">Report missing stock</string>
     <string name="order">Order</string>
+    <string name="bricolage">Bricolage</string>
+    <string name="flyer">Flyer</string>
+    <string name="poster">Poster</string>
+    <string name="no_orders">No orders</string>
+    <string name="activity_name_columba">Columba</string>
+    <string name="reuse_station_check_one"><![CDATA[Reuse - Check & Load]]></string>
+    <string name="reuse_station_lku_stock">Reuse - Lku-Lager</string>
+    <string name="amount_poster">Amount Poster</string>
+    <string name="more_orders">More Orders</string>
+    <string name="receiver">Receiver</string>
+    <string name="bricolages">Bricolages</string>
+    <string name="mobile_boxes">Mobile-Boxes</string>
+    <string name="all_orders">All Orders</string>
+    <string name="printer_not_connected">Printer not connected!</string>
+    <string name="open_orders">Open Orders</string>
+    <string name="recent_orders">Recent Orders</string>
+    <string name="mail_send_again">Mail sent again</string>
+    <string name="cant_find_label">Can\'t find label</string>
+    <string name="report_low_stock">Report low stock</string>
+    <string name="boxes">Boxes</string>
+    <string name="choosen_order">Choosen order</string>
+    <string name="cant_finish_record_if_devices_zero">Can\'t finish record if devices are zero</string>
 
     // Not translated
 

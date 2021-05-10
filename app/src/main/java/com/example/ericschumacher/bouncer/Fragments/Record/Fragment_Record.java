@@ -13,6 +13,7 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Object;
 import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
 
 public class Fragment_Record extends Fragment_Object implements View.OnClickListener {
 
@@ -105,24 +106,29 @@ public class Fragment_Record extends Fragment_Object implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ivDone:
-                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                alertDialog.setTitle(getString(R.string.commit));
-                alertDialog.setMessage(getString(R.string.message_commit_done_record));
-                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.yes),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_DONE, getTag());
-                            }
-                        });
-                alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.no),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
-                return;
+                if (oRecord.getnDevices() == 0) {
+                    Utility_Toast.show(getActivity(), R.string.cant_finish_record_if_devices_zero);
+                } else {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                    alertDialog.setTitle(getString(R.string.commit));
+                    alertDialog.setMessage(getString(R.string.message_commit_done_record));
+                    alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.yes),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_DONE, getTag());
+                                }
+                            });
+                    alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.no),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                    return;
+                }
+
         }
         super.onClick(view);
     }

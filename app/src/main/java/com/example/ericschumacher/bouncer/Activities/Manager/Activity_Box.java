@@ -408,6 +408,4 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
-
 }

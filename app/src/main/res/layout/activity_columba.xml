@@ -26,15 +26,41 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:name="com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Order"
-            android:tag="FRAGMENT_ORDER"
-            android:id="@+id/fOrder"/>
+            android:id="@+id/fOrder"
+            android:tag="FRAGMENT_ORDER"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/llBottom"
+            android:layout_alignParentBottom="true">
+
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:name="com.example.ericschumacher.bouncer.Fragments.Table.Fragment_Table_Order"
+                android:tag="FRAGMENT_TABLE_OPEN_ORDERS"
+                android:id="@+id/fMoreOrders"/>
+
+            <fragment
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:name="com.example.ericschumacher.bouncer.Fragments.Table.Fragment_Table_Order"
+                android:tag="FRAGMENT_TABLE_RECENT_ORDERS"
+                android:id="@+id/fRecentOrders"/>
+
+        </LinearLayout>
+
+
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
             android:id="@+id/flInteraction"
-            android:layout_below="@id/fOrder"/>
+            android:layout_below="@id/fOrder"
+            android:layout_above="@id/llBottom"/>
 
     </RelativeLayout>
 

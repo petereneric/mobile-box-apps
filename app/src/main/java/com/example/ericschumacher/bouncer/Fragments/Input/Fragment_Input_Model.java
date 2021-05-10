@@ -2,6 +2,7 @@ package com.example.ericschumacher.bouncer.Fragments.Input;
 
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
@@ -16,7 +17,14 @@ public class Fragment_Input_Model extends Fragment_Input {
     public void onSearchChanged(String cSearch) {
         super.onSearchChanged(cSearch);
         final String cSearchSaved = cSearch;
-        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODELS_BY_NAMEPART+cSearch, null, new Interface_VolleyResult() {
+        String json = "{'NAME_PART' : '"+cSearch+"'}";
+        JSONObject oJson = new JSONObject();
+        try {
+            oJson.put(Constants_Intern.NAME_PART, cSearch);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        cVolley.getResponse(Request.Method.POST, Urls.URL_POST_MODELS_BY_NAMEPART, oJson, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
                 if (etSearch.getText().toString().equals(cSearchSaved)) {

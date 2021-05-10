@@ -150,7 +150,7 @@ public class Activity_Juicer extends AppCompatActivity implements View.OnClickLi
 
         // TextColor
         Utility_Layout.setTextColor(this, tvStockPrime, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_PRIME_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setTextColor(this, tvStockExcess, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_EXCESS_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
+        Utility_Layout.setTextColor(this, tvStockExcess, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_EXCESS_SELECTED, false) ? R.color.color_primary : R.color.color_grey_secondary);
         Utility_Layout.setTextColor(this, tvLoadingStationOne, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_ONE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
         Utility_Layout.setTextColor(this, tvLoadingStationTwo, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_TWO_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
         Utility_Layout.setTextColor(this, tvLoadingStationThree, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_THREE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
@@ -158,7 +158,7 @@ public class Activity_Juicer extends AppCompatActivity implements View.OnClickLi
 
         // Text
         tvStockPrime.setText(SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_PRIME_SELECTED, true) ? getString(R.string.stock_prime_short)+" ("+lModelColorShapes.size()+")" : getString(R.string.stock_prime_short));
-        tvStockExcess.setText(SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_EXCESS_SELECTED, true) ? getString(R.string.stock_excess_short)+" ("+lModelColorShapes.size()+")" : getString(R.string.stock_excess_short));
+        tvStockExcess.setText(SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_EXCESS_SELECTED, false) ? getString(R.string.stock_excess_short)+" ("+lModelColorShapes.size()+")" : getString(R.string.stock_excess_short));
     }
 
     // Load

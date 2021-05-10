@@ -53,7 +53,9 @@
             layout="@layout/layout_search_main"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_layout_search"
-            android:layout_marginTop="16dp" />
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"/>
 
 
         <FrameLayout

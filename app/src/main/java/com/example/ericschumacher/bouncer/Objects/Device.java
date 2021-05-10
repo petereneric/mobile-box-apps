@@ -36,8 +36,6 @@ import java.util.Comparator;
 
 public class Device implements Serializable {
 
-    // Url
-    private final static String URL_UPDATE_DEVICE = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/device/update/2";
 
     private Volley_Connection vConnection;
 
@@ -46,9 +44,11 @@ public class Device implements Serializable {
     private Boolean bBatteryContained = null;
     private Boolean bBackcoverContained = null;
     private String cNotes = null;
-    private double nRpd = 0;
+    private Double nRpd = null;
+    private Double nFutureStock = null;
     private Battery oBattery = null;
     private Manufacturer oManufacturer = null;
+    private Integer tPhone = null;
 
     private String IMEI = Constants_Intern.IMEI_UNKNOWN;
     private int LKU = Constants_Intern.LKU_UNKNOWN;
@@ -78,6 +78,10 @@ public class Device implements Serializable {
     public Device(Context context, String imei) {
         Context = context;
         IMEI = imei;
+    }
+
+    public Double getnFutureStock() {
+        return nFutureStock;
     }
 
     public Device(JSONObject oJson, Context context) {
@@ -116,6 +120,8 @@ public class Device implements Serializable {
                 bSoftwareIntact = oJson.getBoolean(Constants_Extern.BOOLEAN_SOFTWARE_INTACT);
             if (!oJson.isNull(Constants_Extern.RPD))
                 nRpd = oJson.getDouble(Constants_Extern.RPD);
+            if (!oJson.isNull(Constants_Extern.FUTURE_STOCK_SKU))
+                nFutureStock = oJson.getDouble(Constants_Extern.FUTURE_STOCK_SKU);
             if (!oJson.isNull(Constants_Extern.OBJECT_STATION))
                 oStation = new Station(oJson.getJSONObject(Constants_Extern.OBJECT_STATION));
             if (!oJson.isNull(Constants_Extern.OBJECT_STORAGEPLACE))
@@ -218,7 +224,7 @@ public class Device implements Serializable {
         Log.i("UPDATE_DEVICE:", getJson().toString());
         if (IdDevice > 0) {
             Log.i("updateLayout json", getJson().toString());
-            vConnection.execute(Request.Method.PUT, URL_UPDATE_DEVICE, getJson());
+            vConnection.execute(Request.Method.PUT, Urls.URL_UPDATE_DEVICE, getJson());
         }
     }
 
@@ -281,13 +287,18 @@ public class Device implements Serializable {
         this.oManufacturer = oManufacturer;
     }
 
-    public double getnRpd() {
+    public Integer gettPhone() {
+        return tPhone;
+    }
+
+    public void settPhone(Integer tPhone) {
+        this.tPhone = tPhone;
+    }
+
+    public Double getnRpd() {
         return nRpd;
     }
 
-    public void setnRpd(double nRpd) {
-        this.nRpd = nRpd;
-    }
 
     public Model getoModel() {
         return oModel;

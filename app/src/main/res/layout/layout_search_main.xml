@@ -11,7 +11,7 @@
         android:id="@+id/tvSearchType"
         android:textColor="@color/color_primary"
         android:textAllCaps="true"
-        android:text="Imei"
+        android:text="Geräte-Id"
         android:gravity="center"
         android:paddingLeft="32dp"
         android:paddingRight="32dp"

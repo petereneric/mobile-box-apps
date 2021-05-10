@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 
 import com.example.ericschumacher.bouncer.R;
 
-public class Fragment_Button_Columba_Finish extends Fragment_Button {
+public class Fragment_Button_Columba_Send extends Fragment_Button {
 
     @Override
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
@@ -14,8 +14,10 @@ public class Fragment_Button_Columba_Finish extends Fragment_Button {
 
         // Visibility
         bPrimaryOne.setVisibility(View.VISIBLE);
+        bSecondaryOne.setVisibility(View.VISIBLE);
 
         // Text
-        bPrimaryOne.setText(getString(R.string.order_sent));
+        bPrimaryOne.setText(getString(R.string.print_shipping_label));
+        bSecondaryOne.setText(getString(R.string.report_low_stock));
     }
 }

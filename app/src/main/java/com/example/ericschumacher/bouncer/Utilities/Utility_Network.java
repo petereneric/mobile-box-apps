@@ -42,6 +42,7 @@ import com.example.ericschumacher.bouncer.Objects.Object_Choice;
 import com.example.ericschumacher.bouncer.Objects.Object_Id_Model_Color_Shape;
 import com.example.ericschumacher.bouncer.Objects.Object_SearchResult;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Volley.Urls;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -1833,7 +1834,7 @@ public class Utility_Network {
                                 JSONObject json = jsonArray.getJSONObject(i);
                                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                 Log.i("DAATE", json.getString(Constants_Extern.LAST_UPDATE));
-                                //records.add(new Record(json.getInt(Constants_Extern.ID), Utility_DateTime.stringToDate(json.getString(Constants_Extern.LAST_UPDATE)), json.getInt(Constants_Extern.COUNT_RECYCLING), json.getInt(Constants_Extern.COUNT_REUSE), json.getInt(Constants_Extern.DEVICES), json.getString(Constants_Extern.NAME)));
+                                //records.add(new Record(json.getInt(Constants_Extern.ID), Utility_DateTime.stringToDateTime(json.getString(Constants_Extern.LAST_UPDATE)), json.getInt(Constants_Extern.COUNT_RECYCLING), json.getInt(Constants_Extern.COUNT_REUSE), json.getInt(Constants_Extern.DEVICES), json.getString(Constants_Extern.NAME)));
                             }
                             iCallback.onSuccess(records);
                         } else {
@@ -2133,7 +2134,7 @@ public class Utility_Network {
 
 
     public void getUnpaidBillsPayee(final Interface_VolleyCallback_ArrayList_BillPayee iCallback) {
-        final String url = "http://www.svp-server.com/svp-gmbh/erp/bouncer/src/api.php/bill/payee/unpaid";
+        final String url = Urls.URL_REST_API+"bill/payee/unpaid";
         try {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
@@ -2147,7 +2148,7 @@ public class Utility_Network {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 Log.i("Looping", "Array");
                                 JSONObject json = jsonArray.getJSONObject(i);
-                                billPayees.add(new BillPayee(json.getInt(Constants_Extern.ID), Utility_DateTime.stringToDate(json.getString(Constants_Extern.DATE_CREATION)), json.getString(Constants_Extern.NAME_PAYEE), json.getString(Constants_Extern.ACCOUNTHOLDER), json.getString(Constants_Extern.IBAN), json.getDouble(Constants_Extern.PAYMENT)));
+                                billPayees.add(new BillPayee(json.getInt(Constants_Extern.ID), Utility_DateTime.stringToDateTime(json.getString(Constants_Extern.DATE_CREATION)), json.getString(Constants_Extern.NAME_PAYEE), json.getString(Constants_Extern.ACCOUNTHOLDER), json.getString(Constants_Extern.IBAN), json.getDouble(Constants_Extern.PAYMENT)));
                             }
                             iCallback.onSuccess(billPayees);
                         } else {

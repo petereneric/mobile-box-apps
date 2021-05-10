@@ -16,6 +16,7 @@ import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,15 +45,16 @@ public class Fragment_Table_Input_Collector extends Fragment_Table_Input {
     @Override
     public void onSearch() {
         Log.i("jo", "jo");
-        lData = null;
         cVolley.getResponse(Request.Method.GET, Urls.URL_GET_COLLECTORS_BY_INPUT+etSearch.getText().toString(), null, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
                 if (Volley_Connection.successfulResponse(oJson)) {
                     lData = oJson.getJSONArray(Constants_Extern.LIST_COLLECTOR);
-                    aTable = new Adapter_Table(getActivity(), Fragment_Table_Input_Collector.this);
-                    rvList.setAdapter(aTable);
+                } else {
+                    lData = new JSONArray();
                 }
+                aTable = new Adapter_Table(getActivity(), Fragment_Table_Input_Collector.this);
+                rvList.setAdapter(aTable);
             }
         });
     }

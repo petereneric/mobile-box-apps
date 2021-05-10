@@ -66,43 +66,50 @@ public class Fragment_Order extends Fragment_Object {
         lMenu = vLayout.findViewById(R.id.lMenu);
 
         // Data
-        tvTitle.setText(getString(R.string.order));
+        tvTitle.setText(getString(R.string.choosen_order));
 
         // Visibility
-        ivPrint.setVisibility(View.GONE);
+        ivPrint.setVisibility(View.VISIBLE);
+        ivMail.setVisibility(View.VISIBLE);
         ivDone.setVisibility(View.GONE);
         ivPause.setVisibility(View.GONE);
         ivClear.setVisibility(View.GONE);
         ivDelete.setVisibility(View.GONE);
+        ivAdd.setVisibility(View.GONE);
     }
 
     public int getIdLayout() {
-        return R.layout.fragment_box;
+        return R.layout.fragment_order;
     }
 
     public void updateLayout() {
         oOrder = iOrder.getOrder();
 
         if (oOrder != null) {
+            //tvCollector.setText(oOrder.getoCollector().getName());
             tvCollector.setText(oOrder.getoCollector() != null ? oOrder.getoCollector().getName() : getString(R.string.unknown));
             tvMarketingPackage.setText(oOrder.getoMarketingPackage() != null ? oOrder.getoMarketingPackage().getcName() : getString(R.string.unknown));
             if (oOrder.getnAmountMobileBox() > 0) {
-                tvAmountBoxes.setText(oOrder.getnAmountMobileBox());
+                trAmountBoxes.setVisibility(View.VISIBLE);
+                tvAmountBoxes.setText(Integer.toString(oOrder.getnAmountMobileBox()));
             } else {
                 trAmountBoxes.setVisibility(View.GONE);
             }
             if (oOrder.getnAmountBricolage() > 0) {
-                tvAmountBricolage.setText(oOrder.getnAmountBricolage());
+                trAmountBricolages.setVisibility(View.VISIBLE);
+                tvAmountBricolage.setText(Integer.toString(oOrder.getnAmountBricolage()));
             } else {
                 trAmountBricolages.setVisibility(View.GONE);
             }
             if (oOrder.getnAmountFlyer() > 0) {
-                tvAmountFlyer.setText(oOrder.getnAmountFlyer());
+                trAmountFlyer.setVisibility(View.VISIBLE);
+                tvAmountFlyer.setText(Integer.toString(oOrder.getnAmountFlyer()));
             } else {
                 trAmountFlyer.setVisibility(View.GONE);
             }
             if (oOrder.getnAmountPoster() > 0) {
-                tvAmountPoster.setText(oOrder.getnAmountPoster());
+                trAmountPoster.setVisibility(View.VISIBLE);
+                tvAmountPoster.setText(Integer.toString(oOrder.getnAmountPoster()));
             } else {
                 trAmountPoster.setVisibility(View.GONE);
             }
@@ -113,4 +120,21 @@ public class Fragment_Order extends Fragment_Object {
         Order getOrder();
     }
 
+    /*
+    @Override
+    public void onClick(View view) {
+
+        switch (view.getId()) {
+            case R.id.ivPrint:
+                Log.i("tag", getTag());
+                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_PRINT, getTag());
+                break;
+            case R.id.ivMail:
+                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_MAIL, getTag());
+                break;
+        }
+
+
+    }
+     */
 }

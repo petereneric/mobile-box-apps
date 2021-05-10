@@ -6,18 +6,27 @@ package com.example.ericschumacher.bouncer.Constants;
 
 public class Constants_Intern {
     public final static String SHARED_PREFERENCES = "SHARED_PREFERENCES";
-    public final static String SELECTED_PRINTER = "SELECTED_PRINTER";
-    public final static String ID_PRINTER_ONE = "28:EC:9A:21:30:55";
-    public final static String ID_PRINTER_TWO = "6C:C3:74:E2:42:00";
-    public final static String ID_PRINTER_THREE = "90:E2:02:2B:6D:75";
-    public final static String ID_PRINTER_FOUR = "50:8C:B1:4F:B1:EE";
-    public static final String ID_PRINTER_FIVE = "4C:24:98:AB:93:79";
-    public static final String ID_PRINTER_SIX = "E4:15:F6:46:E1:C3";
-    public static final String ID_PRINTER_SEVEN = "C4:F3:12:17:D0:2E";
-    public static final String ID_PRINTER_EIGHT = "ID_PRINTER_EIGHT";
+    public final static String SELECTED_PRINTER_IP = "SELECTED_PRINTER_IP";
+    public final static String ID_PRINTER_ONE_IP = "10.128.200.178";
+    public final static String ID_PRINTER_TWO_IP = "6C:C3:74:E2:42:00";
+    public final static String ID_PRINTER_THREE_IP = "90:E2:02:2B:6D:75";
+    public final static String ID_PRINTER_FOUR_IP = "10.128.200.174";
+    public static final String ID_PRINTER_FIVE_IP = "10.128.200.180";
+    public static final String ID_PRINTER_SIX_IP = "10.128.200.179";
+    public static final String ID_PRINTER_SEVEN_IP = "C4:F3:12:17:D0:2E";
+    public static final String ID_PRINTER_EIGHT_IP = "10.128.200.131";
+    public final static String SELECTED_PRINTER_BT = "SELECTED_PRINTER_BT";
+    public final static String ID_PRINTER_ONE_BT = "28:EC:9A:21:30:55";
+    public final static String ID_PRINTER_TWO_BT = "6C:C3:74:E2:42:00";
+    public final static String ID_PRINTER_THREE_BT = "90:E2:02:2B:6D:75";
+    public final static String ID_PRINTER_FOUR_BT = "50:8C:B1:4F:B1:EE";
+    public static final String ID_PRINTER_FIVE_BT = "4C:24:98:AB:93:79";
+    public static final String ID_PRINTER_SIX_BT = "E4:15:F6:46:E1:C3";
+    public static final String ID_PRINTER_SEVEN_BT = "C4:F3:12:17:D0:2E";
+    public static final String ID_PRINTER_EIGHT_BT = "10.128.100.118";
     public static final String ID_PRINTER_NONE = "ID_PRINTER_NONE";
-    //public static final String ID_PRINTER_FIVE = "00:07:4D:99:BA:7E";
 
+    //public static final String ID_PRINTER_FIVE_IP = "00:07:4D:99:BA:7E";
 
     public final static String SELECTION_RESULT = "SELECTION_RESULT";
     public final static String SELECTION_ID_MODEL = "SELECTION_ID_MODEL";
@@ -352,6 +361,7 @@ public class Constants_Intern {
     public static final int TYPE_ACTION_MENU_DONE = 3;
     public static final int TYPE_ACTION_MENU_CLEAR = 4;
     public static final int TYPE_ACTION_MENU_DELETE = 5;
+    public static final int TYPE_ACTION_MENU_MAIL = 6;
     public static final String FRAGMENT_MODEL = "FRAGMENT_MODEL";
     public static final int TYPE_ACTION_DEVICE_DAMAGES_COMMIT = 0;
     public static final int TYPE_ACTION_DEVICE_DAMAGES_OTHER_DAMAGES = 1;
@@ -363,4 +373,14 @@ public class Constants_Intern {
     public static final int TYPE_ACTION_FRAGMENT_BUTTON_PRIMARY_TWO = 1;
     public static final int TYPE_ACTION_FRAGMENT_BUTTON_SECONDARY_ONE = 3;
     public static final int TYPE_ACTION_FRAGMENT_BUTTON_SECONDARY_TWO = 4;
+    public static final String FRAGMENT_BUTTON_COLUMBA_FINISH = "FRAGMENT_BUTTON_COLUMBA_FINISH";
+    public static final String FRAGMENT_BUTTON_COLUMBA_SEND = "FRAGMENT_BUTTON_COLUMBA_SEND";
+    public static final String NUMBER_BRICOLAGE = "NUMBER_BRICOLAGE";
+    public static final String NUMBER_BOX = "NUMBER_BOX";
+    public static final String OBJECT_MARKETING_PACKAGE = "OBJECT_MARKETING_PACKAGE";
+    public static final String FRAGMENT_TABLE_OPEN_ORDERS = "FRAGMENT_TABLE_OPEN_ORDERS";
+    public static final String FRAGMENT_TABLE_RECENT_ORDERS = "FRAGMENT_TABLE_RECENT_ORDERS";
+    public static final String FRAGMENT_ORDER = "FRAGMENT_ORDER";
+
+    public static final String BOOLEAN_FEATURE_CHANGED = "BOOLEAN_FEATURE_CHANGED";
 }

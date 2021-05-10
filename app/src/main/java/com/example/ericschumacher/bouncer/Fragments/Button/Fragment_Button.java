@@ -39,7 +39,7 @@ public class Fragment_Button extends Fragment implements View.OnClickListener {
     // Layout
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
         // Initiate
-        vLayout = inflater.inflate(R.layout.fragment_input, container, false);
+        vLayout = inflater.inflate(R.layout.fragment_button, container, false);
         bPrimaryOne = vLayout.findViewById(R.id.bPrimaryOne);
         bPrimaryTwo = vLayout.findViewById(R.id.bPrimaryTwo);
         bSecondaryOne = vLayout.findViewById(R.id.bSecondaryOne);

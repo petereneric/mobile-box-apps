@@ -67,28 +67,27 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
         super.onCreate(savedInstanceState);
         // Print
         mPrinter = new ManagerPrinter(this);
+        //mPrinter.connect();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         etSearch.requestFocus();
+        mPrinter.connect();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        // Print
-        SharedPreferences = getSharedPreferences(Constants_Intern.SHARED_PREFERENCES, 0);
-        if (ManagerPrinter.usePrinter(this)) {
-            Log.i("ja", SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_ONE));
-        } else {
-            Log.i("nein", SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER, Constants_Intern.ID_PRINTER_ONE));
-        }
-        if (mPrinter == null) {
-            mPrinter = new ManagerPrinter(this);
-        }
-        mPrinter.connect();
+    }
+
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mPrinter != null) mPrinter.disconnect();
     }
 
     @Override
@@ -255,6 +254,7 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
     }
 
     public void setModel(Model oModel) {
+        super.setModel(oModel);
         if (oDevice != null) oDevice.setoModel(oModel);
     }
 
@@ -369,9 +369,9 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
                 break;
         }
         updateLayout();
-        onFeatureChanged();
         removeFragment(cTag);
         base(Constants_Intern.CLOSE_KEYBOARD);
+        onFeatureChanged();
     }
 
     @Override
@@ -399,7 +399,13 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
                 showFragmentBookingInStockPrime(Constants_Intern.CLOSE_KEYBOARD);
                 break;
             case Constants_Intern.FRAGMENT_INPUT_MODEL:
-                cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_BY_NAME + cInput, null, new Interface_VolleyResult() {
+                JSONObject oJson= new JSONObject();
+                try {
+                    oJson.put(Constants_Intern.NAME_MODEL, cInput);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                cVolley.getResponse(Request.Method.POST, Urls.URL_POST_MODEL_BY_NAME, oJson, new Interface_VolleyResult() {
                     @Override
                     public void onResult(JSONObject oJson) {
                         if (Volley_Connection.successfulResponse(oJson)) {
@@ -451,7 +457,7 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
                                 }
                             });
                         } else {
-                            cVolley.getResponse(Request.Method.PUT, Urls.URL_PUT_BATTERY_ADD + cInput + getModel().getoManufacturer().getId(), null, new Interface_VolleyResult() {
+                            cVolley.getResponse(Request.Method.PUT, Urls.URL_PUT_BATTERY_ADD + cInput + "/" + getModel().getoManufacturer().getId(), null, new Interface_VolleyResult() {
                                 @Override
                                 public void onResult(JSONObject oJson) throws JSONException {
                                     if (Volley_Connection.successfulResponse(oJson)) {

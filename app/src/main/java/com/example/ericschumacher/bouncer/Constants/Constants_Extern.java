@@ -203,4 +203,9 @@ public class Constants_Extern extends Constants_Intern {
     public static final String NUMBER_DEVICES = "NUMBER_DEVICES";
     public static final String BOOLEAN_SELECTED = "BOOLEAN_SELECTED";
     public static final String OBJECT_MARKETING_PACKAGE = "OBJECT_MARKETING_PACKAGE";
+    public static final String LIST_ORDER = "LIST_ORDER";
+    public static final String FUTURE_STOCK_SKU = "FUTURE_STOCK_SKU";
+    public static final String SHIPMENT_NUMBER = "SHIPMENT_NUMBER";
+    public static final String ZPL2 = "ZPL2";
+    public static final String ZPL_LABEL = "ZPL_LABEL";
 }

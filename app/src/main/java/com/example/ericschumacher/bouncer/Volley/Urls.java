@@ -1,14 +1,17 @@
 package com.example.ericschumacher.bouncer.Volley;
 
 public class Urls {
-    private final static String URL_REST_API = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/";
+    //private final static String URL_REST_API = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/";
+    public final static String URL_REST_API = "https://www.svp-api.com/api/public/index.php/";
 
     public final static String URL_GET_MANUFACTURER_ALL = URL_REST_API+"manufacturer/all";
     public final static String URL_GET_CHARGER_ALL = URL_REST_API+"chargers/all/new";
     public final static String URL_GET_MODEL_BY_TAC = URL_REST_API+"model/tac/";
     public final static String URL_GET_MODEL_BY_NAME = URL_REST_API+"model/name/";
+    public final static String URL_POST_MODEL_BY_NAME = URL_REST_API+"model/name";
     public final static String URL_GET_MODEL_BY_ID = URL_REST_API+"model/id/";// needs to be created
     public final static String URL_GET_MODELS_BY_NAMEPART = URL_REST_API+"models/";
+    public final static String URL_POST_MODELS_BY_NAMEPART = URL_REST_API+"models/name_part";
     public final static String URL_UPDATE_MODEL = URL_REST_API+"model/update";
     public final static String URL_UPDATE_MODEL_BATTERY = URL_REST_API+"model/battery/update";
     public final static String URL_GET_DEVICE_BY_ID = URL_REST_API+"device/id/";
@@ -18,6 +21,7 @@ public class Urls {
     public final static String URL_GET_COLORS_MODEL = URL_REST_API+"colors/";
     public final static String URL_UPLOAD_IMAGE_MODEL_COLOR = URL_REST_API+"upload/images/device/";
     public final static String URL_PUT_MODEL_TAC = URL_REST_API+"model/tac/";
+    //public final static String URL_PUT_MODEL_TAC = "https://www.svp-api.com/api/public/index.php/model/tac/";
     public final static String URL_MODELS_MERGE = URL_REST_API+"models/merge/";
     public final static String URL_GET_MODELS = URL_REST_API+"models";
     public final static String URL_GET_MARKETING_SHIPPING_RECORDS = URL_REST_API+"marketing_shipping_records";
@@ -67,4 +71,7 @@ public class Urls {
     public final static String URL_RECORD_ADD= URL_REST_API+"record/add";
     public final static String URL_RECORD_DELETE= URL_REST_API+"record/delete/";
     public final static String URL_PUT_STOCK_EXCESS_LKU_FULL= URL_REST_API+"stock/excess/lku/full/";
+    public final static String URL_GET_DHL_INTERN_CREATE_SHIPMENT_ORDER = URL_REST_API+"dhl/intern/createShipmentOrder/";
+    public final static String URL_POST_ORDER_MAIL = URL_REST_API+"order/mail/";
+    public final static String URL_UPDATE_DEVICE = URL_REST_API+"device/update/2";
 }

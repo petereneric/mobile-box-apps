@@ -34,8 +34,8 @@ public class Box {
         cVolley = new Volley_Connection(Context);
         try {
             kId = oJson.getInt(Constants_Intern.ID_BOX);
-            dCreation = Utility_DateTime.stringToDate(oJson.getString(Constants_Extern.DATE_CREATION));
-            dLastUpdate = Utility_DateTime.stringToDate(oJson.getString(Constants_Extern.DATE_LAST_UPDATE));
+            dCreation = Utility_DateTime.stringToDateTime(oJson.getString(Constants_Extern.DATE_CREATION));
+            dLastUpdate = Utility_DateTime.stringToDateTime(oJson.getString(Constants_Extern.DATE_LAST_UPDATE));
             if (!oJson.isNull(Constants_Extern.OBJECT_RECORD)) {
                 oRecord = new Record(Context, oJson.getJSONObject(Constants_Extern.OBJECT_RECORD));
             } else {
