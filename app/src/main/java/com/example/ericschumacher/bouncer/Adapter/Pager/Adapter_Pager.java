@@ -1,17 +1,21 @@
 package com.example.ericschumacher.bouncer.Adapter.Pager;
 
+import android.os.Bundle;
+import android.support.v4.app.BundleCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+
 import java.util.ArrayList;
 
-public class Adapter_Pager_Turing extends FragmentPagerAdapter {
+public class Adapter_Pager extends FragmentPagerAdapter {
 
     ArrayList<Fragment> lFragment = new ArrayList<>();
     ArrayList<String> lTitle = new ArrayList<>();
 
-    public Adapter_Pager_Turing(FragmentManager fm) {
+    public Adapter_Pager(FragmentManager fm) {
         super(fm);
     }
 
@@ -31,6 +35,9 @@ public class Adapter_Pager_Turing extends FragmentPagerAdapter {
     }
 
     public void add(String title, Fragment fragment) {
+        Bundle bundle = new Bundle();
+        bundle.putString(Constants_Intern.TITLE, title);
+        fragment.setArguments(bundle);
         lFragment.add(fragment);
         lTitle.add(title);
     }

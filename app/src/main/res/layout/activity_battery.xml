@@ -44,7 +44,7 @@
         android:layout_below="@id/rlHeader"/>
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/TabLayout"
+        android:id="@+id/vTabLayout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@id/flSearch"
@@ -61,7 +61,7 @@
     <com.example.ericschumacher.bouncer.Views.ViewPager_Eric
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/TabLayout"
+        android:layout_below="@id/vTabLayout"
         android:id="@+id/ViewPager"/>
 
     <!--

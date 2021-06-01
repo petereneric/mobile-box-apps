@@ -24,6 +24,7 @@ import com.example.ericschumacher.bouncer.Activities.Previous.Activity_Zwegat;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Article_Verify;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Battery;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Bouncer;
+import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Checker;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Columba;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Juicer;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Lifter;
@@ -263,6 +264,7 @@ public class Activity_Menu extends AppCompatActivity {
     }
 
     private void createMenuData() {
+        lMenu.add(new Object_Menu(getString(R.string.checker), new Intent(this, Activity_Checker.class), R.color.color_choice_positive));
         lMenu.add(new Object_Menu(getString(R.string.activity_box_manager), new Intent(this, Activity_Box.class), R.color.color_orange));
         lMenu.add(new Object_Menu(getString(R.string.model_manager), new Intent(this, Activity_Model.class), R.color.color_defect_reuse));
         lMenu.add(new Object_Menu(getString(R.string.device_manager), new Intent(this, Activity_Device.class), R.color.color_intact_reuse));

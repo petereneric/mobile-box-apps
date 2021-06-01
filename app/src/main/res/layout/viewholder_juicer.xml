@@ -58,7 +58,6 @@
                     android:id="@+id/tvIdDevice"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-
                     android:text="Id: 87384"
                     android:textColor="@color/color_text_secondary"
                     android:textSize="@dimen/size_text_item_description" />

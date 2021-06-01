@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Bouncer.iml" filepath="$PROJECT_DIR$/Bouncer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Mobile-Box_Apps.iml" filepath="$PROJECT_DIR$/.idea/modules/Mobile-Box_Apps.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Mobile-Box_Apps.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Mobile-Box_Apps.app.iml" />
     </modules>
   </component>
 </project>

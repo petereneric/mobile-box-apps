@@ -58,8 +58,6 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
-
-
     <style name="tv_navigationDrawer" parent="tv_default">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">64dp</item>
@@ -114,6 +112,24 @@
     <style name="tv_interaction_result_object_unknown" parent="tv_interaction_result_object">
         <item name="android:background">@drawable/textview_bouncer_result_title_unknown_light</item>
     </style>
+
+    // TextView - List
+
+    <style name="tv_list_title">
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:textSize">@dimen/size_text_item_main</item>
+    </style>
+
+    <style name="tv_list_subtitle">
+        <item name="android:textColor">@color/color_text_secondary</item>
+        <item name="android:textSize">@dimen/size_text_item_sub</item>
+    </style>
+
+    <style name="tv_list_side">
+        <item name="android:textColor">@color/color_text_secondary</item>
+        <item name="android:textSize">@dimen/size_text_item_main</item>
+    </style>
+
 
 
     // Button

@@ -336,6 +336,10 @@
     <string name="boxes">Boxes</string>
     <string name="choosen_order">Choosen order</string>
     <string name="cant_finish_record_if_devices_zero">Can\'t finish record if devices are zero</string>
+    <string name="checker">Checker</string>
+    <string name="diagnose">Diagnose</string>
+    <string name="edit_checks">Edit checks</string>
+    <string name="handling">Handling</string>
 
     // Not translated
 

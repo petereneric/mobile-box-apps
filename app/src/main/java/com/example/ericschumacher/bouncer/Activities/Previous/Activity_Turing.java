@@ -16,7 +16,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.android.volley.Request;
-import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager_Turing;
+import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Old.Fragment_Table;
 import com.example.ericschumacher.bouncer.Fragments.Old.Fragment_List;
@@ -48,7 +48,7 @@ public class Activity_Turing extends AppCompatActivity implements Interface_List
     android.support.v7.widget.Toolbar Toolbar;
     ViewPager_Eric ViewPager;
 
-    Adapter_Pager_Turing aTuring;
+    Adapter_Pager aTuring;
 
     // Tags
     private final static String FRAGMENT_ERROR_MODEL = "FRAGMENT_ERROR_MODEL";
@@ -83,7 +83,7 @@ public class Activity_Turing extends AppCompatActivity implements Interface_List
 
     private void setLayout() {
         setContentView(R.layout.activity_turing);
-        TabLayout = findViewById(R.id.TabLayout);
+        TabLayout = findViewById(R.id.vTabLayout);
         Toolbar = findViewById(R.id.Toolbar);
         ViewPager = findViewById(R.id.ViewPager);
         ViewPager.setSwipeable(false);
@@ -263,7 +263,7 @@ public class Activity_Turing extends AppCompatActivity implements Interface_List
                     public void run() {
                         // Set Adapter
 
-                        aTuring = new Adapter_Pager_Turing(getSupportFragmentManager());
+                        aTuring = new Adapter_Pager(getSupportFragmentManager());
                         aTuring.add(getString(R.string.tab_turing_one), new Fragment_Table());
                         Bundle bundle = new Bundle();
                         bundle.putString(Constants_Intern.TAG, Constants_Intern.FRAGMENT_ERROR_MODEL);

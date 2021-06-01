@@ -75,7 +75,7 @@ public class Activity_Battery extends AppCompatActivity implements View.OnClickL
         ivClear = findViewById(R.id.ivAction);
         etSearch = findViewById(R.id.etSearch);
         flSearch = findViewById(R.id.flSearch);
-        TabLayout = findViewById(R.id.TabLayout);
+        TabLayout = findViewById(R.id.vTabLayout);
         ViewPager = findViewById(R.id.ViewPager);
         //fabMerge = findViewById(R.id.fabMerge);
         ViewPager.setSwipeable(false);
