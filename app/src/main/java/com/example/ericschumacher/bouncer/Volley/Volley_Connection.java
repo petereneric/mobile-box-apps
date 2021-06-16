@@ -155,7 +155,6 @@ public class Volley_Connection {
         StringRequest strreq = new StringRequest(method, url, new Response.Listener<String>() {
 
 
-
             @Override
             public void onResponse(String Response) {
                 JSONObject oJson = null;

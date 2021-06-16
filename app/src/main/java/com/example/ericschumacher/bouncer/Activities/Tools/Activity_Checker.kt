@@ -1,18 +1,32 @@
 package com.example.ericschumacher.bouncer.Activities.Tools
 
+import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.design.widget.TabLayout.OnTabSelectedListener
 import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Device
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Checks
 import com.example.ericschumacher.bouncer.R
+import com.example.ericschumacher.bouncer.Volley.Volley_Connection
 import kotlinx.android.synthetic.main.activity_checker.*
+import javax.inject.Inject
 
 class Activity_Checker : Activity_Device() {
+
+    // Dagger
+    @Inject
+    lateinit var cVolley: Volley_Connection
 
     // Attributes
     var aChecker: Adapter_Pager = Adapter_Pager(supportFragmentManager)
 
+    // Lifecycle
+    override fun onCreate(savedInstanceState: Bundle?) {
+        // Make Dagger instantiate @Inject fields in LoginActivity
+
+
+        super.onCreate(savedInstanceState)
+    }
 
     // Layout
 
