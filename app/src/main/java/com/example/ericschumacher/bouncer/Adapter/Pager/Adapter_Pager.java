@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
 
 import java.util.ArrayList;
 
@@ -40,6 +41,12 @@ public class Adapter_Pager extends FragmentPagerAdapter {
         fragment.setArguments(bundle);
         lFragment.add(fragment);
         lTitle.add(title);
+    }
+    
+    public void update() {
+        for (Fragment fragment : lFragment) {
+            ((Interface_Update)fragment).update();
+        }
     }
 
 }

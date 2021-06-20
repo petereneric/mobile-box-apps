@@ -235,6 +235,7 @@ public class Constants_Intern {
     public static final int DATA_TYPE_ID_MANUFACTURER = 1;
     public static final String FRAGMENT_BATTERIES_SEARCH_RESULTS = "FRAGMENT_BATTERIES_SEARCH_RESULTS";
     public static final int VIEW = 0;
+    public static final int ITEM = 0;
     public static final int ADD = 1;
     public static final int TYPE_MODEL_BATTERY_PRIME = 1;
     public static final String TYPE_MODE = "TYPE_MODE";

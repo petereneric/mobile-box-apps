@@ -91,7 +91,6 @@ public class Fragment_Edit_Device_Damages extends Fragment_Edit {
 
         // Visibility
         bCommit.setVisibility(View.VISIBLE);
-
     }
 
 

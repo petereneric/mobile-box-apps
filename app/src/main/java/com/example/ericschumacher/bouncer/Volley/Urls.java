@@ -74,4 +74,18 @@ public class Urls {
     public final static String URL_GET_DHL_INTERN_CREATE_SHIPMENT_ORDER = URL_REST_API+"dhl/intern/createShipmentOrder/";
     public final static String URL_POST_ORDER_MAIL = URL_REST_API+"order/mail/";
     public final static String URL_UPDATE_DEVICE = URL_REST_API+"device/update/2";
+
+    // Check
+    public final static String URL_GET_CHECKS = URL_REST_API+"team/checks";
+    public final static String URL_GET_MODEL_CHECKS = URL_REST_API+"team/model/checks/";
+    public final static String URL_UPDATE_MODEL_CHECK = URL_REST_API+"team/model/check";
+    public final static String URL_DELETE_MODEL_CHECK = URL_REST_API+"team/model/check/";
+    public final static String URL_GET_DIAGNOSES = URL_REST_API+"team/diagnoses/";
+    public final static String URL_GET_DIAGNOSE = URL_REST_API+"team/diagnose/";
+    public final static String URL_CREATE_DIAGNOSE = URL_REST_API+"team/diagnose";
+    public final static String URL_DELETE_DIAGNOSE = URL_REST_API+"team/diagnose/";
+    public final static String URL_CREATE_DIAGNOSE_CHECK = URL_REST_API+"team/diagnose/check";
+    public final static String URL_UPDATE_DIAGNOSE_CHECK = URL_REST_API+"team/diagnose/check";
+    public final static String URL_DELETE_DIAGNOSE_CHECK = URL_REST_API+"team/diagnose/check/";
+
 }

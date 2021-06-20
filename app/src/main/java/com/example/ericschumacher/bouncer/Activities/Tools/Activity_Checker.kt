@@ -22,7 +22,6 @@ class Activity_Checker : Activity_Device() {
 
     // Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Make Dagger instantiate @Inject fields in LoginActivity
 
 
         super.onCreate(savedInstanceState)
@@ -67,6 +66,8 @@ class Activity_Checker : Activity_Device() {
     override fun updateLayout() {
         super.updateLayout()
         supportFragmentManager.beginTransaction().hide(fDevice).commit()
+        aChecker.update()
+
     }
 }
 
