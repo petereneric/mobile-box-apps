@@ -9,7 +9,9 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Check {
+import java.io.Serializable;
+
+public class Check implements Serializable {
 
     int id;
     String cName;
@@ -28,6 +30,10 @@ public class Check {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getcName() {

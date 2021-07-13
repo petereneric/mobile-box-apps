@@ -78,6 +78,8 @@ public class Urls {
     // Check
     public final static String URL_GET_CHECKS = URL_REST_API+"team/checks";
     public final static String URL_GET_MODEL_CHECKS = URL_REST_API+"team/model/checks/";
+    public final static String URL_GET_MODEL_CHECKS_AVAILABLE = URL_REST_API+"team/model/checks/available/";
+    public final static String URL_CREATE_MODEL_CHECK = URL_REST_API+"team/model/check/";
     public final static String URL_UPDATE_MODEL_CHECK = URL_REST_API+"team/model/check";
     public final static String URL_DELETE_MODEL_CHECK = URL_REST_API+"team/model/check/";
     public final static String URL_GET_DIAGNOSES = URL_REST_API+"team/diagnoses/";

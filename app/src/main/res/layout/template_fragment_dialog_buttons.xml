@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="16dp">
+
+    <ImageButton
+        android:id="@+id/ibSave"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/vDivider"
+        app:srcCompat="@drawable/ic_done_white_24dp"
+        android:background="@color/color_white"
+        android:tint="@color/color_green"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"/>
+
+    <ImageButton
+        android:id="@+id/ibBack"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vDivider"
+        app:srcCompat="@drawable/ic_back_left_white_24"
+        android:background="@color/color_white"
+        android:tint="@color/color_primary"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"/>
+
+    <ImageButton
+        android:id="@+id/ibDelete"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/vDivider"
+        app:srcCompat="@drawable/ic_delete_white_24dp"
+        android:background="@color/color_white"
+        android:tint="@color/color_red"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.33" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.66" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1px"
+        android:background="@color/color_divider"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/vDivider"
+        />
+
+</android.support.constraint.ConstraintLayout>

@@ -5,6 +5,7 @@ import android.support.v4.app.BundleCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
@@ -48,5 +49,4 @@ public class Adapter_Pager extends FragmentPagerAdapter {
             ((Interface_Update)fragment).update();
         }
     }
-
 }

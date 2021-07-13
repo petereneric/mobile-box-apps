@@ -113,6 +113,38 @@
         <item name="android:background">@drawable/textview_bouncer_result_title_unknown_light</item>
     </style>
 
+    // TextView - Input
+
+    <style name="tv_input_label">
+        <item name="android:textSize">11sp</item>
+        <item name="android:textColor">@color/color_text_secondary</item>
+        <item name="android:layout_marginBottom">4dp</item>
+    </style>
+
+    <style name="tv_input_text">
+        <item name="android:textSize">@dimen/size_text_default</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
+    <style name="et_input">
+        <item name="android:textSize">@dimen/size_text_default</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:layout_marginLeft">0dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:layout_marginTop">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+
+
+    </style>
+
+    <style name="tv_input_label_toggle">
+        <item name="android:textSize">@dimen/size_text_default</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:paddingBottom">16dp</item>
+    </style>
+
     // TextView - List
 
     <style name="tv_list_title">
@@ -160,6 +192,8 @@
         <item name="android:layout_marginRight">12dp</item>
         <item name="android:paddingTop">20dp</item>
         <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
         <item name="android:textStyle">normal</item>
     </style>
 

@@ -26,24 +26,24 @@ import java.util.ArrayList;
 public class Fragment_Table extends Fragment implements Adapter_Table.Interface_Adapter_Table {
 
     // vLayout
-    View vLayout;
+    public View vLayout;
     public TextView tvTitle;
-    RecyclerView rvList;
-    RelativeLayout rlMain;
+    public RecyclerView rvList;
+    public RelativeLayout rlMain;
 
     // Data
-    JSONArray lData = new JSONArray();
-    ArrayList<Ann> lAnn = new ArrayList<>();
+    public JSONArray lData = new JSONArray();
+    public ArrayList<Ann> lAnn = new ArrayList<>();
     boolean bHeader;
 
     // Adapter
-    Adapter_Table aTable;
+    public Adapter_Table aTable;
 
     // Interface
-    Interface_Fragment_Table iFragmentTable;
+    public Interface_Fragment_Table iFragmentTable;
 
     // Connection
-    Volley_Connection cVolley;
+    public Volley_Connection cVolley;
 
 
     @Nullable
@@ -117,7 +117,6 @@ public class Fragment_Table extends Fragment implements Adapter_Table.Interface_
 
     @Override
     public boolean isSelected(int position) {
-        Log.i("hahn", "jo");
         return false;
     }
 

@@ -154,6 +154,7 @@ public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     }
 
+
     public class ViewHolder_List extends RecyclerView.ViewHolder {
 
         Interface_Click iClick;

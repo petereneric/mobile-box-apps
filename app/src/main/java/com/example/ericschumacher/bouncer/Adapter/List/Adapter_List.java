@@ -9,6 +9,8 @@ import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Lis
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
 import com.example.ericschumacher.bouncer.R;
 
+import java.util.ArrayList;
+
 public class Adapter_List extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     // Interface

@@ -384,4 +384,5 @@ public class Constants_Intern {
     public static final String FRAGMENT_ORDER = "FRAGMENT_ORDER";
 
     public static final String BOOLEAN_FEATURE_CHANGED = "BOOLEAN_FEATURE_CHANGED";
+    public static final String FRAGMENT_DIALOG_EDIT_MODEL_CHECKS = "FRAGMENT_DIALOG_EDIT_MODEL_CHECKS";
 }

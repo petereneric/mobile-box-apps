@@ -1,4 +1,4 @@
-package com.example.ericschumacher.bouncer.Adapter;
+package com.example.ericschumacher.bouncer.Adapter.List;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
@@ -33,8 +33,16 @@ public class Adapter_List_ModelChecks extends Adapter_List {
             ModelCheck oModelCheck = lModelChecks.get(position);
 
             // Left
-            vhList.ivLeft.setVisibility(View.GONE);
-            vhList.tvLeft.setText(String.valueOf(oModelCheck.getnPosition()));
+            if (oModelCheck.isbPositionFixed()) {
+                vhList.ivLeft.setImageDrawable(ContextCompat.getDrawable(Context, R.drawable.ic_lock_24));
+                vhList.ivLeft.setColorFilter(Context.getResources().getColor(R.color.color_red));
+                vhList.tvLeft.setVisibility(View.GONE);
+            } else {
+                vhList.ivLeft.setImageDrawable(ContextCompat.getDrawable(Context, R.drawable.ic_lock_open_24));
+                vhList.ivLeft.setColorFilter(Context.getResources().getColor(R.color.color_green));
+                vhList.tvLeft.setVisibility(View.GONE);
+            }
+
 
             // Right
             vhList.ivRight.setVisibility(View.GONE);
@@ -61,4 +69,8 @@ public class Adapter_List_ModelChecks extends Adapter_List {
             vhList.tvSubtitle.setVisibility(View.GONE);
         }
     }
+    public void update(ArrayList lData) {
+        lModelChecks = lData;
+    }
+
 }
