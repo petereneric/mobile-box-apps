@@ -7,6 +7,7 @@
 
     // Size - Text
     <dimen name="size_text_header_title">24sp</dimen>
+    <dimen name="size_text_header_subtitle">14sp</dimen>
     <dimen name="size_text_footer">24sp</dimen>
 
     // Size - Text | Item

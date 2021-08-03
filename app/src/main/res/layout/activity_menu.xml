@@ -107,6 +107,29 @@
 
             </RadioGroup>
 
+            <RadioGroup
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/rgFour">
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterNine"
+                    android:text="@string/printer_nine"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterTen"
+                    android:text="@string/printer_ten"/>
+
+                <android.support.v7.widget.AppCompatRadioButton
+                    style="@style/radio_button_main_menu_printer"
+                    android:id="@+id/rbPrinterEleven"
+                    android:text="@string/printer_eleven"/>
+
+            </RadioGroup>
+
         </LinearLayout>
 
 

@@ -1,4 +1,4 @@
-package com.example.ericschumacher.bouncer.Fragments.Table;
+package com.example.ericschumacher.bouncer.Fragments.Checker;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +11,7 @@ import android.widget.Button;
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Adapter.Table.Adapter_Table;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
-import com.example.ericschumacher.bouncer.Fragments.Others.Fragment_Diagnose_Container;
+import com.example.ericschumacher.bouncer.Fragments.Table.Fragment_Table;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Diagnose_Container;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
@@ -48,18 +48,21 @@ public class Fragment_Table_Diagnose_Menu extends Fragment_Table implements View
     public View onCreateView(LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
+        return vLayout;
+    }
+
+    @Override
+    public void setInterface() {
         // Interfaces
         iDevice = (Fragment_Device.Interface_Device) getActivity();
         iDiagnoseContainer = (Interface_Fragment_Diagnose_Container)getParentFragment();
-
-        Log.i("Diagnose_MENU", "onCreateView");
-
-        return vLayout;
+        iFragmentTable = (Interface_Fragment_Table)getParentFragment();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        update();
     }
 
     // Layout
@@ -77,7 +80,7 @@ public class Fragment_Table_Diagnose_Menu extends Fragment_Table implements View
     }
 
     public int getIdLayout() {
-        return R.layout.fragment_list_diagnose;
+        return R.layout.fragment_table_diagnose_menu;
     }
 
 
@@ -90,14 +93,8 @@ public class Fragment_Table_Diagnose_Menu extends Fragment_Table implements View
         }
     }
 
-    private void refresh() {
-        aTable = new Adapter_Table(getActivity(), Fragment_Table_Diagnose_Menu.this);
-        rvList.setAdapter(aTable);
-    }
-
     @Override
     public void update() {
-        Log.i("Diagnose_MENU", "Update");
         load();
     }
 
@@ -109,11 +106,10 @@ public class Fragment_Table_Diagnose_Menu extends Fragment_Table implements View
                     if (oJson != null) {
                         lData = oJson.getJSONArray("lDiagnoses");
                         if (lData.length() > 0) {
-                            refresh();
                         } else {
                             // handle info to activity and display new diagnose fragment
-
                         }
+                        aTable.notifyDataSetChanged();
 
                     }
                 }

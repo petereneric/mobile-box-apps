@@ -21,28 +21,28 @@ import org.json.JSONObject;
 public class Fragment_List extends Fragment implements Interface_Click {
 
     // vLayout
-    View vLayout;
-    RecyclerView rvList;
+    public View vLayout;
+    public RecyclerView rvList;
 
     // Data
-    JSONArray lData = new JSONArray();
-    boolean bHeader;
+    public JSONArray lData = new JSONArray();
+    public boolean bHeader;
 
     // Adapter
-    Adapter_Table aList;
+    public Adapter_Table aList;
 
     // Connection
-    Volley_Connection cVolley;
+    public Volley_Connection cVolley;
 
     // Interface
-    Interface_List iList;
+    public Interface_List iList;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Interface
-        iList = (Interface_List) getActivity();
+        // Interfaces
+        setInterface();
 
         // Connection
         cVolley = new Volley_Connection(getActivity());
@@ -55,6 +55,10 @@ public class Fragment_List extends Fragment implements Interface_Click {
         setLayout(inflater, container);
 
         return vLayout;
+    }
+
+    public void setInterface() {
+        iList = (Interface_List) getActivity();
     }
 
     public void setLayout(LayoutInflater inflater, ViewGroup container) {

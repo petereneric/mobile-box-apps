@@ -64,6 +64,7 @@ public class Fragment_Record extends Fragment_Object implements View.OnClickList
         ivAdd.setVisibility(View.GONE);
         ivPause.setVisibility(View.GONE);
         ivClear.setVisibility(View.GONE);
+        ivUnlink.setVisibility(View.VISIBLE);
     }
 
     public int getIdLayout() {

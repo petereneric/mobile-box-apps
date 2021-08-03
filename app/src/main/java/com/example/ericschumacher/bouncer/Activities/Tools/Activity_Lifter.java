@@ -31,7 +31,6 @@ public class Activity_Lifter extends Activity_Device {
         if (getSupportFragmentManager().findFragmentByTag(Constants_Intern.FRAGMENT_BOOKING_OUT_STOCK_PRIME) != null) {
             removeFragment(Constants_Intern.FRAGMENT_BOOKING_OUT_STOCK_PRIME);
         }
-
     }
 
     // Layout

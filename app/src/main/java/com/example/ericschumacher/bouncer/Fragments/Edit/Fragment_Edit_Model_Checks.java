@@ -53,7 +53,14 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
         iModel = (Interface_Model_New_New) getActivity();
 
         super.onCreateView(inflater, container, savedInstanceState);
+
+        update();
         return vLayout;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -99,13 +106,6 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
     }
 
     private void loadData() {
-        // Reset
-
-        if (aList != null) {
-            lModelChecks = new ArrayList<>();
-            aList.update(lModelChecks);
-            aList.notifyDataSetChanged();
-        }
 
         // Load
         if (iModel != null && iModel.getModel() != null) {
@@ -113,6 +113,13 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
                 @Override
                 public void onResult(JSONObject oJson) throws JSONException {
                     if (oJson != null) {
+                        // Reset
+                        lModelChecks = new ArrayList<>();
+                        if (aList != null) {
+                            aList.update(lModelChecks);
+                            aList.notifyDataSetChanged();
+                        }
+
                         JSONArray aJson = oJson.getJSONArray("lModelChecks");
                         for (int i = 0; i < aJson.length(); i++) {
                             JSONObject jsonModelCheck = aJson.getJSONObject(i);
@@ -132,6 +139,7 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
 
     @Override
     public void update() {
+        Log.i("lääädt", "jooo");
         loadData();
     }
 

@@ -53,9 +53,13 @@ public class Activity_Menu extends AppCompatActivity {
     AppCompatRadioButton rbPrinterSeven;
     AppCompatRadioButton rbPrinterEight;
     AppCompatRadioButton rbPrinterNone;
+    AppCompatRadioButton rbPrinterNine;
+    AppCompatRadioButton rbPrinterTen;
+    AppCompatRadioButton rbPrinterEleven;
     RadioGroup rgOne;
     RadioGroup rgTwo;
     RadioGroup rgThree;
+    RadioGroup rgFour;
 
     Toolbar vToolbar;
 
@@ -99,14 +103,19 @@ public class Activity_Menu extends AppCompatActivity {
         rbPrinterSeven = findViewById(R.id.rbPrinterSeven);
         rbPrinterEight = findViewById(R.id.rbPrinterEight);
         rbPrinterNone = findViewById(R.id.rbPrinterNone);
+        rbPrinterNine = findViewById(R.id.rbPrinterNine);
+        rbPrinterTen = findViewById(R.id.rbPrinterTen);
+        rbPrinterEleven = findViewById(R.id.rbPrinterEleven);
         rgOne = findViewById(R.id.rgOne);
         rgTwo = findViewById(R.id.rgTwo);
         rgThree = findViewById(R.id.rgThree);
+        rgFour = findViewById(R.id.rgFour);
         vToolbar = findViewById(R.id.vToolbar);
 
         rgOne.clearCheck();
         rgTwo.clearCheck();
         rgThree.clearCheck();
+        rgFour.clearCheck();
         if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_ONE_IP)) {
             rbPrinterOne.setChecked(true);
         }
@@ -136,6 +145,15 @@ public class Activity_Menu extends AppCompatActivity {
         }
         if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_NONE)) {
             rbPrinterNone.setChecked(true);
+        }
+        if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_NINE_IP)) {
+            rbPrinterNine.setChecked(true);
+        }
+        if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_TEN_IP)) {
+            rbPrinterTen.setChecked(true);
+        }
+        if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_ELEVEN_IP)) {
+            rbPrinterEleven.setChecked(true);
         }
 
 
@@ -170,6 +188,7 @@ public class Activity_Menu extends AppCompatActivity {
                 if (anyButtonChecked) {
                     rgTwo.clearCheck();
                     rgThree.clearCheck();
+                    rgFour.clearCheck();
                 }
             }
         });
@@ -204,6 +223,7 @@ public class Activity_Menu extends AppCompatActivity {
                 if (anyButtonChecked) {
                     rgOne.clearCheck();
                     rgThree.clearCheck();
+                    rgFour.clearCheck();
                 }
             }
         });
@@ -221,15 +241,14 @@ public class Activity_Menu extends AppCompatActivity {
                         }
                         break;
                     case R.id.rbPrinterEight:
-                        anyButtonChecked = rbPrinterSeven.isChecked();
+                        anyButtonChecked = rbPrinterEight.isChecked();
                         if (rbPrinterEight.isChecked()) {
                             SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_EIGHT_IP).commit();
                             SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_EIGHT_BT).commit();
-                            Utility_Toast.showString(Activity_Menu.this, SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP));
                         }
                         break;
                     case R.id.rbPrinterNone:
-                        anyButtonChecked = rbPrinterSeven.isChecked();
+                        anyButtonChecked = rbPrinterNone.isChecked();
                         if (rbPrinterNone.isChecked())SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_NONE).commit();
                         ManagerPrinter.usePrinter(Activity_Menu.this, false);
                         break;
@@ -237,6 +256,42 @@ public class Activity_Menu extends AppCompatActivity {
                 if (anyButtonChecked) {
                     rgOne.clearCheck();
                     rgTwo.clearCheck();
+                    rgFour.clearCheck();
+                }
+            }
+        });
+        rgFour.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                ManagerPrinter.usePrinter(Activity_Menu.this, true);
+                boolean anyButtonChecked = false;
+                switch (i) {
+                    case R.id.rbPrinterNine:
+                        anyButtonChecked = rbPrinterNine.isChecked();
+                        if (rbPrinterNine.isChecked()) {
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_NINE_IP).commit();
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_NINE_BT).commit();
+                        }
+                        break;
+                    case R.id.rbPrinterTen:
+                        anyButtonChecked = rbPrinterTen.isChecked();
+                        if (rbPrinterTen.isChecked()) {
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_TEN_IP).commit();
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_TEN_BT).commit();
+                        }
+                        break;
+                    case R.id.rbPrinterEleven:
+                        anyButtonChecked = rbPrinterEleven.isChecked();
+                        if (rbPrinterEleven.isChecked()) {
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ELEVEN_IP).commit();
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_ELEVEN_BT).commit();
+                        }
+                        break;
+                }
+                if (anyButtonChecked) {
+                    rgOne.clearCheck();
+                    rgTwo.clearCheck();
+                    rgThree.clearCheck();
                 }
             }
         });
@@ -255,6 +310,9 @@ public class Activity_Menu extends AppCompatActivity {
         rbPrinterSeven.setSupportButtonTintList(colorStateList);
         rbPrinterEight.setSupportButtonTintList(colorStateList);
         rbPrinterNone.setSupportButtonTintList(colorStateList);
+        rbPrinterNine.setSupportButtonTintList(colorStateList);
+        rbPrinterTen.setSupportButtonTintList(colorStateList);
+        rbPrinterEleven.setSupportButtonTintList(colorStateList);
 
         // Toolbar
         setSupportActionBar(vToolbar);

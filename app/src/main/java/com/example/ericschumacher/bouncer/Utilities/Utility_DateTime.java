@@ -35,4 +35,9 @@ public class Utility_DateTime {
         SimpleDateFormat format = new SimpleDateFormat("dd.MM.yy '-' HH:mm 'Uhr'");
         return format.format(date);
     }
+
+    public static String dateTimeToStringDatabase(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return format.format(date);
+    }
 }

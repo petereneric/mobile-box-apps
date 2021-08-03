@@ -73,6 +73,7 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
     @Override
     protected void onStart() {
         super.onStart();
+        //Utility_Toast.showString(this, getSharedPreferences(Constants_Intern.SHARED_PREFERENCES, 0).getString(Constants_Intern.SELECTED_PRINTER_IP, "none"));
         etSearch.requestFocus();
         mPrinter.connect();
     }

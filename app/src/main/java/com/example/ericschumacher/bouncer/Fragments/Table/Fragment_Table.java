@@ -45,6 +45,12 @@ public class Fragment_Table extends Fragment implements Adapter_Table.Interface_
     // Connection
     public Volley_Connection cVolley;
 
+    @Override
+    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // Interface
+        setInterface();
+    }
 
     @Nullable
     @Override
@@ -58,10 +64,11 @@ public class Fragment_Table extends Fragment implements Adapter_Table.Interface_
         // vLayout
         setLayout(inflater, container);
 
-        // Interface
-        iFragmentTable = (Interface_Fragment_Table) getActivity();
-
         return vLayout;
+    }
+
+    public void setInterface() {
+        iFragmentTable = (Interface_Fragment_Table) getActivity();
     }
 
     public void setLayout(LayoutInflater inflater, ViewGroup container) {

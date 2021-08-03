@@ -14,9 +14,10 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Manufacturer;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Model;
-import com.example.ericschumacher.bouncer.Fragments.Others.Fragment_Result;
+import com.example.ericschumacher.bouncer.Fragments.Result.Fragment_Result;
 import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record;
 import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record_Bouncer;
+import com.example.ericschumacher.bouncer.Fragments.Result.Fragment_Result_Bouncer;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
@@ -34,7 +35,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class Activity_Bouncer extends Activity_Device implements Fragment_Record.Interface_Fragment_Record {
+public class Activity_Bouncer extends Activity_Device implements Fragment_Record.Interface_Fragment_Record, Fragment_Result.Interface_Fragment_Result {
 
     // Data
     Record oRecord;
@@ -377,7 +378,7 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                                 oDevice = new Device(oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Bouncer.this);
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
-                                showFragment(new Fragment_Result(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
+                                showFragment(new Fragment_Result_Bouncer(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
                                 mPrinter.printDeviceId(oDevice);
                             }
                         } catch (JSONException e) {
@@ -399,7 +400,7 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                                     oDevice.setoStation(new Station(Constants_Intern.STATION_CHECK_ONE));
                                 Bundle bundle = new Bundle();
                                 bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
-                                showFragment(new Fragment_Result(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
+                                showFragment(new Fragment_Result_Bouncer(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
                                 mPrinter.printDeviceId(oDevice);
                             }
                         } catch (JSONException e) {
@@ -411,7 +412,7 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
             default:
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
-                showFragment(new Fragment_Result(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
+                showFragment(new Fragment_Result_Bouncer(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
         }
     }
 

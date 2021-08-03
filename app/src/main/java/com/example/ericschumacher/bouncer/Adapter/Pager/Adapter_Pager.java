@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Fragments.Checker.Fragment_Checker;
+import com.example.ericschumacher.bouncer.Fragments.Checker.Fragment_Diagnose_Container;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
 
 import java.util.ArrayList;
@@ -48,5 +50,10 @@ public class Adapter_Pager extends FragmentPagerAdapter {
         for (Fragment fragment : lFragment) {
             ((Interface_Update)fragment).update();
         }
+        notifyDataSetChanged();
     }
+
+
+
+
 }

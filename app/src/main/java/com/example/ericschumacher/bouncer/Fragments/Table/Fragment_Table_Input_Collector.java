@@ -12,7 +12,9 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Ann;
+import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
@@ -42,6 +44,10 @@ public class Fragment_Table_Input_Collector extends Fragment_Table_Input {
         tvSearchType.setText(getString(R.string.name));
     }
 
+    public void setInterface() {
+        iFragmentTable = (Interface_Fragment_Table_Input_Collector) getActivity();
+    }
+
     @Override
     public void onSearch() {
         Log.i("jo", "jo");
@@ -57,6 +63,22 @@ public class Fragment_Table_Input_Collector extends Fragment_Table_Input {
                 rvList.setAdapter(aTable);
             }
         });
+        if (etSearch.getText().toString().length() >= 10 && etSearch.getText().toString().matches(".*\\d.*")) {
+            Log.i("Search for ShippingId", "Check");
+            cVolley.getResponse(Request.Method.GET, Urls.URL_GET_RECORD_BY_SHIPPINGNUMBER + etSearch.getText().toString(), null, new Interface_VolleyResult() {
+                @Override
+                public void onResult(JSONObject oJson) throws JSONException {
+                    if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
+                        Record record = new Record(getActivity(), oJson.getJSONObject(Constants_Extern.OBJECT_RECORD));
+                        ((Interface_Fragment_Table_Input_Collector)iFragmentTable).returnTableRecord(getTag(), record);
+                    } else {
+                        if (!oJson.isNull(Constants_Extern.DETAILS)) {
+                            Utility_Toast.showString(getActivity(), oJson.getString(Constants_Extern.DETAILS));
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -67,5 +89,9 @@ public class Fragment_Table_Input_Collector extends Fragment_Table_Input {
     @Override
     public boolean hasHeader() {
         return true;
+    }
+
+    public interface Interface_Fragment_Table_Input_Collector extends Interface_Fragment_Table{
+        public void returnTableRecord(final String cTag, Record record);
     }
 }

@@ -43,7 +43,7 @@ import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Activity_Box extends AppCompatActivity implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener, Fragment_Object.Interface_Fragment_Object_Menu, Fragment_Box.Interface_Fragment_Box, Fragment_Record.Interface_Fragment_Record, Fragment_Table.Interface_Fragment_Table {
+public class Activity_Box extends AppCompatActivity implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener, Fragment_Object.Interface_Fragment_Object_Menu, Fragment_Box.Interface_Fragment_Box, Fragment_Record.Interface_Fragment_Record, Fragment_Table_Input_Collector.Interface_Fragment_Table_Input_Collector {
 
     // Layout
     Toolbar vToolbar;
@@ -226,7 +226,7 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
 
     public void onSearch() {
         final String cSearchSaved = etSearch.getText().toString();
-        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_BOX_BY_ID + etSearch.getText().toString().substring(0, etSearch.getText().toString().length()-1), null, new Interface_VolleyResult() {
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_BOX_BY_ID + etSearch.getText().toString().substring(0, etSearch.getText().toString().length() - 1), null, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) {
                 if (cSearchSaved.equals(etSearch.getText().toString())) {
@@ -234,6 +234,9 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
                         try {
                             oBox = new Box(Activity_Box.this, oJson.getJSONObject(Constants_Extern.OBJECT_BOX));
                             returnFromSearch();
+                            if (oBox.getoRecord() == null) {
+                                showFragment(new Fragment_Table_Input_Collector(), null, Constants_Intern.FRAGMENT_TABLE_INPUT_COLLECTOR, null);
+                            }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -263,7 +266,7 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
     @Override
     public void afterTextChanged(Editable editable) {
         if (!editable.toString().equals("")) {
-            if (editable.toString().length() > 1 && editable.toString().substring(editable.toString().length()-1).equals("e")) {
+            if (editable.toString().length() > 1 && editable.toString().substring(editable.toString().length() - 1).equals("e")) {
                 onSearch();
                 setKeyboard(Constants_Intern.CLOSE_KEYBOARD);
             }
@@ -332,21 +335,29 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
             case Constants_Intern.TYPE_ACTION_MENU_DONE:
                 switch (cTag) {
                     case Constants_Intern.FRAGMENT_RECORD:
-                        cVolley.execute(Request.Method.PUT, Urls.URL_RECORD_FINISH+oBox.getoRecord().getId(), null);
+                        cVolley.execute(Request.Method.PUT, Urls.URL_RECORD_FINISH + oBox.getoRecord().getId(), null);
                         oBox.setoRecord(null);
                         updateLayout();
+                        break;
+                }
+                break;
+            case Constants_Intern.TYPE_ACTION_MENU_UNLINK:
+                switch (cTag) {
+                    case Constants_Intern.FRAGMENT_RECORD:
+                        oBox.setoRecord(null);
+                        reset();
                         break;
                 }
                 break;
             case Constants_Intern.TYPE_ACTION_MENU_DELETE:
                 switch (cTag) {
                     case Constants_Intern.FRAGMENT_BOX:
-                        cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_BOX_DELETE+oBox.getkId(), null);
+                        cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_BOX_DELETE + oBox.getkId(), null);
                         oBox.setoRecord(null);
                         reset();
                         break;
                     case Constants_Intern.FRAGMENT_RECORD:
-                        cVolley.execute(Request.Method.DELETE, Urls.URL_RECORD_DELETE+oBox.getoRecord().getId(), null);
+                        cVolley.execute(Request.Method.DELETE, Urls.URL_RECORD_DELETE + oBox.getoRecord().getId(), null);
                         oBox.setoRecord(null);
                         updateLayout();
                         break;
@@ -407,5 +418,12 @@ public class Activity_Box extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
         }
+    }
+
+    @Override
+    public void returnTableRecord(String cTag, Record record) {
+        oBox.setoRecord(record);
+        removeFragment(cTag);
+        updateLayout();
     }
 }

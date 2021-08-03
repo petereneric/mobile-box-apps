@@ -352,6 +352,17 @@
     <string name="user">User</string>
     <string name="diagnose_menu">Diagnose menu</string>
     <string name="diagnose_created_date">Diagnose from</string>
+    <string name="finish_diagnose_with_success_rest">Finish everything else successfully</string>
+    <string name="finish_diagnose_with_success">Finish successfully</string>
+    <string name="checking">Checking</string>
+    <string name="printer_ten">Printer Ten</string>
+    <string name="printer_eleven">Printer Eleven</string>
+    <string name="not_finished">Not finished</string>
+    <string name="finished">Finished</string>
+    <string name="show_handler">Show Handler</string>
+    <string name="no_diagnoses_created_yet">No diagnoses created yet</string>
+    <string name="please_finish_diagnose">Please finish diagnose first</string>
+    <string name="handler">Handler</string>
 
     // Not translated
 

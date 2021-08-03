@@ -24,6 +24,7 @@ public class Fragment_Object extends Fragment implements View.OnClickListener {
     public ImageView ivAdd;
     public ImageView ivPause;
     public ImageView ivDone;
+    public ImageView ivUnlink;
     public ImageView ivClear;
     public ImageView ivDelete;
     public LinearLayout llLayout;
@@ -54,6 +55,7 @@ public class Fragment_Object extends Fragment implements View.OnClickListener {
         ivAdd = vLayout.findViewById(R.id.ivAdd);
         ivPause = vLayout.findViewById(R.id.ivPause);
         ivDone = vLayout.findViewById(R.id.ivDone);
+        ivUnlink = vLayout.findViewById(R.id.ivUnlink);
         ivClear = vLayout.findViewById(R.id.ivClear);
         ivDelete = vLayout.findViewById(R.id.ivDelete);
 
@@ -63,6 +65,7 @@ public class Fragment_Object extends Fragment implements View.OnClickListener {
         ivAdd.setOnClickListener(this);
         ivPause.setOnClickListener(this);
         ivDone.setOnClickListener(this);
+        ivUnlink.setOnClickListener(this);
         ivClear.setOnClickListener(this);
         ivDelete.setOnClickListener(this);
     }
@@ -90,6 +93,9 @@ public class Fragment_Object extends Fragment implements View.OnClickListener {
                 break;
             case R.id.ivDone:
                 iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_DONE, getTag());
+                break;
+            case R.id.ivUnlink:
+                iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_UNLINK, getTag());
                 break;
             case R.id.ivClear:
                 iFragmentObjectMenu.returnMenu(Constants_Intern.TYPE_ACTION_MENU_CLEAR, getTag());

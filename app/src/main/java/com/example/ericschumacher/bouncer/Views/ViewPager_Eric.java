@@ -14,7 +14,7 @@ public class ViewPager_Eric extends ViewPager {
 
     public ViewPager_Eric(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.swipeable = true;
+        this.swipeable = false;
     }
 
     @Override

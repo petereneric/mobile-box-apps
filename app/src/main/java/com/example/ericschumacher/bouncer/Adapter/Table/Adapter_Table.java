@@ -84,7 +84,6 @@ public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         try {
             if (holder.getItemViewType() == TYPE_LIST) {
                 if (iAdapterTable.isSelected(getPosition(position))) {
-                    Log.i("jooo", "joo2");
                     vhList.llForeground.setBackgroundColor(ResourcesCompat.getColor(Context.getResources(), R.color.color_primary_light, null));
                 } else {
                     vhList.llForeground.setBackgroundColor(ResourcesCompat.getColor(Context.getResources(), R.color.color_background, null));
@@ -146,6 +145,7 @@ public class Adapter_Table extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
+        Log.i("hauruck", iAdapterTable.getJsonArray().toString());
         if (iAdapterTable.hasHeader() && iAdapterTable.getJsonArray().length() > 0) {
             return iAdapterTable.getJsonArray().length() + 1;
         } else {

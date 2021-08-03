@@ -120,7 +120,6 @@
 
             </LinearLayout>
 
-
         </LinearLayout>
 
         <LinearLayout
@@ -208,6 +207,25 @@
         </LinearLayout>
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llInformation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:visibility="visible"
+        android:layout_below="@id/tvHeader">
+
+        <TextView
+            android:id="@+id/tvInformation"
+            style="@style/tv_interaction_result_header_exploitation"
+            android:background="@drawable/textview_bouncer_result_title_unknown"
+            android:text="@string/unknown_text"
+            android:textColor="@color/color_unknown" />
+
+    </LinearLayout>
+
 
     <include
         android:id="@+id/tvHeader"

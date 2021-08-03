@@ -1,23 +1,23 @@
 package com.example.ericschumacher.bouncer.Activities.Tools
 
 import android.os.Bundle
-import android.support.design.widget.TabLayout
-import android.support.design.widget.TabLayout.*
+import android.support.design.widget.TabLayout.GONE
+import android.util.Log
 import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Device
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager
-import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Checks
-import com.example.ericschumacher.bouncer.Fragments.Others.Fragment_Diagnose_Container
-import com.example.ericschumacher.bouncer.Fragments.Table.Fragment_Table
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Checker
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern
+import com.example.ericschumacher.bouncer.Fragments.Checker.Fragment_Checker
+import com.example.ericschumacher.bouncer.Fragments.Result.Fragment_Result
 import com.example.ericschumacher.bouncer.R
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection
-import kotlinx.android.synthetic.main.activity_checker.*
-import org.json.JSONObject
 import javax.inject.Inject
 
-class Activity_Checker : Activity_Device(), Fragment_Table.Interface_Fragment_Table, Interface_Checker {
+class Activity_Checker : Activity_Device(), Fragment_Result.Interface_Fragment_Result {
 
-    // Dagger
+    // Fragments
+    var fChecker: Fragment_Checker? = Fragment_Checker()
+
+    // Connection
     @Inject
     lateinit var cVolley: Volley_Connection
 
@@ -26,15 +26,13 @@ class Activity_Checker : Activity_Device(), Fragment_Table.Interface_Fragment_Ta
 
     // Lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
-
-
         super.onCreate(savedInstanceState)
     }
 
     // Layout
 
     override fun getIdLayout(): Int {
-        return R.layout.activity_checker
+        return super.getIdLayout()
     }
 
     override fun setLayout() {
@@ -42,51 +40,42 @@ class Activity_Checker : Activity_Device(), Fragment_Table.Interface_Fragment_Ta
 
         // Toolbar
         supportActionBar?.title = getString(R.string.checker)
-
-        // Tablayout
-        vTabLayout.setupWithViewPager(ViewPager)
-        vTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                ViewPager.currentItem = tab.position
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-        })
-        vTabLayout.addTab(vTabLayout.newTab().setText(getString(R.string.diagnose)))
-        vTabLayout.addTab(vTabLayout.newTab().setText(getString(R.string.edit_checks)))
-        vTabLayout.addTab(vTabLayout.newTab().setText(getString(R.string.handling)))
-
-        // Adapter
-
-        // Set Adapter
-        aChecker.add(getString(R.string.diagnose), Fragment_Diagnose_Container())
-        aChecker.add(getString(R.string.edit_checks), Fragment_Edit_Model_Checks())
-        aChecker.add(getString(R.string.handling), Fragment_Edit_Model_Checks())
-        ViewPager.adapter = aChecker
     }
 
     override fun updateLayout() {
         super.updateLayout()
-        supportFragmentManager.beginTransaction().hide(fDevice).commit()
-        if (oDevice == null) {
-            ViewPager.visibility = GONE;
-            vTabLayout.visibility = GONE;
-        } else {
-            ViewPager.visibility = VISIBLE;
-            vTabLayout.visibility = VISIBLE;
+
+        if (oDevice != null) {
+            showFragment(fChecker, null, "FRAGMENT_CHECKER", true);
+            fChecker?.update()
         }
 
-        aChecker.notifyDataSetChanged()
-        aChecker.update()
-
+        supportFragmentManager.beginTransaction().hide(fModel).commit()
     }
 
-    override fun returnTable(cTag: String?, oJson: JSONObject?) {
-        // Open Fragment_Diagnose and pass id
+    // Fragments
+
+    override fun initiateFragments() {
+        super.initiateFragments()
+        fDevice.lMenu.visibility = GONE;
+        supportFragmentManager.beginTransaction().hide(fModel).commit()
     }
 
-    override fun newDiagnose() {
+    override fun removeFragments() {
+        super.removeFragments()
+        if (supportFragmentManager.findFragmentByTag("FRAGMENT_CHECKER") != null) {
+            fManager.beginTransaction().hide(fChecker);
+            removeFragment("FRAGMENT_CHECKER")
+        }
     }
+
+    override fun reset() {
+        super.reset()
+    }
+
+    override fun returnResult(cTag: String?) {
+        reset()
+    }
+
 }
 

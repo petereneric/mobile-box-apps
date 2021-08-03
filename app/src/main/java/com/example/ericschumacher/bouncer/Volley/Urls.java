@@ -69,6 +69,8 @@ public class Urls {
     public final static String URL_GET_COLLECTORS_BY_INPUT= URL_REST_API+"collectors/input/";
     public final static String URL_PUT_UPDATE_RECORD= URL_REST_API+"record/update";
     public final static String URL_RECORD_ADD= URL_REST_API+"record/add";
+    public final static String URL_GET_RECORD_BY_SHIPPINGNUMBER= URL_REST_API+"record/shippingnumber/";
+
     public final static String URL_RECORD_DELETE= URL_REST_API+"record/delete/";
     public final static String URL_PUT_STOCK_EXCESS_LKU_FULL= URL_REST_API+"stock/excess/lku/full/";
     public final static String URL_GET_DHL_INTERN_CREATE_SHIPMENT_ORDER = URL_REST_API+"dhl/intern/createShipmentOrder/";
@@ -84,10 +86,12 @@ public class Urls {
     public final static String URL_DELETE_MODEL_CHECK = URL_REST_API+"team/model/check/";
     public final static String URL_GET_DIAGNOSES = URL_REST_API+"team/diagnoses/";
     public final static String URL_GET_DIAGNOSE = URL_REST_API+"team/diagnose/";
+    public final static String URL_UPDATE_DIAGNOSE = URL_REST_API+"team/diagnose";
     public final static String URL_CREATE_DIAGNOSE = URL_REST_API+"team/diagnose";
     public final static String URL_DELETE_DIAGNOSE = URL_REST_API+"team/diagnose/";
     public final static String URL_CREATE_DIAGNOSE_CHECK = URL_REST_API+"team/diagnose/check";
     public final static String URL_UPDATE_DIAGNOSE_CHECK = URL_REST_API+"team/diagnose/check";
     public final static String URL_DELETE_DIAGNOSE_CHECK = URL_REST_API+"team/diagnose/check/";
+    public final static String URL_GET_DIAGNOSE_CHECKS = URL_REST_API+"team/diagnose/checks/";
 
 }

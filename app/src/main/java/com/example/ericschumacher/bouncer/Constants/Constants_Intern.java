@@ -24,6 +24,12 @@ public class Constants_Intern {
     public static final String ID_PRINTER_SIX_BT = "E4:15:F6:46:E1:C3";
     public static final String ID_PRINTER_SEVEN_BT = "C4:F3:12:17:D0:2E";
     public static final String ID_PRINTER_EIGHT_BT = "10.128.100.118";
+    public final static String ID_PRINTER_NINE_IP = "10.128.200.59";
+    public final static String ID_PRINTER_NINE_BT = "00:07:4D:64:4A:75";
+    public final static String ID_PRINTER_TEN_IP = "10.128.200.64";
+    public final static String ID_PRINTER_TEN_BT = "00:07:4D:BD:17:9D";
+    public final static String ID_PRINTER_ELEVEN_IP = "10.128.200.66";
+    public final static String ID_PRINTER_ELEVEN_BT = "00:07:4D:98:73:95";
     public static final String ID_PRINTER_NONE = "ID_PRINTER_NONE";
 
     //public static final String ID_PRINTER_FIVE_IP = "00:07:4D:99:BA:7E";
@@ -237,6 +243,7 @@ public class Constants_Intern {
     public static final int VIEW = 0;
     public static final int ITEM = 0;
     public static final int ADD = 1;
+    public static final int SPECIAL = 2;
     public static final int TYPE_MODEL_BATTERY_PRIME = 1;
     public static final String TYPE_MODE = "TYPE_MODE";
     public static final String TYPE_INTERFACE = "TYPE_INTERFACE";
@@ -363,6 +370,7 @@ public class Constants_Intern {
     public static final int TYPE_ACTION_MENU_CLEAR = 4;
     public static final int TYPE_ACTION_MENU_DELETE = 5;
     public static final int TYPE_ACTION_MENU_MAIL = 6;
+    public static final int TYPE_ACTION_MENU_UNLINK = 7;
     public static final String FRAGMENT_MODEL = "FRAGMENT_MODEL";
     public static final int TYPE_ACTION_DEVICE_DAMAGES_COMMIT = 0;
     public static final int TYPE_ACTION_DEVICE_DAMAGES_OTHER_DAMAGES = 1;
@@ -385,4 +393,5 @@ public class Constants_Intern {
 
     public static final String BOOLEAN_FEATURE_CHANGED = "BOOLEAN_FEATURE_CHANGED";
     public static final String FRAGMENT_DIALOG_EDIT_MODEL_CHECKS = "FRAGMENT_DIALOG_EDIT_MODEL_CHECKS";
+
 }

@@ -2,6 +2,7 @@ package com.example.ericschumacher.bouncer.Adapter.List.ViewHolder;
 
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +22,9 @@ public class ViewHolder_List extends RecyclerView.ViewHolder {
     public TextView tvTitle;
     public TextView tvSubtitle;
     public ConstraintLayout lMain;
+    public ConstraintLayout clForeground;
+    public ConstraintLayout clBackground;
+    public ImageView ivSwipe;
 
 
     public ViewHolder_List(View itemView, final Interface_Click iClick) {
@@ -36,9 +40,12 @@ public class ViewHolder_List extends RecyclerView.ViewHolder {
         tvTitle = itemView.findViewById(R.id.tvTitle);
         tvSubtitle = itemView.findViewById(R.id.tvSubtitle);
         lMain = itemView.findViewById(R.id.lMain);
+        clBackground = itemView.findViewById(R.id.clBackground);
+        clForeground = itemView.findViewById(R.id.clForeground);
+        ivSwipe = itemView.findViewById(R.id.ivSwipe);
 
         // OnClickListener
-        lMain.setOnClickListener(new View.OnClickListener() {
+        clForeground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 iClick.onClick(getAdapterPosition());
