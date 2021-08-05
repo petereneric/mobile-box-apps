@@ -363,6 +363,10 @@
     <string name="no_diagnoses_created_yet">No diagnoses created yet</string>
     <string name="please_finish_diagnose">Please finish diagnose first</string>
     <string name="handler">Handler</string>
+    <string name="remove_dust">Remove dust</string>
+    <string name="attach_backcover">Attach backcover</string>
+    <string name="load_with_battery">Load with battery</string>
+    <string name="load_without_battery">Load without battery</string>
 
     // Not translated
 
