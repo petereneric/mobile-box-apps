@@ -365,8 +365,8 @@
     <string name="handler">Handler</string>
     <string name="remove_dust">Remove dust</string>
     <string name="attach_backcover">Attach backcover</string>
-    <string name="load_with_battery">Load with battery</string>
-    <string name="load_without_battery">Load without battery</string>
+    <string name="load_with_battery">Load | with battery</string>
+    <string name="load_without_battery">Load | without battery</string>
 
     // Not translated
 

@@ -51,6 +51,8 @@ public class Object_Damage {
         return oJson;
     }
 
+
+
     public int getkDamage() {
         return kDamage;
     }

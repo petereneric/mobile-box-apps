@@ -128,14 +128,13 @@ public class Fragment_Dialog_Model_Check extends DialogFragment implements View.
                 boolean bSort = !(oModelCheck.isbPositionFixed() == sPositionFixed.isChecked());
                 oModelCheck.setbPositionFixed(sPositionFixed.isChecked());
                 oModelCheck.update();
-                iFragmentModelChecks.refresh(bSort);
+                iFragmentModelChecks.editModelCheck();
                 dismiss();
                 break;
             case R.id.ibDelete:
                 Utility_Keyboard.hideKeyboardFrom(getActivity(), etDescription);
-                oModelCheck.delete();
+                iFragmentModelChecks.deleteModelCheck(oModelCheck);
                 dismiss();
-                iFragmentModelChecks.update();
                 break;
 
         }

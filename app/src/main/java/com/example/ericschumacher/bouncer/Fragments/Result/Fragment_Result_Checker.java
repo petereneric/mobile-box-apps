@@ -50,50 +50,49 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
                     // Show result
                     if (iChecker.getDiagnoses().get(0).isbPassed()) {
                         // Diagnose passed
+                        Log.i("Hit", "diagnose passed");
                         if (iDevice.getDevice().isBackcoverContained()) {
                             // Backcover contained
-                            if (iDevice.getDevice().getlDeviceDamages().size() > 0) {
-                                boolean bDust = false;
-                                for (Object_Device_Damage oDeviceDamage : iDevice.getDevice().getlDeviceDamages()) {
-                                    if (oDeviceDamage.getoModelDamage().getId() == 10) {
-                                        bDust = true;
-                                    }
+                            Log.i("Hit", "backcover contained");
+                            boolean bDust = false;
+                            Log.i("sizee", ""+iDevice.getDevice().getlDeviceDamages().size());
+                            for (Object_Device_Damage oDeviceDamage : iDevice.getDevice().getlDeviceDamages()) {
+                                if (oDeviceDamage.getoModelDamage().getoDamage().getkDamage() == 10) {
+                                    Log.i("johi", "hite");
+                                    bDust = true;
                                 }
-                                if (!bDust) {
-                                    // No dust
-                                    llReuse.setVisibility(View.VISIBLE);
-                                    tvReuse.setVisibility(View.GONE);
-                                    llReuseObjects.setVisibility(View.VISIBLE);
-                                    tvReuseDevice.setVisibility(View.VISIBLE);
-                                    if (iDevice.getDevice().isBatteryContained()) {
-                                        // Battery contained
-                                        tvReuseDevice.setText(getString(R.string.load_with_battery));
-                                    } else {
-                                        // Battery not contained
-                                        tvReuseDevice.setText(getString(R.string.load_without_battery));
-                                    }
+                            }
+                            if (!bDust) {
+                                // No dust
+                                llReuse.setVisibility(View.VISIBLE);
+                                tvReuse.setVisibility(View.VISIBLE);
+
+                                if (iDevice.getDevice().isBatteryContained()) {
+                                    // Battery contained
+                                    tvReuse.setText(getString(R.string.load_with_battery));
                                 } else {
-                                    // With dust
-                                    llDefectRepair.setVisibility(View.VISIBLE);
-                                    llDefectRepairObjects.setVisibility(View.VISIBLE);
-                                    tvDefectRepairDevice.setVisibility(View.VISIBLE);
-                                    tvDefectRepairDevice.setText(getString(R.string.remove_dust));
+                                    // Battery not contained
+                                    tvReuse.setText(getString(R.string.load_without_battery));
                                 }
+                            } else {
+                                Log.i("Hit", "with dust");
+                                // With dust
+                                llRepair.setVisibility(View.VISIBLE);
+                                tvRepair.setText(getString(R.string.remove_dust));
                             }
                         } else {
                             // Backcover not contained
-                            llDefectRepair.setVisibility(View.VISIBLE);
-                            llDefectRepairObjects.setVisibility(View.VISIBLE);
-                            tvDefectRepairDevice.setVisibility(View.VISIBLE);
-                            tvDefectRepairDevice.setText(getString(R.string.attach_backcover));
+                            llRepair.setVisibility(View.VISIBLE);
+                            tvRepair.setText(getString(R.string.attach_backcover));
                         }
                     } else {
                         // Diagnose failed
                         if (iDevice.getDevice().getoModel().getlModelDamages().size() >= 2) {
                             // Repair possible
-                            llDefectRepair.setVisibility(View.VISIBLE);
+                            llRepair.setVisibility(View.VISIBLE);
                             if (iDevice.getDevice().isBatteryContained()) {
                                 // Battery contained
+                                llDefectRepairObjects.setVisibility(View.VISIBLE);
                                 tvDefectRepairDevice.setVisibility(View.VISIBLE);
                                 if (iDevice.getDevice().getoBattery().getlStock() < 2) {
                                     // Battery reuse
@@ -150,7 +149,7 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
                                             tvReuseBattery.setVisibility(View.VISIBLE);
                                         } else {
                                             // Battery recycling
-                                            tvReuseBattery.setVisibility(View.VISIBLE);
+                                            tvRecyclingBattery.setVisibility(View.VISIBLE);
                                         }
                                     } else {
                                         // Battery not contained
@@ -200,12 +199,13 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
     @Override
     public void setInterface() {
         super.setInterface();
-        iChecker = (Interface_Fragment_Checker)getTargetFragment();
+        iChecker = (Interface_Fragment_Checker) getTargetFragment();
     }
 
     @Override
     public void click() {
         if (iChecker.getDiagnoses().size() > 0 && iChecker.getDiagnoses().get(0).isbFinished()) {
+            iChecker.showTab(0);
             iResult.returnResult(getTag());
         } else {
             iChecker.showTab(0);

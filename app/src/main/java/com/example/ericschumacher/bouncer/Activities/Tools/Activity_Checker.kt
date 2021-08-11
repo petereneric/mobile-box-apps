@@ -2,10 +2,10 @@ package com.example.ericschumacher.bouncer.Activities.Tools
 
 import android.os.Bundle
 import android.support.design.widget.TabLayout.GONE
+import android.support.v4.app.FragmentManager
 import android.util.Log
 import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Device
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager
-import com.example.ericschumacher.bouncer.Constants.Constants_Intern
 import com.example.ericschumacher.bouncer.Fragments.Checker.Fragment_Checker
 import com.example.ericschumacher.bouncer.Fragments.Result.Fragment_Result
 import com.example.ericschumacher.bouncer.R
@@ -46,8 +46,22 @@ class Activity_Checker : Activity_Device(), Fragment_Result.Interface_Fragment_R
         super.updateLayout()
 
         if (oDevice != null) {
+            if (fChecker == null) {
+                fChecker = Fragment_Checker()
+            } else {
+                //fChecker = Fragment_Checker()
+            }
             showFragment(fChecker, null, "FRAGMENT_CHECKER", true);
+            if (supportFragmentManager.findFragmentByTag("FRAGMENT_CHECKER") != null) {
+                supportFragmentManager.beginTransaction()
+                    .show(supportFragmentManager.findFragmentByTag("FRAGMENT_CHECKER")).commit()
+            }
             fChecker?.update()
+        } else {
+            Log.i("Hide Fragment", "fChecker");
+            if (supportFragmentManager.findFragmentByTag("FRAGMENT_CHECKER") != null) {
+                supportFragmentManager.beginTransaction().hide(supportFragmentManager.findFragmentByTag("FRAGMENT_CHECKER")).commit()
+            }
         }
 
         supportFragmentManager.beginTransaction().hide(fModel).commit()
@@ -63,13 +77,25 @@ class Activity_Checker : Activity_Device(), Fragment_Result.Interface_Fragment_R
 
     override fun removeFragments() {
         super.removeFragments()
+        /*
         if (supportFragmentManager.findFragmentByTag("FRAGMENT_CHECKER") != null) {
+            fChecker?.removeFragments()
             fManager.beginTransaction().hide(fChecker);
             removeFragment("FRAGMENT_CHECKER")
         }
+         */
+        //fChecker?.removeFragments();
     }
 
     override fun reset() {
+        /*
+        val fm: FragmentManager = getSupportFragmentManager()
+        for (i in 0 until fm.getBackStackEntryCount()) {
+            fm.popBackStack()
+        }
+         */
+        //fChecker == null;
+        fChecker?.reset()
         super.reset()
     }
 

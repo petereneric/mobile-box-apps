@@ -62,6 +62,11 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
         return vLayout;
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        //super.onSaveInstanceState(outState);
+    }
+
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
         // Initiate
         vLayout = inflater.inflate(getIdLayout(), container, false);

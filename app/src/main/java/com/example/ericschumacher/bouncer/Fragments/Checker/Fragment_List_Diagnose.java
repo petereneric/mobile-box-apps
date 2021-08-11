@@ -1,12 +1,9 @@
 package com.example.ericschumacher.bouncer.Fragments.Checker;
 
-import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
@@ -24,11 +21,9 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.List.Fragment_List;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Checker;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Model_New_New;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
-import com.example.ericschumacher.bouncer.Objects.Check;
 import com.example.ericschumacher.bouncer.Objects.Diagnose;
-import com.example.ericschumacher.bouncer.Objects.DiagnoseCheck;
 import com.example.ericschumacher.bouncer.Objects.ModelCheck;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_DateTime;
@@ -38,10 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
-public class Fragment_List_Diagnose extends Fragment_List implements Adapter_List.Interface_Adapter_List, View.OnClickListener {
+public class Fragment_List_Diagnose extends Fragment_List implements Adapter_List.Interface_Adapter_List, View.OnClickListener, Interface_Update {
 
     // Layout
     TextView tvTitle;
@@ -54,7 +48,6 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
     Interface_Fragment_Checker iChecker;
 
     // Data
-    ArrayList<ModelCheck> lModelChecks = new ArrayList<>();
     Adapter_List_Diagnose aDiagnose;
 
     @Override
@@ -65,7 +58,7 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
         iChecker = (Interface_Fragment_Checker) getParentFragment();
 
         // Data
-        loadDiagnoseChecks();
+        loadChecks();
     }
 
 
@@ -78,10 +71,11 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
 
     @Override
     public void onDestroy() {
+        /*
         if (iChecker.getDiagnose().getlDiagnoseChecks().size() == 0) {
             iChecker.deleteDiagnose();
-
         }
+         */
         super.onDestroy();
     }
 
@@ -103,7 +97,7 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
 
         // Header
         tvSubtitle.setVisibility(View.VISIBLE);
-        tvSubtitle.setText(Utility_DateTime.dateToString(iChecker.getDiagnose().getdLastUpdate())+" | "+iChecker.getDiagnose().getcUser()+" | "+ (iChecker.getDiagnose().isbFinished() ? getString(R.string.finished) : getString(R.string.not_finished)));
+
         ivHeaderLeft.setVisibility(View.VISIBLE);
         ivHeaderRight.setVisibility(View.VISIBLE);
         ivHeaderLeft.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.ic_pause_white_24dp));
@@ -117,11 +111,27 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
 
 
         // Data
-        aDiagnose = new Adapter_List_Diagnose(getActivity(), this, lModelChecks, iChecker != null && iChecker.getDiagnose() != null ? iChecker.getDiagnose().getlDiagnoseChecks() : new ArrayList<>(), iChecker);
+        aDiagnose = new Adapter_List_Diagnose(getActivity(), this, iChecker != null && iChecker.getModelChecks() != null ? iChecker.getModelChecks() : new ArrayList<>(), iChecker != null && iChecker.getDiagnose() != null ? iChecker.getDiagnose().getlDiagnoseChecks() : new ArrayList<>(), iChecker);
         rvList.setAdapter(aDiagnose);
 
         // Swipe
         setSwipe();
+
+        // Update
+        updateLayout();
+    }
+
+    public void updateLayout() {
+        if (iChecker != null) {
+            aDiagnose.updateData(iChecker.getModelChecks(), iChecker.getDiagnose() != null ? iChecker.getDiagnose().getlDiagnoseChecks(): new ArrayList<>());
+            if (iChecker.getDiagnose() != null) {
+                tvSubtitle.setVisibility(View.VISIBLE);
+                tvSubtitle.setText(Utility_DateTime.dateToString(iChecker.getDiagnose().getdLastUpdate()) + " | " + iChecker.getDiagnose().getcUser() + " | " + (iChecker.getDiagnose().isbFinished() ? getString(R.string.finished) : getString(R.string.not_finished)));
+
+            } else {
+                tvSubtitle.setVisibility(View.GONE);
+            }
+        }
     }
 
     private void setSwipe() {
@@ -136,11 +146,11 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
                 if (getItemViewType(viewHolder.getAdapterPosition()) == Constants_Intern.ITEM) {
                     switch (direction) {
                         case ItemTouchHelper.LEFT:
-                            if (iChecker.getDiagnose().hasDiagnoseCheck(lModelChecks.get(viewHolder.getAdapterPosition()).getoCheck().getId())) {
+                            if (iChecker.getDiagnose() != null && iChecker.getDiagnose().hasDiagnoseCheck(iChecker.getModelChecks().get(viewHolder.getAdapterPosition()).getoCheck().getId())) {
                                 // Delete DiagnoseCheck
-                                iChecker.getDiagnose().deleteDiagnoseCheck(lModelChecks.get(viewHolder.getAdapterPosition()).getoCheck().getId());
-                                iChecker.getDiagnose().updateState(iDevice.getDevice().getoModel(), lModelChecks);
-                                aDiagnose.updateData(lModelChecks, iChecker.getDiagnose().getlDiagnoseChecks());
+                                iChecker.getDiagnose().deleteDiagnoseCheck(iChecker.getModelChecks().get(viewHolder.getAdapterPosition()).getoCheck().getId());
+                                iChecker.getDiagnose().updateState(iDevice.getDevice().getoModel(), iChecker.getModelChecks());
+                                aDiagnose.updateData(iChecker.getModelChecks(), iChecker.getDiagnose().getlDiagnoseChecks());
                                 break;
                             }
                     }
@@ -149,7 +159,7 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
             }
 
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                if (getItemViewType(viewHolder.getAdapterPosition()) == Constants_Intern.ITEM && iChecker.getDiagnose().hasDiagnoseCheck(lModelChecks.get(viewHolder.getAdapterPosition()).getoCheck().getId())) {
+                if (iChecker.getDiagnose() != null && getItemViewType(viewHolder.getAdapterPosition()) == Constants_Intern.ITEM && iChecker.getDiagnose().hasDiagnoseCheck(iChecker.getModelChecks().get(viewHolder.getAdapterPosition()).getoCheck().getId())) {
                     final View clForeground = ((ViewHolder_List) viewHolder).clForeground;
                     final View clBackground = ((ViewHolder_List) viewHolder).clBackground;
                     clBackground.setVisibility(View.VISIBLE);
@@ -159,7 +169,7 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
 
             @Override
             public void onChildDrawOver(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                if (getItemViewType(viewHolder.getAdapterPosition()) == Constants_Intern.ITEM && iChecker.getDiagnose().hasDiagnoseCheck(lModelChecks.get(viewHolder.getAdapterPosition()).getoCheck().getId())) {
+                if (iChecker.getDiagnose() != null && getItemViewType(viewHolder.getAdapterPosition()) == Constants_Intern.ITEM && iChecker.getDiagnose().hasDiagnoseCheck(iChecker.getModelChecks().get(viewHolder.getAdapterPosition()).getoCheck().getId())) {
                     final View foregroundView = ((ViewHolder_List) viewHolder).clForeground;
                     getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY, actionState, isCurrentlyActive);
                 }
@@ -167,7 +177,7 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
 
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
-                if (getItemViewType(viewHolder.getAdapterPosition()) == Constants_Intern.ITEM) {
+                if (iChecker.getDiagnose() != null && getItemViewType(viewHolder.getAdapterPosition()) == Constants_Intern.ITEM) {
                     final View foregroundView = ((ViewHolder_List) viewHolder).clForeground;
                     getDefaultUIUtil().clearView(foregroundView);
                     final View backgroundView = ((ViewHolder_List) viewHolder).clBackground;
@@ -180,55 +190,38 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
         itemTouchHelper.attachToRecyclerView(rvList);
     }
 
-    private void loadDiagnoseChecks() {
-        if (iDevice.getDevice() != null) {
-            Log.i("LOOOOADING", "" + iDevice.getDevice().getIdDevice());
-            cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_CHECKS + iDevice.getDevice().getoModel().getkModel(), null, new Interface_VolleyResult() {
+    private void loadChecks() {
+
+        // Load Diagnose_Checks
+        if (iChecker.getDiagnose() != null) {
+            Log.i("laadde", "nochmal!!");
+            cVolley.getResponse(Request.Method.GET, Urls.URL_GET_DIAGNOSE_CHECKS + iChecker.getDiagnose().getId(), null, new Interface_VolleyResult() {
                 @Override
                 public void onResult(JSONObject oJson) throws JSONException {
                     if (oJson != null) {
-                        JSONArray aJson = oJson.getJSONArray("lModelChecks");
-                        for (int i = 0; i < aJson.length(); i++) {
-                            JSONObject jsonModelCheck = aJson.getJSONObject(i);
-                            ModelCheck oModelCheck = new ModelCheck(jsonModelCheck, getActivity());
-                            lModelChecks.add(oModelCheck);
+                        if (oJson.getJSONArray("lDiagnoseChecks").length() > 0) {
+                            iChecker.getDiagnose().addDiagnoseChecks(oJson.getJSONArray("lDiagnoseChecks"));
                         }
-                        ModelCheck.sortByPosition(lModelChecks);
-                        ModelCheck.sortByLogic(lModelChecks);
-                        ModelCheck.updatePosition(lModelChecks);
-                        aDiagnose.updateData(lModelChecks, iChecker.getDiagnose() != null ? iChecker.getDiagnose().getlDiagnoseChecks() : new ArrayList<>());
 
-                        // Load Diagnose_Checks
-                        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_DIAGNOSE_CHECKS + iChecker.getDiagnose().getId(), null, new Interface_VolleyResult() {
-                            @Override
-                            public void onResult(JSONObject oJson) throws JSONException {
-                                if (oJson != null) {
-                                    if (oJson.getJSONArray("lDiagnoseChecks").length() > 0) {
-                                        iChecker.getDiagnose().addDiagnoseChecks(oJson.getJSONArray("lDiagnoseChecks"));
-                                    }
-
-                                    aDiagnose.updateData(lModelChecks, iChecker.getDiagnose().getlDiagnoseChecks());
-                                } else {
-                                    // There is no Diagnose
-                                }
-                            }
-                        });
-                    } // Check if null means that there are no modelChecks --> Show in UI
-
-                }
+                        aDiagnose.updateData(iChecker.getModelChecks(), iChecker.getDiagnose().getlDiagnoseChecks());
+                    } else {
+                        // There is no Diagnose
+                    }
+                }// Check if null means that there are no modelChecks --> Show in UI
             });
+        } else {
+            if (aDiagnose != null) aDiagnose.updateData(iChecker.getModelChecks(), new ArrayList<>());
         }
-
     }
 
     @Override
     public int getItemCount() {
-        return lModelChecks.size() + 1;
+        return iChecker.getModelChecks().size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (position < lModelChecks.size()) {
+        if (position < iChecker.getModelChecks().size()) {
             return Constants_Intern.ITEM;
         } else {
             return Constants_Intern.SPECIAL;
@@ -237,6 +230,33 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
 
     @Override
     public void clickList(int position) {
+        if (iChecker.getDiagnose() != null) {
+            handleClick(position);
+        } else {
+            JSONObject oJson = new JSONObject();
+            try {
+                oJson.put("kDevice", iDevice.getDevice().getIdDevice());
+                oJson.put("kUser", 1);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            cVolley.getResponse(Request.Method.PUT, Urls.URL_CREATE_DIAGNOSE, oJson, new Interface_VolleyResult() {
+                @Override
+                public void onResult(JSONObject oJson) throws JSONException {
+                    if (oJson != null) {
+                        Diagnose oDiagnose = new Diagnose(getActivity(), oJson);
+                        iChecker.getDiagnoses().add(oDiagnose);
+                        iChecker.setDiagnose(oDiagnose);
+                        handleClick(position);
+
+                    }
+                }
+            });
+        }
+
+    }
+
+    private void handleClick(int position) {
         boolean bFinishedBefore = iChecker.getDiagnose().isbFinished();
 
         // Special
@@ -244,17 +264,18 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
             if (iChecker.getDiagnose().isbFinished()) {
                 iChecker.showHandler();
             } else {
-                iChecker.getDiagnose().finishSuccessfully(lModelChecks);
+                iChecker.getDiagnose().finishSuccessfully(iChecker.getModelChecks());
             }
-
         }
 
         // Item
         if (getItemViewType(position) == Constants_Intern.ITEM) {
-            iChecker.getDiagnose().click(lModelChecks, lModelChecks.get(position).getoCheck().getId());
+            iChecker.getDiagnose().click(iChecker.getModelChecks(), iChecker.getModelChecks().get(position).getoCheck().getId());
         }
-        iChecker.getDiagnose().updateState(iDevice.getDevice().getoModel(), lModelChecks);
-        aDiagnose.updateData(lModelChecks, iChecker.getDiagnose().getlDiagnoseChecks());
+
+        // State
+        iChecker.getDiagnose().updateState(iDevice.getDevice().getoModel(), iChecker.getModelChecks());
+        iChecker.diagnoseChange();
 
         if (!bFinishedBefore && iChecker.getDiagnose().isbFinished()) {
             // Show Handler
@@ -271,8 +292,16 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
                 break;
             case R.id.ivHeaderRight:
                 // Delete
-                iChecker.deleteDiagnose();
+                iChecker.deleteDiagnose(iChecker.getDiagnose());
                 break;
+        }
+    }
+
+    @Override
+    public void update() {
+        Log.i("jOOOO", "neee");
+        if (aDiagnose != null) {
+            loadChecks();
         }
     }
 }

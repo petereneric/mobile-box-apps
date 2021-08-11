@@ -18,6 +18,7 @@ import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List_ModelChecks;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Model_Check;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Checker;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Model_New_New;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
@@ -38,9 +39,7 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
 
     // Interface
     Interface_Model_New_New iModel;
-
-    // Data
-    ArrayList<ModelCheck> lModelChecks = new ArrayList<>();
+    Interface_Fragment_Checker iChecker;
 
     // Adapter
     Adapter_List_ModelChecks aList;
@@ -51,7 +50,9 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
     public View onCreateView(LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         // Interface
         iModel = (Interface_Model_New_New) getActivity();
+        iChecker = (Interface_Fragment_Checker)getTargetFragment();
 
+        Log.i("onCreateView", "Fragment_Edit_Model_Checks");
         super.onCreateView(inflater, container, savedInstanceState);
 
         update();
@@ -69,7 +70,7 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
 
         // RecyclerView
         rvList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        aList = new Adapter_List_ModelChecks(getActivity(), this, lModelChecks);
+        aList = new Adapter_List_ModelChecks(getActivity(), this, iChecker.getModelChecks());
         rvList.setAdapter(aList);
 
         // drag & drop
@@ -78,9 +79,9 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 int positionSelect = viewHolder.getAdapterPosition();
                 int postionTarget = target.getAdapterPosition();
-                if (positionSelect < lModelChecks.size() && postionTarget < lModelChecks.size()) {
-                    Collections.swap(lModelChecks, viewHolder.getAdapterPosition(),target.getAdapterPosition());
-                    ModelCheck.updatePosition(lModelChecks);
+                if (positionSelect < iChecker.getModelChecks().size() && postionTarget < iChecker.getModelChecks().size()) {
+                    Collections.swap(iChecker.getModelChecks(), viewHolder.getAdapterPosition(),target.getAdapterPosition());
+                    ModelCheck.updatePosition(iChecker.getModelChecks());
                     aList.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
                     return true;
                 } else {
@@ -96,8 +97,8 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
             @Override
             public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
                 super.clearView(recyclerView, viewHolder);
-                ModelCheck.sortByLogic(lModelChecks);
-                ModelCheck.updatePosition(lModelChecks);
+                ModelCheck.sortByLogic(iChecker.getModelChecks());
+                ModelCheck.updatePosition(iChecker.getModelChecks());
                 aList.notifyDataSetChanged();
             }
         };
@@ -105,56 +106,25 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
         itemTouchHelper.attachToRecyclerView(rvList);
     }
 
-    private void loadData() {
-
-        // Load
-        if (iModel != null && iModel.getModel() != null) {
-            cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_CHECKS + iModel.getModel().getkModel(), null, new Interface_VolleyResult() {
-                @Override
-                public void onResult(JSONObject oJson) throws JSONException {
-                    if (oJson != null) {
-                        // Reset
-                        lModelChecks = new ArrayList<>();
-                        if (aList != null) {
-                            aList.update(lModelChecks);
-                            aList.notifyDataSetChanged();
-                        }
-
-                        JSONArray aJson = oJson.getJSONArray("lModelChecks");
-                        for (int i = 0; i < aJson.length(); i++) {
-                            JSONObject jsonModelCheck = aJson.getJSONObject(i);
-                            ModelCheck oModelCheck = new ModelCheck(jsonModelCheck, getActivity());
-                            lModelChecks.add(oModelCheck);
-                        }
-                    }
-                    ModelCheck.sortByPosition(lModelChecks);
-                    ModelCheck.sortByLogic(lModelChecks);
-                    ModelCheck.updatePosition(lModelChecks);
-
-                    aList.notifyDataSetChanged();
-                }
-            });
-        }
-    }
-
     @Override
     public void update() {
         Log.i("lääädt", "jooo");
-        loadData();
     }
 
     public void refresh(boolean bSort) {
-        aList.update(lModelChecks);
-        if (bSort) {
-            ModelCheck.sortByLogic(lModelChecks);
-            ModelCheck.updatePosition(lModelChecks);
+        if (iChecker != null) {
+            aList.update(iChecker.getModelChecks());
+            if (bSort) {
+                ModelCheck.sortByLogic(iChecker.getModelChecks());
+                ModelCheck.updatePosition(iChecker.getModelChecks());
+            }
+            aList.notifyDataSetChanged();
         }
-        aList.notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return lModelChecks.size() + 1;
+        return iChecker.getModelChecks().size() + 1;
     }
 
     @Override
@@ -194,7 +164,10 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
                                     cVolley.getResponse(Request.Method.PUT, Urls.URL_CREATE_MODEL_CHECK + iModel.getModel().getkModel() + "/" + check.getId(), null, new Interface_VolleyResult() {
                                         @Override
                                         public void onResult(JSONObject oJson) throws JSONException {
-                                            loadData();
+                                            if (oJson != null) {
+                                                iChecker.getModelChecks().add(new ModelCheck(oJson, getActivity()));
+                                                iChecker.changeModelChecks();
+                                            }
                                         }
                                     });
                                 }
@@ -213,14 +186,23 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
 
     @Override
     public int getItemViewType(int position) {
-        return position < lModelChecks.size() ? Constants_Intern.ITEM : Constants_Intern.ADD;
+        return position < iChecker.getModelChecks().size() ? Constants_Intern.ITEM : Constants_Intern.ADD;
     }
 
     public ModelCheck getModelCheck(int position) {
-        if (lModelChecks.size() > 0) {
-            return lModelChecks.get(position);
+        if (iChecker.getModelChecks().size() > 0) {
+            return iChecker.getModelChecks().get(position);
         }
         return null;
+    }
 
+    public void deleteModelCheck(ModelCheck modelCheck) {
+        iChecker.getModelChecks().remove(modelCheck);
+        modelCheck.delete();
+        iChecker.changeModelChecks();
+    }
+
+    public void editModelCheck() {
+        iChecker.changeModelChecks();
     }
 }

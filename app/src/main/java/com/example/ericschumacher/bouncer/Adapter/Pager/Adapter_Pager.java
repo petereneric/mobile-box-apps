@@ -18,9 +18,11 @@ public class Adapter_Pager extends FragmentPagerAdapter {
 
     ArrayList<Fragment> lFragment = new ArrayList<>();
     ArrayList<String> lTitle = new ArrayList<>();
+    FragmentManager fragmentManager;
 
     public Adapter_Pager(FragmentManager fm) {
         super(fm);
+        fragmentManager = fm;
     }
 
     @Override
@@ -53,7 +55,9 @@ public class Adapter_Pager extends FragmentPagerAdapter {
         notifyDataSetChanged();
     }
 
-
-
-
+    public void remove() {
+        for (Fragment fragment : lFragment) {
+            if (fragmentManager != null) fragmentManager.beginTransaction().remove(fragment);
+        }
+    }
 }

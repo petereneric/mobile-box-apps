@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,7 @@ import com.example.ericschumacher.bouncer.Fragments.Result.Fragment_Result_Check
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Checker;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Diagnose;
+import com.example.ericschumacher.bouncer.Objects.ModelCheck;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
 import com.example.ericschumacher.bouncer.Views.ViewPager_Eric;
@@ -49,15 +53,26 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
     Volley_Connection cVolley;
 
     // Data
+    ArrayList<ModelCheck> lModelChecks = new ArrayList<>();
     ArrayList<Diagnose> lDiagnoses;
     Diagnose oDiagnose;
 
     // Fragments
     Fragment_Diagnose_Container fDiagnoseContainer;
+    Fragment_Edit_Model_Checks fModelChecks;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+    }
+
+    @Nullable
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         // Interfaces
         iDevice = (Fragment_Device.Interface_Device)getActivity();
 
@@ -66,16 +81,23 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
 
         // Data
         loadDiagnoses();
-    }
 
-    @Nullable
-    @org.jetbrains.annotations.Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         // Layout
+        Log.i("onCreateView", "Fragment_Checker");
         setLayout(inflater, container);
 
         return vLayout;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Show Diagnose if there is no diagnose yet or there is one from the same day that is not finished
+        if (lDiagnoses.size() > 0 && (DateUtils.isToday(lDiagnoses.get(0).getdLastUpdate().getTime()) && !lDiagnoses.get(0).isbFinished())) {
+            Log.i("Wird ", "angezeigt2");
+            oDiagnose = lDiagnoses.get(0);
+            fDiagnoseContainer.showDiagnose();
+        }
     }
 
     private void setLayout(LayoutInflater inflater, ViewGroup container) {
@@ -85,6 +107,13 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
 
         // Adapter
         aChecker = new Adapter_Pager_Checker(getActivity().getSupportFragmentManager());
+
+        /*
+        FragmentManager fm = getActivity().getSupportFragmentManager();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
+         */
 
         // Tabs
         vTabLayout.setupWithViewPager(ViewPager);
@@ -105,11 +134,14 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
         fDiagnoseContainer = new Fragment_Diagnose_Container();
         fDiagnoseContainer.setTargetFragment(Fragment_Checker.this, 0);
         aChecker.add(getString(R.string.diagnose), fDiagnoseContainer);
-        aChecker.add(getString(R.string.edit_checks), new Fragment_Edit_Model_Checks());
+        fModelChecks = new Fragment_Edit_Model_Checks();
+        fModelChecks.setTargetFragment(Fragment_Checker.this, 1);
+        aChecker.add(getString(R.string.edit_checks), fModelChecks);
         Fragment_Result_Checker fResult = new Fragment_Result_Checker();
         fResult.setTargetFragment(Fragment_Checker.this, 2);
         aChecker.add(getString(R.string.handling), fResult);
         ViewPager.setAdapter(aChecker);
+        aChecker.notifyDataSetChanged();
     }
 
     // Data
@@ -128,7 +160,19 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
                             Diagnose oDiagnose = new Diagnose(getActivity(), jsonDiagnose);
                             lDiagnoses.add(oDiagnose);
                         }
+                        // Sort
                         sortDiagnoses();
+
+                        // Show Diagnose if there is no diagnose yet or there is one from the same day that is not finished
+                        if (lDiagnoses.size() == 0 || (DateUtils.isToday(lDiagnoses.get(0).getdCreation().getTime()) && !lDiagnoses.get(0).isbFinished())) {
+                            Log.i("Wird ", "angezeigt");
+                            if (lDiagnoses.size() > 0) {
+                                oDiagnose = lDiagnoses.get(0);
+                            }
+                            //fDiagnoseContainer.showDiagnose();
+                        } else {
+                            //fDiagnoseContainer.showMenu();
+                        }
                     }
                     if (aChecker != null) {
                         aChecker.update();
@@ -138,12 +182,35 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
         }
     }
 
-    public void update() {
-        loadDiagnoses();
+    public void loadModelChecks() {
+        // Load
+        if (iDevice != null && iDevice.getDevice().getoModel() != null) {
+            cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_CHECKS + iDevice.getDevice().getoModel().getkModel(), null, new Interface_VolleyResult() {
+                @Override
+                public void onResult(JSONObject oJson) throws JSONException {
+                    lModelChecks.clear();
+                    if (oJson != null) {
+                        JSONArray aJson = oJson.getJSONArray("lModelChecks");
+                        for (int i = 0; i < aJson.length(); i++) {
+                            JSONObject jsonModelCheck = aJson.getJSONObject(i);
+                            ModelCheck oModelCheck = new ModelCheck(jsonModelCheck, getActivity());
+                            lModelChecks.add(oModelCheck);
+                        }
+                    }
+                    ModelCheck.sortByPosition(lModelChecks);
+                    ModelCheck.sortByLogic(lModelChecks);
+                    ModelCheck.updatePosition(lModelChecks);
+
+                    fModelChecks.refresh(false);
+                    fDiagnoseContainer.updateLayout();
+                }
+            });
+        }
     }
 
-    public void reset() {
-
+    public void update() {
+        loadDiagnoses();
+        loadModelChecks();
     }
 
     @Override
@@ -152,25 +219,14 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
     }
 
     @Override
+    public ArrayList<ModelCheck> getModelChecks() {
+        return lModelChecks;
+    }
+
+    @Override
     public void addDiagnose() {
-        JSONObject oJson = new JSONObject();
-        try {
-            oJson.put("kDevice", iDevice.getDevice().getIdDevice());
-            oJson.put("kUser", 1);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        cVolley.getResponse(Request.Method.PUT, Urls.URL_CREATE_DIAGNOSE, oJson, new Interface_VolleyResult() {
-            @Override
-            public void onResult(JSONObject oJson) throws JSONException {
-                if (oJson != null) {
-                    Diagnose oDiagnose = new Diagnose(getActivity(), oJson);
-                    lDiagnoses.add(oDiagnose);
-                    Fragment_Checker.this.oDiagnose = oDiagnose;
-                    fDiagnoseContainer.showDiagnose();
-                }
-            }
-        });
+        oDiagnose = null;
+        fDiagnoseContainer.showDiagnose();
     }
 
     @Override
@@ -186,11 +242,20 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
     }
 
     @Override
-    public void deleteDiagnose() {
-        cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_DIAGNOSE+oDiagnose.getId(), null);
-        lDiagnoses.remove(oDiagnose);
-        oDiagnose = null;
+    public void setDiagnose(Diagnose diagnose) {
+        oDiagnose = diagnose;
+    }
+
+    @Override
+    public void deleteDiagnose(Diagnose diagnose) {
+        if (lDiagnoses.indexOf(diagnose) == 0) {
+            setDiagnose(null);
+        }
+        diagnose.delete();
+        lDiagnoses.remove(diagnose);
         fDiagnoseContainer.showMenu();
+        aChecker.updateDiagnose();
+
     }
 
     @Override
@@ -204,11 +269,39 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
     }
 
     @Override
-    public void showTab(int position) {
-        ViewPager.setCurrentItem(position);
+    public void showTab(Integer position) {
+        if (ViewPager != null) {
+            if (position == null) {
+                ViewPager.setCurrentItem(0);
+                fDiagnoseContainer.showMenu();
+            } else {
+                ViewPager.setCurrentItem(position);
+            }
+        }
+    }
+
+    @Override
+    public void diagnoseChange() {
+        sortDiagnoses();
+        aChecker.updateDiagnose();
+    }
+
+    @Override
+    public void changeModelChecks() {
+        fDiagnoseContainer.getFragmentDiagnose().updateLayout();
+        fModelChecks.refresh(true);
     }
 
     public void sortDiagnoses() {
         Collections.sort(lDiagnoses);
+    }
+
+    public void removeFragments() {
+        if (fDiagnoseContainer != null) fDiagnoseContainer.removeFragments();
+        if (aChecker != null) aChecker.remove();
+    }
+
+    public void reset() {
+        showTab(0);
     }
 }

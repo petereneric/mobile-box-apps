@@ -84,10 +84,7 @@ public class Fragment_List_Diagnose_Menu extends Fragment implements Adapter_Lis
                     switch (direction) {
                         case ItemTouchHelper.LEFT:
                             // Delete
-                            Diagnose diagnose = iChecker.getDiagnoses().get(viewHolder.getAdapterPosition());
-                            diagnose.delete();
-                            iChecker.getDiagnoses().remove(iChecker.getDiagnoses().get(viewHolder.getAdapterPosition()));
-                            update();
+                            iChecker.deleteDiagnose(iChecker.getDiagnoses().get(viewHolder.getAdapterPosition()));
                             break;
                     }
                 }
@@ -154,8 +151,10 @@ public class Fragment_List_Diagnose_Menu extends Fragment implements Adapter_Lis
 
     @Override
     public void update() {
-        aDiagnoseMenu.update(iChecker.getDiagnoses());
-        Log.i("Sagan", iChecker.getDiagnoses().size()+"");
-        aDiagnoseMenu.notifyDataSetChanged();
+        if (iChecker != null) {
+            aDiagnoseMenu.update(iChecker.getDiagnoses());
+            Log.i("Sagan", iChecker.getDiagnoses().size()+"");
+            aDiagnoseMenu.notifyDataSetChanged();
+        }
     }
 }

@@ -44,8 +44,8 @@ public class Diagnose implements Comparable<Diagnose> {
             id = oJson.getInt("id");
             kDevice = oJson.getInt("kDevice");
             cUser = oJson.getString("cUser");
-            dCreation = Utility_DateTime.stringToDate(oJson.getString("dCreation"));
-            dLastUpdate = Utility_DateTime.stringToDate(oJson.getString("dLastUpdate"));
+            dCreation = Utility_DateTime.stringToDateTime(oJson.getString("dCreation"));
+            dLastUpdate = Utility_DateTime.stringToDateTime(oJson.getString("dLastUpdate"));
             bFinished = oJson.getInt("bFinished") == 1;
             bPassed = oJson.isNull("bPassed") ? null : oJson.getInt("bPassed") == 1;
             /*
@@ -301,6 +301,6 @@ public class Diagnose implements Comparable<Diagnose> {
         if (getdLastUpdate() == null || o.getdLastUpdate() == null) {
             return 0;
         }
-        return getdLastUpdate().compareTo(o.getdLastUpdate());
+        return o.getdLastUpdate().compareTo(getdLastUpdate());
     }
 }

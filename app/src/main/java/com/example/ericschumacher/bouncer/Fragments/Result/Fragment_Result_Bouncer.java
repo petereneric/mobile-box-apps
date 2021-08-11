@@ -81,7 +81,7 @@ public class Fragment_Result_Bouncer extends Fragment_Result {
                                 }
                                 break;
                             case Constants_Intern.STATE_DEFECT_REPAIR:
-                                llDefectRepair.setVisibility(View.VISIBLE);
+                                llRepair.setVisibility(View.VISIBLE);
                                 //tvDefectRepairDevice.setVisibility(View.VISIBLE);
                                 break;
                             case Constants_Intern.STATE_DEFECT_REUSE:

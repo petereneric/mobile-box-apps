@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Diagnose
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Diagnose;
+import com.example.ericschumacher.bouncer.Objects.ModelCheck;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
@@ -54,6 +56,15 @@ public class Fragment_Diagnose_Container extends Fragment implements Interface_U
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
+    }
+
+    @Nullable
+    @org.jetbrains.annotations.Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+
+
         // Interfaces
         iDevice = (Fragment_Device.Interface_Device)getActivity();
         iChecker = (Interface_Fragment_Checker)getTargetFragment();
@@ -65,18 +76,25 @@ public class Fragment_Diagnose_Container extends Fragment implements Interface_U
         fManager = getChildFragmentManager();
 
         // Fragments
+
         fMenu = new Fragment_List_Diagnose_Menu();
         fDiagnose = new Fragment_List_Diagnose();
-        replaceFragment(fMenu,"FRAGMENT_DIAGNOSE_MENU");
+        //addFragment(fMenu,"FRAGMENT_DIAGNOSE_MENU");
+        //addFragment(fDiagnose,"FRAGMENT_DIAGNOSE");
+        if (iChecker.getDiagnoses().size() == 0 || (DateUtils.isToday(iChecker.getDiagnoses().get(0).getdCreation().getTime()) && !iChecker.getDiagnoses().get(0).isbFinished())) {
+            showDiagnose();
+        } else {
+            showMenu();
+        }
+        Log.i("CRRREATION", "test");
 
         // Interfaces
         iUpdateDiagnoseMenu = (Interface_Update)fMenu;
-    }
+        iUpdateDiagnose = (Interface_Update)fDiagnose;
 
-    @Nullable
-    @org.jetbrains.annotations.Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+
+
+        Log.i("CRRREATION", "test2");
         setLayout(inflater, container);
         return vLayout;
     }
@@ -96,6 +114,20 @@ public class Fragment_Diagnose_Container extends Fragment implements Interface_U
             if (iUpdateDiagnoseMenu != null) {
                 iUpdateDiagnoseMenu.update();
             }
+            if (iUpdateDiagnose != null) {
+                iUpdateDiagnose.update();
+            }
+        }
+    }
+
+    public void updateLayout() {
+        if (fManager != null) {
+            if (iUpdateDiagnoseMenu != null) {
+                iUpdateDiagnoseMenu.update();
+            }
+            if (fDiagnose != null) {
+                fDiagnose.updateLayout();
+            }
         }
     }
 
@@ -106,9 +138,23 @@ public class Fragment_Diagnose_Container extends Fragment implements Interface_U
 
     private void replaceFragment(Fragment fragment, String tag) {
         if (fManager != null) {
+            /*
+            for(int i = 0; i < fManager.getBackStackEntryCount(); ++i) {
+                fManager.popBackStack();
+            }
+             */
+
             FragmentTransaction fTransaction = fManager.beginTransaction();
             fTransaction.addToBackStack(null);
             fTransaction.replace(R.id.flContainer, fragment, tag).commit();
+        }
+    }
+
+    private void addFragment(Fragment fragment, String tag) {
+        if (fManager != null) {
+            FragmentTransaction fTransaction = fManager.beginTransaction();
+            fTransaction.addToBackStack(null);
+            fTransaction.add(R.id.flContainer, fragment, tag).commit();
         }
     }
 
@@ -138,6 +184,11 @@ public class Fragment_Diagnose_Container extends Fragment implements Interface_U
     }
 
     @Override
+    public ArrayList<ModelCheck> getModelChecks() {
+        return iChecker.getModelChecks();
+    }
+
+    @Override
     public void addDiagnose() {
         iChecker.addDiagnose();
     }
@@ -153,8 +204,13 @@ public class Fragment_Diagnose_Container extends Fragment implements Interface_U
     }
 
     @Override
-    public void deleteDiagnose() {
-        iChecker.deleteDiagnose();
+    public void setDiagnose(Diagnose diagnose) {
+        iChecker.setDiagnose(diagnose);
+    }
+
+    @Override
+    public void deleteDiagnose(Diagnose diagnose) {
+        iChecker.deleteDiagnose(diagnose);
     }
 
     @Override
@@ -168,16 +224,52 @@ public class Fragment_Diagnose_Container extends Fragment implements Interface_U
     }
 
     @Override
-    public void showTab(int position) {
+    public void showTab(Integer position) {
         iChecker.showTab(position);
     }
 
+    @Override
+    public void diagnoseChange() {
+        iChecker.diagnoseChange();
+    }
+
+    @Override
+    public void changeModelChecks() {
+        changeModelChecks();
+    }
+
     public void showDiagnose() {
+        Log.i("Call", "showDiagnose");
         replaceFragment(fDiagnose, "FRAGMENT_DIAGNOSE");
+        if (fDiagnose != null) {
+            fDiagnose.update();
+        }
     }
 
     public void showMenu() {
+        Log.i("Call", "showMenu");
         replaceFragment(fMenu, "FRAGMENT_DIAGNOSE_MENU");
+    }
+
+    public Fragment_List_Diagnose getFragmentDiagnose() {
+        return fDiagnose;
+    }
+
+
+
+    public void removeFragments() {
+        if (fManager != null) {
+            for(int i = 0; i < fManager.getBackStackEntryCount(); ++i) {
+                fManager.popBackStack();
+            }
+            /*
+            FragmentTransaction fTransaction = fManager.beginTransaction();
+            fTransaction.remove(fManager.findFragmentByTag("FRAGMENT_DIAGNOSE")).commit();
+            FragmentTransaction fTransaction2 = fManager.beginTransaction();
+            fTransaction2.remove(fManager.findFragmentByTag("FRAGMENT_DIAGNOSE_MENU")).commit();
+
+             */
+        }
     }
 }
 

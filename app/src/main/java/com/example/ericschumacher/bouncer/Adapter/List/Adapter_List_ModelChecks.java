@@ -17,6 +17,7 @@ public class Adapter_List_ModelChecks extends Adapter_List {
 
     // Data
     ArrayList<ModelCheck> lModelChecks = new ArrayList<>();
+    Integer sFails = null;
 
     public Adapter_List_ModelChecks(android.content.Context context, Adapter_List.Interface_Adapter_List iAdapterList, ArrayList<ModelCheck> lModelChecks) {
         super(context, iAdapterList);
@@ -46,7 +47,8 @@ public class Adapter_List_ModelChecks extends Adapter_List {
 
             // Right
             vhList.ivRight.setVisibility(View.GONE);
-            vhList.tvRight.setText(String.valueOf(oModelCheck.getnCount()));
+            Double qFail = getFailQuote(oModelCheck);
+            vhList.tvRight.setText(sFails != null ? String.format("%.0f", qFail) + " %" : "-");
 
             // Middle
             vhList.tvTitle.setText(oModelCheck.getoCheck().getcName());
@@ -71,6 +73,18 @@ public class Adapter_List_ModelChecks extends Adapter_List {
     }
     public void update(ArrayList lData) {
         lModelChecks = lData;
+    }
+
+    private Double getFailQuote(ModelCheck oModelCheck) {
+        if (sFails == null) {
+            for (ModelCheck modelCheck : lModelChecks) {
+                if (sFails == null && modelCheck.getnCount() > 0) {
+                    sFails = 0;
+                }
+                if (sFails != null) sFails = sFails + modelCheck.getnCount();
+            }
+        }
+        return sFails != null ? (double)oModelCheck.getnCount()/(double)sFails*100 : null;
     }
 
 }

@@ -3,7 +3,6 @@ package com.example.ericschumacher.bouncer.Fragments.Result;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Bouncer;
-import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
@@ -28,7 +25,7 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
     TextView tvInteractionType;
     RelativeLayout rlResult;
     LinearLayout llReuse;
-    LinearLayout llDefectRepair;
+    LinearLayout llRepair;
     LinearLayout llDefectReuse;
     LinearLayout llRecycling;
     LinearLayout llUnknown;
@@ -44,6 +41,7 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
     TextView tvReuseBackcover;
     TextView tvDefectRepairDevice;
     TextView tvDefectReuseDevice;
+    TextView tvRepair;
     TextView tvRecyclingDevice;
     TextView tvRecyclingBattery;
     TextView tvRecyclingBackcover;
@@ -79,7 +77,7 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
         tvInteractionTitle = vLayout.findViewById(R.id.tvTitle);
         tvInteractionType = vLayout.findViewById(R.id.tvTitle);
         llReuse = vLayout.findViewById(R.id.llReuse);
-        llDefectRepair = vLayout.findViewById(R.id.llRepair);
+        llRepair = vLayout.findViewById(R.id.llRepair);
         llDefectReuse = vLayout.findViewById(R.id.llDefectReuse);
         llRecycling = vLayout.findViewById(R.id.llRecycling);
         llUnknown = vLayout.findViewById(R.id.llUnknown);
@@ -95,6 +93,7 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
         tvReuseBackcover = vLayout.findViewById(R.id.tvReuseBackcover);
         tvDefectRepairDevice = vLayout.findViewById(R.id.tvRepairDevice);
         tvDefectReuseDevice = vLayout.findViewById(R.id.tvDefectReuseDevice);
+        tvRepair = vLayout.findViewById(R.id.tvRepair);
         tvRecyclingDevice = vLayout.findViewById(R.id.tvRecyclingDevice);
         tvRecyclingBattery = vLayout.findViewById(R.id.tvRecyclingBattery);
         tvRecyclingBackcover = vLayout.findViewById(R.id.tvRecyclingBackcover);
