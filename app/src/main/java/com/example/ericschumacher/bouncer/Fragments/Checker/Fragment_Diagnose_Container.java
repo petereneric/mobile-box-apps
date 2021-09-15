@@ -234,8 +234,13 @@ public class Fragment_Diagnose_Container extends Fragment implements Interface_U
     }
 
     @Override
-    public void changeModelChecks() {
-        changeModelChecks();
+    public void changeModelChecks(boolean updateModelChecks) {
+        changeModelChecks(updateModelChecks);
+    }
+
+    @Override
+    public void loadModelChecks() {
+        iChecker.loadModelChecks();
     }
 
     public void showDiagnose() {

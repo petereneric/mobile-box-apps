@@ -1,23 +1,33 @@
 package com.example.ericschumacher.bouncer.Fragments.Object;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Model;
 import com.example.ericschumacher.bouncer.Objects.Model;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Layout;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
 public class Fragment_Model extends Fragment implements View.OnClickListener {
 
     View vLayout;
+
+    // Header
+    TextView tvSubtitle;
+    ImageView ivHeaderLeft;
+    ImageView ivHeaderRight;
+
     TableRow trName;
     TableRow trManufacturer;
     TableRow trCharger;
@@ -28,6 +38,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
     TableRow trDefaultExploitation;
     TableRow trDps;
     TableRow trPhoneType;
+    TableRow trModelDamages;
 
     TextView tvTitle;
     TextView tvName;
@@ -40,6 +51,10 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
     TextView tvDefaultExploitation;
     TextView tvDps;
     TextView tvPhoneType;
+    TextView tvModelDamages;
+
+    // Visibility
+    boolean bShowAll;
 
     // Interface
     Activity_Model activityModel;
@@ -54,7 +69,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         // Interface
-        activityModel = (Activity_Model)getActivity();
+        activityModel = (Activity_Model) getActivity();
 
         // Layout
         setLayout(inflater, container);
@@ -71,6 +86,9 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
         // Initiate
         vLayout = inflater.inflate(getIdLayout(), container, false);
         tvTitle = vLayout.findViewById(R.id.tvTitle);
+        tvSubtitle = vLayout.findViewById(R.id.tvSubtitle);
+        ivHeaderLeft = vLayout.findViewById(R.id.ivHeaderLeft);
+        ivHeaderRight = vLayout.findViewById(R.id.ivHeaderRight);
         trName = vLayout.findViewById(R.id.trName);
         trManufacturer = vLayout.findViewById(R.id.trManufacturer);
         trCharger = vLayout.findViewById(R.id.trCharger);
@@ -81,6 +99,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
         trDefaultExploitation = vLayout.findViewById(R.id.trDefaultExploitation);
         trDps = vLayout.findViewById(R.id.trDps);
         trPhoneType = vLayout.findViewById(R.id.trPhone);
+        trModelDamages = vLayout.findViewById(R.id.trModelDamages);
 
         tvName = vLayout.findViewById(R.id.tvName);
         tvManufacturer = vLayout.findViewById(R.id.tvManufacturer);
@@ -92,6 +111,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
         tvDefaultExploitation = vLayout.findViewById(R.id.tvDefaultExploitation);
         tvDps = vLayout.findViewById(R.id.tvDps);
         tvPhoneType = vLayout.findViewById(R.id.tvPhone);
+        tvModelDamages = vLayout.findViewById(R.id.tvModelDamages);
 
         // Data
         tvTitle.setText(getString(R.string.model));
@@ -106,6 +126,13 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
         trDefaultExploitation.setOnClickListener(this);
         trDps.setOnClickListener(this);
         trPhoneType.setOnClickListener(this);
+        trModelDamages.setOnClickListener(this);
+        ivHeaderLeft.setOnClickListener(this);
+        ivHeaderRight.setOnClickListener(this);
+
+        ivHeaderRight.setVisibility(View.VISIBLE);
+        ivHeaderRight.setColorFilter(getActivity().getResources().getColor(R.color.color_divider));
+        bShowAll = false;
     }
 
     public int getIdLayout() {
@@ -149,9 +176,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
             } else {
                 tvDefaultExploitation.setText(getString(R.string.unknown));
             }
-
             tvDps.setText(Integer.toString(model.getnDps()));
-
             if (model.isBatteryRemovable() != null) {
                 tvBatteryRemovable.setText((model.isBatteryRemovable()) ? getString(R.string.yes) : getString(R.string.no));
             } else {
@@ -163,10 +188,11 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
                 tvBackcoverRemovable.setText(getString(R.string.unknown));
             }
             if (model.getoBattery() != null && model.getoBattery().getLku() != null) {
-                tvBatteryLku.setText(model.getoBattery().getoManufacturer().getcShortcut()+" - "+Integer.toString(model.getoBattery().getLku()));
+                tvBatteryLku.setText(model.getoBattery().getoManufacturer().getcShortcut() + " - " + Integer.toString(model.getoBattery().getLku()));
             } else {
                 tvBatteryLku.setText(getString(R.string.unknown));
             }
+            tvModelDamages.setText(Integer.toString(model.getlModelDamages().size()));
 
         } else {
             tvName.setText(getString(R.string.unknown));
@@ -179,10 +205,45 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
             tvBatteryRemovable.setText(getString(R.string.unknown));
             tvBackcoverRemovable.setText(getString(R.string.unknown));
             tvBatteryLku.setText(getString(R.string.unknown));
+            tvModelDamages.setText(getString(R.string.unknown));
         }
+
+        // Clap-In & -Out
+        updateVisibility();
+
     }
 
-    private void setClickable (boolean clickable) {
+    public void updateVisibility() {
+        int bVisibility;
+        if (bShowAll) {
+            bVisibility = View.VISIBLE;
+            ivHeaderRight.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_expand_more));
+
+        } else {
+            bVisibility = View.GONE;
+            ivHeaderRight.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_expand_less));
+        }
+        setVisibility(bVisibility);
+
+    }
+
+    public void setVisibility(int bVisibility) {
+        trPhoneType.setVisibility(bVisibility);
+        trManufacturer.setVisibility(bVisibility);
+        trDefaultExploitation.setVisibility(bVisibility);
+        trDps.setVisibility(bVisibility);
+        trBattery.setVisibility(bVisibility);
+        trBatteryRemovable.setVisibility(bVisibility);
+        trBackcoverRemovable.setVisibility(bVisibility);
+        trModelDamages.setVisibility(bVisibility);
+    }
+
+    public void showAll(boolean bShowAll) {
+        this.bShowAll = bShowAll;
+        updateVisibility();
+    }
+
+    private void setClickable(boolean clickable) {
         trName.setClickable(clickable);
         trManufacturer.setClickable(clickable);
         trCharger.setClickable(clickable);
@@ -193,6 +254,7 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
         trBatteryRemovable.setClickable(clickable);
         trBackcoverRemovable.setClickable(clickable);
         trBatteryLku.setClickable(clickable);
+        trModelDamages.setClickable(clickable);
     }
 
     @Override
@@ -224,6 +286,13 @@ public class Fragment_Model extends Fragment implements View.OnClickListener {
                 break;
             case R.id.trDps:
                 activityModel.requestDps();
+                break;
+            case R.id.trModelDamages:
+                activityModel.requestModelDamages();
+                break;
+            case R.id.ivHeaderRight:
+                bShowAll = !bShowAll;
+                updateLayout();
                 break;
         }
     }

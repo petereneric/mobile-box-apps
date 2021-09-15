@@ -47,7 +47,7 @@ public class Adapter_List_Choice_Image_Color extends Adapter_List_Choice_Image{
             vhChoiceImage.ivIconOne.setVisibility(View.VISIBLE);
             vhChoiceImage.ivIconTwo.setVisibility(View.GONE);
             //vhChoiceImage.ivIconTwo.setVisibility(View.VISIBLE);
-            Utility_Layout.setBackground(Context, vhChoiceImage.ivIconOne, R.color.color_transparent);
+            Utility_Layout.setBackgroundColor(Context, vhChoiceImage.ivIconOne, R.color.color_transparent);
             iFragmentChoiceImageColor.setImage(vhChoiceImage.ivIconOne, vhChoiceImage.ivIconTwo, position);
             /*
             ImageRequest request1 = new ImageRequest(iFragmentChoiceImageColor.getUrlIconOne(position),

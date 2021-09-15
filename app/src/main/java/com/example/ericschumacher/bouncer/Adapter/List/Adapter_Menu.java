@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ericschumacher.bouncer.Activities.Menu.Activity_Menu;
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Objects.Object_Menu;
 import com.example.ericschumacher.bouncer.R;
 
@@ -33,7 +35,7 @@ public class Adapter_Menu extends RecyclerView.Adapter<Adapter_Menu.View_Holder_
         View_Holder_Menu vh = new View_Holder_Menu(layout, new Interface_Click() {
             @Override
             public void onClick(int i) {
-                Context.startActivity(lMenu.get(i).getIntentActivity());
+                ((Activity_Menu) Context).startActivityForResult(lMenu.get(i).getIntentActivity().putExtra(Constants_Intern.TOKEN_AUTHENTICATION, ((Activity_Menu) Context).getTokenAuthentication()), Constants_Intern.REQUEST_CODE_TOKEN_AUTHENTICATION);
             }
         });
         return vh;

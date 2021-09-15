@@ -16,6 +16,7 @@ public class Check implements Serializable {
     int id;
     String cName;
     String cDescription;
+    Integer kDamage = null;
     Context context;
     Volley_Connection cVolley;
 
@@ -27,6 +28,10 @@ public class Check implements Serializable {
             id = oJson.getInt("id");
             cName = oJson.getString("cName");
             cDescription = oJson.getString("cDescription");
+            if (!oJson.isNull("kDamage")) {
+                kDamage = oJson.getInt("kDamage");
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -42,5 +47,9 @@ public class Check implements Serializable {
 
     public String getcDescription() {
         return cDescription;
+    }
+
+    public Integer getkDamage() {
+        return kDamage;
     }
 }

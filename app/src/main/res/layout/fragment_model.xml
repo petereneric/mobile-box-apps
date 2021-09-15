@@ -7,8 +7,6 @@
         layout="@layout/layout_header"
         android:id="@+id/vTitle"/>
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,7 +35,20 @@
                     android:layout_weight="@dimen/layout_weight_model_value_one"/>
             </TableRow>
 
+            <TableRow
+                android:id="@+id/trPhone">
 
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/typePhone"
+                    android:layout_weight="@dimen/layout_weight_model_key_one"/>
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    style="@style/tv_tableRow_Value"
+                    android:text="Handy"
+                    android:layout_weight="@dimen/layout_weight_model_value_one"/>
+            </TableRow>
 
             <TableRow
                 android:id="@+id/trManufacturer">
@@ -55,17 +66,17 @@
             </TableRow>
 
             <TableRow
-                android:id="@+id/trCharger">
+                android:id="@+id/trModelDamages">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
-                    android:text="@string/oCharger"
+                    android:text="@string/model_damages"
                     android:layout_weight="@dimen/layout_weight_model_key_one"/>
 
                 <TextView
-                    android:id="@+id/tvCharger"
+                    android:id="@+id/tvModelDamages"
                     style="@style/tv_tableRow_Value"
-                    android:text="Dick"
+                    android:text="6"
                     android:layout_weight="@dimen/layout_weight_model_value_one"/>
             </TableRow>
 
@@ -77,18 +88,19 @@
             android:layout_weight="@dimen/layout_weight_model_row_two"
             android:layout_height="wrap_content">
 
+
             <TableRow
-                android:id="@+id/trPhone">
+                android:id="@+id/trCharger">
 
                 <TextView
                     style="@style/tv_tableRow_Key"
-                    android:text="@string/typePhone"
+                    android:text="@string/oCharger"
                     android:layout_weight="@dimen/layout_weight_model_key_two"/>
 
                 <TextView
-                    android:id="@+id/tvPhone"
+                    android:id="@+id/tvCharger"
                     style="@style/tv_tableRow_Value"
-                    android:text="Handy"
+                    android:text="Dick"
                     android:layout_weight="@dimen/layout_weight_model_value_two"/>
             </TableRow>
 
@@ -131,21 +143,6 @@
             android:layout_height="wrap_content">
 
             <TableRow
-                android:id="@+id/trBattery">
-
-                <TextView
-                    style="@style/tv_tableRow_Key"
-                    android:text="@string/oBattery"
-                    android:layout_weight="@dimen/layout_weight_model_key_three"/>
-
-                <TextView
-                    android:id="@+id/tvBattery"
-                    style="@style/tv_tableRow_Value"
-                    android:text="BL-4C"
-                    android:layout_weight="@dimen/layout_weight_model_value_three"/>
-            </TableRow>
-
-            <TableRow
                 android:id="@+id/trBatteryLku">
 
                 <TextView
@@ -157,6 +154,21 @@
                     android:id="@+id/tvBatteryLku"
                     style="@style/tv_tableRow_Value"
                     android:text="NOK - 34"
+                    android:layout_weight="@dimen/layout_weight_model_value_three"/>
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/trBattery">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/oBattery"
+                    android:layout_weight="@dimen/layout_weight_model_key_three"/>
+
+                <TextView
+                    android:id="@+id/tvBattery"
+                    style="@style/tv_tableRow_Value"
+                    android:text="BL-4C"
                     android:layout_weight="@dimen/layout_weight_model_value_three"/>
             </TableRow>
 

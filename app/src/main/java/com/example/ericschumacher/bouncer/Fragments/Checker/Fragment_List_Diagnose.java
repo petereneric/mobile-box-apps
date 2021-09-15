@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,24 +19,31 @@ import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List_Diagnose;
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_List;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Checker_CodeLock;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Checker_Software;
 import com.example.ericschumacher.bouncer.Fragments.List.Fragment_List;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_JWT;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Checker;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Diagnose;
-import com.example.ericschumacher.bouncer.Objects.ModelCheck;
+import com.example.ericschumacher.bouncer.Objects.DiagnoseCheck;
+import com.example.ericschumacher.bouncer.Objects.Object_Model_Damage;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_DateTime;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
+import com.example.ericschumacher.bouncer.Volley.JWT;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Fragment_List_Diagnose extends Fragment_List implements Adapter_List.Interface_Adapter_List, View.OnClickListener, Interface_Update {
+public class Fragment_List_Diagnose extends Fragment_List implements Adapter_List.Interface_Adapter_List, View.OnClickListener, Interface_Update, Fragment_Dialog.Interface_Fragment_Dialog {
 
     // Layout
     TextView tvTitle;
@@ -46,6 +54,8 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
     // Interface
     Fragment_Device.Interface_Device iDevice;
     Interface_Fragment_Checker iChecker;
+    Interface_Manager iManager;
+    Interface_JWT iJWT;
 
     // Data
     Adapter_List_Diagnose aDiagnose;
@@ -56,9 +66,11 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
 
         // Interface
         iChecker = (Interface_Fragment_Checker) getParentFragment();
+        iManager = (Interface_Manager) getActivity();
+        iJWT = (Interface_JWT)getActivity();
 
         // Data
-        loadChecks();
+        //loadChecks();
     }
 
 
@@ -87,6 +99,9 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
     @Override
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
         super.setLayout(inflater, container);
+
+        // RecyclerView
+        //rvList.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         // Layout
         tvTitle = vLayout.findViewById(R.id.tvTitle);
@@ -123,13 +138,14 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
 
     public void updateLayout() {
         if (iChecker != null) {
-            aDiagnose.updateData(iChecker.getModelChecks(), iChecker.getDiagnose() != null ? iChecker.getDiagnose().getlDiagnoseChecks(): new ArrayList<>());
+            aDiagnose.updateData(iChecker.getModelChecks(), iChecker.getDiagnose() != null ? iChecker.getDiagnose().getlDiagnoseChecks() : new ArrayList<>());
             if (iChecker.getDiagnose() != null) {
                 tvSubtitle.setVisibility(View.VISIBLE);
-                tvSubtitle.setText(Utility_DateTime.dateToString(iChecker.getDiagnose().getdLastUpdate()) + " | " + iChecker.getDiagnose().getcUser() + " | " + (iChecker.getDiagnose().isbFinished() ? getString(R.string.finished) : getString(R.string.not_finished)));
+                tvSubtitle.setText(Utility_DateTime.dateToString(iChecker.getDiagnose().getdCreation()) + " | " + iChecker.getDiagnose().getcUser() + " | " + (iChecker.getDiagnose().isbFinished() ? getString(R.string.finished) : getString(R.string.not_finished)));
 
             } else {
                 tvSubtitle.setVisibility(View.GONE);
+                ivHeaderRight.setVisibility(View.GONE);
             }
         }
     }
@@ -148,14 +164,14 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
                         case ItemTouchHelper.LEFT:
                             if (iChecker.getDiagnose() != null && iChecker.getDiagnose().hasDiagnoseCheck(iChecker.getModelChecks().get(viewHolder.getAdapterPosition()).getoCheck().getId())) {
                                 // Delete DiagnoseCheck
-                                iChecker.getDiagnose().deleteDiagnoseCheck(iChecker.getModelChecks().get(viewHolder.getAdapterPosition()).getoCheck().getId());
+                                iChecker.getDiagnose().deleteDiagnoseCheck(iChecker.getModelChecks(), iChecker.getModelChecks().get(viewHolder.getAdapterPosition()).getoCheck().getId());
                                 iChecker.getDiagnose().updateState(iDevice.getDevice().getoModel(), iChecker.getModelChecks());
+                                iChecker.diagnoseChange();
                                 aDiagnose.updateData(iChecker.getModelChecks(), iChecker.getDiagnose().getlDiagnoseChecks());
                                 break;
                             }
                     }
                 }
-
             }
 
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
@@ -190,29 +206,6 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
         itemTouchHelper.attachToRecyclerView(rvList);
     }
 
-    private void loadChecks() {
-
-        // Load Diagnose_Checks
-        if (iChecker.getDiagnose() != null) {
-            Log.i("laadde", "nochmal!!");
-            cVolley.getResponse(Request.Method.GET, Urls.URL_GET_DIAGNOSE_CHECKS + iChecker.getDiagnose().getId(), null, new Interface_VolleyResult() {
-                @Override
-                public void onResult(JSONObject oJson) throws JSONException {
-                    if (oJson != null) {
-                        if (oJson.getJSONArray("lDiagnoseChecks").length() > 0) {
-                            iChecker.getDiagnose().addDiagnoseChecks(oJson.getJSONArray("lDiagnoseChecks"));
-                        }
-
-                        aDiagnose.updateData(iChecker.getModelChecks(), iChecker.getDiagnose().getlDiagnoseChecks());
-                    } else {
-                        // There is no Diagnose
-                    }
-                }// Check if null means that there are no modelChecks --> Show in UI
-            });
-        } else {
-            if (aDiagnose != null) aDiagnose.updateData(iChecker.getModelChecks(), new ArrayList<>());
-        }
-    }
 
     @Override
     public int getItemCount() {
@@ -231,12 +224,22 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
     @Override
     public void clickList(int position) {
         if (iChecker.getDiagnose() != null) {
-            handleClick(position);
+            boolean bHandlerClick = (getItemViewType(position) == Constants_Intern.SPECIAL && iChecker.getDiagnose().isbFinished());
+            if (DateUtils.isToday(iChecker.getDiagnose().getdCreation().getTime()) || bHandlerClick) {
+                if (iJWT.getJWT().isAdmin() || iJWT.getJWT().getkUser() == iChecker.getDiagnose().getkUser() || bHandlerClick) {
+                    handleClick(position);
+                } else {
+                    Utility_Toast.show(getActivity(), R.string.cant_be_edited_due_wrong_user);
+                }
+            } else {
+                Utility_Toast.show(getActivity(), R.string.cant_be_edited_anymore_due_time);
+            }
         } else {
             JSONObject oJson = new JSONObject();
             try {
                 oJson.put("kDevice", iDevice.getDevice().getIdDevice());
-                oJson.put("kUser", 1);
+                Log.i("UserId: ", iJWT.getJWT().getkUser()+"");
+                oJson.put("kUser", iJWT.getJWT().getkUser());
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -256,6 +259,11 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
 
     }
 
+    @Override
+    public boolean longClickList(int position) {
+        return false;
+    }
+
     private void handleClick(int position) {
         boolean bFinishedBefore = iChecker.getDiagnose().isbFinished();
 
@@ -270,7 +278,51 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
 
         // Item
         if (getItemViewType(position) == Constants_Intern.ITEM) {
-            iChecker.getDiagnose().click(iChecker.getModelChecks(), iChecker.getModelChecks().get(position).getoCheck().getId());
+            if (iChecker.getModelChecks().get(position).getoCheck().getId() == 13 || iChecker.getModelChecks().get(position).getoCheck().getId() == 10) {
+                boolean bFailed = true;
+                for (DiagnoseCheck diagnoseCheck : iChecker.getDiagnose().getlDiagnoseChecks()) {
+                    if (diagnoseCheck.getkCheck() == iChecker.getModelChecks().get(position).getoCheck().getId()) {
+                        if (diagnoseCheck.gettStatus() == 2) {
+                            bFailed = false;
+                        }
+                        break;
+                    }
+                }
+
+                if (bFailed) {
+                    if (iChecker.getModelChecks().get(position).getoCheck().getId() == 13) {
+                        // Code-Lock
+                        for (Object_Model_Damage modelDamage : iDevice.getDevice().getoModel().getlModelDamages()) {
+                            if (modelDamage.getoDamage().getkDamage() == iChecker.getModelChecks().get(position).getoCheck().getkDamage()) {
+                                // show dialog
+                                Fragment_Dialog_Checker_CodeLock fDialog = new Fragment_Dialog_Checker_CodeLock();
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("nPosition", position);
+                                fDialog.setArguments(bundle);
+                                fDialog.setTargetFragment(this, 0);
+                                fDialog.show(getFragmentManager(), "FRAGMENT_DIALOG_CHECKER_CODE_LOCK");
+                                return;
+                            }
+                        }
+                    }
+                    if (iChecker.getModelChecks().get(position).getoCheck().getId() == 10) {
+                        // Software
+                        for (Object_Model_Damage modelDamage : iDevice.getDevice().getoModel().getlModelDamages()) {
+                            if (modelDamage.getoDamage().getkDamage() == iChecker.getModelChecks().get(position).getoCheck().getkDamage()) {
+                                // show dialog
+                                Fragment_Dialog_Checker_Software fDialog = new Fragment_Dialog_Checker_Software();
+                                Bundle bundle = new Bundle();
+                                bundle.putInt("nPosition", position);
+                                fDialog.setArguments(bundle);
+                                fDialog.setTargetFragment(this, 0);
+                                fDialog.show(getFragmentManager(), "FRAGMENT_DIALOG_CHECKER_SOFTWARE");
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+            iChecker.getDiagnose().click(iChecker.getModelChecks(), iChecker.getModelChecks().get(position).getoCheck().getId(), true);
         }
 
         // State
@@ -300,8 +352,41 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
     @Override
     public void update() {
         Log.i("jOOOO", "neee");
+        /*
         if (aDiagnose != null) {
             loadChecks();
+        }
+         */
+    }
+
+    @Override
+    public void click(String cTag, int typeButton, int nPosition) {
+        if (cTag.equals("FRAGMENT_DIALOG_CHECKER_CODE_LOCK") || cTag.equals("FRAGMENT_DIALOG_CHECKER_SOFTWARE")) {
+            switch (typeButton) {
+                case Constants_Intern.BUTTON_ONE:
+                    if (nPosition > 0) iChecker.getDiagnose().click(iChecker.getModelChecks(), iChecker.getModelChecks().get(nPosition - 1).getoCheck().getId(), false);
+                    // Edit
+                    iChecker.getDiagnose().updateState(iDevice.getDevice().getoModel(), iChecker.getModelChecks());
+                    iChecker.diagnoseChange();
+                    aDiagnose.updateData(iChecker.getModelChecks(), iChecker.getDiagnose().getlDiagnoseChecks());
+                    // reset
+                    iManager.reset();
+                    break;
+                case Constants_Intern.BUTTON_TWO:
+                    boolean bFinishedBefore = iChecker.getDiagnose().isbFinished();
+
+                    iChecker.getDiagnose().click(iChecker.getModelChecks(), iChecker.getModelChecks().get(nPosition).getoCheck().getId(), true);
+
+                    // State
+                    iChecker.getDiagnose().updateState(iDevice.getDevice().getoModel(), iChecker.getModelChecks());
+                    iChecker.diagnoseChange();
+
+                    if (!bFinishedBefore && iChecker.getDiagnose().isbFinished()) {
+                        // Show Handler
+                        iChecker.showHandler();
+                    }
+                    break;
+            }
         }
     }
 }

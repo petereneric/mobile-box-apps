@@ -1,13 +1,14 @@
 package com.example.ericschumacher.bouncer.Adapter.List.ViewHolder;
 
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.Guideline;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Long_Click;
 import com.example.ericschumacher.bouncer.R;
 
 public class ViewHolder_List extends RecyclerView.ViewHolder {
@@ -24,10 +25,15 @@ public class ViewHolder_List extends RecyclerView.ViewHolder {
     public ConstraintLayout lMain;
     public ConstraintLayout clForeground;
     public ConstraintLayout clBackground;
-    public ImageView ivSwipe;
+    public ImageView ivSwipeRight;
+    public ImageView ivSwipeLeft;
+    public Guideline gOne;
+    public Guideline gTwo;
+    public Guideline gThree;
+    public Guideline gFour;
 
 
-    public ViewHolder_List(View itemView, final Interface_Click iClick) {
+    public ViewHolder_List(View itemView, final Interface_Click iClick, final Interface_Long_Click iLongClick) {
         super(itemView);
 
         // Initiate
@@ -42,13 +48,24 @@ public class ViewHolder_List extends RecyclerView.ViewHolder {
         lMain = itemView.findViewById(R.id.lMain);
         clBackground = itemView.findViewById(R.id.clBackground);
         clForeground = itemView.findViewById(R.id.clForeground);
-        ivSwipe = itemView.findViewById(R.id.ivSwipe);
+        ivSwipeRight = itemView.findViewById(R.id.ivSwipeRight);
+        ivSwipeLeft = itemView.findViewById(R.id.ivSwipeLeft);
+        gOne = itemView.findViewById(R.id.gOne);
+        gTwo = itemView.findViewById(R.id.gTwo);
+        gThree = itemView.findViewById(R.id.gThree);
+        gFour = itemView.findViewById(R.id.gFour);
 
         // OnClickListener
         clForeground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 iClick.onClick(getAdapterPosition());
+            }
+        });
+        clForeground.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                return iLongClick.onLongClick(getAdapterPosition());
             }
         });
     }

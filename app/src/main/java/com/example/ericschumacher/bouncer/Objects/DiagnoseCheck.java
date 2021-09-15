@@ -72,10 +72,16 @@ public class DiagnoseCheck {
     }
 
     public void delete() {
-        cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_DIAGNOSE_CHECK+getId(), null);
+        if (getId() != null) {
+            cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_DIAGNOSE_CHECK+getId(), null);
+        }
     }
 
-    public int getId() {
+    public void deleteWithoutId(int kDiagnose, int kCheck) {
+        cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_DIAGNOSE_CHECK+kDiagnose+"/"+kCheck, null);
+    }
+
+    public Integer getId() {
         return id;
     }
 

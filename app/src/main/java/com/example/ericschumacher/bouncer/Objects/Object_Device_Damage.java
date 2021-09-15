@@ -39,7 +39,7 @@ public class Object_Device_Damage {
             //dCreation = oJson.getInt(Constants_Extern.ID_DEVICE_DAMAGE);
             //dLastUpdate = oJson.getInt(Constants_Extern.ID_DEVICE_DAMAGE);
             tStatus = oJson.getInt(Constants_Extern.TYPE_STATUS);
-            cNotes = oJson.getString(Constants_Extern.NOTES);
+            //cNotes = oJson.getString(Constants_Extern.NOTES);
 
         } catch (JSONException e) {
             e.printStackTrace();

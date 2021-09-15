@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
+import com.example.ericschumacher.bouncer.Activities.Activity_Authentication;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Fragment_Choice;
@@ -32,6 +33,8 @@ import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Manufacturer;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Battery;
+import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Damages;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Authentication;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Model;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_Battery;
@@ -41,6 +44,8 @@ import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_Exploitation;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_PhoneType;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_YesNo;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Edit;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Model_New_New;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
@@ -57,7 +62,7 @@ import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Activity_Model extends AppCompatActivity implements View.OnClickListener, TextWatcher, Fragment_Choice.Interface_Choice, Fragment_Input.Interface_Input, Fragment_Select.Interface_Select, Fragment_Edit_Model_Battery.Interface_Edit_Model_Battery, Interface_Model_New_New, Fragment_Display.Interface_Display, TextView.OnEditorActionListener {
+public class Activity_Model extends Activity_Authentication implements View.OnClickListener, TextWatcher, Fragment_Choice.Interface_Choice, Fragment_Input.Interface_Input, Fragment_Select.Interface_Select, Fragment_Edit_Model_Battery.Interface_Edit_Model_Battery, Interface_Model_New_New, Fragment_Display.Interface_Display, TextView.OnEditorActionListener, Interface_Edit, Interface_Manager {
 
     // Layout
     public Toolbar vToolbar;
@@ -101,6 +106,9 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
 
         // SharedPreferences
         SharedPreferences = getSharedPreferences(Constants_Intern.SHARED_PREFERENCES, 0);
+
+        // Token
+        tAuthentication = getIntent().getStringExtra(Constants_Intern.TOKEN_AUTHENTICATION);
     }
 
     @Override
@@ -116,6 +124,9 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
 
     public void initiateFragments() {
         fModel = (Fragment_Model) fManager.findFragmentById(R.id.fModel);
+
+        // Visibility
+        fModel.showAll(true);
     }
 
     public void showFragment(Fragment fragment, Bundle bData, String cTag, Boolean bKeyboard) {
@@ -422,6 +433,12 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
         showFragment(new Fragment_Select_YesNo(), bData, Constants_Intern.FRAGMENT_SELECT_BACKCOVER_REMOVABLE, Constants_Intern.DONT_SHOW_KEYBOARD);
     }
 
+    public void requestModelDamages() {
+        Bundle bData = new Bundle();
+        bData.putString(Constants_Intern.TITLE, getString(R.string.model_damages));
+        showFragment(new Fragment_Edit_Model_Damages(), bData, Constants_Intern.FRAGMENT_EDIT_MODEL_DAMAGES, Constants_Intern.DONT_SHOW_KEYBOARD);
+    }
+
 
     // Return
 
@@ -538,6 +555,12 @@ public class Activity_Model extends AppCompatActivity implements View.OnClickLis
                 });
                 break;
         }
+    }
+
+    @Override
+    public void returnEdit(String cTag) {
+        removeFragment(cTag);
+        base(Constants_Intern.CLOSE_KEYBOARD);
     }
 
     @Override

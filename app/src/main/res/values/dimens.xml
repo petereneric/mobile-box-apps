@@ -11,7 +11,7 @@
     <dimen name="size_text_footer">24sp</dimen>
 
     // Size - Text | Item
-    <dimen name="size_text_item_main">21sp</dimen>
+    <dimen name="size_text_item_main">20sp</dimen>
     <dimen name="size_text_item_description">17sp</dimen>
     <dimen name="size_text_item_description_sub">13sp</dimen>
 
@@ -36,6 +36,17 @@
     <dimen name="layout_weight_device_value_one">7</dimen>
     <dimen name="layout_weight_device_value_two">8</dimen>
     <dimen name="layout_weight_device_value_three">3</dimen>
+
+    // FragmentDeviceChecker
+    <dimen name="layout_weight_device_checker_row_one">5</dimen>
+    <dimen name="layout_weight_device_checker_row_two">5</dimen>
+    <dimen name="layout_weight_device_checker_row_three">5</dimen>
+    <dimen name="layout_weight_device_checker_key_one">5</dimen>
+    <dimen name="layout_weight_device_checker_key_two">7</dimen>
+    <dimen name="layout_weight_device_checker_key_three">4</dimen>
+    <dimen name="layout_weight_device_checker_value_one">7</dimen>
+    <dimen name="layout_weight_device_checker_value_two">4</dimen>
+    <dimen name="layout_weight_device_checker_value_three">2</dimen>
 
     // FragmentRecord
     <dimen name="layout_weight_record_row_one">12</dimen>
@@ -69,6 +80,12 @@
     <dimen name="layout_weight_table_article_key">6</dimen>
     <dimen name="layout_weight_table_article_value">18</dimen>
     <dimen name="layout_margin_top_buttons_interaction">32dp</dimen>
+
+    // Authentication
+    <dimen name="size_circle_authentication_code">24dp</dimen>
+    <dimen name="size_circle_authentication_keyboard">80dp</dimen>
+    <dimen name="margin_authentication_keyboard_bottom">@dimen/size_circle_authentication_keyboard</dimen>
+    <dimen name="margin_authentication_code_left_right">32dp</dimen>
 
 
 

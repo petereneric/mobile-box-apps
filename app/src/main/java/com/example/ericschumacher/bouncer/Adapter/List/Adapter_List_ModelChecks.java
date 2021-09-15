@@ -13,6 +13,8 @@ import com.example.ericschumacher.bouncer.R;
 
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
+
 public class Adapter_List_ModelChecks extends Adapter_List {
 
     // Data
@@ -52,7 +54,14 @@ public class Adapter_List_ModelChecks extends Adapter_List {
 
             // Middle
             vhList.tvTitle.setText(oModelCheck.getoCheck().getcName());
-            vhList.tvSubtitle.setVisibility(View.GONE);
+
+
+            if (!oModelCheck.getoCheck().getcDescription().equals("") || !oModelCheck.getcDescription().equals("")) {
+                vhList.tvSubtitle.setVisibility(View.VISIBLE);
+                vhList.tvSubtitle.setText(oModelCheck.getoCheck().getcDescription() + ((!oModelCheck.getoCheck().getcDescription().equals("") && !oModelCheck.getcDescription().equals("")) ? " | " : "") + oModelCheck.getcDescription());
+            } else {
+                vhList.tvSubtitle.setVisibility(GONE);
+            }
         }
 
         // Add
@@ -71,7 +80,9 @@ public class Adapter_List_ModelChecks extends Adapter_List {
             vhList.tvSubtitle.setVisibility(View.GONE);
         }
     }
+
     public void update(ArrayList lData) {
+        sFails = null;
         lModelChecks = lData;
     }
 

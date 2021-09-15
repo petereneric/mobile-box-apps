@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Layout;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +21,12 @@ import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_Jui
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_List;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Checker;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_JWT;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Diagnose;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
 public class Fragment_List_Diagnose_Menu extends Fragment implements Adapter_List.Interface_Adapter_List, Interface_Update {
@@ -38,12 +41,14 @@ public class Fragment_List_Diagnose_Menu extends Fragment implements Adapter_Lis
 
     // Interfaces
     Interface_Fragment_Checker iChecker;
+    Interface_JWT iJWT;
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Interfaces
         iChecker = (Interface_Fragment_Checker)getParentFragment();
+        iJWT = (Interface_JWT)getActivity();
 
         // Adapter
         aDiagnoseMenu = new Adapter_List_Diagnose_Menu(getActivity(), this, iChecker.getDiagnoses());
@@ -84,11 +89,21 @@ public class Fragment_List_Diagnose_Menu extends Fragment implements Adapter_Lis
                     switch (direction) {
                         case ItemTouchHelper.LEFT:
                             // Delete
-                            iChecker.deleteDiagnose(iChecker.getDiagnoses().get(viewHolder.getAdapterPosition()));
+                            if (iJWT.getJWT().isAdmin() || DateUtils.isToday(iChecker.getDiagnoses().get(viewHolder.getAdapterPosition()).getdCreation().getTime())) {
+                                if (iJWT.getJWT().isAdmin() || iJWT.getJWT().getkUser() == iChecker.getDiagnoses().get(viewHolder.getAdapterPosition()).getkUser()) {
+                                    iChecker.deleteDiagnose(iChecker.getDiagnoses().get(viewHolder.getAdapterPosition()));
+                                } else {
+                                    Utility_Toast.show(getActivity(), R.string.cant_be_edited_due_wrong_user);
+                                    update();
+                                }
+                            } else {
+                                Utility_Toast.show(getActivity(), R.string.cant_be_edited_anymore_due_time);
+                                update();
+                            }
+
                             break;
                     }
                 }
-
             }
 
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
@@ -138,6 +153,11 @@ public class Fragment_List_Diagnose_Menu extends Fragment implements Adapter_Lis
                 iChecker.addDiagnose();
                 break;
         }
+    }
+
+    @Override
+    public boolean longClickList(int position) {
+        return false;
     }
 
     @Override

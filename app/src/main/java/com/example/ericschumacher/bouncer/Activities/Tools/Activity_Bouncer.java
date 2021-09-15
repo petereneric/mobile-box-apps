@@ -53,6 +53,10 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
         super.initiateFragments();
         fDevice.lMenu.setVisibility(View.GONE);
         fRecord = (Fragment_Record_Bouncer) fManager.findFragmentById(R.id.fRecord);
+
+        // Visibility
+        fDevice.showAll(false);
+        fModel.showAll(false);
     }
 
     public void removeFragments() {

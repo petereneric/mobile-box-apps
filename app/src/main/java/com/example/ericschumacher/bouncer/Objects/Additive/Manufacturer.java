@@ -44,7 +44,7 @@ public class Manufacturer extends Additive {
     }
 
     public String getUrlIcon() {
-        return "http://svp-server.com/svp-gmbh/erp/files/icon_manufactures/" + Integer.toString(Id) + ".jpg";
+        return "https://svp-api.com/api/public/index.php/manufacturer/image/" + Integer.toString(Id);
     }
 
     public String getcShortcut() {

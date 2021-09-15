@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Checker;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
 import com.example.ericschumacher.bouncer.Objects.Object_Device_Damage;
@@ -89,8 +90,9 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
                         // Diagnose failed
                         if (iDevice.getDevice().getoModel().getlModelDamages().size() >= 2) {
                             // Repair possible
+                            iDevice.getDevice().settState(Constants_Intern.STATE_DEFECT_REPAIR); // State
                             llRepair.setVisibility(View.VISIBLE);
-                            if (iDevice.getDevice().isBatteryContained()) {
+                            if (iDevice.getDevice().getoBattery() != null && iDevice.getDevice().isBatteryContained()) {
                                 // Battery contained
                                 llDefectRepairObjects.setVisibility(View.VISIBLE);
                                 tvDefectRepairDevice.setVisibility(View.VISIBLE);
@@ -112,6 +114,7 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
 
                         } else {
                             // Repair not possible
+                            iDevice.getDevice().settState(Constants_Intern.STATE_RECYCLING); // State
                             llRecycling.setVisibility(View.VISIBLE);
                             if (iDevice.getDevice().isBackcoverContained()) {
                                 // Backcover contained
@@ -119,7 +122,7 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
                                     // Backcover recycling
                                     if (iDevice.getDevice().isBatteryContained()) {
                                         // Battery contained
-                                        if (iDevice.getDevice().getoBattery().getlStock() < 2) {
+                                        if (iDevice.getDevice().getoBattery() != null && iDevice.getDevice().getoBattery().getlStock() < 2) {
                                             // Battery reuse
                                             llRecyclingObjects.setVisibility(View.VISIBLE);
                                             tvRecyclingDevice.setVisibility(View.VISIBLE);
@@ -142,7 +145,7 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
                                     llReuse.setVisibility(View.VISIBLE);
                                     llReuseObjects.setVisibility(View.VISIBLE);
                                     tvReuseBackcover.setVisibility(View.VISIBLE);
-                                    if (iDevice.getDevice().isBatteryContained()) {
+                                    if (iDevice.getDevice().isBatteryContained() && iDevice.getDevice().getoBattery() != null) {
                                         // Battery contained
                                         if (iDevice.getDevice().getoBattery().getlStock() < 2) {
                                             // Battery reuse
@@ -161,7 +164,7 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
                                 // Backcover not contained
                                 if (iDevice.getDevice().isBatteryContained()) {
                                     // Battery contained
-                                    if (iDevice.getDevice().getoBattery().getlStock() < 2) {
+                                    if (iDevice.getDevice().getoBattery() != null && iDevice.getDevice().getoBattery().getlStock() < 2) {
                                         // Battery reuse
                                         llRecyclingObjects.setVisibility(View.VISIBLE);
                                         tvRecyclingDevice.setVisibility(View.VISIBLE);

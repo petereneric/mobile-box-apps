@@ -5,7 +5,10 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.ericschumacher.bouncer.R;
 
 public class Utility_Layout {
 
@@ -18,8 +21,16 @@ public class Utility_Layout {
         view.setBackground(shape);
     }
 
-    public static void setBackground(Context context, View view, int kColor) {
+    public static void setImageDrawable(Context context, ImageView iv, int kDrawable) {
+        iv.setImageDrawable(ContextCompat.getDrawable(context, kDrawable));
+    }
+
+    public static void setBackgroundColor(Context context, View view, int kColor) {
         view.setBackgroundColor(ContextCompat.getColor(context, kColor));
+    }
+
+    public static void setBackgroundDrawable(Context context, View view, int kDrawable) {
+        view.setBackground(ContextCompat.getDrawable(context, kDrawable));
     }
 
     public static void setTextColor(Context context, TextView textView, int kColor) {

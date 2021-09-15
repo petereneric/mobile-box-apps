@@ -4,13 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.Request;
+import com.example.ericschumacher.bouncer.Activities.Activity_Authentication;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
@@ -28,7 +28,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Activity_Juicer extends AppCompatActivity implements View.OnClickListener, Fragment_Display.Interface_Display {
+public class Activity_Juicer extends Activity_Authentication implements View.OnClickListener, Fragment_Display.Interface_Display {
 
     // Layout
     Toolbar vToolbar;
@@ -74,11 +74,9 @@ public class Activity_Juicer extends AppCompatActivity implements View.OnClickLi
 
         // Connection
         cVolley = new Volley_Connection(this);
-
-
-
-
     }
+
+
 
     @Override
     protected void onStart() {

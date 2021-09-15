@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
+import com.example.ericschumacher.bouncer.Activities.Activity_Authentication;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List_Battery;
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager_Battery;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
@@ -34,7 +34,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Activity_Battery extends AppCompatActivity implements View.OnClickListener, Interface_Battery {
+public class Activity_Battery extends Activity_Authentication implements View.OnClickListener, Interface_Battery {
 
     // Layout
     ImageView ivClear;

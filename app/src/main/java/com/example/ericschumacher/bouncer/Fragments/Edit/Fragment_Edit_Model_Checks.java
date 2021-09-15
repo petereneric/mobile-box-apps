@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
@@ -83,6 +84,7 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
                     Collections.swap(iChecker.getModelChecks(), viewHolder.getAdapterPosition(),target.getAdapterPosition());
                     ModelCheck.updatePosition(iChecker.getModelChecks());
                     aList.notifyItemMoved(viewHolder.getAdapterPosition(), target.getAdapterPosition());
+                    iChecker.changeModelChecks(false);
                     return true;
                 } else {
                     return false;
@@ -109,6 +111,10 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
     @Override
     public void update() {
         Log.i("lääädt", "jooo");
+    }
+
+    public void updateLayout() {
+        refresh(true);
     }
 
     public void refresh(boolean bSort) {
@@ -166,7 +172,7 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
                                         public void onResult(JSONObject oJson) throws JSONException {
                                             if (oJson != null) {
                                                 iChecker.getModelChecks().add(new ModelCheck(oJson, getActivity()));
-                                                iChecker.changeModelChecks();
+                                                iChecker.changeModelChecks(true);
                                             }
                                         }
                                     });
@@ -185,6 +191,31 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
     }
 
     @Override
+    public boolean longClickList(int position) {
+        if (getItemViewType(position) == Constants_Intern.ADD) {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+            dialog.setTitle(R.string.add_check_procedures);
+            String[] lProcedures = {"Tastenhandy", "Smartphone", "Smartphone - Galaxy"};
+            dialog.setItems(lProcedures, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int position) {
+                    cVolley.getResponse(Request.Method.PUT, Urls.URL_CREATE_MODEL_CHECKS + iModel.getModel().getkModel() + "/" + position, null, new Interface_VolleyResult() {
+                        @Override
+                        public void onResult(JSONObject oJson) throws JSONException {
+                            iChecker.loadModelChecks();
+                        }
+                    });
+                }
+            });
+            AlertDialog alert = dialog.create();
+            alert.show();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public int getItemViewType(int position) {
         return position < iChecker.getModelChecks().size() ? Constants_Intern.ITEM : Constants_Intern.ADD;
     }
@@ -199,10 +230,10 @@ public class Fragment_Edit_Model_Checks extends Fragment_Edit implements Interfa
     public void deleteModelCheck(ModelCheck modelCheck) {
         iChecker.getModelChecks().remove(modelCheck);
         modelCheck.delete();
-        iChecker.changeModelChecks();
+        iChecker.changeModelChecks(true);
     }
 
     public void editModelCheck() {
-        iChecker.changeModelChecks();
+        iChecker.changeModelChecks(true);
     }
 }

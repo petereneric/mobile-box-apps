@@ -31,21 +31,20 @@
                     android:text="Weiß" />
             </TableRow>
 
-            <TableRow android:id="@+id/trShape">
+            <TableRow android:id="@+id/trState">
 
                 <TextView
-                    style="@style/tv_tableRow_Key"
+                    style="@style/tv_tableRow_Key_Small"
                     android:layout_weight="@dimen/layout_weight_device_key_one"
-                    android:text="@string/shape" />
+                    android:text="@string/state" />
 
                 <TextView
-                    android:id="@+id/tvShape"
-                    style="@style/tv_tableRow_Value"
+                    android:id="@+id/tvState"
+                    style="@style/tv_tableRow_Value_Small"
                     android:layout_weight="@dimen/layout_weight_device_value_one"
-                    android:text="@string/shape_very_good" />
+                    android:text="@string/reuse" />
+
             </TableRow>
-
-
 
             <TableRow
                 android:id="@+id/trDamages"
@@ -71,19 +70,18 @@
             android:layout_height="wrap_content"
             android:layout_weight="@dimen/layout_weight_device_row_two">
 
-            <TableRow android:id="@+id/trState">
+            <TableRow android:id="@+id/trShape">
 
                 <TextView
-                    style="@style/tv_tableRow_Key_Small"
+                    style="@style/tv_tableRow_Key"
                     android:layout_weight="@dimen/layout_weight_device_key_two"
-                    android:text="@string/state" />
+                    android:text="@string/shape" />
 
                 <TextView
-                    android:id="@+id/tvState"
-                    style="@style/tv_tableRow_Value_Small"
+                    android:id="@+id/tvShape"
+                    style="@style/tv_tableRow_Value"
                     android:layout_weight="@dimen/layout_weight_device_value_two"
-                    android:text="@string/reuse" />
-
+                    android:text="@string/shape_very_good" />
             </TableRow>
 
             <TableRow android:id="@+id/trStation">

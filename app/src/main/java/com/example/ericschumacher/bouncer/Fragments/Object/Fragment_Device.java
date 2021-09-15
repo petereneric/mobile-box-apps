@@ -2,9 +2,11 @@ package com.example.ericschumacher.bouncer.Fragments.Object;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TableRow;
 import android.widget.TextView;
 
@@ -12,6 +14,11 @@ import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.R;
 
 public class Fragment_Device extends Fragment_Object implements View.OnClickListener {
+
+    // Header
+    TextView tvSubtitle;
+    ImageView ivHeaderLeft;
+    ImageView ivHeaderRight;
 
     TableRow trColor;
     TableRow trShape;
@@ -34,6 +41,9 @@ public class Fragment_Device extends Fragment_Object implements View.OnClickList
     TextView tvState;
     public View lMenu;
 
+    // Visibility
+    boolean bShowAll;
+
     // Interface
     Interface_Device iFragmentDevice;
 
@@ -54,6 +64,9 @@ public class Fragment_Device extends Fragment_Object implements View.OnClickList
 
         // Initiate
         tvTitle = vLayout.findViewById(R.id.tvTitle);
+        tvSubtitle = vLayout.findViewById(R.id.tvSubtitle);
+        ivHeaderLeft = vLayout.findViewById(R.id.ivHeaderLeft);
+        ivHeaderRight = vLayout.findViewById(R.id.ivHeaderRight);
         trLKU = vLayout.findViewById(R.id.trLKU);
         trStation = vLayout.findViewById(R.id.trStation);
         trColor = vLayout.findViewById(R.id.trColor);
@@ -95,6 +108,12 @@ public class Fragment_Device extends Fragment_Object implements View.OnClickList
         trBattery.setOnClickListener(this);
         trBackcoverContained.setOnClickListener(this);
         trDamages.setOnClickListener(this);
+        ivHeaderLeft.setOnClickListener(this);
+        ivHeaderRight.setOnClickListener(this);
+
+        ivHeaderRight.setVisibility(View.VISIBLE);
+        ivHeaderRight.setColorFilter(getActivity().getResources().getColor(R.color.color_divider));
+        bShowAll = false;
     }
 
     public int getIdLayout() {
@@ -158,7 +177,38 @@ public class Fragment_Device extends Fragment_Object implements View.OnClickList
                 tvBackcoverContained.setText(getString(R.string.unknown));
             }
         }
+
+        // Clap-In & -Out
+        updateVisibility();
     }
+
+    public void updateVisibility() {
+        int bVisibility;
+        if (bShowAll) {
+            bVisibility = View.VISIBLE;
+            ivHeaderRight.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_expand_more));
+
+        } else {
+            bVisibility = View.GONE;
+            ivHeaderRight.setImageDrawable(ContextCompat.getDrawable(getContext(), R.drawable.ic_expand_less));
+        }
+        setVisibility(bVisibility);
+
+    }
+
+    public void setVisibility(int bVisibility) {
+        trState.setVisibility(bVisibility);
+        trDamages.setVisibility(bVisibility);
+        trStation.setVisibility(bVisibility);
+        trBattery.setVisibility(bVisibility);
+        trBackcoverContained.setVisibility(bVisibility);
+    }
+
+    public void showAll(boolean bShowAll) {
+        this.bShowAll = bShowAll;
+        updateVisibility();
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -191,6 +241,10 @@ public class Fragment_Device extends Fragment_Object implements View.OnClickList
                 break;
             case R.id.trState:
                 iFragmentDevice.requestState();
+                break;
+            case R.id.ivHeaderRight:
+                bShowAll = !bShowAll;
+                updateLayout();
                 break;
         }
     }

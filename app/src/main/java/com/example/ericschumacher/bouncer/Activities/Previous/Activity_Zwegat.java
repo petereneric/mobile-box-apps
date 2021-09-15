@@ -2,12 +2,12 @@ package com.example.ericschumacher.bouncer.Activities.Previous;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
+import com.example.ericschumacher.bouncer.Activities.Activity_Authentication;
 import com.example.ericschumacher.bouncer.Fragments.Old.Fragment_Zwegat;
 import com.example.ericschumacher.bouncer.R;
 
-public class  Activity_Zwegat extends AppCompatActivity {
+public class  Activity_Zwegat extends Activity_Authentication {
 
     android.support.v4.app.FragmentManager FragmentManager;
 

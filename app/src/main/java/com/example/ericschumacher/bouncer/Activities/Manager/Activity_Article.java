@@ -197,7 +197,8 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
     }
 
     public void reset() {
-
+        fModel.showAll(false);
+        fDevice.showAll(false);
         oArticle = null;
         super.reset();
     }
@@ -396,6 +397,10 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
                     }
                     break;
             }
+
+            // Visibility
+            fModel.showAll(false);
+            fDevice.showAll(false);
         } else {
             reset();
         }

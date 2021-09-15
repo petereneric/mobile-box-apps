@@ -23,6 +23,7 @@ public class Diagnose implements Comparable<Diagnose> {
     // Data
     int id;
     int kDevice;
+    int kUser;
     String cUser;
     Date dCreation;
     Date dLastUpdate;
@@ -43,19 +44,20 @@ public class Diagnose implements Comparable<Diagnose> {
         try {
             id = oJson.getInt("id");
             kDevice = oJson.getInt("kDevice");
+            kUser = oJson.getInt("kUser");
             cUser = oJson.getString("cUser");
             dCreation = Utility_DateTime.stringToDateTime(oJson.getString("dCreation"));
             dLastUpdate = Utility_DateTime.stringToDateTime(oJson.getString("dLastUpdate"));
             bFinished = oJson.getInt("bFinished") == 1;
             bPassed = oJson.isNull("bPassed") ? null : oJson.getInt("bPassed") == 1;
-            /*
-            JSONArray aJson = oJson.getJSONArray("lDiagnoseChecks");
-            for (int i = 0; i < aJson.length(); i++) {
-                JSONObject jsonDiagnoseCheck = aJson.getJSONObject(i);
-                DiagnoseCheck oDiagnoseCheck = new DiagnoseCheck(eContext, jsonDiagnoseCheck);
-                lDiagnoseChecks.add(oDiagnoseCheck);
+            if (!oJson.isNull("lDiagnoseChecks")) {
+                JSONArray aJson = oJson.getJSONArray("lDiagnoseChecks");
+                for (int i = 0; i < aJson.length(); i++) {
+                    JSONObject jsonDiagnoseCheck = aJson.getJSONObject(i);
+                    DiagnoseCheck oDiagnoseCheck = new DiagnoseCheck(eContext, jsonDiagnoseCheck);
+                    lDiagnoseChecks.add(oDiagnoseCheck);
+                }
             }
-            */
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -63,7 +65,7 @@ public class Diagnose implements Comparable<Diagnose> {
 
     public void addDiagnoseChecks(JSONArray jsonArray) {
         lDiagnoseChecks.clear();
-        for (int i = 0; i<jsonArray.length(); i++) {
+        for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 DiagnoseCheck diagnoseCheck = new DiagnoseCheck(eContext, jsonArray.getJSONObject(i));
                 lDiagnoseChecks.add(diagnoseCheck);
@@ -73,12 +75,23 @@ public class Diagnose implements Comparable<Diagnose> {
         }
     }
 
-    public void deleteDiagnoseCheck(int kCheck) {
+    public void deleteDiagnoseCheck(ArrayList<ModelCheck> lModelChecks, int kCheck) {
         for (DiagnoseCheck diagnoseCheck : lDiagnoseChecks) {
             if (diagnoseCheck.getkCheck() == kCheck) {
-                diagnoseCheck.delete();
+                if (diagnoseCheck.getId() != null) {
+                    diagnoseCheck.delete();
+                } else {
+                    diagnoseCheck.deleteWithoutId(getId(), kCheck);
+                }
                 lDiagnoseChecks.remove(diagnoseCheck);
-                return;
+                break;
+            }
+        }
+        for (ModelCheck modelCheck : lModelChecks) {
+            if (modelCheck.getoCheck().getId() == kCheck) {
+                // Lower count for amount of fails
+                modelCheck.setnCount(modelCheck.getnCount() > 0 ? modelCheck.getnCount() - 1 : 0);
+                break;
             }
         }
     }
@@ -136,7 +149,7 @@ public class Diagnose implements Comparable<Diagnose> {
 
  */
 
-    public void click(ArrayList<ModelCheck> lModelChecks, int kCheck) {
+    public void click(ArrayList<ModelCheck> lModelChecks, int kCheck, boolean bFailed) {
         // Check if an existing DiagnoseCheck was clicked or not
         boolean bDiagnoseCheckExists = false;
         for (DiagnoseCheck diagnoseCheck : lDiagnoseChecks) {
@@ -145,6 +158,19 @@ public class Diagnose implements Comparable<Diagnose> {
                 // An existing DiagnoseCheck was clicked
                 // 1.1. Just change the status
                 diagnoseCheck.settStatus(diagnoseCheck.gettStatus() == 1 ? 2 : 1);
+                for (ModelCheck modelCheck : lModelChecks) {
+                    if (modelCheck.getoCheck().getId() == kCheck) {
+                        // Lower count for amount of fails
+                        if (diagnoseCheck.gettStatus() == 1) {
+                            modelCheck.setnCount(modelCheck.getnCount() > 0 ? modelCheck.getnCount() - 1 : 0);
+                        }
+                        // Rise count for amount of fails
+                        if (diagnoseCheck.gettStatus() == 2) {
+                            modelCheck.setnCount(modelCheck.getnCount() + 1);
+                        }
+                    }
+                }
+
                 bDiagnoseCheckExists = true;
                 break;
             }
@@ -153,11 +179,14 @@ public class Diagnose implements Comparable<Diagnose> {
         if (!bDiagnoseCheckExists) {
             // A not existing DiagnoseCheck was clicked
             // 2.1. Create a new failed DiagnoseCheck
-            DiagnoseCheck _diagnoseCheck = new DiagnoseCheck(eContext, id, kCheck, 2);
+            //DiagnoseCheck _diagnoseCheck = new DiagnoseCheck(eContext, id, kCheck, 2);
+            DiagnoseCheck _diagnoseCheck = new DiagnoseCheck(eContext, id, kCheck, bFailed ? 2 : 1);
             lDiagnoseChecks.add(_diagnoseCheck);
             // 2.2. Set all not set ModelChecks to passed, new created DiagnoseChecks
             for (ModelCheck modelCheck : lModelChecks) {
                 if (modelCheck.getoCheck().getId() == kCheck) {
+
+                    if (bFailed) modelCheck.setnCount(modelCheck.getnCount() + 1);
                     break;
                 } else {
                     // 3. Check if there is already a DiagnoseCheck
@@ -248,6 +277,10 @@ public class Diagnose implements Comparable<Diagnose> {
         this.kDevice = kDevice;
     }
 
+    public int getkUser() {
+        return kUser;
+    }
+
     public String getcUser() {
         return cUser;
     }
@@ -292,8 +325,19 @@ public class Diagnose implements Comparable<Diagnose> {
         this.bPassed = bPassed;
     }
 
-    public void delete() {
-        cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_DIAGNOSE+id, null);
+    public void delete(ArrayList<ModelCheck> lModelChecks) {
+        for (DiagnoseCheck diagnoseCheck : lDiagnoseChecks) {
+            diagnoseCheck.delete();
+            if (diagnoseCheck.gettStatus() == 2) {
+                for (ModelCheck modelCheck : lModelChecks) {
+                    if (modelCheck.getoCheck().getId() == diagnoseCheck.getkCheck()) {
+                        // Lower count for amount of fails
+                        modelCheck.setnCount(modelCheck.getnCount() > 0 ? modelCheck.getnCount() - 1 : 0);
+                    }
+                }
+            }
+        }
+        cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_DIAGNOSE + id, null);
     }
 
     @Override

@@ -78,6 +78,7 @@ public class ModelCheck implements Serializable {
 
     public void setnCount(int nCount) {
         this.nCount = nCount;
+        update();
     }
 
     public int getnPosition() {

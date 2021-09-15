@@ -1,5 +1,6 @@
 package com.example.ericschumacher.bouncer.Fragments.Checker;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -14,12 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.Request;
+import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Checker;
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager;
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager_Checker;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Checks;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
 import com.example.ericschumacher.bouncer.Fragments.Result.Fragment_Result_Checker;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Checker;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Diagnose;
 import com.example.ericschumacher.bouncer.Objects.ModelCheck;
@@ -42,24 +45,29 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
     View vLayout;
     ViewPager_Eric ViewPager;
     TabLayout vTabLayout;
+    boolean bCreated = false;
 
     // Adapter
     Adapter_Pager_Checker aChecker;
 
     // Interfaces
     Fragment_Device.Interface_Device iDevice;
+    Interface_Manager iManager;
 
     // Connection
     Volley_Connection cVolley;
 
     // Data
     ArrayList<ModelCheck> lModelChecks = new ArrayList<>();
-    ArrayList<Diagnose> lDiagnoses;
+    ArrayList<Diagnose> lDiagnoses = new ArrayList<>();
     Diagnose oDiagnose;
 
     // Fragments
     Fragment_Diagnose_Container fDiagnoseContainer;
     Fragment_Edit_Model_Checks fModelChecks;
+
+    // Log
+    private final String lTitle = "FRAGMENT_CHECKER";
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
@@ -75,12 +83,13 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
     public View onCreateView(LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         // Interfaces
         iDevice = (Fragment_Device.Interface_Device)getActivity();
+        iManager = (Interface_Manager)getActivity();
 
         // Connection
         cVolley = new Volley_Connection(getActivity());
 
         // Data
-        loadDiagnoses();
+        update();
 
         // Layout
         Log.i("onCreateView", "Fragment_Checker");
@@ -107,13 +116,6 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
 
         // Adapter
         aChecker = new Adapter_Pager_Checker(getActivity().getSupportFragmentManager());
-
-        /*
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
-            fm.popBackStack();
-        }
-         */
 
         // Tabs
         vTabLayout.setupWithViewPager(ViewPager);
@@ -147,11 +149,14 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
     // Data
 
     private void loadDiagnoses() {
-        lDiagnoses = new ArrayList<>();
+        lDiagnoses.clear();
         if (iDevice != null && iDevice.getDevice() != null) {
+            Log.i(lTitle, "loadDiagnoses: "+iDevice.getDevice().getIdDevice());
             cVolley.getResponse(Request.Method.GET, Urls.URL_GET_DIAGNOSES + iDevice.getDevice().getIdDevice(), null, new Interface_VolleyResult() {
                 @Override
                 public void onResult(JSONObject oJson) throws JSONException {
+
+                    lDiagnoses.clear();
                     if (oJson != null) {
                         Log.i("Strange:", ""+iDevice.getDevice().getIdDevice());
                         JSONArray jsonArray = oJson.getJSONArray("lDiagnoses");
@@ -182,9 +187,12 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
         }
     }
 
+    @Override
     public void loadModelChecks() {
         // Load
+        Log.i("whattt", "the fuck");
         if (iDevice != null && iDevice.getDevice().getoModel() != null) {
+            Log.i("heeee", "jooo");
             cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_CHECKS + iDevice.getDevice().getoModel().getkModel(), null, new Interface_VolleyResult() {
                 @Override
                 public void onResult(JSONObject oJson) throws JSONException {
@@ -203,12 +211,28 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
 
                     fModelChecks.refresh(false);
                     fDiagnoseContainer.updateLayout();
+
+                    if (!bCreated) {
+                        bCreated = true;
+                        if (lModelChecks.size() == 0) {
+                            showTab(1);
+                        } else {
+                            showTab(0);
+                        }
+                    }
                 }
             });
         }
     }
 
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
     public void update() {
+        Log.i(lTitle, "update()");
+        oDiagnose = null;
         loadDiagnoses();
         loadModelChecks();
     }
@@ -251,10 +275,10 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
         if (lDiagnoses.indexOf(diagnose) == 0) {
             setDiagnose(null);
         }
-        diagnose.delete();
+        diagnose.delete(lModelChecks);
         lDiagnoses.remove(diagnose);
         fDiagnoseContainer.showMenu();
-        aChecker.updateDiagnose();
+        diagnoseChange();
 
     }
 
@@ -283,13 +307,13 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
     @Override
     public void diagnoseChange() {
         sortDiagnoses();
-        aChecker.updateDiagnose();
+        aChecker.updateLayout();
     }
 
     @Override
-    public void changeModelChecks() {
+    public void changeModelChecks(boolean updateModelChecks) {
         fDiagnoseContainer.getFragmentDiagnose().updateLayout();
-        fModelChecks.refresh(true);
+        if (updateModelChecks) fModelChecks.refresh(true);
     }
 
     public void sortDiagnoses() {
@@ -302,6 +326,7 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
     }
 
     public void reset() {
+        bCreated = false;
         showTab(0);
     }
 }

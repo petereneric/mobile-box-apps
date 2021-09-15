@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvHeader"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:background="@color/color_primary"
+        android:gravity="center"
+        android:text="Title"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/size_text_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:id="@+id/tvContent"
+        style="@style/tv_dialog_content"
+        android:text="Lirum Larum Lipsum dorum sinum, erum."
+        app:layout_constraintBottom_toTopOf="@+id/rlButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHeader" />
+
+    <RelativeLayout
+        android:id="@+id/rlButtons"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/color_primary"
+            android:layout_alignParentTop="true"
+            android:id="@+id/vDividerButtons"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/vDividerButtons">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/rlButtonOne">
+
+                <TextView
+                    android:id="@+id/tvButtonOne"
+                    android:text="tvButtonOne"
+                    style="@style/tv_dialog_button"/>
+
+                <ImageView
+                    android:id="@+id/ivButtonOne"
+                    style="@style/iv_dialog_button"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:id="@+id/rlButtonTwo">
+
+                <TextView
+                    android:id="@+id/tvButtonTwo"
+                    android:text="tvButtonTwo"
+                    style="@style/tv_dialog_button"/>
+
+                <ImageView
+                    android:id="@+id/ivButtonTwo"
+                    style="@style/iv_dialog_button"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

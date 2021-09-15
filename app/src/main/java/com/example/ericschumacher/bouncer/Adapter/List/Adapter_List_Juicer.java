@@ -80,9 +80,9 @@ public class Adapter_List_Juicer extends RecyclerView.Adapter<ViewHolder_Juicer>
         Utility_Layout.setTextColor(Context, holder.tvPosition, kColor);
         Utility_Layout.setTextColor(Context, holder.tvStock, kColor);
         Utility_Layout.setTextColor(Context, holder.tvLoadingStation, kColor);
-        Utility_Layout.setBackground(Context, holder.vDivicerOne, kColor);
-        Utility_Layout.setBackground(Context, holder.vDividerTwo, kColor);
-        Utility_Layout.setBackground(Context, holder.vDividerThree, kColor);
+        Utility_Layout.setBackgroundColor(Context, holder.vDivicerOne, kColor);
+        Utility_Layout.setBackgroundColor(Context, holder.vDividerTwo, kColor);
+        Utility_Layout.setBackgroundColor(Context, holder.vDividerThree, kColor);
     }
 
     @Override

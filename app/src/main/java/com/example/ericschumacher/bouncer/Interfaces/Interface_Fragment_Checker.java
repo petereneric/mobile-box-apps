@@ -17,5 +17,6 @@ public interface Interface_Fragment_Checker {
     public void showHandler();
     public void showTab(Integer position);
     public void diagnoseChange();
-    public void changeModelChecks();
+    public void changeModelChecks(boolean updateModelChecks);
+    public void loadModelChecks();
 }

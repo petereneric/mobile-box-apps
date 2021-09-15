@@ -334,4 +334,58 @@
     </style>
 
 
+    // Dialog
+
+    <style name="tv_dialog_content">
+        <item name="android:textSize">@dimen/size_text_default</item>
+        <item name="android:textColor">@color/color_text_primary</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:layout_margin">16dp</item>
+    </style>
+
+    <style name="tv_dialog_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/color_primary</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="iv_dialog_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:buttonTint">@color/color_primary</item>
+        <item name="android:gravity">center</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    // Authentication
+
+    <style name="tv_dialog_authentication_title">
+        <item name="android:textSize">28sp</item>
+        <item name="android:textColor">@color/color_primary</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="iv_dialog_authentication_code">
+        <item name="android:background">@drawable/background_round_stroke_primary_authentication_code</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
+
+    <style name="b_dialog_authentication_keyboard">
+        <item name="android:textSize">@dimen/size_text_default</item>
+        <item name="android:textColor">@drawable/selector_button_code_textcolor</item>
+        <item name="android:background">@drawable/selector_button_code_background</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/margin_authentication_keyboard_bottom</item>
+    </style>
+
+
+
+
+
+
 </resources>

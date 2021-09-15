@@ -20,6 +20,7 @@ import com.example.ericschumacher.bouncer.Fragments.Choice.Fragment_Choice_Devic
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Color;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Device_Damages;
+import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Device_Damages_New;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_Model;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_StockPrimeCapacity;
@@ -103,6 +104,9 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
     public void initiateFragments() {
         super.initiateFragments();
         fDevice = (Fragment_Device) fManager.findFragmentById(R.id.fDevice);
+
+        // Visibility
+        fDevice.showAll(true);
     }
 
     public void showFragmentBookingInStockPrime(Boolean bKeyboard) {
@@ -292,7 +296,7 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
     public void requestDamages() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.damages));
-        showFragment(new Fragment_Edit_Device_Damages(), bData, Constants_Intern.FRAGMENT_EDIT_DEVICE_DAMAGES, Constants_Intern.DONT_SHOW_KEYBOARD);
+        showFragment(new Fragment_Edit_Device_Damages_New(), bData, Constants_Intern.FRAGMENT_EDIT_DEVICE_DAMAGES, Constants_Intern.DONT_SHOW_KEYBOARD);
     }
 
     public void requestStation() {

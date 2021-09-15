@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -22,12 +21,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.Request;
+import com.example.ericschumacher.bouncer.Activities.Activity_Authentication;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Box;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Object;
 import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record;
-import com.example.ericschumacher.bouncer.Fragments.Table.Fragment_Table;
 import com.example.ericschumacher.bouncer.Fragments.Table.Fragment_Table_Input_Collector;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Collection.Box;
@@ -43,7 +42,7 @@ import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Activity_Box extends AppCompatActivity implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener, Fragment_Object.Interface_Fragment_Object_Menu, Fragment_Box.Interface_Fragment_Box, Fragment_Record.Interface_Fragment_Record, Fragment_Table_Input_Collector.Interface_Fragment_Table_Input_Collector {
+public class Activity_Box extends Activity_Authentication implements View.OnClickListener, TextWatcher, TextView.OnEditorActionListener, Fragment_Object.Interface_Fragment_Object_Menu, Fragment_Box.Interface_Fragment_Box, Fragment_Record.Interface_Fragment_Record, Fragment_Table_Input_Collector.Interface_Fragment_Table_Input_Collector {
 
     // Layout
     Toolbar vToolbar;

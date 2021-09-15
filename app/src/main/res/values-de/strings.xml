@@ -335,6 +335,47 @@
     <string name="boxes">Boxen</string>
     <string name="choosen_order">Ausgewählte Bestellung</string>
 
+    <string name="cant_finish_record_if_devices_zero">Lieferung kann nicht beendet werden, wenn keine Geräte bearbeitet wurden</string>
+    <string name="checker">Checker</string>
+    <string name="diagnose">Prüfen</string>
+    <string name="edit_checks">Bearbeiten</string>
+    <string name="handling">Absortieren</string>
+    <string name="add">Hinzufügen</string>
+    <string name="no_checks_available">Keine weiteren Prüfschritte vorhanden</string>
+    <string name="add_check">Prüfschritt hinzufügen</string>
+    <string name="check">Prüfschritt</string>
+    <string name="description">Beschreibung</string>
+    <string name="enter_description">Beschreibung hinzufügen</string>
+    <string name="position_fixed">Position fixiert:</string>
+    <string name="edit_model_check">Prüfschritt bearbeiten</string>
+    <string name="new_diagnose">Neue Prüfung starten</string>
+    <string name="user">Team-Mitglied</string>
+    <string name="diagnose_menu">Prüf-Menü</string>
+    <string name="diagnose_created_date">Prüfung vom</string>
+    <string name="finish_diagnose_with_success_rest">Restliche Prüfung erfolgreich abschließen</string>
+    <string name="finish_diagnose_with_success">Prüfung erfolgreich abschließen</string>
+    <string name="checking">Prüfung</string>
+    <string name="printer_ten">Drucker Zehn</string>
+    <string name="printer_eleven">Drucker Elf</string>
+    <string name="not_finished">Nicht abgeschlossen</string>
+    <string name="finished">Abgeschlossen</string>
+    <string name="show_handler">Zur Absortierung wechseln</string>
+    <string name="no_diagnoses_created_yet">Es liegt keine Prüfung vor</string>
+    <string name="please_finish_diagnose">Beende die Prüfung bitte zunächst</string>
+    <string name="handler">Absortieren</string>
+    <string name="remove_dust">Staub entfernen</string>
+    <string name="attach_backcover">Rückschale hinzufügen</string>
+    <string name="load_with_battery">Laden | Mit Batterie</string>
+    <string name="load_without_battery">Laden | Ohne Batterie</string>
+    <string name="code_lock">Code-Sperre</string>
+    <string name="dialog_code_lock_content">Eine Code-Sperre auf diesem Gerät kann durch ein Zurücksetzen entfernt werden.</string>
+    <string name="reset">Zurücksetzen</string>
+    <string name="failed">Fehlgeschlagen</string>
+    <string name="software">Software</string>
+    <string name="dialog_software_content">Durch ein Zurücksetzen kann die Geschwindigkeit der auf dem Gerät befindlichen Software möglicherweise beschleunigt werden.</string>
+    <string name="add_check_procedures">Prüfverfahren hinzufügen</string>
+    <string name="visibility">Sichtbarkeit</string>
+    <string name="cant_be_edited_anymore">Bearbeitung nicht mehr möglich</string>
 
     // Not translated
 

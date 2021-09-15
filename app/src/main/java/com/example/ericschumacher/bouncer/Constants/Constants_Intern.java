@@ -319,6 +319,7 @@ public class Constants_Intern {
     public static final int MAIN_SEARCH_ARTICLE_TYPE_ID_DEVICE = 0;
     public static final int MAIN_SEARCH_ARTICLE_TYPE_IMEI = 1;
     public static final String FRAGMENT_DISPLAY_EDIT_NEW_ARTICLE = "FRAGMENT_DISPLAY_EDIT_NEW_ARTICLE";
+    public static final String FRAGMENT_EDIT_MODEL_DAMAGES = "FRAGMENT_EDIT_MODEL_DAMAGES";
 
     public static final int TYPE_ERROR_RECLEAN = 0;
     public static final int TYPE_ERROR_DEFECT = 1;
@@ -394,4 +395,7 @@ public class Constants_Intern {
     public static final String BOOLEAN_FEATURE_CHANGED = "BOOLEAN_FEATURE_CHANGED";
     public static final String FRAGMENT_DIALOG_EDIT_MODEL_CHECKS = "FRAGMENT_DIALOG_EDIT_MODEL_CHECKS";
 
+    public static final String TOKEN_AUTHENTICATION = "token_authentication";
+    public static final int REQUEST_CODE_TOKEN_AUTHENTICATION = 1;
+    public static final int REQUEST_CODE_NO_AUTHENTICATION = 1;
 }

@@ -70,6 +70,7 @@ public class Urls {
     public final static String URL_PUT_UPDATE_RECORD= URL_REST_API+"record/update";
     public final static String URL_RECORD_ADD= URL_REST_API+"record/add";
     public final static String URL_GET_RECORD_BY_SHIPPINGNUMBER= URL_REST_API+"record/shippingnumber/";
+    public final static String URL_POST_BILL_PAYEE_PAID= URL_REST_API+"bill/payee/paid/";
 
     public final static String URL_RECORD_DELETE= URL_REST_API+"record/delete/";
     public final static String URL_PUT_STOCK_EXCESS_LKU_FULL= URL_REST_API+"stock/excess/lku/full/";
@@ -82,6 +83,7 @@ public class Urls {
     public final static String URL_GET_MODEL_CHECKS = URL_REST_API+"team/model/checks/";
     public final static String URL_GET_MODEL_CHECKS_AVAILABLE = URL_REST_API+"team/model/checks/available/";
     public final static String URL_CREATE_MODEL_CHECK = URL_REST_API+"team/model/check/";
+    public final static String URL_CREATE_MODEL_CHECKS = URL_REST_API+"team/model/checks/";
     public final static String URL_UPDATE_MODEL_CHECK = URL_REST_API+"team/model/check";
     public final static String URL_DELETE_MODEL_CHECK = URL_REST_API+"team/model/check/";
     public final static String URL_GET_DIAGNOSES = URL_REST_API+"team/diagnoses/";
@@ -93,5 +95,20 @@ public class Urls {
     public final static String URL_UPDATE_DIAGNOSE_CHECK = URL_REST_API+"team/diagnose/check";
     public final static String URL_DELETE_DIAGNOSE_CHECK = URL_REST_API+"team/diagnose/check/";
     public final static String URL_GET_DIAGNOSE_CHECKS = URL_REST_API+"team/diagnose/checks/";
+
+    // Authentication
+    public final static String URL_POST_LOGIN = URL_REST_API+"login/team";
+
+    // ModelDamage
+    public static final String URL_GET_MODEL_DAMAGE_AVAILABLE = "team/model/damages/available/";
+    public static final String URL_DELETE_MODEL_DAMAGE = "team/model/damage/";
+    public static final String URL_CREATE_MODEL_DAMAGE = "team/model/damage";
+    public static final String URL_CREATE_MODEL_DAMAGES = "team/model/damage/";
+
+    // ModelDamage
+    public static final String URL_DELETE_DEVICE_DAMAGE = "team/device/damage/";
+    public static final String URL_CREATE_DEVICE_DAMAGE = "team/model/damage/";
+    public static final String URL_UPDATE_DEVICE_DAMAGE = "team/model/damage";
+
 
 }

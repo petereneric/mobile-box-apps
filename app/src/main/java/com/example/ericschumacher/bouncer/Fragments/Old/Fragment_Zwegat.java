@@ -10,12 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_BillPayee;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyCallback_ArrayList_BillPayee;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Collection.BillPayee;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Network;
+import com.example.ericschumacher.bouncer.Volley.Urls;
+import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -27,6 +34,7 @@ public class Fragment_Zwegat extends Fragment {
 
     // Utility
     Utility_Network uNetwork;
+    Volley_Connection cVolley;
 
     // Data
     ArrayList<BillPayee> lBillPayee = new ArrayList<>();
@@ -41,6 +49,7 @@ public class Fragment_Zwegat extends Fragment {
 
         // Utility
         uNetwork = new Utility_Network(getActivity());
+        cVolley = new Volley_Connection(getActivity());
 
         // Data
         aBillPayee = new Adapter_BillPayee(getActivity(), lBillPayee);
@@ -77,11 +86,19 @@ public class Fragment_Zwegat extends Fragment {
             @Override
             public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
                 BillPayee oBillPayee = lBillPayee.get(viewHolder.getAdapterPosition());
+                cVolley.getResponse(Request.Method.POST, Urls.URL_POST_BILL_PAYEE_PAID + oBillPayee.getId(), null, new Interface_VolleyResult() {
+                    @Override
+                    public void onResult(JSONObject oJson) throws JSONException {
+                        lBillPayee.remove(viewHolder.getAdapterPosition());
+                        aBillPayee.notifyDataSetChanged();
+                    }
+                });
+
+                /*
                 uNetwork.setBillPayeePaid(oBillPayee.getId(), new Interface_VolleyCallback() {
                     @Override
                     public void onSuccess() {
-                        lBillPayee.remove(viewHolder.getAdapterPosition());
-                        aBillPayee.notifyDataSetChanged();
+
                     }
 
                     @Override
@@ -89,6 +106,7 @@ public class Fragment_Zwegat extends Fragment {
 
                     }
                 });
+                */
 
             }
         };

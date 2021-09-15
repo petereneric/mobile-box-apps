@@ -210,6 +210,7 @@ public class Volley_Connection {
                     }
                     return requestBody == null ? null : requestBody.getBytes("utf-8");
                 } catch (UnsupportedEncodingException uee) {
+                    uee.printStackTrace();
                     VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s", finalJsonObject, "utf-8");
                     return null;
                 }

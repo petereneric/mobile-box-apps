@@ -1,6 +1,5 @@
 package com.example.ericschumacher.bouncer.Adapter.List;
 
-import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -13,7 +12,6 @@ import com.example.ericschumacher.bouncer.Utilities.Utility_DateTime;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Layout;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Adapter_List_Diagnose_Menu extends Adapter_List {
 
@@ -77,7 +75,7 @@ public class Adapter_List_Diagnose_Menu extends Adapter_List {
 
             // Middle
             vhList.tvSubtitle.setVisibility(View.GONE);
-            vhList.tvTitle.setText(Context.getString(R.string.add));
+            vhList.tvTitle.setText(Context.getString(R.string.new_diagnose));
 
             // Right
             vhList.ivRight.setVisibility(View.GONE);
@@ -86,7 +84,7 @@ public class Adapter_List_Diagnose_Menu extends Adapter_List {
 
             // BackgroundColor
             Utility_Layout.setRoundedCorners(Context, vhList.lMain, R.color.color_primary);
-            Utility_Layout.setBackground(Context, vhList.vDividerLeft, R.color.color_primary);
+            Utility_Layout.setBackgroundColor(Context, vhList.vDividerLeft, R.color.color_primary);
 
             // TextColor
             Utility_Layout.setTextColor(Context, vhList.tvTitle, R.color.color_primary);

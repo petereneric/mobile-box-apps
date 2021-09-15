@@ -367,6 +367,21 @@
     <string name="attach_backcover">Attach backcover</string>
     <string name="load_with_battery">Load | with battery</string>
     <string name="load_without_battery">Load | without battery</string>
+    <string name="code_lock">Code-Lock</string>
+    <string name="dialog_code_lock_content">A code-lock on this device can be removed by reseting it.</string>
+    <string name="reset">Reset</string>
+    <string name="failed">Failed</string>
+    <string name="software">Software</string>
+    <string name="dialog_software_content">A slow software may be fixed by reseting the phone.</string>
+    <string name="add_check_procedures">Add check procedures</string>
+    <string name="visibility">Visibility</string>
+    <string name="cant_be_edited_anymore">Can\'t be edited anymore</string>
+    <string name="enter_code">Enter Code</string>
+    <string name="code_does_not_exist">Code does not exist</string>
+    <string name="cant_be_edited_anymore_due_time">Can\'t edit or delete Diagnoses that not have been created today</string>
+    <string name="cant_be_edited_due_wrong_user">Can only be edited from the same user</string>
+    <string name="model_damages">Model-Damages</string>
+    <string name="add_damage_sheme">Damage-Sheme</string>
 
     // Not translated
 

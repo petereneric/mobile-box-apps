@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_List;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Long_Click;
 import com.example.ericschumacher.bouncer.R;
 
 import java.util.ArrayList;
@@ -32,6 +33,11 @@ public class Adapter_List extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             public void onClick(int position) {
                 iAdapterList.clickList(position);
             }
+        }, new Interface_Long_Click() {
+            @Override
+            public boolean onLongClick(int position) {
+                return iAdapterList.longClickList(position);
+            }
         });
         return vhList;
     }
@@ -54,6 +60,7 @@ public class Adapter_List extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public interface Interface_Adapter_List {
         int getItemCount();
         void clickList(int position);
+        boolean longClickList(int position);
         int getItemViewType(int position);
     }
 }

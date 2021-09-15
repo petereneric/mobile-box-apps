@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/color_transparent">
+
+<android.support.constraint.ConstraintLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <android.support.constraint.Guideline
+        android:id="@+id/gAuthenticationOne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="152dp" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        style="@style/tv_dialog_authentication_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_code"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvInfo"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/tvInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="tvInfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:layout_constraintBottom_toTopOf="@id/gAuthenticationOne"
+        app:layout_constraintVertical_chainStyle="packed"
+        android:gravity="center"
+        android:visibility="gone"/>
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="192dp" />
+
+    <ImageView
+        android:id="@+id/ivCodeOne"
+        style="@style/iv_dialog_authentication_code"
+        app:layout_constraintTop_toBottomOf="@+id/gAuthenticationOne"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/ivCodeTwo"
+        app:layout_constraintBottom_toTopOf="@id/guideline1"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="1"/>
+
+    <ImageView
+        android:id="@+id/ivCodeTwo"
+        style="@style/iv_dialog_authentication_code"
+        app:layout_constraintTop_toBottomOf="@+id/gAuthenticationOne"
+        app:layout_constraintLeft_toRightOf="@+id/ivCodeOne"
+        app:layout_constraintRight_toLeftOf="@id/ivCodeThree"
+        app:layout_constraintBottom_toTopOf="@id/guideline1"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="1"/>
+
+    <ImageView
+        android:id="@+id/ivCodeThree"
+        style="@style/iv_dialog_authentication_code"
+        app:layout_constraintTop_toBottomOf="@+id/gAuthenticationOne"
+        app:layout_constraintLeft_toRightOf="@+id/ivCodeTwo"
+        app:layout_constraintRight_toLeftOf="@id/ivCodeFour"
+        app:layout_constraintBottom_toTopOf="@id/guideline1"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="1"/>
+
+    <ImageView
+        android:id="@+id/ivCodeFour"
+        style="@style/iv_dialog_authentication_code"
+        app:layout_constraintTop_toBottomOf="@+id/gAuthenticationOne"
+        app:layout_constraintLeft_toRightOf="@+id/ivCodeThree"
+        app:layout_constraintRight_toLeftOf="@id/ivCodeFive"
+        app:layout_constraintBottom_toTopOf="@id/guideline1"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="1"/>
+
+    <ImageView
+        android:id="@+id/ivCodeFive"
+        style="@style/iv_dialog_authentication_code"
+        app:layout_constraintTop_toBottomOf="@+id/gAuthenticationOne"
+        app:layout_constraintLeft_toRightOf="@+id/ivCodeFour"
+        app:layout_constraintRight_toLeftOf="@id/ivCodeSix"
+        app:layout_constraintBottom_toTopOf="@id/guideline1"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="1"/>
+
+    <ImageView
+        android:id="@+id/ivCodeSix"
+        style="@style/iv_dialog_authentication_code"
+        app:layout_constraintTop_toBottomOf="@+id/gAuthenticationOne"
+        app:layout_constraintLeft_toRightOf="@+id/ivCodeFive"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline1"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_weight="1"/>
+
+    <Button
+        android:id="@+id/bKeyboardOne"
+        style="@style/b_dialog_authentication_keyboard"
+        app:layout_constraintTop_toBottomOf="@+id/guideline1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/bKeyboardTwo"
+        android:text="1"
+        app:layout_constraintHorizontal_chainStyle="spread"/>
+
+    <Button
+        android:id="@+id/bKeyboardTwo"
+        style="@style/b_dialog_authentication_keyboard"
+        app:layout_constraintTop_toBottomOf="@+id/guideline1"
+        app:layout_constraintRight_toLeftOf="@+id/bKeyboardThree"
+        app:layout_constraintLeft_toRightOf="@+id/bKeyboardOne"
+        android:text="2"
+        app:layout_constraintHorizontal_chainStyle="spread"/>
+
+    <Button
+        android:id="@+id/bKeyboardThree"
+        style="@style/b_dialog_authentication_keyboard"
+        app:layout_constraintTop_toBottomOf="@+id/guideline1"
+        app:layout_constraintLeft_toRightOf="@+id/bKeyboardTwo"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="3"
+        app:layout_constraintHorizontal_chainStyle="spread"/>
+
+    <Button
+        android:id="@+id/bKeyboardFour"
+        style="@style/b_dialog_authentication_keyboard"
+        app:layout_constraintTop_toBottomOf="@+id/bKeyboardOne"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/bKeyboardFive"
+        android:text="4"
+        app:layout_constraintHorizontal_chainStyle="spread"/>
+
+    <Button
+        android:id="@+id/bKeyboardFive"
+        style="@style/b_dialog_authentication_keyboard"
+        app:layout_constraintTop_toBottomOf="@+id/bKeyboardOne"
+        app:layout_constraintRight_toLeftOf="@+id/bKeyboardSix"
+        app:layout_constraintLeft_toRightOf="@+id/bKeyboardFour"
+        android:text="5"
+        app:layout_constraintHorizontal_chainStyle="spread"/>
+
+    <Button
+        android:id="@+id/bKeyboardSix"
+        style="@style/b_dialog_authentication_keyboard"
+        app:layout_constraintTop_toBottomOf="@+id/bKeyboardOne"
+        app:layout_constraintLeft_toRightOf="@+id/bKeyboardFive"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="6"
+        app:layout_constraintHorizontal_chainStyle="spread"/>
+
+    <Button
+        android:id="@+id/bKeyboardSeven"
+        style="@style/b_dialog_authentication_keyboard"
+        app:layout_constraintTop_toBottomOf="@+id/bKeyboardFour"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/bKeyboardEight"
+        android:text="7"
+        app:layout_constraintHorizontal_chainStyle="spread"/>
+
+    <Button
+        android:id="@+id/bKeyboardEight"
+        style="@style/b_dialog_authentication_keyboard"
+        app:layout_constraintTop_toBottomOf="@+id/bKeyboardFour"
+        app:layout_constraintRight_toLeftOf="@+id/bKeyboardSeven"
+        app:layout_constraintLeft_toRightOf="@+id/bKeyboardNine"
+        android:text="8"
+        app:layout_constraintHorizontal_chainStyle="spread"/>
+
+    <Button
+        android:id="@+id/bKeyboardNine"
+        style="@style/b_dialog_authentication_keyboard"
+        app:layout_constraintTop_toBottomOf="@+id/bKeyboardFour"
+        app:layout_constraintLeft_toRightOf="@+id/bKeyboardEight"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="9"
+        app:layout_constraintHorizontal_chainStyle="spread"/>
+
+    <Button
+        android:id="@+id/bKeyboardZero"
+        style="@style/b_dialog_authentication_keyboard"
+        app:layout_constraintTop_toBottomOf="@+id/bKeyboardEight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="0"/>
+
+    <TextView
+        android:id="@+id/tvDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete"
+        android:textSize="22sp"
+        android:textAllCaps="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bKeyboardZero"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="32dp"
+        android:layout_marginTop="32dp"/>
+
+
+</android.support.constraint.ConstraintLayout>
+
+</RelativeLayout>

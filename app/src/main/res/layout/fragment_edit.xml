@@ -17,7 +17,7 @@
         android:layout_marginBottom="32dp"/>
 
     <Button
-        style="@style/button_main"
+        style="@style/button_sub_new"
         android:text="@string/commit"
         android:id="@+id/bCommit"
         android:layout_alignParentBottom="true"

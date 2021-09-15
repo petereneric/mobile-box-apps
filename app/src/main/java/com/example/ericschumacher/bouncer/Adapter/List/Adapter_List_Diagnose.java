@@ -1,10 +1,8 @@
 package com.example.ericschumacher.bouncer.Adapter.List;
 
-import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -44,9 +42,9 @@ public class Adapter_List_Diagnose extends Adapter_List {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ViewHolder_List vhList = (ViewHolder_List)super.onCreateViewHolder(parent, viewType);
-        vhList.ivSwipe.setImageDrawable(ContextCompat.getDrawable(Context, R.drawable.ic_unlink_24));
+        vhList.ivSwipeRight.setImageDrawable(ContextCompat.getDrawable(Context, R.drawable.ic_unlink_24));
         vhList.clBackground.setBackground(ResourcesCompat.getDrawable(Context.getResources(), R.drawable.background_rounded_corners_solid_orange, null));
-        Utility_Layout.setBackground(Context, vhList.ivSwipe, R.color.color_orange);
+        Utility_Layout.setBackgroundColor(Context, vhList.ivSwipeRight, R.color.color_orange);
         return vhList;
     }
 
@@ -64,7 +62,7 @@ public class Adapter_List_Diagnose extends Adapter_List {
 
             // General
             Utility_Layout.setRoundedCorners(Context, vhList.lMain, R.color.color_text_secondary);
-            Utility_Layout.setBackground(Context, vhList.vDividerLeft, R.color.color_text_secondary);
+            Utility_Layout.setBackgroundColor(Context, vhList.vDividerLeft, R.color.color_text_secondary);
 
             // Left
             vhList.vDividerLeft.setVisibility(View.VISIBLE);
@@ -116,7 +114,7 @@ public class Adapter_List_Diagnose extends Adapter_List {
 
             // BackgroundColor
             Utility_Layout.setRoundedCorners(Context, vhList.clForeground, R.color.color_primary);
-            Utility_Layout.setBackground(Context, vhList.vDividerLeft, R.color.color_primary);
+            Utility_Layout.setBackgroundColor(Context, vhList.vDividerLeft, R.color.color_primary);
 
             // TextColor
             Utility_Layout.setTextColor(Context, vhList.tvTitle, R.color.color_primary);
@@ -131,7 +129,7 @@ public class Adapter_List_Diagnose extends Adapter_List {
             vhList.ivLeft.setVisibility(View.VISIBLE);
             if (iChecker.getDiagnose() != null && iChecker.getDiagnose().isbFinished()) {
                 // Finished
-                vhList.ivLeft.setImageDrawable(ContextCompat.getDrawable(Context, R.drawable.ic_airplane_24));
+                vhList.ivLeft.setImageDrawable(ContextCompat.getDrawable(Context, R.drawable.ic_send));
                 vhList.tvTitle.setText(Context.getString(R.string.show_handler));
             } else {
                 // Not finished

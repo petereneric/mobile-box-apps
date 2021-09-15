@@ -9,13 +9,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.res.ResourcesCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.android.volley.Request;
+import com.example.ericschumacher.bouncer.Activities.Activity_Authentication;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Button.Fragment_Button;
@@ -42,7 +42,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity_Columba extends AppCompatActivity implements Fragment_Order.Interface_Fragment_Order, Fragment_Button.Interface_Fragment_Button, Fragment_Object.Interface_Fragment_Object_Menu, Fragment_Table.Interface_Fragment_Table_Select_DataImport {
+public class Activity_Columba extends Activity_Authentication implements Fragment_Order.Interface_Fragment_Order, Fragment_Button.Interface_Fragment_Button, Fragment_Object.Interface_Fragment_Object_Menu, Fragment_Table.Interface_Fragment_Table_Select_DataImport {
 
     // Layout
     Toolbar vToolbar;
