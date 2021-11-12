@@ -339,7 +339,7 @@
     <style name="tv_dialog_content">
         <item name="android:textSize">@dimen/size_text_default</item>
         <item name="android:textColor">@color/color_text_primary</item>
-        <item name="android:gravity">center_horizontal</item>
+        <item name="android:gravity">center</item>
         <item name="android:layout_margin">16dp</item>
     </style>
 

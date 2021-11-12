@@ -7,21 +7,21 @@ package com.example.ericschumacher.bouncer.Constants;
 public class Constants_Intern {
     public final static String SHARED_PREFERENCES = "SHARED_PREFERENCES";
     public final static String SELECTED_PRINTER_IP = "SELECTED_PRINTER_IP";
-    public final static String ID_PRINTER_ONE_IP = "10.128.200.178";
+    public final static String ID_PRINTER_ONE_IP = "10.128.200.90";
     public final static String ID_PRINTER_TWO_IP = "6C:C3:74:E2:42:00";
     public final static String ID_PRINTER_THREE_IP = "90:E2:02:2B:6D:75";
-    public final static String ID_PRINTER_FOUR_IP = "10.128.200.174";
-    public static final String ID_PRINTER_FIVE_IP = "10.128.200.180";
+    public final static String ID_PRINTER_FOUR_IP = "10.128.200.35";
+    public static final String ID_PRINTER_FIVE_IP = "10.128.200.23";
     public static final String ID_PRINTER_SIX_IP = "10.128.200.179";
     public static final String ID_PRINTER_SEVEN_IP = "C4:F3:12:17:D0:2E";
     public static final String ID_PRINTER_EIGHT_IP = "10.128.200.131";
     public final static String SELECTED_PRINTER_BT = "SELECTED_PRINTER_BT";
-    public final static String ID_PRINTER_ONE_BT = "28:EC:9A:21:30:55";
+    public final static String ID_PRINTER_ONE_BT = "00:07:4D:97:E3:04";
     public final static String ID_PRINTER_TWO_BT = "6C:C3:74:E2:42:00";
     public final static String ID_PRINTER_THREE_BT = "90:E2:02:2B:6D:75";
-    public final static String ID_PRINTER_FOUR_BT = "50:8C:B1:4F:B1:EE";
+    public final static String ID_PRINTER_FOUR_BT = "00:07:4D:74:57:AB";
     public static final String ID_PRINTER_FIVE_BT = "4C:24:98:AB:93:79";
-    public static final String ID_PRINTER_SIX_BT = "E4:15:F6:46:E1:C3";
+    public static final String ID_PRINTER_SIX_BT = "00:07:4D:A4:1C:95";
     public static final String ID_PRINTER_SEVEN_BT = "C4:F3:12:17:D0:2E";
     public static final String ID_PRINTER_EIGHT_BT = "10.128.100.118";
     public final static String ID_PRINTER_NINE_IP = "10.128.200.59";
@@ -30,6 +30,14 @@ public class Constants_Intern {
     public final static String ID_PRINTER_TEN_BT = "00:07:4D:BD:17:9D";
     public final static String ID_PRINTER_ELEVEN_IP = "10.128.200.66";
     public final static String ID_PRINTER_ELEVEN_BT = "00:07:4D:98:73:95";
+    public final static String ID_PRINTER_TWELVE_IP = "10.128.200.173";
+    public final static String ID_PRINTER_TWELVE_BT = "C4:F3:12:17:D8:13";
+    public final static String ID_PRINTER_THIRTEEN_IP = "10.128.200.167";
+    public final static String ID_PRINTER_THIRTEEN_BT = "F0:B5:D1:5E:DA:FB";
+    public final static String ID_PRINTER_FOURTEEN_IP = "192.168.254.254";
+    public final static String ID_PRINTER_FOURTEEN_BT = "00:07:4D:8C:FE:6F";
+    public final static String ID_PRINTER_FIFTEEN_IP = "192.168.254.254";
+    public final static String ID_PRINTER_FIFTEEN_BT = "00:07:4D:8C:FE:6F";
     public static final String ID_PRINTER_NONE = "ID_PRINTER_NONE";
 
     //public static final String ID_PRINTER_FIVE_IP = "00:07:4D:99:BA:7E";
@@ -305,6 +313,7 @@ public class Constants_Intern {
     public static final boolean DONT_CLOSE_KEYBOARD = true;
     public static final String STATION_ID = "STATION_ID";
     public static final int STATION_CHECK_ONE = 10;
+    public static final int STATION_TBD = 11;
     public static final String FRAGMENT_BOOKING_OUT_STOCK_PRIME = "FRAGMENT_BOOKING_OUT_STOCK_PRIME";
     public static final String FRAGMENT_PRINT_DEVICE = "FRAGMENT_PRINT_DEVICE";
     public static final String FRAGMENT_VERIFY_ARTICLE = "FRAGMENT_VERIFY_ARTICLE";
@@ -329,6 +338,7 @@ public class Constants_Intern {
     public static final String JUICER_LOADING_STATION_TWO_SELECTED = "JUICER_LOADING_STATION_TWO_SELECTED";
     public static final String JUICER_LOADING_STATION_THREE_SELECTED = "JUICER_LOADING_STATION_THREE_SELECTED";
     public static final String JUICER_LOADING_STATION_FOUR_SELECTED = "JUICER_LOADING_STATION_FOUR_SELECTED";
+    public static final String JUICER_LOADING_STATION_FIVE_SELECTED = "JUICER_LOADING_STATION_FIVE_SELECTED";
     public static final String SEARCH_JUICER_TYPE = "SEARCH_JUICER_TYPE";
     public static final int SEARCH_JUICER_TYPE_IMEI_DEVICE = 1;
     public static final int SEARCH_JUICER_TYPE_ID_DEVICE = 0;
@@ -398,4 +408,11 @@ public class Constants_Intern {
     public static final String TOKEN_AUTHENTICATION = "token_authentication";
     public static final int REQUEST_CODE_TOKEN_AUTHENTICATION = 1;
     public static final int REQUEST_CODE_NO_AUTHENTICATION = 1;
+    public static final String FRAGMENT_DIAlOG_SIMPLE_DELETE_MODEL_DAMAGE = "FRAGMENT_DIAlOG_SIMPLE_DELETE_MODEL_DAMAGE";
+    public static final String POSITION = "POSITION";
+    public static final int TYPE_MODEL_BATTERY_NORMAL = 0;
+    public static final int TYPE_CLASS_AUTOMATIC = 0;
+    public static final int TYPE_CLASS_V = 5;
+    public static final String FRAGMENT_SELECT_CLASS = "FRAGMENT_SELECT_CLASS";
+
 }

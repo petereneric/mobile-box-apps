@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -42,7 +43,7 @@ public class Fragment_Dialog extends DialogFragment implements View.OnClickListe
         iFragmentDialog = (Interface_Fragment_Dialog)getTargetFragment();
 
         // Data
-        nPosition = getArguments().getInt("nPosition", 0);
+        if (getArguments() != null) nPosition = getArguments().getInt("nPosition", 0);
 
         // Layout
         setLayout(inflater, container);
@@ -93,5 +94,9 @@ public class Fragment_Dialog extends DialogFragment implements View.OnClickListe
 
     public interface Interface_Fragment_Dialog {
         public void click(String cTag, int typeButton, int position);
+    }
+
+    public void setHeightContent(int height) {
+        tvContent.getLayoutParams().height = height;
     }
 }

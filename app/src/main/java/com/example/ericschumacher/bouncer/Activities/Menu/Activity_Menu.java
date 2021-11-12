@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Article;
 import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Box;
@@ -34,6 +35,7 @@ import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dia
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Authentication_Dialog;
 import com.example.ericschumacher.bouncer.Objects.Object_Menu;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
 import com.example.ericschumacher.bouncer.Volley.Volley_Authentication;
 import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 
@@ -58,6 +60,10 @@ public class Activity_Menu extends AppCompatActivity implements Interface_Authen
     AppCompatRadioButton rbPrinterNine;
     AppCompatRadioButton rbPrinterTen;
     AppCompatRadioButton rbPrinterEleven;
+    AppCompatRadioButton rbPrinterTwelve;
+    AppCompatRadioButton rbPrinterThirteen;
+    AppCompatRadioButton rbPrinterFourteen;
+    AppCompatRadioButton rbPrinterFifteen;
     RadioGroup rgOne;
     RadioGroup rgTwo;
     RadioGroup rgThree;
@@ -157,6 +163,10 @@ public class Activity_Menu extends AppCompatActivity implements Interface_Authen
         rbPrinterNine = findViewById(R.id.rbPrinterNine);
         rbPrinterTen = findViewById(R.id.rbPrinterTen);
         rbPrinterEleven = findViewById(R.id.rbPrinterEleven);
+        rbPrinterTwelve = findViewById(R.id.rbPrinterTwelve);
+        rbPrinterThirteen = findViewById(R.id.rbPrinterThirteen);
+        rbPrinterFourteen = findViewById(R.id.rbPrinterFourteen);
+        rbPrinterFifteen = findViewById(R.id.rbPrinterFifteen);
         rgOne = findViewById(R.id.rgOne);
         rgTwo = findViewById(R.id.rgTwo);
         rgThree = findViewById(R.id.rgThree);
@@ -191,9 +201,6 @@ public class Activity_Menu extends AppCompatActivity implements Interface_Authen
         if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_EIGHT_IP)) {
             rbPrinterEight.setChecked(true);
         }
-        if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_EIGHT_IP)) {
-            rbPrinterEight.setChecked(true);
-        }
         if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_NONE)) {
             rbPrinterNone.setChecked(true);
         }
@@ -205,6 +212,18 @@ public class Activity_Menu extends AppCompatActivity implements Interface_Authen
         }
         if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_ELEVEN_IP)) {
             rbPrinterEleven.setChecked(true);
+        }
+        if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_TWELVE_IP)) {
+            rbPrinterTwelve.setChecked(true);
+        }
+        if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_THIRTEEN_IP)) {
+            rbPrinterThirteen.setChecked(true);
+        }
+        if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_FOURTEEN_IP)) {
+            rbPrinterFourteen.setChecked(true);
+        }
+        if (SharedPreferences.getString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_ONE_IP).equals(Constants_Intern.ID_PRINTER_FIFTEEN_IP)) {
+            rbPrinterFifteen.setChecked(true);
         }
 
 
@@ -235,6 +254,13 @@ public class Activity_Menu extends AppCompatActivity implements Interface_Authen
                             SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_THREE_BT).commit();
                         }
                         break;
+                    case R.id.rbPrinterFour:
+                        anyButtonChecked = rbPrinterFour.isChecked();
+                        if (rbPrinterFour.isChecked()) {
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_FOUR_IP).commit();
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_FOUR_BT).commit();
+                        }
+                        break;
                 }
                 if (anyButtonChecked) {
                     rgTwo.clearCheck();
@@ -249,13 +275,7 @@ public class Activity_Menu extends AppCompatActivity implements Interface_Authen
                 ManagerPrinter.usePrinter(Activity_Menu.this, true);
                 boolean anyButtonChecked = false;
                 switch (i) {
-                    case R.id.rbPrinterFour:
-                        anyButtonChecked = rbPrinterFour.isChecked();
-                        if (rbPrinterFour.isChecked()) {
-                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_FOUR_IP).commit();
-                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_FOUR_BT).commit();
-                        }
-                        break;
+
                     case R.id.rbPrinterFive:
                         anyButtonChecked = rbPrinterFive.isChecked();
                         if (rbPrinterFive.isChecked()) {
@@ -268,6 +288,20 @@ public class Activity_Menu extends AppCompatActivity implements Interface_Authen
                         if (rbPrinterSix.isChecked()) {
                             SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_SIX_IP).commit();
                             SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_SIX_BT).commit();
+                        }
+                        break;
+                    case R.id.rbPrinterSeven:
+                        anyButtonChecked = rbPrinterSeven.isChecked();
+                        if (rbPrinterSeven.isChecked()) {
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_SEVEN_IP).commit();
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_SEVEN_BT).commit();
+                        }
+                        break;
+                    case R.id.rbPrinterEight:
+                        anyButtonChecked = rbPrinterEight.isChecked();
+                        if (rbPrinterEight.isChecked()) {
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_EIGHT_IP).commit();
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_EIGHT_BT).commit();
                         }
                         break;
                 }
@@ -284,39 +318,11 @@ public class Activity_Menu extends AppCompatActivity implements Interface_Authen
                 ManagerPrinter.usePrinter(Activity_Menu.this, true);
                 boolean anyButtonChecked = false;
                 switch (i) {
-                    case R.id.rbPrinterSeven:
-                        anyButtonChecked = rbPrinterSeven.isChecked();
-                        if (rbPrinterSeven.isChecked()) {
-                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_SEVEN_IP).commit();
-                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_SEVEN_BT).commit();
-                        }
-                        break;
-                    case R.id.rbPrinterEight:
-                        anyButtonChecked = rbPrinterEight.isChecked();
-                        if (rbPrinterEight.isChecked()) {
-                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_EIGHT_IP).commit();
-                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_EIGHT_BT).commit();
-                        }
-                        break;
                     case R.id.rbPrinterNone:
                         anyButtonChecked = rbPrinterNone.isChecked();
-                        if (rbPrinterNone.isChecked())SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_NONE).commit();
+                        if (rbPrinterNone.isChecked()) SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_NONE).commit();
                         ManagerPrinter.usePrinter(Activity_Menu.this, false);
                         break;
-                }
-                if (anyButtonChecked) {
-                    rgOne.clearCheck();
-                    rgTwo.clearCheck();
-                    rgFour.clearCheck();
-                }
-            }
-        });
-        rgFour.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                ManagerPrinter.usePrinter(Activity_Menu.this, true);
-                boolean anyButtonChecked = false;
-                switch (i) {
                     case R.id.rbPrinterNine:
                         anyButtonChecked = rbPrinterNine.isChecked();
                         if (rbPrinterNine.isChecked()) {
@@ -342,11 +348,52 @@ public class Activity_Menu extends AppCompatActivity implements Interface_Authen
                 if (anyButtonChecked) {
                     rgOne.clearCheck();
                     rgTwo.clearCheck();
+                    rgFour.clearCheck();
+                }
+            }
+        });
+        rgFour.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                ManagerPrinter.usePrinter(Activity_Menu.this, true);
+                boolean anyButtonChecked = false;
+                switch (i) {
+                    case R.id.rbPrinterTwelve:
+                        anyButtonChecked = rbPrinterTwelve.isChecked();
+                        if (rbPrinterTwelve.isChecked()) {
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_TWELVE_IP).commit();
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_TWELVE_BT).commit();
+                        }
+                        break;
+                    case R.id.rbPrinterThirteen:
+                        anyButtonChecked = rbPrinterThirteen.isChecked();
+                        if (rbPrinterThirteen.isChecked()) {
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_THIRTEEN_IP).commit();
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_THIRTEEN_BT).commit();
+                        }
+                        break;
+                    case R.id.rbPrinterFourteen:
+                        anyButtonChecked = rbPrinterFourteen.isChecked();
+                        if (rbPrinterFourteen.isChecked()) {
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_FOURTEEN_IP).commit();
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_FOURTEEN_BT).commit();
+                        }
+                        break;
+                    case R.id.rbPrinterFifteen:
+                        anyButtonChecked = rbPrinterFifteen.isChecked();
+                        if (rbPrinterFifteen.isChecked()) {
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_IP, Constants_Intern.ID_PRINTER_FIFTEEN_IP).commit();
+                            SharedPreferences.edit().putString(Constants_Intern.SELECTED_PRINTER_BT, Constants_Intern.ID_PRINTER_FIFTEEN_BT).commit();
+                        }
+                        break;
+                }
+                if (anyButtonChecked) {
+                    rgOne.clearCheck();
+                    rgTwo.clearCheck();
                     rgThree.clearCheck();
                 }
             }
         });
-
 
 
         // Color
@@ -364,6 +411,10 @@ public class Activity_Menu extends AppCompatActivity implements Interface_Authen
         rbPrinterNine.setSupportButtonTintList(colorStateList);
         rbPrinterTen.setSupportButtonTintList(colorStateList);
         rbPrinterEleven.setSupportButtonTintList(colorStateList);
+        rbPrinterTwelve.setSupportButtonTintList(colorStateList);
+        rbPrinterThirteen.setSupportButtonTintList(colorStateList);
+        rbPrinterFourteen.setSupportButtonTintList(colorStateList);
+        rbPrinterFifteen.setSupportButtonTintList(colorStateList);
 
         // Toolbar
         setSupportActionBar(vToolbar);

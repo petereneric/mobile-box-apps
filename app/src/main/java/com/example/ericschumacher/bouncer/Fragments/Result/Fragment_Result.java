@@ -103,8 +103,8 @@ public class Fragment_Result extends Fragment implements View.OnClickListener {
 
         rlResult.setOnClickListener(this);
 
-        tvInteractionType.setText(getString(R.string.result));
-        tvInteractionTitle.setVisibility(View.GONE);
+        tvInteractionTitle.setVisibility(View.VISIBLE);
+        tvInteractionTitle.setText(getString(R.string.handler));
 
 
     }

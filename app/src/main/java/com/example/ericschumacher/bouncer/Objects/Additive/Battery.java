@@ -44,8 +44,6 @@ public class Battery extends Additive {
                 oManufacturer = new Manufacturer(oJson.getJSONObject(Constants_Extern.OBJECT_MANUFACTURER));
             if (!oJson.isNull(Constants_Extern.LKU_BATTERY))
                 lkuBattery = oJson.getInt(Constants_Extern.LKU_BATTERY);
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }

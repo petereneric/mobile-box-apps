@@ -25,8 +25,11 @@ public class Fragment_Dialog_Checker_CodeLock extends Fragment_Dialog {
 
         // Data
         tvHeader.setText(getString(R.string.code_lock));
-        tvContent.setText(getString(R.string.dialog_code_lock_content));
+        tvContent.setText(getText(R.string.dialog_code_lock_content));
         tvButtonOne.setText(getString(R.string.reset));
         tvButtonTwo.setText(getString(R.string.failed));
+
+        // Height
+        setHeightContent(1600);
     }
 }

@@ -23,7 +23,7 @@
         android:layout_height="200dp"
         android:id="@+id/tvContent"
         style="@style/tv_dialog_content"
-        android:text="Lirum Larum Lipsum dorum sinum, erum."
+        android:text=""
         app:layout_constraintBottom_toTopOf="@+id/rlButtons"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

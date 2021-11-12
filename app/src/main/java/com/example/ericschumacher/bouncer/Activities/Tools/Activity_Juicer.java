@@ -42,6 +42,7 @@ public class Activity_Juicer extends Activity_Authentication implements View.OnC
     TextView tvLoadingStationTwo;
     TextView tvLoadingStationThree;
     TextView tvLoadingStationFour;
+    TextView tvLoadingStationFive;
 
     // Connection
     Volley_Connection cVolley;
@@ -107,6 +108,7 @@ public class Activity_Juicer extends Activity_Authentication implements View.OnC
         tvLoadingStationTwo = findViewById(R.id.tvLoadingStationTwo);
         tvLoadingStationThree = findViewById(R.id.tvLoadingStationThree);
         tvLoadingStationFour = findViewById(R.id.tvLoadingStationFour);
+        tvLoadingStationFive = findViewById(R.id.tvLoadingStationFive);
 
 
         // Title
@@ -128,6 +130,7 @@ public class Activity_Juicer extends Activity_Authentication implements View.OnC
         tvLoadingStationTwo.setOnClickListener(this);
         tvLoadingStationThree.setOnClickListener(this);
         tvLoadingStationFour.setOnClickListener(this);
+        tvLoadingStationFive.setOnClickListener(this);
     }
 
     public int getIdLayout() {
@@ -145,6 +148,7 @@ public class Activity_Juicer extends Activity_Authentication implements View.OnC
         Utility_Layout.setRoundedCorners(this, tvLoadingStationTwo, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_TWO_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
         Utility_Layout.setRoundedCorners(this, tvLoadingStationThree, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_THREE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
         Utility_Layout.setRoundedCorners(this, tvLoadingStationFour, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FOUR_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
+        Utility_Layout.setRoundedCorners(this, tvLoadingStationFive, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FIVE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
 
         // TextColor
         Utility_Layout.setTextColor(this, tvStockPrime, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_PRIME_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
@@ -153,6 +157,7 @@ public class Activity_Juicer extends Activity_Authentication implements View.OnC
         Utility_Layout.setTextColor(this, tvLoadingStationTwo, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_TWO_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
         Utility_Layout.setTextColor(this, tvLoadingStationThree, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_THREE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
         Utility_Layout.setTextColor(this, tvLoadingStationFour, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FOUR_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
+        Utility_Layout.setTextColor(this, tvLoadingStationFive, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FIVE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
 
         // Text
         tvStockPrime.setText(SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_PRIME_SELECTED, true) ? getString(R.string.stock_prime_short)+" ("+lModelColorShapes.size()+")" : getString(R.string.stock_prime_short));
@@ -202,6 +207,7 @@ public class Activity_Juicer extends Activity_Authentication implements View.OnC
         if (!SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_TWO_SELECTED, true)) lLoadingStations.add(2);
         if (!SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_THREE_SELECTED, true)) lLoadingStations.add(3);
         if (!SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FOUR_SELECTED, true)) lLoadingStations.add(4);
+        if (!SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FIVE_SELECTED, true)) lLoadingStations.add(5);
 
         String cLoadingStations = "";
         if (lLoadingStations.size() > 0 ) {
@@ -288,6 +294,9 @@ public class Activity_Juicer extends Activity_Authentication implements View.OnC
                 break;
             case R.id.tvLoadingStationFour:
                 SharedPreferences.edit().putBoolean(Constants_Intern.JUICER_LOADING_STATION_FOUR_SELECTED, (!SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FOUR_SELECTED, true))).commit();
+                break;
+            case R.id.tvLoadingStationFive:
+                SharedPreferences.edit().putBoolean(Constants_Intern.JUICER_LOADING_STATION_FIVE_SELECTED, (!SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FIVE_SELECTED, true))).commit();
                 break;
         }
         updateLayout();

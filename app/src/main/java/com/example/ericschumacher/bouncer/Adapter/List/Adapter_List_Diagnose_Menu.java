@@ -73,6 +73,7 @@ public class Adapter_List_Diagnose_Menu extends Adapter_List {
             vhList.ivLeft.setImageDrawable(ContextCompat.getDrawable(Context, R.drawable.ic_add_24dp));
             vhList.ivLeft.setColorFilter(Context.getResources().getColor(R.color.color_primary));
 
+
             // Middle
             vhList.tvSubtitle.setVisibility(View.GONE);
             vhList.tvTitle.setText(Context.getString(R.string.new_diagnose));
@@ -83,7 +84,8 @@ public class Adapter_List_Diagnose_Menu extends Adapter_List {
             vhList.vDividerRight.setVisibility(View.GONE);
 
             // BackgroundColor
-            Utility_Layout.setRoundedCorners(Context, vhList.lMain, R.color.color_primary);
+            Utility_Layout.setBackgroundColor(Context, vhList.vDividerLeft, R.color.color_primary);
+            Utility_Layout.setRoundedCorners(Context, vhList.clForeground, R.color.color_primary);
             Utility_Layout.setBackgroundColor(Context, vhList.vDividerLeft, R.color.color_primary);
 
             // TextColor

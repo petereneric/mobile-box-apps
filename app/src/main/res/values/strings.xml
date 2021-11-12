@@ -382,6 +382,20 @@
     <string name="cant_be_edited_due_wrong_user">Can only be edited from the same user</string>
     <string name="model_damages">Model-Damages</string>
     <string name="add_damage_sheme">Damage-Sheme</string>
+    <string name="add_damage">Add damage</string>
+    <string name="delete_all_model_damages_first">Please delete all Model-Damages first, before you can use this function</string>
+    <string name="printer_twelve">Printer Twelve</string>
+    <string name="printer_thirteen">Printer Thirteen</string>
+    <string name="printer_fourteen">Printer Fourteen</string>
+    <string name="printer_fifteen">Printer Fifteen</string>
+    <string name="current_state">Current state</string>
+    <string name="really_delete_model_damage">Do you really want to delete this Model-Damage</string>
+    <string name="station_market_check">Market-Check</string>
+    <string name="class_five_blancco">V (Blancco)</string>
+    <string name="automatic">Automatic</string>
+    <string name="class_">Class</string>
+    <string name="roman_five">V</string>
+
 
     // Not translated
 

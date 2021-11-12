@@ -22,6 +22,7 @@ import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
+import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +35,7 @@ public class Fragment_Batteries extends Fragment implements Interface_Update {
     View lFragment;
     RecyclerView rvBatteries;
     Adapter_List_Battery aBattery;
+    ManagerPrinter mPrinter;
 
     // Data
     private int tData;
@@ -52,13 +54,16 @@ public class Fragment_Batteries extends Fragment implements Interface_Update {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        // Printer
+        mPrinter = new ManagerPrinter(getActivity());
+
         // vLayout
         lFragment = inflater.inflate(R.layout.fragment_batteries, container, false);
 
         // rvList
         rvBatteries = lFragment.findViewById(R.id.rvBatteries);
         rvBatteries.setLayoutManager(new LinearLayoutManager(getActivity()));
-        aBattery = new Adapter_List_Battery(getActivity(), lBatteries, this);
+        aBattery = new Adapter_List_Battery(getActivity(), lBatteries, this, mPrinter);
         rvBatteries.setAdapter(aBattery);
 
         // Data
@@ -71,6 +76,24 @@ public class Fragment_Batteries extends Fragment implements Interface_Update {
         update();
 
         return lFragment;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mPrinter.connect();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mPrinter != null) mPrinter.disconnect();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mPrinter != null) mPrinter.disconnect();
     }
 
     public void requestStorageLevel(int position) {

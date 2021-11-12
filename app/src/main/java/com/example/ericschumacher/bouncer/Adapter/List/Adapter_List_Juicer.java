@@ -64,7 +64,7 @@ public class Adapter_List_Juicer extends RecyclerView.Adapter<ViewHolder_Juicer>
         }
         holder.tvStock.setText(device.getoStoragePlace().getcStock());
         holder.tvIdDevice.setText("Id: "+device.getIdDevice());
-        holder.tvLoadingStation.setText(device.getoModel().getoCharger().gettLoadingStation());
+        holder.tvLoadingStation.setText(device.getoModel().getClassString());
 
         // ExtraDevices
         int kColor;

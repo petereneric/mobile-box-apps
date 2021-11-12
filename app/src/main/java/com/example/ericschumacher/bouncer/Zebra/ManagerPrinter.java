@@ -324,7 +324,7 @@ public class ManagerPrinter {
         } else {
             lkuBattery = "-";
         }
-        String cLoadingStation = device.getoModel().getoCharger().gettLoadingStation();
+        String cClass = device.getoModel().getClassString();
         String cCharger = device.getoModel().getoCharger().getName();
 
 
@@ -363,7 +363,7 @@ public class ManagerPrinter {
                 "^FH\\^FD>:" + idDevice + "^FS\n" +
                 "^FPH,3^FT21,188^A@N,17,18,TT0003M_^FH\\^CI28^FD" + cCharger + "^FS^CI27\n" +
                 "^FPH,3^FT284,108^A@N,17,18,TT0003M_^FH\\^CI28^FD-^FS^CI27\n" +
-                "^FPH,3^FT285,189^A@N,23,22,TT0003M_^FH\\^CI28^FD" + cLoadingStation + "^FS^CI27\n" +
+                "^FPH,3^FT285,189^A@N,23,22,TT0003M_^FH\\^CI28^FD" + cClass + "^FS^CI27\n" +
                 "^FPH,3^FT21,68^A@N,17,18,TT0003M_^FH\\^CI28^FD" + cModelName + "^FS^CI27\n" +
                 "^PQ1,0,1,Y\n" +
                 "^XZ\n";
@@ -403,7 +403,7 @@ public class ManagerPrinter {
                 "^FH\\^FD>:" + idDevice + ">68^FS\n" +
                 "^FPH,3^FT21,188^A@N,17,18,TT0003M_^FH\\^CI28^FD" + cCharger + "^FS^CI27\n" +
                 "^FPH,3^FT284,108^A@N,17,18,TT0003M_^FH\\^CI28^FD-^FS^CI27\n" +
-                "^FPH,3^FT285,189^A@N,23,22,TT0003M_^FH\\^CI28^FD" + cLoadingStation + "^FS^CI27\n" +
+                "^FPH,3^FT285,189^A@N,23,22,TT0003M_^FH\\^CI28^FD" + cClass + "^FS^CI27\n" +
                 "^FPH,3^FT21,68^A@N,17,18,TT0003M_^FH\\^CI28^FD" + cModelName + "^FS^CI27\n" +
                 "^PQ1,0,1,Y\n" +
                 "^XZ\n";

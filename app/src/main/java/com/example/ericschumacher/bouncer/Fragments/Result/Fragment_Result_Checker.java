@@ -26,9 +26,6 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
     @Override
     public void setLayout(LayoutInflater inflater, @Nullable ViewGroup container) {
         super.setLayout(inflater, container);
-
-        tvInteractionTitle.setVisibility(View.VISIBLE);
-        tvInteractionTitle.setText(getString(R.string.handler));
     }
 
     @Override
@@ -58,7 +55,7 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
                             boolean bDust = false;
                             Log.i("sizee", ""+iDevice.getDevice().getlDeviceDamages().size());
                             for (Object_Device_Damage oDeviceDamage : iDevice.getDevice().getlDeviceDamages()) {
-                                if (oDeviceDamage.getoModelDamage().getoDamage().getkDamage() == 10) {
+                                if (oDeviceDamage.getoModelDamage().getoDamage().getkDamage() == 10 && oDeviceDamage.gettStatus() < 2) {
                                     Log.i("johi", "hite");
                                     bDust = true;
                                 }
@@ -92,24 +89,72 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
                             // Repair possible
                             iDevice.getDevice().settState(Constants_Intern.STATE_DEFECT_REPAIR); // State
                             llRepair.setVisibility(View.VISIBLE);
-                            if (iDevice.getDevice().getoBattery() != null && iDevice.getDevice().isBatteryContained()) {
-                                // Battery contained
+                            if (iDevice.getDevice().isBackcoverContained()) {
+                                // Backcover contained
                                 llDefectRepairObjects.setVisibility(View.VISIBLE);
                                 tvDefectRepairDevice.setVisibility(View.VISIBLE);
-                                if (iDevice.getDevice().getoBattery().getlStock() < 2) {
-                                    // Battery reuse
-                                    llReuse.setVisibility(View.VISIBLE);
-                                    llReuseObjects.setVisibility(View.VISIBLE);
-                                    tvReuseBattery.setVisibility(View.VISIBLE);
-                                } else {
-                                    // Battery recycling
+                                if (iDevice.getDevice().getoShape().getId() == 4) {
+                                    // Backcover recycling
                                     llRecycling.setVisibility(View.VISIBLE);
                                     llRecyclingObjects.setVisibility(View.VISIBLE);
-                                    tvRecyclingBattery.setVisibility(View.VISIBLE);
+                                    tvRecyclingBackcover.setVisibility(View.VISIBLE);
+                                    if (iDevice.getDevice().isBatteryContained()) {
+                                        // Battery contained
+                                        if (iDevice.getDevice().getoBattery() != null && iDevice.getDevice().getoBattery().getlStock() < 2) {
+                                            // Battery reuse
+                                            llReuse.setVisibility(View.VISIBLE);
+                                            llReuseObjects.setVisibility(View.VISIBLE);
+                                            tvReuseBattery.setVisibility(View.VISIBLE);
+                                        } else {
+                                            // Battery recycling
+                                            tvRecyclingBattery.setVisibility(View.VISIBLE);
+                                        }
+                                    } else {
+                                        // Battery not contained
+                                        // --
+                                    }
+                                } else {
+                                    // Backcover reuse
+                                    llReuse.setVisibility(View.VISIBLE);
+                                    llReuseObjects.setVisibility(View.VISIBLE);
+                                    tvReuseBackcover.setVisibility(View.VISIBLE);
+                                    if (iDevice.getDevice().isBatteryContained() && iDevice.getDevice().getoBattery() != null) {
+                                        // Battery contained
+                                        if (iDevice.getDevice().getoBattery().getlStock() < 2) {
+                                            // Battery reuse
+                                            tvReuseBattery.setVisibility(View.VISIBLE);
+                                        } else {
+                                            // Battery recycling
+                                            llRecycling.setVisibility(View.VISIBLE);
+                                            llRecyclingObjects.setVisibility(View.VISIBLE);
+                                            tvRecyclingBattery.setVisibility(View.VISIBLE);
+                                        }
+                                    } else {
+                                        // Battery not contained
+                                        // --
+                                    }
                                 }
                             } else {
-                                // Battery not contained
-                                // --
+                                // Backcover not contained
+                                if (iDevice.getDevice().isBatteryContained()) {
+                                    // Battery contained
+                                    llDefectRepairObjects.setVisibility(View.VISIBLE);
+                                    tvDefectRepairDevice.setVisibility(View.VISIBLE);
+                                    if (iDevice.getDevice().getoBattery() != null && iDevice.getDevice().getoBattery().getlStock() < 2) {
+                                        // Battery reuse
+                                        llReuse.setVisibility(View.VISIBLE);
+                                        llReuseObjects.setVisibility(View.VISIBLE);
+                                        tvReuseBattery.setVisibility(View.VISIBLE);
+                                    } else {
+                                        // Battery recycling
+                                        llRecycling.setVisibility(View.VISIBLE);
+                                        llRecyclingObjects.setVisibility(View.VISIBLE);
+                                        tvRecyclingBattery.setVisibility(View.VISIBLE);
+                                    }
+                                } else {
+                                    // Battery not contained
+                                    // --
+                                }
                             }
 
                         } else {
@@ -162,7 +207,7 @@ public class Fragment_Result_Checker extends Fragment_Result implements Interfac
 
                             } else {
                                 // Backcover not contained
-                                if (iDevice.getDevice().isBatteryContained()) {
+                                if (iDevice.getDevice().getoBattery() != null &&  iDevice.getDevice().isBatteryContained()) {
                                     // Battery contained
                                     if (iDevice.getDevice().getoBattery() != null && iDevice.getDevice().getoBattery().getlStock() < 2) {
                                         // Battery reuse

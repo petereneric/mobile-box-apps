@@ -110,7 +110,13 @@
                 <TextView
                     android:id="@+id/tvLoadingStationFour"
                     style="@style/tv_juicer_settings"
+                    android:layout_marginRight="8dp"
                     android:text="@string/roman_four" />
+
+                <TextView
+                    android:id="@+id/tvLoadingStationFive"
+                    style="@style/tv_juicer_settings"
+                    android:text="@string/roman_five" />
 
             </LinearLayout>
 

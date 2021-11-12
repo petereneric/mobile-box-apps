@@ -19,4 +19,5 @@ public interface Interface_Fragment_Checker {
     public void diagnoseChange();
     public void changeModelChecks(boolean updateModelChecks);
     public void loadModelChecks();
+    public void diagnoseFinished();
 }

@@ -41,6 +41,7 @@ import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_Battery
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_Dps;
 import com.example.ericschumacher.bouncer.Fragments.Input.Fragment_Input_Model;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select;
+import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_Class;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_Exploitation;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_PhoneType;
 import com.example.ericschumacher.bouncer.Fragments.Select.Fragment_Select_YesNo;
@@ -141,6 +142,13 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
 
     public void removeFragments() {
         getSupportFragmentManager().beginTransaction().hide(fModel).commit();
+
+        if (fManager.findFragmentByTag(Constants_Intern.FRAGMENT_EDIT_MODEL_DAMAGES) != null) {
+            removeFragment(Constants_Intern.FRAGMENT_EDIT_MODEL_DAMAGES);
+        }
+        if (fManager.findFragmentByTag(Constants_Intern.FRAGMENT_SELECT_CLASS) != null) {
+            removeFragment(Constants_Intern.FRAGMENT_SELECT_CLASS);
+        }
     }
 
 
@@ -439,6 +447,12 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
         showFragment(new Fragment_Edit_Model_Damages(), bData, Constants_Intern.FRAGMENT_EDIT_MODEL_DAMAGES, Constants_Intern.DONT_SHOW_KEYBOARD);
     }
 
+    public void requestClass() {
+        Bundle bData = new Bundle();
+        bData.putString(Constants_Intern.TITLE, getString(R.string.class_));
+        showFragment(new Fragment_Select_Class(), bData, Constants_Intern.FRAGMENT_SELECT_CLASS, Constants_Intern.DONT_SHOW_KEYBOARD);
+    }
+
 
     // Return
 
@@ -583,6 +597,9 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
                 break;
             case Constants_Intern.FRAGMENT_SELECT_BACKCOVER_REMOVABLE:
                 getModel().setBackcoverRemovable(tSelect == 1);
+                break;
+            case Constants_Intern.FRAGMENT_SELECT_CLASS:
+                getModel().settClass(tSelect);
                 break;
         }
         removeFragment(cTag);

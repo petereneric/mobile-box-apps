@@ -51,11 +51,6 @@ public class Adapter_Edit_Device_Damages extends Adapter_List {
         ConstraintLayout.LayoutParams params = (ConstraintLayout.LayoutParams) vhList.gTwo.getLayoutParams();
         params.guidePercent = 1;
         vhList.gTwo.setLayoutParams(params);
-
-        // ITEM
-        // Data
-        Object_Model_Damage oModelDamage = lModelDamages.get(position);
-
         // Left
         vhList.ivLeft.setVisibility(GONE);
         vhList.tvLeft.setVisibility(GONE);
@@ -63,33 +58,50 @@ public class Adapter_Edit_Device_Damages extends Adapter_List {
         ConstraintLayout.LayoutParams paramsTwo = (ConstraintLayout.LayoutParams) vhList.gOne.getLayoutParams();
         paramsTwo.guideBegin = 0;
         vhList.gOne.setLayoutParams(paramsTwo);
-
         // Middle
-        vhList.tvTitle.setText(oModelDamage.getoDamage().getcName());
-        vhList.tvTitle.setGravity(Gravity.CENTER);
         vhList.tvSubtitle.setVisibility(GONE);
+        vhList.tvTitle.setGravity(Gravity.CENTER);
 
-        // Color
-        Object_Device_Damage deviceDamage = ((Interface_Adapter_List_Edit_Device_Damages)iAdapterList).getDeviceDamage(position);
-        if (deviceDamage != null) {
-            switch (deviceDamage.gettStatus()) {
-                case 1: // Repairable
-                    Utility_Layout.setBackgroundDrawable(Context, vhList.clForeground, R.drawable.background_rounded_corners_repair);
-                    Utility_Layout.setTextColor(Context, vhList.tvTitle, R.color.color_defect_repair);
-                    break;
-                case 2: // Repaired
-                    Utility_Layout.setBackgroundDrawable(Context, vhList.clForeground, R.drawable.background_rounded_corners_positive);
-                    Utility_Layout.setTextColor(Context, vhList.tvTitle, R.color.color_choice_positive);
-                    break;
-                case 3: // Not repairable
-                    Utility_Layout.setBackgroundDrawable(Context, vhList.clForeground, R.drawable.background_rounded_corners_negative);
-                    Utility_Layout.setTextColor(Context, vhList.tvTitle, R.color.color_choice_negative);
-                    break;
+        if (iAdapterList.getItemViewType(position) == Constants_Intern.ITEM) {
+
+            // ITEM
+            // Data
+            Object_Model_Damage oModelDamage = lModelDamages.get(position);
+
+            // Middle
+            vhList.tvTitle.setText(oModelDamage.getoDamage().getcName());
+
+            // Color
+            Object_Device_Damage deviceDamage = ((Interface_Adapter_List_Edit_Device_Damages)iAdapterList).getDeviceDamage(position);
+            if (deviceDamage != null) {
+                switch (deviceDamage.gettStatus()) {
+                    case 1: // Repairable
+                        Utility_Layout.setBackgroundDrawable(Context, vhList.clForeground, R.drawable.background_rounded_corners_repair);
+                        Utility_Layout.setTextColor(Context, vhList.tvTitle, R.color.color_defect_repair);
+                        break;
+                    case 2: // Repaired
+                        Utility_Layout.setBackgroundDrawable(Context, vhList.clForeground, R.drawable.background_rounded_corners_positive);
+                        Utility_Layout.setTextColor(Context, vhList.tvTitle, R.color.color_choice_positive);
+                        break;
+                    case 3: // Not repairable
+                        Utility_Layout.setBackgroundDrawable(Context, vhList.clForeground, R.drawable.background_rounded_corners_negative);
+                        Utility_Layout.setTextColor(Context, vhList.tvTitle, R.color.color_choice_negative);
+                        break;
+                }
+            } else {
+                Utility_Layout.setBackgroundDrawable(Context, vhList.clForeground, R.drawable.background_rounded_corners_grey);
+                Utility_Layout.setTextColor(Context, vhList.tvTitle, R.color.color_grey);
             }
-        } else {
-            Utility_Layout.setBackgroundDrawable(Context, vhList.clForeground, R.drawable.background_rounded_corners_grey);
-            Utility_Layout.setTextColor(Context, vhList.tvTitle, R.color.color_grey);
         }
+        if (iAdapterList.getItemViewType(position) == Constants_Intern.TYPE_DAMAGE_OVERBROKEN) {
+            // Middle
+            vhList.tvTitle.setText(Context.getString(R.string.damage_overbroken));
+        }
+        if (iAdapterList.getItemViewType(position) == Constants_Intern.TYPE_DAMAGE_OTHER) {
+            // Middle
+            vhList.tvTitle.setText(Context.getString(R.string.damage_not_listed));
+        }
+
 
 
     }

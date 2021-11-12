@@ -3,6 +3,7 @@ package com.example.ericschumacher.bouncer.Activities.Tools
 import android.os.Bundle
 import android.support.design.widget.TabLayout.GONE
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.util.Log
@@ -10,14 +11,12 @@ import android.view.Menu
 import android.view.MenuItem
 import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Device
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager
-import com.example.ericschumacher.bouncer.Constants.Constants_Intern
 import com.example.ericschumacher.bouncer.Fragments.Checker.Fragment_Checker
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Info_Checker
 import com.example.ericschumacher.bouncer.Fragments.Result.Fragment_Result
-import com.example.ericschumacher.bouncer.Interfaces.Interface_Authentication_Dialog
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Checker
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager
 import com.example.ericschumacher.bouncer.R
-import com.example.ericschumacher.bouncer.Volley.JWT
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection
 import javax.inject.Inject
 
@@ -129,12 +128,6 @@ class Activity_Checker : Activity_Device(), Fragment_Result.Interface_Fragment_R
     }
 
     override fun returnResult(cTag: String?) {
-        if ((oDevice.gettState() == Constants_Intern.STATE_RECYCLING || oDevice.gettState() == Constants_Intern.STATE_DEFECT_REPAIR) && oDevice.getoBattery() != null && oDevice.getoBattery().getlStock() < 2) {
-            Log.i("Print", "Battery");
-            mPrinter.printBattery(oDevice.getoBattery());
-        } else {
-            Log.i("Don't Print", "Battery");
-        }
         reset()
     }
 
@@ -154,6 +147,12 @@ class Activity_Checker : Activity_Device(), Fragment_Result.Interface_Fragment_R
             }
             R.id.mVisibility -> {
                 menuVisibility = !menuVisibility;
+                updateLayoutMenu();
+                true
+            }
+            R.id.mInfo -> {
+                val fDialogInfo = Fragment_Dialog_Info_Checker()
+                fDialogInfo.show(supportFragmentManager, "FRAGMENT_DIALOG_INFO_CHECKER");
                 updateLayoutMenu();
                 true
             }

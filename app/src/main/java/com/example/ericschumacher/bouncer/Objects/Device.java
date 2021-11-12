@@ -97,13 +97,9 @@ public class Device implements Serializable {
             }
             if (!oJson.isNull(Constants_Extern.BOOLEAN_BATTERY_CONTAINED)) {
                 bBatteryContained = (oJson.getInt(Constants_Extern.BOOLEAN_BATTERY_CONTAINED) == 1) ? true : false;
-            } else {
-                if (oModel != null && oModel.isBatteryRemovable() != null && !oModel.isBatteryRemovable()) {
-                    bBatteryContained = true;
-                }
             }
-            if (bBatteryContained != null && bBatteryContained && oModel != null && oModel.getlModelBatteries().size() == 1) {
-                setoBattery(oModel.getoBattery());
+            if (!oJson.isNull("oBattery")) {
+                oBattery = new Battery(oJson.getJSONObject("oBattery"), Context);
             }
             if (!oJson.isNull(Constants_Extern.BOOLEAN_BACKCOVER_CONTAINED)) {
                 bBackcoverContained = (oJson.getInt(Constants_Extern.BOOLEAN_BACKCOVER_CONTAINED) == 1) ? true : false;
@@ -178,6 +174,11 @@ public class Device implements Serializable {
                 oJson.put(Constants_Extern.BOOLEAN_BATTERY_CONTAINED, bBatteryContained ? 1 : 0);
             } else {
                 oJson.put(Constants_Extern.BOOLEAN_BATTERY_CONTAINED, JSONObject.NULL);
+            }
+            if (oBattery != null) {
+                oJson.put("kBattery", oBattery.getId());
+            } else {
+                oJson.put("kBattery", JSONObject.NULL);
             }
             if (oColor != null) {
                 oJson.put(Constants_Extern.ID_COLOR, oColor.getId());
@@ -268,6 +269,7 @@ public class Device implements Serializable {
 
     public void setoBattery(Battery oBattery) {
         this.oBattery = oBattery;
+        updateDevice();
     }
 
     public StoragePlace getoStoragePlace() {
@@ -462,6 +464,13 @@ public class Device implements Serializable {
 
     public void setBatteryContained(Boolean bBattery) {
         this.bBatteryContained = bBattery;
+        if (!bBattery) {
+            oBattery = null;
+        } else {
+            if (oModel.getlModelBatteries().size() == 1) {
+                oBattery = oModel.getlModelBatteries().get(0).getoBattery();
+            }
+        }
         updateDevice();
     }
 

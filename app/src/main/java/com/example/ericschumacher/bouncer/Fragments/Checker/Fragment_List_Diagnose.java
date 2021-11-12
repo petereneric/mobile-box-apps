@@ -256,7 +256,6 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
                 }
             });
         }
-
     }
 
     @Override
@@ -331,7 +330,7 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
 
         if (!bFinishedBefore && iChecker.getDiagnose().isbFinished()) {
             // Show Handler
-            iChecker.showHandler();
+            iChecker.diagnoseFinished();
         }
     }
 

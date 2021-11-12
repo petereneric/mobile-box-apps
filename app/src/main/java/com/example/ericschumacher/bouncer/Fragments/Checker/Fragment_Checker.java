@@ -18,6 +18,7 @@ import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Checker;
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager;
 import com.example.ericschumacher.bouncer.Adapter.Pager.Adapter_Pager_Checker;
+import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Checks;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
 import com.example.ericschumacher.bouncer.Fragments.Result.Fragment_Result_Checker;
@@ -222,6 +223,17 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
                     }
                 }
             });
+        }
+    }
+
+    @Override
+    public void diagnoseFinished() {
+        showHandler();
+        if ((iDevice.getDevice().gettState() == Constants_Intern.STATE_RECYCLING || iDevice.getDevice().gettState() == Constants_Intern.STATE_DEFECT_REPAIR) && iDevice.getDevice().getoBattery() != null && iDevice.getDevice().getoBattery().getlStock() < 2) {
+            Log.i("Print", "Battery");
+            iDevice.printDeviceBattery();
+        } else {
+            Log.i("Don't Print", "Battery");
         }
     }
 

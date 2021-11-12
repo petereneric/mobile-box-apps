@@ -46,6 +46,7 @@ public class Model implements Parcelable, Serializable {
     Charger oCharger = null;
     Manufacturer oManufacturer = null;
     ArrayList<Object_Model_Damage> lModelDamages = new ArrayList<>();
+    Integer tClass = null;
 
     // Connection
     Volley_Connection cVolley;
@@ -108,6 +109,10 @@ public class Model implements Parcelable, Serializable {
                     lModelDamages.add(oModelDamage);
                 }
             }
+
+            if (!oJson.isNull("tClass"))
+                tClass = oJson.getInt("tClass");
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -197,10 +202,13 @@ public class Model implements Parcelable, Serializable {
                     return oModelBattery.getoBattery();
                 }
             }
-            return lModelBatteries.get(0).getoBattery();
-        } else {
-            return null;
+            for (Model_Battery oModelBattery : lModelBatteries) {
+                if (oModelBattery.gettStatus() == Constants_Intern.TYPE_MODEL_BATTERY_NORMAL) {
+                    return oModelBattery.getoBattery();
+                }
+            }
         }
+        return null;
     }
 
     public Integer gettPhone() {
@@ -307,6 +315,29 @@ public class Model implements Parcelable, Serializable {
         }
     }
 
+    public Integer gettClass() {
+        return tClass;
+    }
+
+    public String getClassString() {
+        if (tClass != null) {
+            switch (tClass) {
+                case 0: return Context.getString(R.string.automatic);
+                case 1: return "I";
+                case 2: return "II";
+                case 3: return "III";
+                case 4: return "IV";
+                case 5: return "V";
+            }
+        }
+        return Context.getString(R.string.unknown);
+    }
+
+    public void settClass(Integer tClass) {
+        this.tClass = tClass;
+        update();
+    }
+
     public JSONObject getJson() {
         JSONObject oJson = new JSONObject();
         try {
@@ -354,6 +385,11 @@ public class Model implements Parcelable, Serializable {
                 oJson.put(Constants_Extern.LIST_MODEL_BATTERIES, aJson);
             } else {
                 oJson.put(Constants_Extern.LIST_MODEL_BATTERIES, JSONObject.NULL);
+            }
+            if (tClass != null) {
+                oJson.put("tClass", tClass);
+            } else {
+                oJson.put("tClass", JSONObject.NULL);
             }
         } catch (JSONException e) {
             e.printStackTrace();

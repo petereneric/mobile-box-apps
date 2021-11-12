@@ -125,6 +125,9 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
     public void removeFragments() {
         super.removeFragments();
         getSupportFragmentManager().beginTransaction().hide(fDevice).commit();
+        if (fManager.findFragmentByTag(Constants_Intern.FRAGMENT_EDIT_DEVICE_DAMAGES) != null) {
+            removeFragment(Constants_Intern.FRAGMENT_EDIT_DEVICE_DAMAGES);
+        }
     }
 
 
@@ -195,26 +198,28 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
         final String cSearchSaved = etSearch.getText().toString();
         switch (SharedPreferences.getInt(Constants_Intern.SEARCH_DEVICE_TYPE, Constants_Intern.MAIN_SEARCH_DEVICE_TYPE_ID_DEVICE)) {
             case Constants_Intern.MAIN_SEARCH_DEVICE_TYPE_ID_DEVICE:
-                cVolley.getResponse(Request.Method.GET, Urls.URL_GET_DEVICE_BY_ID + etSearch.getText().toString(), null, new Interface_VolleyResult() {
-                    @Override
-                    public void onResult(JSONObject oJson) {
-                        if (cSearchSaved.equals(etSearch.getText().toString())) {
-                            if (Volley_Connection.successfulResponse(oJson)) {
-                                try {
-                                    oDevice = new Device(oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device.this);
-                                    oModel = oDevice.getoModel();
-                                    returnFromSearch();
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
+                if (cSearchSaved.length() < 15) {
+                    cVolley.getResponse(Request.Method.GET, Urls.URL_GET_DEVICE_BY_ID + etSearch.getText().toString(), null, new Interface_VolleyResult() {
+                        @Override
+                        public void onResult(JSONObject oJson) {
+                            if (cSearchSaved.equals(etSearch.getText().toString())) {
+                                if (Volley_Connection.successfulResponse(oJson)) {
+                                    try {
+                                        oDevice = new Device(oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Device.this);
+                                        oModel = oDevice.getoModel();
+                                        returnFromSearch();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    Utility_Toast.show(Activity_Device.this, R.string.id_unknown);
+                                    removeFragments();
                                 }
-                            } else {
-                                Utility_Toast.show(Activity_Device.this, R.string.id_unknown);
-                                removeFragments();
                             }
                         }
-                    }
-                });
-                break;
+                    });
+                    break;
+                }
             case Constants_Intern.MAIN_SEARCH_DEVICE_TYPE_IMEI:
                 cVolley.getResponse(Request.Method.GET, Urls.URL_GET_DEVICE_BY_IMEI + etSearch.getText().toString(), null, new Interface_VolleyResult() {
                     @Override
@@ -293,6 +298,16 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
         // Changed indirect
     }
 
+    @Override
+    public void printDevice() {
+        if (oDevice != null) mPrinter.printDeviceId(oDevice);
+    }
+
+    @Override
+    public void printDeviceBattery() {
+        if (oDevice != null && oDevice.getoBattery() != null) mPrinter.printBattery(oDevice.getoBattery());
+    }
+
     public void requestDamages() {
         Bundle bData = new Bundle();
         bData.putString(Constants_Intern.TITLE, getString(R.string.damages));
@@ -365,8 +380,8 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
                 break;
             case Constants_Intern.FRAGMENT_SELECT_BATTERY_CONTAINED:
                 oDevice.setBatteryContained(tSelect == 1);
-                if (oDevice.isBatteryContained() && oDevice.getoModel().getlModelBatteries() != null && oDevice.getoModel().getlModelBatteries().size() == 1) {
-                    oDevice.setoBattery(oDevice.getoModel().getoBattery());
+                if (tSelect == 1 && getModel() != null && getModel().getlModelBatteries().size() > 1) {
+                    requestDeviceBattery();
                 }
                 break;
             case Constants_Intern.FRAGMENT_SELECT_BACKCOVER_CONTAINED:
@@ -512,7 +527,39 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
     public void returnEditDeviceDamages(int tAction, String cTag) {
         switch (tAction) {
             case Constants_Intern.TYPE_ACTION_DEVICE_DAMAGES_COMMIT:
-                oDevice.settState(Constants_Intern.STATE_DEFECT_REPAIR);
+                if (oDevice.getlDeviceDamages().size() > 0) {
+                    Integer tRepairstate = null;
+                    for (Object_Device_Damage deviceDamage : oDevice.getlDeviceDamages()) {
+                        if (deviceDamage.gettStatus() == 3) {
+                            tRepairstate = 3;
+                            break;
+                        }
+                        if (tRepairstate == null && deviceDamage.gettStatus() == 2) {
+                            tRepairstate = 2;
+                        }
+                        if (deviceDamage.gettStatus() == 1) {
+                            tRepairstate = 1;
+                        }
+                    }
+
+                    switch (tRepairstate) {
+                        case 1:
+                            if (oDevice.getlDeviceDamages().size() == 1 && oDevice.getlDeviceDamages().get(0).getoModelDamage().getoDamage().getkDamage() == 10) {
+                                oDevice.settState(Constants_Intern.STATE_DEFECT_REUSE);
+                            } else {
+                                oDevice.settState(Constants_Intern.STATE_DEFECT_REPAIR);
+                            }
+                            break;
+                        case 2:
+                            oDevice.settState(Constants_Intern.STATE_INTACT_REUSE);
+                            break;
+                        case 3:
+                            oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                            break;
+                    }
+                } else {
+                    oDevice.settState(Constants_Intern.STATE_INTACT_REUSE);
+                }
                 break;
             case Constants_Intern.TYPE_ACTION_DEVICE_DAMAGES_OVERBROKEN:
             case Constants_Intern.TYPE_ACTION_DEVICE_DAMAGES_OTHER_DAMAGES:
@@ -619,8 +666,10 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
         if (!editable.toString().equals("")) {
             switch (SharedPreferences.getInt(Constants_Intern.SEARCH_DEVICE_TYPE, Constants_Intern.MAIN_SEARCH_DEVICE_TYPE_ID_DEVICE)) {
                 case Constants_Intern.MAIN_SEARCH_DEVICE_TYPE_ID_DEVICE:
-                    onSearch();
-                    break;
+                    if (editable.toString().length() < 15) {
+                        onSearch();
+                        break;
+                    }
                 case Constants_Intern.MAIN_SEARCH_DEVICE_TYPE_IMEI:
                     if (editable.toString().length() == 15) {
                         onSearch();

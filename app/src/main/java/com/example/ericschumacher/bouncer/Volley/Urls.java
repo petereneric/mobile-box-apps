@@ -2,7 +2,7 @@ package com.example.ericschumacher.bouncer.Volley;
 
 public class Urls {
     //private final static String URL_REST_API = "http://svp-server.com/svp-gmbh/erp/bouncer/src/api.php/";
-    public final static String URL_REST_API = "https://www.svp-api.com/api/public/index.php/";
+    public final static String URL_REST_API = "https://svp-api.com/api/public/index.php/";
 
     public final static String URL_GET_MANUFACTURER_ALL = URL_REST_API+"manufacturer/all";
     public final static String URL_GET_CHARGER_ALL = URL_REST_API+"chargers/all/new";
@@ -100,15 +100,22 @@ public class Urls {
     public final static String URL_POST_LOGIN = URL_REST_API+"login/team";
 
     // ModelDamage
-    public static final String URL_GET_MODEL_DAMAGE_AVAILABLE = "team/model/damages/available/";
-    public static final String URL_DELETE_MODEL_DAMAGE = "team/model/damage/";
-    public static final String URL_CREATE_MODEL_DAMAGE = "team/model/damage";
-    public static final String URL_CREATE_MODEL_DAMAGES = "team/model/damage/";
+    public static final String URL_GET_MODEL_DAMAGE_AVAILABLE = URL_REST_API+"team/model/damages/available/";
+    public static final String URL_DELETE_MODEL_DAMAGE = URL_REST_API+"team/model/damage/";
+    public static final String URL_CREATE_MODEL_DAMAGE = URL_REST_API+"team/model/damage";
+    public static final String URL_CREATE_MODEL_DAMAGES = URL_REST_API+"team/model/damages/";
 
-    // ModelDamage
-    public static final String URL_DELETE_DEVICE_DAMAGE = "team/device/damage/";
-    public static final String URL_CREATE_DEVICE_DAMAGE = "team/model/damage/";
-    public static final String URL_UPDATE_DEVICE_DAMAGE = "team/model/damage";
+    // DeviceDamage
+    public static final String URL_DELETE_DEVICE_DAMAGE = URL_REST_API+"team/device/damage/";
+    public static final String URL_CREATE_DEVICE_DAMAGE = URL_REST_API+"team/device/damage";
+    public static final String URL_UPDATE_DEVICE_DAMAGE = URL_REST_API+"team/device/damage";
+
+    // Stock
+    public static final String URL_GET_STOCK_AMOUNT = URL_REST_API+"team/stock/amount/";
+
+    // Statistic
+    public static final String URL_GET_STATISTIC_BOUNCER = URL_REST_API+"team/statistic/bouncer";
+    public static final String URL_GET_STATISTIC_CHECKER = URL_REST_API+"team/statistic/checker";
 
 
 }

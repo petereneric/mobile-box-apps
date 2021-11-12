@@ -41,9 +41,10 @@ public class Fragment_Result_Bouncer extends Fragment_Result {
                     case  Constants_Intern.DEFAULT_EXPLOITATION_TBD:
                         switch (oDevice.gettState()) {
                             case Constants_Intern.STATE_INTACT_REUSE:
+                            case Constants_Intern.STATE_DEFECT_REUSE:
                                 llReuse.setVisibility(View.VISIBLE);
-                                if (oDevice.getoStation().getId() == Constants_Intern.STATION_CHECK_ONE) {
-                                    tvReuse.setText(getString(R.string.reuse_station_check_one));
+                                if (oDevice.getoStation().getId() == Constants_Intern.STATION_TBD || oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.DEFAULT_EXPLOITATION_TBD) {
+                                    tvReuse.setText(getString(R.string.station_market_check));
                                 } else {
                                     tvReuse.setText(getString(R.string.reuse_station_lku_stock));
                                 }
@@ -69,6 +70,7 @@ public class Fragment_Result_Bouncer extends Fragment_Result {
                                     tvRecyclingDevice.setVisibility(View.VISIBLE);
                                 }
                                 if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() >= 2) {
+                                    llRecyclingObjects.setVisibility(View.VISIBLE);
                                     tvRecyclingBattery.setVisibility(View.VISIBLE);
                                     tvRecyclingDevice.setVisibility(View.VISIBLE);
                                 }
@@ -82,11 +84,28 @@ public class Fragment_Result_Bouncer extends Fragment_Result {
                                 break;
                             case Constants_Intern.STATE_DEFECT_REPAIR:
                                 llRepair.setVisibility(View.VISIBLE);
+                                if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() < 2) {
+                                    llDefectRepairObjects.setVisibility(View.VISIBLE);
+                                    tvDefectRepairDevice.setVisibility(View.VISIBLE);
+                                    llReuseObjects.setVisibility(View.VISIBLE);
+                                    llReuse.setVisibility(View.VISIBLE);
+                                    tvReuseBattery.setVisibility(View.VISIBLE);
+                                }
+                                if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() >= 2) {
+                                    llRecycling.setVisibility(View.VISIBLE);
+                                    llRecyclingObjects.setVisibility(View.VISIBLE);
+                                    tvRecyclingBattery.setVisibility(View.VISIBLE);
+                                    llDefectRepairObjects.setVisibility(View.VISIBLE);
+                                    tvDefectRepairDevice.setVisibility(View.VISIBLE);
+                                }
+                                if (oDevice.getoModel().isBackcoverRemovable() && oDevice.isBackcoverContained()) {
+                                    llReuseObjects.setVisibility(View.VISIBLE);
+                                    llReuse.setVisibility(View.VISIBLE);
+                                    tvReuseBackcover.setVisibility(View.VISIBLE);
+                                    llDefectRepairObjects.setVisibility(View.VISIBLE);
+                                    tvDefectRepairDevice.setVisibility(View.VISIBLE);
+                                }
                                 //tvDefectRepairDevice.setVisibility(View.VISIBLE);
-                                break;
-                            case Constants_Intern.STATE_DEFECT_REUSE:
-                                llDefectReuse.setVisibility(View.VISIBLE);
-                                //tvDefectReuseDevice.setVisibility(View.VISIBLE);
                                 break;
                         }
                         break;

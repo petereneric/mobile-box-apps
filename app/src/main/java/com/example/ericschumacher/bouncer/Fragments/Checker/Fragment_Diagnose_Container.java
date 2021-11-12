@@ -243,6 +243,11 @@ public class Fragment_Diagnose_Container extends Fragment implements Interface_U
         iChecker.loadModelChecks();
     }
 
+    @Override
+    public void diagnoseFinished() {
+        iChecker.diagnoseFinished();
+    }
+
     public void showDiagnose() {
         Log.i("Call", "showDiagnose");
         replaceFragment(fDiagnose, "FRAGMENT_DIAGNOSE");

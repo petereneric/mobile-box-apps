@@ -9,11 +9,4 @@
         app:showAsAction="always"
         android:title="@string/visibility" />
 
-    <item
-        android:id="@+id/mVisibility"
-        android:icon="@drawable/ic_visibility_off"
-        android:orderInCategory="100"
-        app:showAsAction="always"
-        android:title="@string/visibility" />
-
 </menu>

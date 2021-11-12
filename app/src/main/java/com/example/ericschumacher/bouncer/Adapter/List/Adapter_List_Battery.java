@@ -37,9 +37,9 @@ public class Adapter_List_Battery extends RecyclerView.Adapter<RecyclerView.View
     // Interface
     Fragment_Batteries iFragmentBatteries;
 
-    public Adapter_List_Battery(Context context, ArrayList<Battery> lBatteries, Fragment_Batteries iFragmentBatteries) {
+    public Adapter_List_Battery(Context context, ArrayList<Battery> lBatteries, Fragment_Batteries iFragmentBatteries, ManagerPrinter printer) {
         Context = context;
-        mPrinter = new ManagerPrinter(Context);
+        mPrinter = printer;
         this.lBatteries = lBatteries;
         this.iFragmentBatteries = iFragmentBatteries;
     }

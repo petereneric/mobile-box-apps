@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">85.214.91.154</domain>
-        <domain includeSubdomains="true">http://h2905991.stratoserver.net</domain>
-        <domain includeSubdomains="true">h2905991.stratoserver.net</domain>
-    </domain-config>
+    <base-config>
+        <trust-anchors>
+            <certificates src="system"/>
+        </trust-anchors>
+    </base-config>
 </network-security-config>
     <!--android:networkSecurityConfig="@xml/http_security"-->
     <!-- Add in manifest/application -->

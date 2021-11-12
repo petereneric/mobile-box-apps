@@ -260,5 +260,7 @@ public class Fragment_Device extends Fragment_Object implements View.OnClickList
         void requestBackcoverContained();
         void requestDamages();
         void requestState();
+        void printDevice();
+        void printDeviceBattery();
     }
 }

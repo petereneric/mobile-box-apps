@@ -3,9 +3,12 @@ package com.example.ericschumacher.bouncer.Objects;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.R;
+import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
 import org.json.JSONException;
@@ -23,7 +26,7 @@ public class Object_Device_Damage {
     private int tStatus;
     private String cNotes;
 
-    private Volley_Connection cVolley;
+    public Volley_Connection cVolley;
 
     public Object_Device_Damage(Context context, JSONObject oJson) {
         cVolley = new Volley_Connection(context);
@@ -74,6 +77,22 @@ public class Object_Device_Damage {
         return oJson;
     }
 
+    private JSONObject getJsonNew() {
+        JSONObject oJson = new JSONObject();
+        try {
+            oJson.put("kDeviceDamage", getId());
+            oJson.put("tStatus", tStatus);
+            oJson.put("cNotes", cNotes);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return oJson;
+    }
+
+    public void upload() {
+        cVolley.execute(Request.Method.POST, Urls.URL_UPDATE_DEVICE_DAMAGE, getJsonNew());
+    }
+
     public int getId() {
         return Id;
     }
@@ -120,6 +139,7 @@ public class Object_Device_Damage {
 
     public void settStatus(int tStatus) {
         this.tStatus = tStatus;
+        upload();
     }
 
     public String getcNotes() {

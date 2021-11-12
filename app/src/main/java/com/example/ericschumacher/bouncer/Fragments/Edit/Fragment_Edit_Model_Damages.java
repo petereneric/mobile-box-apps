@@ -18,6 +18,8 @@ import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Edit_Model_Damage
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List;
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_List;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Simple;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Dialog_Simple;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Edit;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Manager;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Model_New_New;
@@ -36,7 +38,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Fragment_Edit_Model_Damages extends Fragment_Edit implements Adapter_List.Interface_Adapter_List {
+public class Fragment_Edit_Model_Damages extends Fragment_Edit implements Adapter_List.Interface_Adapter_List, Interface_Dialog_Simple {
 
     // Adapter
     Adapter_Edit_Model_Damages mAdapter;
@@ -88,9 +90,13 @@ public class Fragment_Edit_Model_Damages extends Fragment_Edit implements Adapte
                 if (getItemViewType(viewHolder.getAdapterPosition()) == Constants_Intern.ITEM) {
                     switch (direction) {
                         case ItemTouchHelper.LEFT:
-                            cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_MODEL_DAMAGE+iModel.getModel().getlModelDamages().get(viewHolder.getAdapterPosition()), null);
-                            iModel.getModel().getlModelDamages().remove(viewHolder.getAdapterPosition());
-                            mAdapter.update(iModel.getModel().getlModelDamages());
+                            Fragment_Dialog_Simple fDialogSimple = new Fragment_Dialog_Simple();
+                            Bundle data = new Bundle();
+                            data.putString(Constants_Intern.TITLE, getString(R.string.really_delete_model_damage));
+                            data.putInt(Constants_Intern.POSITION, viewHolder.getAdapterPosition());
+                            fDialogSimple.setArguments(data);
+                            fDialogSimple.setTargetFragment(Fragment_Edit_Model_Damages.this, 0);
+                            fDialogSimple.show(getFragmentManager(), Constants_Intern.FRAGMENT_DIAlOG_SIMPLE_DELETE_MODEL_DAMAGE);
                             break;
                     }
                 }
@@ -135,7 +141,11 @@ public class Fragment_Edit_Model_Damages extends Fragment_Edit implements Adapte
 
     @Override
     public int getItemCount() {
-        return iModel.getModel().getlModelDamages().size()+1;
+        if (iModel.getModel() != null) {
+            return iModel.getModel().getlModelDamages().size()+1;
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -160,17 +170,25 @@ public class Fragment_Edit_Model_Damages extends Fragment_Edit implements Adapte
                                 lCheckNames[lDamages.indexOf(damage)] = damage.getcName();
                             }
                             AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-                            dialog.setTitle(R.string.add_check);
+                            dialog.setTitle(R.string.add_damage);
                             dialog.setItems(lCheckNames, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int position) {
                                     Object_Damage damage = lDamages.get(position);
-                                    cVolley.getResponse(Request.Method.PUT, Urls.URL_CREATE_MODEL_DAMAGE + iModel.getModel().getkModel() + "/" + damage.getkDamage(), null, new Interface_VolleyResult() {
+                                    JSONObject oJson = new JSONObject();
+                                    try {
+                                        oJson.put("kModel", iModel.getModel().getkModel());
+                                        oJson.put("kDamage", damage.getkDamage());
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    cVolley.getResponse(Request.Method.PUT, Urls.URL_CREATE_MODEL_DAMAGE, oJson, new Interface_VolleyResult() {
                                         @Override
                                         public void onResult(JSONObject oJson) throws JSONException {
                                             if (oJson != null) {
                                                 iModel.getModel().getlModelDamages().add(new Object_Model_Damage(getActivity(), oJson));
-                                                iManager.updateLayout();
+                                                //iManager.updateLayout();
                                                 mAdapter.update(iModel.getModel().getlModelDamages());
                                             }
                                         }
@@ -190,34 +208,39 @@ public class Fragment_Edit_Model_Damages extends Fragment_Edit implements Adapte
 
     @Override
     public boolean longClickList(int position) {
-        if (getItemViewType(position) == Constants_Intern.ADD) {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
-            dialog.setTitle(R.string.add_damage_sheme);
-            String[] lProcedures = {"Tastenhandy", "Smartphone"};
-            dialog.setItems(lProcedures, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int position) {
-                    cVolley.getResponse(Request.Method.PUT, Urls.URL_CREATE_MODEL_DAMAGES + iModel.getModel().getkModel() + "/" + position, null, new Interface_VolleyResult() {
-                        @Override
-                        public void onResult(JSONObject oJson) throws JSONException {
-                            if (oJson != null) {
-                                iModel.getModel().getlModelDamages().clear();
-                                JSONArray jsonArray = oJson.getJSONArray("lModelDamages");
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                                    Object_Model_Damage modelDamage = new Object_Model_Damage(getActivity(), jsonObject);
-                                    iModel.getModel().getlModelDamages().add(modelDamage);
+        if (getItemViewType(position) == Constants_Intern.ADD ) {
+            if (iModel.getModel().getlModelDamages().size() == 0) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                dialog.setTitle(R.string.add_damage_sheme);
+                String[] lProcedures = {"Tastenhandy", "Smartphone"};
+                dialog.setItems(lProcedures, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int position) {
+                        cVolley.getResponse(Request.Method.PUT, Urls.URL_CREATE_MODEL_DAMAGES + iModel.getModel().getkModel() + "/" + position, null, new Interface_VolleyResult() {
+                            @Override
+                            public void onResult(JSONObject oJson) throws JSONException {
+                                if (oJson != null) {
+                                    iModel.getModel().getlModelDamages().clear();
+                                    JSONArray jsonArray = oJson.getJSONArray("lModelDamages");
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        Object_Model_Damage modelDamage = new Object_Model_Damage(getActivity(), jsonObject);
+                                        iModel.getModel().getlModelDamages().add(modelDamage);
+                                    }
+                                    iManager.updateLayout();
+                                    mAdapter.update(iModel.getModel().getlModelDamages());
                                 }
-                                iManager.updateLayout();
-                                mAdapter.update(iModel.getModel().getlModelDamages());
                             }
-                        }
-                    });
-                }
-            });
-            AlertDialog alert = dialog.create();
-            alert.show();
-            return true;
+                        });
+                    }
+                });
+                AlertDialog alert = dialog.create();
+                alert.show();
+                return true;
+            } else {
+                Utility_Toast.show(getActivity(), R.string.delete_all_model_damages_first);
+                return true;
+            }
         } else {
             return false;
         }
@@ -229,6 +252,26 @@ public class Fragment_Edit_Model_Damages extends Fragment_Edit implements Adapte
             return Constants_Intern.ITEM;
         } else {
             return Constants_Intern.ADD;
+        }
+    }
+
+    @Override
+    public void onYes(String cTag, int position) {
+        switch (cTag) {
+            case Constants_Intern.FRAGMENT_DIAlOG_SIMPLE_DELETE_MODEL_DAMAGE:
+                cVolley.execute(Request.Method.DELETE, Urls.URL_DELETE_MODEL_DAMAGE+iModel.getModel().getlModelDamages().get(position).getId(), null);
+                iModel.getModel().getlModelDamages().remove(position);
+                mAdapter.update(iModel.getModel().getlModelDamages());
+                break;
+        }
+    }
+
+    @Override
+    public void onNo(String cTag) {
+        switch (cTag) {
+            case Constants_Intern.FRAGMENT_DIAlOG_SIMPLE_DELETE_MODEL_DAMAGE:
+                mAdapter.update(iModel.getModel().getlModelDamages());
+                break;
         }
     }
 }

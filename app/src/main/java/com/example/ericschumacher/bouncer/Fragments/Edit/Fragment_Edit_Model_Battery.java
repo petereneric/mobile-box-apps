@@ -73,11 +73,17 @@ public class Fragment_Edit_Model_Battery extends Fragment_Edit implements Interf
 
     public void addBattery(Battery oBattery) {
         iModel.getModel().addModelBattery(new Model_Battery(getActivity(), iModel.getModel().getkModel(), oBattery, 0));
+        if (iModel.getModel().getlModelBatteries().size() == 1) {
+            iModel.getModel().getlModelBatteries().get(0).settStatus(Constants_Intern.MODEL_BATTERY_STATUS_PRIME);
+        }
         aModelBatteries.notifyDataSetChanged();
     }
 
     public void deleteModelBattery(Model_Battery oModelBattery) {
         iModel.getModel().removeModelBattery(oModelBattery);
+        if (iModel.getModel().getlModelBatteries().size() == 1) {
+            iModel.getModel().getlModelBatteries().get(0).settStatus(Constants_Intern.MODEL_BATTERY_STATUS_PRIME);
+        }
         aModelBatteries.notifyDataSetChanged();
     }
 
@@ -98,6 +104,9 @@ public class Fragment_Edit_Model_Battery extends Fragment_Edit implements Interf
             aModelBatteries.notifyDataSetChanged();
         } else {
             oModelBattery.changeStatus();
+            if (iModel.getModel().getlModelBatteries().size() == 1) {
+                iModel.getModel().getlModelBatteries().get(0).settStatus(Constants_Intern.MODEL_BATTERY_STATUS_PRIME);
+            }
             iModel.getModel().update();
             aModelBatteries.notifyDataSetChanged();
         }

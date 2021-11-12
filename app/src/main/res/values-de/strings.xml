@@ -18,13 +18,13 @@
     <string name="not_defined">Nicht definiert</string>
     <string name="phone">Telefon</string>
     <string name="model">Model</string>
-    <string name="oBattery">Batterie</string>
+    <string name="oBattery">Akku</string>
     <string name="shape">Zustand</string>
     <string name="color">Farbe</string>
     <string name="producer">Hersteller</string>
     <string name="hint_scan">Scan..</string>
     <string name="hint_model_name">Model-Namen eingeben..</string>
-    <string name="hint_battery_name">Batterie-Namen eingeben..</string>
+    <string name="hint_battery_name">Akku-Namen eingeben..</string>
     <string name="missing_input">Fehlende Eingabe</string>
     <string name="selection_result">Ergebnis der Erfassung</string>
     <string name="reuse">Wiederverwendung</string>
@@ -36,8 +36,8 @@
     <string name="new_selection">Neues Paket anlegen</string>
     <string name="undo">Rückgängig</string>
     <string name="added_to">Hinzufügen:</string>
-    <string name="add_battery">%1$s zu Batterien hinzufügen?</string>
-    <string name="hint_enter_battery_name">Batterie-Namen eingeben..</string>
+    <string name="add_battery">%1$s zu Akkus hinzufügen?</string>
+    <string name="hint_enter_battery_name">Akku-Namen eingeben..</string>
     <string name="broken">Defekt</string>
     <string name="shape_broken">Defekt</string>
     <string name="ok">Ok</string>
@@ -120,7 +120,7 @@
     <string name="click_for_front_picture">Bitte klicken für Front-Bild (Lange drücken zum Überspringen)</string>
     <string name="toast_request_permission_camera">Kamera-Nutzung erlauben.</string>
     <string name="click_for_back_picture">Bitte kicken für Rückseiten-Bild (Lange drücken zum Überspringen)</string>
-    <string name="battery">Batterie</string>
+    <string name="battery">Akku</string>
     <string name="unknown">-</string>
     <string name="charger">Ladekabel</string>
     <string name="doubleModel">Doppelte Modele</string>
@@ -149,12 +149,12 @@
     <string name="devices_no_color_lku">Geräte ohne Farbe in Prime-Lager</string>
     <string name="devices_no_model_lku">Geräte ohne Model in Prime-Lager</string>
     <string name="error_forgot_to_book">Fehler: Du hast vergessen das Geräte zu buchen oder hast die Buchung nicht abgebrochen</string>
-    <string name="battery_contained">Batterie enthalten</string>
+    <string name="battery_contained">Akku enthalten</string>
     <string name="_false">Falsch</string>
     <string name="_true">Richtig</string>
-    <string name="request_battery_contained_title">Batterie enthalten?</string>
-    <string name="battery_removable">Batterie entnehmbar</string>
-    <string name="request_battery_removable_title">Batterie entnehmbar?</string>
+    <string name="request_battery_contained_title">Akku enthalten?</string>
+    <string name="battery_removable">Akku entnehmbar</string>
+    <string name="request_battery_removable_title">Akku entnehmbar?</string>
     <string name="request">Anfrage</string>
     <string name="result">Ergebnis</string>
     <string name="device">Gerät</string>
@@ -187,7 +187,7 @@
     <string name="apply">Übernehmen</string>
     <string name="edit">Bearbeiten</string>
     <string name="hint_enter">Namen eingeben..</string>
-    <string name="battery_intact_and_contained">Batterie enthalten und intakt?</string>
+    <string name="battery_intact_and_contained">Akku enthalten und intakt?</string>
     <string name="backcover_intact_and_contained">Rückschale enthalten und intakt?</string>
     <string name="message_commit_done_record">Möchtest du diese Lieferung wirklich abschließen?</string>
     <string name="printer_one">Drucker Eins</string>
@@ -200,20 +200,20 @@
     <string name="printer_eight">Drucker Acht</string>
     <string name="printer_nine">Drucker Neun</string>
     <string name="printer_none">Kein Drucker</string>
-    <string name="battery_lku">Batterie Lku</string>
+    <string name="battery_lku">Akku Lku</string>
     <string name="print_label">Label drucken</string>
-    <string name="no_label_print_battery">Kein Label-Druck für Batterie</string>
-    <string name="label_print_battery">Label-Druck für Batterie</string>
+    <string name="no_label_print_battery">Kein Label-Druck für Akku</string>
+    <string name="label_print_battery">Label-Druck für Akku</string>
     <string name="label_print_device">Label-Druck für Gerät</string>
     <string name="enter_name">Namen eingeben...</string>
-    <string name="interaction_title_select_device_battery">Geräte-Batterie auswählen</string>
-    <string name="interaction_title_edit_model_battery">Model-Batterie bearbeiten</string>
+    <string name="interaction_title_select_device_battery">Geräte-Akku auswählen</string>
+    <string name="interaction_title_edit_model_battery">Model-Akku bearbeiten</string>
     <string name="disconnect">Trennen</string>
     <string name="invalid_input">Ungültige Eingabe</string>
     <string name="add_model">Model hinzufügen</string>
     <string name="interaction_title_request_name_model">Model Auswahl</string>
     <string name="exploitation">Verwertung</string>
-    <string name="request_name_battery">Batterie Auswahl</string>
+    <string name="request_name_battery">Akku Auswahl</string>
     <string name="tac">TAC</string>
     <string name="imei">IMEI</string>
     <string name="enter_scan_name_model">Eingabe oder Scan von Model-Name</string>
@@ -231,10 +231,10 @@
     <string name="device_manager">Geräte-Manager</string>
     <string name="imei_unknown">IMEI unbekannt</string>
     <string name="none">Keins</string>
-    <string name="device_battery">Geräte-Batterie</string>
+    <string name="device_battery">Geräte-Akku</string>
     <string name="edit_new_model">Neues Model bearbeiten</string>
     <string name="edit_new_device">Neues Gerät bearbeiten</string>
-    <string name="model_battery_prime_warning">Nicht möglich - Eine Batterie pro Model wird mindestens benötigt.</string>
+    <string name="model_battery_prime_warning">Nicht möglich - Ein Akku pro Model wird mindestens benötigt.</string>
     <string name="defect_repair">Defekt Reparatur</string>
     <string name="model_unknown">Model unbekannt</string>
     <string name="current_stock_side">Aktuelle Lager-Seite</string>
@@ -301,10 +301,10 @@
     <string name="no_record_connected_to_box">Keine Lieferung verbunden mit Box</string>
     <string name="free_record">Freier Eingang</string>
     <string name="mobile_box">Mobile-Box</string>
-    <string name="battery_removable_short">Batt. entnehmbar</string>
+    <string name="battery_removable_short">Akku entnehmbar</string>
     <string name="backcover_removable_short">Rück. entnehmbar</string>
     <string name="backcover_contained_short">Rück. enthalten</string>
-    <string name="battery_contained_short">Batt. enthalten</string>
+    <string name="battery_contained_short">Akku enthalten</string>
     <string name="marketing_package">Paket</string>
     <string name="amount_boxes">Anzahl Boxen</string>
     <string name="amount_bricolage">Anzahl Bastel-Set</string>
@@ -365,10 +365,10 @@
     <string name="handler">Absortieren</string>
     <string name="remove_dust">Staub entfernen</string>
     <string name="attach_backcover">Rückschale hinzufügen</string>
-    <string name="load_with_battery">Laden | Mit Batterie</string>
-    <string name="load_without_battery">Laden | Ohne Batterie</string>
+    <string name="load_with_battery">Laden | Mit Akku</string>
+    <string name="load_without_battery">Laden | Ohne Akku</string>
     <string name="code_lock">Code-Sperre</string>
-    <string name="dialog_code_lock_content">Eine Code-Sperre auf diesem Gerät kann durch ein Zurücksetzen entfernt werden.</string>
+    <string name="dialog_code_lock_content"><i>Eine Code-Sperre auf diesem Gerät kann durch ein Zurücksetzen entfernt werden:</i>\n\n\n <b>Samsung (Tastenhandys)</b>\n *2767*3855#\n\n <b>Nokia (Tastenhandys)</b>\n *#7370#\n\n <b>LG</b>\n 2945#*# oder 1809#*[Modellnummer]# (z.B. bei LG KM900 -> 1809#*900#)\n\n <b>Motorola Moto F3</b>\n***000*\n\n<b>Samsung (Smartphones)</b>\n1. Ausschalten\n\n 2. „Power“-, „Lauter“- und „Home“-Taste gleichzeitig drücken. Geräte ohne Home-Button: „Power“-, „Lauter“- sowie die „Bixby“-Taste drücken.\n\n 3. Menü: Navigation mittels der Lautstärke- und Power-Tasten.\n\n 4. „wipe data/factory reset“ auswählen, mit „Yes – delete all user data“ bestätigen.</string>
     <string name="reset">Zurücksetzen</string>
     <string name="failed">Fehlgeschlagen</string>
     <string name="software">Software</string>
@@ -376,10 +376,21 @@
     <string name="add_check_procedures">Prüfverfahren hinzufügen</string>
     <string name="visibility">Sichtbarkeit</string>
     <string name="cant_be_edited_anymore">Bearbeitung nicht mehr möglich</string>
+    <string name="enter_code">Bitte Code eingeben</string>
+    <string name="code_does_not_exist">Code existiert nicht</string>
+    <string name="cant_be_edited_anymore_due_time">Diagnosen können nur am selben Tag bearbeitet werden</string>
+    <string name="cant_be_edited_due_wrong_user">Bearbeitung nur vom selben Nutzer möglich</string>
+    <string name="model_damages">Model-Defekte</string>
+    <string name="add_damage_sheme">Defekt-Muster</string>
+    <string name="add_damage">Defekt hinzufügen</string>
+    <string name="delete_all_model_damages_first">Bitte lösche zunächst alle Model-Defekte bevor du ein Defekt-Muster hinzufügen kannst</string>
+    <string name="printer_twelve">Drucker Zwölf</string>
+    <string name="printer_thirteen">Drucker Dreizehn</string>
+    <string name="printer_fourteen">Drucker Vierzehn</string>
+    <string name="printer_fifteen">Drucker Fünfzehn</string>
+    <string name="current_state">Aktueller Stand</string>
 
     // Not translated
-
-
 
 
 </resources>

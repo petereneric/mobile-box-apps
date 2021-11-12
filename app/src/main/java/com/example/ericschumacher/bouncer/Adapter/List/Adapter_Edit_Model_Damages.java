@@ -32,6 +32,9 @@ public class Adapter_Edit_Model_Damages extends Adapter_List {
         ViewHolder_List vhList = (ViewHolder_List) holder;
 
         // GENERAL
+        // Middle
+        vhList.vDividerLeft.setVisibility(GONE);
+
         // Right
         vhList.ivRight.setVisibility(GONE);
         vhList.tvRight.setVisibility(GONE);
@@ -48,7 +51,7 @@ public class Adapter_Edit_Model_Damages extends Adapter_List {
             // Left
             vhList.ivLeft.setVisibility(GONE);
             vhList.tvLeft.setVisibility(GONE);
-            vhList.vDividerLeft.setVisibility(GONE);
+
             ConstraintLayout.LayoutParams paramsTwo = (ConstraintLayout.LayoutParams) vhList.gOne.getLayoutParams();
             paramsTwo.guideBegin = 0;
             vhList.gOne.setLayoutParams(paramsTwo);
@@ -66,8 +69,12 @@ public class Adapter_Edit_Model_Damages extends Adapter_List {
             vhList.tvTitle.setGravity(Gravity.START);
             vhList.tvLeft.setVisibility(View.GONE);
 
+            ConstraintLayout.LayoutParams paramsTwo = (ConstraintLayout.LayoutParams) vhList.gOne.getLayoutParams();
+            paramsTwo.guidePercent = 1;
+            vhList.gOne.setLayoutParams(paramsTwo);
+
             // Middle
-            vhList.tvTitle.setText(Context.getString(R.string.add));
+            vhList.tvTitle.setVisibility(GONE);
             vhList.tvSubtitle.setVisibility(View.GONE);
         }
     }

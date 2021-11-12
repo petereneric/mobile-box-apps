@@ -134,6 +134,21 @@
                     android:layout_weight="@dimen/layout_weight_model_value_two"/>
             </TableRow>
 
+            <TableRow
+                android:id="@+id/trClass">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/class_"
+                    android:layout_weight="@dimen/layout_weight_model_key_two"/>
+
+                <TextView
+                    android:id="@+id/tvClass"
+                    style="@style/tv_tableRow_Value"
+                    android:text="V"
+                    android:layout_weight="@dimen/layout_weight_model_value_two"/>
+            </TableRow>
+
         </TableLayout>
 
         <TableLayout
