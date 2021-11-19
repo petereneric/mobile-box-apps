@@ -7,12 +7,12 @@ package com.example.ericschumacher.bouncer.Constants;
 public class Constants_Intern {
     public final static String SHARED_PREFERENCES = "SHARED_PREFERENCES";
     public final static String SELECTED_PRINTER_IP = "SELECTED_PRINTER_IP";
-    public final static String ID_PRINTER_ONE_IP = "10.128.200.90";
+    public final static String ID_PRINTER_ONE_IP = "10.128.100.172";
     public final static String ID_PRINTER_TWO_IP = "6C:C3:74:E2:42:00";
     public final static String ID_PRINTER_THREE_IP = "90:E2:02:2B:6D:75";
-    public final static String ID_PRINTER_FOUR_IP = "10.128.200.35";
-    public static final String ID_PRINTER_FIVE_IP = "10.128.200.23";
-    public static final String ID_PRINTER_SIX_IP = "10.128.200.179";
+    public final static String ID_PRINTER_FOUR_IP = "10.128.100.117";
+    public static final String ID_PRINTER_FIVE_IP = "10.128.100.91";
+    public static final String ID_PRINTER_SIX_IP = "10.128.100.166";
     public static final String ID_PRINTER_SEVEN_IP = "C4:F3:12:17:D0:2E";
     public static final String ID_PRINTER_EIGHT_IP = "10.128.200.131";
     public final static String SELECTED_PRINTER_BT = "SELECTED_PRINTER_BT";
@@ -415,4 +415,7 @@ public class Constants_Intern {
     public static final int TYPE_CLASS_V = 5;
     public static final String FRAGMENT_SELECT_CLASS = "FRAGMENT_SELECT_CLASS";
 
+    public static final int EDIT_MODEL_COLOR_MATCH = 0;
+    public static final int EDIT_MODEL_COLOR_AUTO = 1;
+    public static final int EDIT_MODEL_COLOR_EXPLOITATION = 2;
 }

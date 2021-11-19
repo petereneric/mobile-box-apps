@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="600dp"
+    android:background="@drawable/background_stroke_round_grey_secondary"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/tv_viewholder_title"
+        android:layout_width="0dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ivMatch"
+        style="@style/iv_viewholder_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivAuto"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:srcCompat="@drawable/ic_link_24"
+        android:tint="@color/color_primary"/>
+
+    <ImageView
+        android:id="@+id/ivAuto"
+        style="@style/iv_viewholder_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ivExploitation"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivMatch"
+        tools:srcCompat="@drawable/ic_automatic_24"
+        android:tint="@color/color_primary" />
+
+    <ImageView
+        android:id="@+id/ivExploitation"
+        style="@style/iv_viewholder_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivAuto"
+        tools:srcCompat="@drawable/ic_exploitation_24"
+        android:tint="@color/color_primary" />
+
+    <ImageView
+        android:id="@+id/ivContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/ivAuto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:background="@color/color_primary"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+</android.support.constraint.ConstraintLayout>

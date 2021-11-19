@@ -80,6 +80,21 @@
                     android:layout_weight="@dimen/layout_weight_model_value_one"/>
             </TableRow>
 
+            <TableRow
+                android:id="@+id/trModelColor">
+
+                <TextView
+                    style="@style/tv_tableRow_Key"
+                    android:text="@string/model_color"
+                    android:layout_weight="@dimen/layout_weight_model_key_one"/>
+
+                <TextView
+                    android:id="@+id/tvModelColor"
+                    style="@style/tv_tableRow_Value"
+                    android:text="6 Matches"
+                    android:layout_weight="@dimen/layout_weight_model_value_one"/>
+            </TableRow>
+
         </TableLayout>
 
         <TableLayout

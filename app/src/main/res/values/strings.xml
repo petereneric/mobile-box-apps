@@ -395,6 +395,8 @@
     <string name="automatic">Automatic</string>
     <string name="class_">Class</string>
     <string name="roman_five">V</string>
+    <string name="model_color">Model-Color</string>
+    <string name="matches">Matches</string>
 
 
     // Not translated

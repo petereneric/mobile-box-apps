@@ -48,6 +48,8 @@ public class Model implements Parcelable, Serializable {
     ArrayList<Object_Model_Damage> lModelDamages = new ArrayList<>();
     Integer tClass = null;
 
+    ArrayList<ModelColor> lModelColor = new ArrayList<>();
+
     // Connection
     Volley_Connection cVolley;
 
@@ -287,6 +289,14 @@ public class Model implements Parcelable, Serializable {
             this.nDps = nDps;
             update();
         }
+    }
+
+    public ArrayList<ModelColor> getlModelColor() {
+        return lModelColor;
+    }
+
+    public void setlModelColor(ArrayList<ModelColor> lModelColor) {
+        this.lModelColor = lModelColor;
     }
 
     public Boolean isBatteryRemovable() {

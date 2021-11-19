@@ -453,6 +453,12 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
         showFragment(new Fragment_Select_Class(), bData, Constants_Intern.FRAGMENT_SELECT_CLASS, Constants_Intern.DONT_SHOW_KEYBOARD);
     }
 
+    public void requestModelColor() {
+        Bundle bData = new Bundle();
+        bData.putString(Constants_Intern.TITLE, getString(R.string.model_damages));
+        showFragment(new Fragment_Edit_Model_Damages(), bData, Constants_Intern.FRAGMENT_EDIT_MODEL_DAMAGES, Constants_Intern.DONT_SHOW_KEYBOARD);
+    }
+
 
     // Return
 
