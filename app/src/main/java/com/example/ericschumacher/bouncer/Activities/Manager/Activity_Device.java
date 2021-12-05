@@ -18,6 +18,7 @@ import com.example.ericschumacher.bouncer.Fragments.Booking.Fragment_Booking_In_
 import com.example.ericschumacher.bouncer.Fragments.Booking.Fragment_Booking_Out_Lku_Stock;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Fragment_Choice_DeviceBattery;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Color;
+import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_ModelColor;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Device_Damages;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Device_Damages_New;
@@ -33,6 +34,7 @@ import com.example.ericschumacher.bouncer.Objects.Additive.Color;
 import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
+import com.example.ericschumacher.bouncer.Objects.ModelColor;
 import com.example.ericschumacher.bouncer.Objects.Model_Battery;
 import com.example.ericschumacher.bouncer.Objects.Object_Device_Damage;
 import com.example.ericschumacher.bouncer.R;
@@ -185,10 +187,10 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
         updateLayout();
     }
 
+    @Override
     public void reset() {
         oDevice = null;
         super.reset();
-
     }
 
 
@@ -283,9 +285,9 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
         if (oDevice.getoModel() != null) {
             bData.putInt(Constants_Intern.ID_MODEL, oDevice.getoModel().getkModel());
         } else {
-            bData.putInt(Constants_Intern.ID_MODEL, Constants_Intern.ID_UNKNOWN);
+            requestModelName();
         }
-        showFragment(new Fragment_Choice_Image_Color(), bData, Constants_Intern.FRAGMENT_CHOICE_IMAGE_COLOR, Constants_Intern.DONT_SHOW_KEYBOARD);
+        showFragment(new Fragment_Choice_Image_ModelColor(), bData, Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL_COLOR, Constants_Intern.DONT_SHOW_KEYBOARD);
     }
 
     public void requestShape() {
@@ -398,8 +400,9 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
     public void returnChoice(String cTag, Object object) {
         super.returnChoice(cTag, object);
         switch (cTag) {
-            case Constants_Intern.FRAGMENT_CHOICE_IMAGE_COLOR:
-                oDevice.setoColor((Color) object);
+            case Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL_COLOR:
+                oDevice.setoModelColor((ModelColor) object);
+                oDevice.settState(Constants_Intern.STATE_UNKNOWN);
                 onFeatureChanged();
                 break;
             case Constants_Intern.FRAGMENT_CHOICE_DEVICE_BATTERY:
@@ -513,7 +516,7 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
             case Constants_Intern.FRAGMENT_DISPLAY_STOCK_PRIME_FULL:
                 base(Constants_Intern.CLOSE_KEYBOARD);
             case Constants_Intern.FRAGMENT_DISPLAY_ARTICLE_NOT_FOUND:
-                reset();
+                hardReset();
         }
     }
 
@@ -649,7 +652,7 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
                                 SharedPreferences.edit().putInt(Constants_Intern.SEARCH_DEVICE_TYPE, Constants_Intern.MAIN_SEARCH_DEVICE_TYPE_IMEI).commit();
                                 break;
                         }
-                        reset();
+                        hardReset();
                     }
                 });
                 builder.create().show();
@@ -657,12 +660,13 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
             case R.id.etSearch:
                 break;
             case R.id.ivAction:
-                reset();
+                hardReset();
         }
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
+        reset();
         if (!editable.toString().equals("")) {
             switch (SharedPreferences.getInt(Constants_Intern.SEARCH_DEVICE_TYPE, Constants_Intern.MAIN_SEARCH_DEVICE_TYPE_ID_DEVICE)) {
                 case Constants_Intern.MAIN_SEARCH_DEVICE_TYPE_ID_DEVICE:
@@ -676,8 +680,6 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
                     }
                     break;
             }
-        } else {
-            reset();
         }
     }
 }

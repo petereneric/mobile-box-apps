@@ -63,8 +63,8 @@ public class Device implements Serializable {
 
     private Color oColor = null;
     private Shape oShape = null;
-
     private Model oModel = null;
+    private ModelColor oModelColor = null;
 
     Context Context;
 
@@ -124,8 +124,12 @@ public class Device implements Serializable {
                 oStoragePlace = new StoragePlace(oJson.getJSONObject(Constants_Extern.OBJECT_STORAGEPLACE));
             if (!oJson.isNull(Constants_Extern.OBJECT_SHAPE))
                 oShape = new Shape(oJson.getJSONObject(Constants_Extern.OBJECT_SHAPE));
-            if (!oJson.isNull(Constants_Extern.OBJECT_COLOR))
-                oColor = new Color(context, oJson.getJSONObject(Constants_Extern.OBJECT_COLOR));
+            //if (!oJson.isNull(Constants_Extern.OBJECT_COLOR))
+            //    oColor = new Color(context, oJson.getJSONObject(Constants_Extern.OBJECT_COLOR));
+            if (!oJson.isNull("oModelColor")) {
+                oModelColor = new ModelColor(Context, oJson.getJSONObject("oModelColor"));
+                oColor = oModelColor.getoColor();
+            }
             if (!oJson.isNull(Constants_Extern.LIST_DEVICE_DAMAGES)) {
                 JSONArray aJson = oJson.getJSONArray(Constants_Extern.LIST_DEVICE_DAMAGES);
                 for (int i = 0; i < aJson.length(); i++) {
@@ -180,15 +184,24 @@ public class Device implements Serializable {
             } else {
                 oJson.put("kBattery", JSONObject.NULL);
             }
+            /*
             if (oColor != null) {
                 oJson.put(Constants_Extern.ID_COLOR, oColor.getId());
             } else {
                 oJson.put(Constants_Extern.ID_COLOR, JSONObject.NULL);
             }
+             */
             if (oShape != null) {
                 oJson.put(Constants_Extern.ID_SHAPE, oShape.getId());
             } else {
                 oJson.put(Constants_Extern.ID_SHAPE, JSONObject.NULL);
+            }
+            if (oModelColor != null) {
+                oJson.put("kModelColor", oModelColor.getId());
+                oJson.put(Constants_Extern.ID_COLOR, oModelColor.getoColor().getId());
+            } else {
+                oJson.put("kModelColor", JSONObject.NULL);
+                oJson.put(Constants_Extern.ID_COLOR, JSONObject.NULL);
             }
             if (cNotes != null) {
                 oJson.put(Constants_Extern.NOTES, cNotes);
@@ -319,6 +332,15 @@ public class Device implements Serializable {
         updateDevice();
     }
 
+    public ModelColor getoModelColor() {
+        return oModelColor;
+    }
+
+    public void setoModelColor(ModelColor oModelColor) {
+        this.oModelColor = oModelColor;
+        updateDevice();
+    }
+
     public int getkRecord() {
         return kRecord;
     }
@@ -424,7 +446,7 @@ public class Device implements Serializable {
     }
 
     public Color getoColor() {
-        return oColor;
+        return oModelColor.getoColor();
     }
 
     public void setoColor(Color oColor) {

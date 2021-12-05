@@ -33,6 +33,7 @@ import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Manufacturer;
 import com.example.ericschumacher.bouncer.Fragments.Display.Fragment_Display;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Battery;
+import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Color;
 import com.example.ericschumacher.bouncer.Fragments.Edit.Fragment_Edit_Model_Damages;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Authentication;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Model;
@@ -149,6 +150,9 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
         if (fManager.findFragmentByTag(Constants_Intern.FRAGMENT_SELECT_CLASS) != null) {
             removeFragment(Constants_Intern.FRAGMENT_SELECT_CLASS);
         }
+        if (fManager.findFragmentByTag(Constants_Intern.FRAGMENT_EDIT_MODEL_COLOR) != null) {
+            removeFragment(Constants_Intern.FRAGMENT_EDIT_MODEL_COLOR);
+        }
     }
 
 
@@ -253,6 +257,10 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
         removeFragments();
         setKeyboard(Constants_Intern.SHOW_KEYBOARD);
         updateLayout();
+    }
+
+    public void hardReset() {
+        reset();
         if (!etSearch.getText().toString().equals("")) {
             etSearch.setText("");
         }
@@ -455,8 +463,8 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
 
     public void requestModelColor() {
         Bundle bData = new Bundle();
-        bData.putString(Constants_Intern.TITLE, getString(R.string.model_damages));
-        showFragment(new Fragment_Edit_Model_Damages(), bData, Constants_Intern.FRAGMENT_EDIT_MODEL_DAMAGES, Constants_Intern.DONT_SHOW_KEYBOARD);
+        bData.putString(Constants_Intern.TITLE, getString(R.string.model_color));
+        showFragment(new Fragment_Edit_Model_Color(), bData, Constants_Intern.FRAGMENT_EDIT_MODEL_COLOR, Constants_Intern.DONT_SHOW_KEYBOARD);
     }
 
 
@@ -684,7 +692,7 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
                                 SharedPreferences.edit().putInt(Constants_Intern.SEARCH_MODEL_TYPE, Constants_Intern.MAIN_SEARCH_MODEL_TYPE_IMEI).commit();
                                 break;
                         }
-                        reset();
+                        hardReset();
                     }
                 });
                 builder.create().show();
@@ -692,7 +700,7 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
             case R.id.etSearch:
                 break;
             case R.id.ivAction:
-                reset();
+                hardReset();
         }
     }
 
@@ -706,6 +714,7 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
 
     @Override
     public void afterTextChanged(Editable editable) {
+        reset();
         if (!editable.toString().equals("")) {
             switch (SharedPreferences.getInt(Constants_Intern.SEARCH_MODEL_TYPE, 2)) {
                 case Constants_Intern.MAIN_SEARCH_MODEL_TYPE_ID_MODEL:
@@ -725,8 +734,6 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
                     }
                     break;
             }
-        } else {
-            reset();
         }
     }
 

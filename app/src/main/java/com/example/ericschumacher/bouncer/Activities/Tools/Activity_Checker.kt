@@ -162,10 +162,10 @@ class Activity_Checker : Activity_Device(), Fragment_Result.Interface_Fragment_R
 
     fun updateLayoutMenu() {
         if (menuVisibility) {
-            if (this::menu.isInitialized) menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_visibility))
+            if (this::menu.isInitialized) menu.getItem(1).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_visibility))
             supportFragmentManager.beginTransaction().show(fDevice).commit()
         } else {
-            if (this::menu.isInitialized) menu.getItem(0).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_visibility_off))
+            if (this::menu.isInitialized) menu.getItem(1).setIcon(ContextCompat.getDrawable(this, R.drawable.ic_visibility_off))
             supportFragmentManager.beginTransaction().hide(fDevice).commit()
         }
     }

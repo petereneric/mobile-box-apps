@@ -149,11 +149,11 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                     if (oDevice.getoShape() != null) {
                         if (oDevice.getoManufacturer() != null) {
                             if (oDevice.gettPhone() != null) {
-                                if (oDevice.getoColor() != null) {
+                                if (oDevice.getoModelColor() != null) {
                                     Bundle bundle = new Bundle();
                                     bundle.putString(Constants_Intern.TITLE, getString(R.string.model));
                                     bundle.putInt(Constants_Intern.ID_MANUFACTURER, oDevice.getoManufacturer().getId());
-                                    bundle.putInt(Constants_Intern.ID_COLOR, oDevice.getoColor().getId());
+                                    bundle.putInt(Constants_Intern.ID_COLOR, oDevice.getoModelColor().getoColor().getId());
                                     showFragment(new Fragment_Choice_Image_Model(), bundle, Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL, Constants_Intern.CLOSE_KEYBOARD);
                                 } else {
                                     requestColor();
@@ -192,8 +192,8 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                                                 oDevice.getoModel().settDefaultExploitation(Constants_Intern.DEFAULT_EXPLOITATION_RECYCLING);
                                             } else {
                                                 oDevice.getoModel().settDefaultExploitation(Constants_Intern.DEFAULT_EXPLOITATION_TBD);
-                                                base(null);
                                             }
+                                            base(null);
                                         }
                                     } else {
                                         if (oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_RECYCLING || oDevice.gettState() == Constants_Intern.STATE_RECYCLING) {
@@ -235,24 +235,30 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                                                                     if (oDevice.getoShape() == null || (oDevice.getoShape().getId() == Constants_Intern.SHAPE_BROKEN && oDevice.gettState() == Constants_Intern.STATE_DEFECT_REUSE)) {
                                                                         requestShape();
                                                                     } else {
-                                                                        if (oDevice.getoColor() == null) {
+                                                                        if (oDevice.getoModelColor() == null) {
                                                                             Log.i("Color", "null");
                                                                             requestColor();
                                                                         } else {
-                                                                            if (oDevice.isBatteryContained() == null) {
-                                                                                Log.i("Battery", "Contained");
-                                                                                requestBatteryContained();
-                                                                            } else {
-                                                                                if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() == null) {
-                                                                                    requestDeviceBattery();
+                                                                            if (((oDevice.getoModelColor().isbMatch() || oDevice.getoModelColor().gettExploitation() == Constants_Intern.EXPLOITATION_REUSE || (oDevice.getoModel().gettPhone() == Constants_Intern.TYPE_PHONE_SMARTPHONE && !oDevice.getoModel().isBatteryRemovable() && oDevice.getoModel().getoManufacturer().gettColorExploitation() == Constants_Intern.EXPLOITATION_REUSE)) && oDevice.getoModelColor().gettExploitation() != Constants_Intern.EXPLOITATION_RECYCLING) || oDevice.getoModel().gettDefaultExploitation() == Constants_Intern.EXPLOITATION_DEFECT_REUSE) {
+                                                                                if (oDevice.isBatteryContained() == null) {
+                                                                                    Log.i("Battery", "Contained");
+                                                                                    requestBatteryContained();
                                                                                 } else {
-                                                                                    if (oDevice.isBackcoverContained() == null) { // Backcover
-                                                                                        requestBackcoverContained();
+                                                                                    if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() == null) {
+                                                                                        requestDeviceBattery();
                                                                                     } else {
-                                                                                        showResult();
+                                                                                        if (oDevice.isBackcoverContained() == null) { // Backcover
+                                                                                            requestBackcoverContained();
+                                                                                        } else {
+                                                                                            showResult();
+                                                                                        }
                                                                                     }
                                                                                 }
+                                                                            } else {
+                                                                                oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                                                                                base(null);
                                                                             }
+
                                                                         }
                                                                     }
                                                                 }
@@ -401,7 +407,7 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                 break;
             case Constants_Intern.STATE_INTACT_REUSE:
             case Constants_Intern.STATE_DEFECT_REUSE:
-                cVolley.getResponse(Request.Method.GET, Urls.URL_GET_STOCK_AMOUNT + oDevice.getoModel().getkModel() + "/" + oDevice.getoColor().getId() + "/" + oDevice.getoShape().getId(), null, new Interface_VolleyResult() {
+                cVolley.getResponse(Request.Method.GET, Urls.URL_GET_STOCK_AMOUNT + oDevice.getoModel().getkModel() + "/" + oDevice.getoModelColor().getoColor().getId() + "/" + oDevice.getoShape().getId(), null, new Interface_VolleyResult() {
                     @Override
                     public void onResult(JSONObject oJson) throws JSONException {
                         int nStockPrime = oJson.getInt("nStockPrime");

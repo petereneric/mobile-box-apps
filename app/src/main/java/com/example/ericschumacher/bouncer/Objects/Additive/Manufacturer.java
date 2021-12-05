@@ -13,6 +13,7 @@ public class Manufacturer extends Additive {
 
     private String cShortcut;
     private int tDefaultExploitation;
+    private int tColorExploitation;
 
     public Manufacturer(int id, String name) {
         super(id, name);
@@ -26,6 +27,7 @@ public class Manufacturer extends Additive {
             Name = oJson.getString(Constants_Extern.NAME_MANUFACTURER);
             cShortcut = oJson.getString(Constants_Extern.SHORTCUT);
             tDefaultExploitation = oJson.getInt(Constants_Extern.TYPE_DEFAULT_EXPLOITATION);
+            tColorExploitation = oJson.getInt("tColorExploitation");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -61,5 +63,9 @@ public class Manufacturer extends Additive {
 
     public void settDefaultExploitation(int tDefaultExploitation) {
         this.tDefaultExploitation = tDefaultExploitation;
+    }
+
+    public int gettColorExploitation() {
+        return tColorExploitation;
     }
 }

@@ -117,5 +117,24 @@ public class Urls {
     public static final String URL_GET_STATISTIC_BOUNCER = URL_REST_API+"team/statistic/bouncer";
     public static final String URL_GET_STATISTIC_CHECKER = URL_REST_API+"team/statistic/checker";
 
+    // ModelColor
+    public static final String URL_UPDATE_MODEL_COLOR = URL_REST_API+"team/model_color";
+    public static final String URL_GET_MODEL_COLOR_LIST = URL_REST_API+"team/model_color/list/";
+    public static final String URL_DELETE_MODEL_COLOR = URL_REST_API+"team/model_color/";
+    public static final String URL_GET_MODEL_COLOR_LIST_OTHERS = URL_REST_API+"team/model_color/list/others/";
+    public static final String URL_ADD_MODEL_COLOR = URL_REST_API+"team/model_color/";
+
+    // Wipeprocedure
+    public static final String URL_GET_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure/";
+    public static final String URL_GET_WIPEPROCEDURES_BY_NAME = URL_REST_API+"team/wipeprocedures/";
+    public static final String URL_ADD_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure";
+    public static final String URL_UPDATE_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure";
+    public static final String URL_DELETE_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure/";
+
+    // WipeProcedure
+    public static final String URL_GET_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure/";
+    public static final String URL_ADD_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure/";
+    public static final String URL_UPDATE_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure/";
+    public static final String URL_DELETE_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure/";
 
 }

@@ -418,4 +418,11 @@ public class Constants_Intern {
     public static final int EDIT_MODEL_COLOR_MATCH = 0;
     public static final int EDIT_MODEL_COLOR_AUTO = 1;
     public static final int EDIT_MODEL_COLOR_EXPLOITATION = 2;
+    public static final String FRAGMENT_EDIT_MODEL_COLOR = "FRAGMENT_EDIT_MODEL_COLOR";
+    public static final int EXPLOITATION_REUSE = 2;
+    public static final int ADD_COLOR = 2;
+    public static final String WIDTH_LIST_MODEL_COLOR = "WIDTH_LIST_MODEL_COLOR";
+    public static final String WIDTH_LIST_MODEL_COLOR_BACKGROUND = "WIDTH_LIST_MODEL_COLOR_BACKGROUND";
+    public static final String HEIGHT_LIST_MODEL_COLOR_BACKGROUND = "HEIGHT_LIST_MODEL_COLOR_BACKGROUND";
+    public static final String FRAGMENT_CHOICE_IMAGE_MODEL_COLOR = "FRAGMENT_CHOICE_IMAGE_MODEL_COLOR";
 }

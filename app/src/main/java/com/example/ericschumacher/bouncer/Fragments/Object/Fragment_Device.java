@@ -124,8 +124,8 @@ public class Fragment_Device extends Fragment_Object implements View.OnClickList
         oDevice = iFragmentDevice.getDevice();
 
         if (oDevice != null) {
-            if (oDevice.getoColor() != null) {
-                tvColor.setText(oDevice.getoColor().getcNameDE());
+            if (oDevice.getoModelColor() != null) {
+                tvColor.setText(oDevice.getoModelColor().getoColor().getcNameDE());
             } else {
                 tvColor.setText(getString(R.string.unknown));
             }

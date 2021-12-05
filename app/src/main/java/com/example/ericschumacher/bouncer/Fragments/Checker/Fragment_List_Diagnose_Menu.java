@@ -44,7 +44,7 @@ public class Fragment_List_Diagnose_Menu extends Fragment implements Adapter_Lis
     Interface_JWT iJWT;
 
     @Override
-    public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+    public void onCreate(@Nullable @org .jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Interfaces
         iChecker = (Interface_Fragment_Checker)getParentFragment();
