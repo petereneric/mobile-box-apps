@@ -128,7 +128,7 @@ class Activity_Checker : Activity_Device(), Fragment_Result.Interface_Fragment_R
     }
 
     override fun returnResult(cTag: String?) {
-        reset()
+        hardReset()
     }
 
     // Menu

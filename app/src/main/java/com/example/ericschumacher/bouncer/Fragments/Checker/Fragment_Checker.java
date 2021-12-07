@@ -159,7 +159,6 @@ public class Fragment_Checker extends Fragment implements Interface_Fragment_Che
 
                     lDiagnoses.clear();
                     if (oJson != null) {
-                        Log.i("Strange:", ""+iDevice.getDevice().getIdDevice());
                         JSONArray jsonArray = oJson.getJSONArray("lDiagnoses");
                         for (int i = 0; i <jsonArray.length(); i++) {
                             JSONObject jsonDiagnose = jsonArray.getJSONObject(i);

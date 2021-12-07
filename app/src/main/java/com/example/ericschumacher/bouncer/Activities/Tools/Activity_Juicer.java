@@ -142,22 +142,22 @@ public class Activity_Juicer extends Activity_Authentication implements View.OnC
 
     public void updateLayout() {
         // RoundedCorners
-        Utility_Layout.setRoundedCorners(this, tvStockPrime, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_PRIME_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setRoundedCorners(this, tvStockExcess, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_EXCESS_SELECTED, false) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setRoundedCorners(this, tvLoadingStationOne, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_ONE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setRoundedCorners(this, tvLoadingStationTwo, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_TWO_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setRoundedCorners(this, tvLoadingStationThree, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_THREE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setRoundedCorners(this, tvLoadingStationFour, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FOUR_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setRoundedCorners(this, tvLoadingStationFive, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FIVE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
+        Utility_Layout.setRoundedCorners(this, tvStockPrime, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_PRIME_SELECTED, true) ? R.color.color_primary : R.color.color_transparent);
+        Utility_Layout.setRoundedCorners(this, tvStockExcess, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_EXCESS_SELECTED, false) ? R.color.color_primary : R.color.color_transparent);
+        Utility_Layout.setRoundedCorners(this, tvLoadingStationOne, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_ONE_SELECTED, true) ? R.color.color_primary : R.color.color_transparent);
+        Utility_Layout.setRoundedCorners(this, tvLoadingStationTwo, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_TWO_SELECTED, true) ? R.color.color_primary : R.color.color_transparent);
+        Utility_Layout.setRoundedCorners(this, tvLoadingStationThree, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_THREE_SELECTED, true) ? R.color.color_primary : R.color.color_transparent);
+        Utility_Layout.setRoundedCorners(this, tvLoadingStationFour, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FOUR_SELECTED, true) ? R.color.color_primary : R.color.color_transparent);
+        Utility_Layout.setRoundedCorners(this, tvLoadingStationFive, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FIVE_SELECTED, true) ? R.color.color_primary : R.color.color_transparent);
 
         // TextColor
-        Utility_Layout.setTextColor(this, tvStockPrime, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_PRIME_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setTextColor(this, tvStockExcess, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_EXCESS_SELECTED, false) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setTextColor(this, tvLoadingStationOne, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_ONE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setTextColor(this, tvLoadingStationTwo, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_TWO_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setTextColor(this, tvLoadingStationThree, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_THREE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setTextColor(this, tvLoadingStationFour, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FOUR_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
-        Utility_Layout.setTextColor(this, tvLoadingStationFive, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FIVE_SELECTED, true) ? R.color.color_primary : R.color.color_grey_secondary);
+        Utility_Layout.setTextColor(this, tvStockPrime, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_PRIME_SELECTED, true) ? R.color.color_primary : R.color.color_grey);
+        Utility_Layout.setTextColor(this, tvStockExcess, SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_EXCESS_SELECTED, false) ? R.color.color_primary : R.color.color_grey);
+        Utility_Layout.setTextColor(this, tvLoadingStationOne, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_ONE_SELECTED, true) ? R.color.color_primary : R.color.color_grey);
+        Utility_Layout.setTextColor(this, tvLoadingStationTwo, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_TWO_SELECTED, true) ? R.color.color_primary : R.color.color_grey);
+        Utility_Layout.setTextColor(this, tvLoadingStationThree, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_THREE_SELECTED, true) ? R.color.color_primary : R.color.color_grey);
+        Utility_Layout.setTextColor(this, tvLoadingStationFour, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FOUR_SELECTED, true) ? R.color.color_primary : R.color.color_grey);
+        Utility_Layout.setTextColor(this, tvLoadingStationFive, SharedPreferences.getBoolean(Constants_Intern.JUICER_LOADING_STATION_FIVE_SELECTED, true) ? R.color.color_primary : R.color.color_grey);
 
         // Text
         tvStockPrime.setText(SharedPreferences.getBoolean(Constants_Intern.JUICER_STOCK_PRIME_SELECTED, true) ? getString(R.string.stock_prime_short)+" ("+lModelColorShapes.size()+")" : getString(R.string.stock_prime_short));
