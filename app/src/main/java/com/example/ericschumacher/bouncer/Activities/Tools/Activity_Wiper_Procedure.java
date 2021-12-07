@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
@@ -13,12 +14,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Activities.Activity_Authentication;
+import com.example.ericschumacher.bouncer.Objects.Wipeprocedure;
 import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
+
+import java.util.ArrayList;
 
 public class Activity_Wiper_Procedure extends Activity_Authentication implements View.OnClickListener, TextWatcher {
 
     // VALUES & VARIABLES
+
+    // Data
+    public ArrayList<Wipeprocedure> lWipeprocedure = new ArrayList<>();
+    Wipeprocedure oWipeprocedure = null;
 
     // Layout
     Toolbar vToolbar;
@@ -38,6 +46,8 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Connection
+        cVolley = new Volley_Connection(this);
 
         // Layout
         setLayout();
@@ -47,6 +57,7 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // PRIVATE
 
+    // Layout
     private void setLayout() {
         setContentView(R.layout.activity_wiper_procedure);
 
@@ -62,6 +73,14 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
         vFab.setOnClickListener(this);
     }
 
+    // Base
+    private void base() {
+        if (oWipeprocedure == null) {
+
+        }
+    }
+
+    // Click & TextChange
     private void onClick_SearchAction() {
 
     }
@@ -71,7 +90,17 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
     }
 
     private void afterTextChanged(String text) {
-
+        if (oWipeprocedure == null) {
+            Wipeprocedure.readByName(this, cVolley, text, new Wipeprocedure.Interface_Read_byName() {
+                @Override
+                public void read(ArrayList<Wipeprocedure> lWipeprocedure_) {
+                    lWipeprocedure = lWipeprocedure_;
+                    base();
+                }
+            });
+        } else {
+            oWipeprocedure.setcName(text);
+        }
     }
 
 
