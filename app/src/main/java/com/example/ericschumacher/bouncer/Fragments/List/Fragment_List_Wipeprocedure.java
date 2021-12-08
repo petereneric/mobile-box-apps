@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Wiper_Procedure;
 import com.example.ericschumacher.bouncer.Adapter.Adapter_List_Wipeprocedure;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
 import com.example.ericschumacher.bouncer.Objects.Wipeprocedure;
@@ -58,7 +59,7 @@ public class Fragment_List_Wipeprocedure extends Fragment {
         mAdapter = new Adapter_List_Wipeprocedure(getActivity(), lWipeprocedure, new Interface_Click() {
             @Override
             public void onClick(int position) {
-                //send back to activity
+                ((Activity_Wiper_Procedure)getActivity()).setWipeprocedure(lWipeprocedure.get(position));
             }
         });
         rvData.setLayoutManager(new LinearLayoutManager(getActivity()));

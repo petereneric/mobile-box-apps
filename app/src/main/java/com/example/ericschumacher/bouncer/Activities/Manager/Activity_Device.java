@@ -402,7 +402,7 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
         switch (cTag) {
             case Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL_COLOR:
                 oDevice.setoModelColor((ModelColor) object);
-                oDevice.settState(Constants_Intern.STATE_UNKNOWN);
+                //oDevice.settState(Constants_Intern.STATE_UNKNOWN);
                 onFeatureChanged();
                 break;
             case Constants_Intern.FRAGMENT_CHOICE_DEVICE_BATTERY:

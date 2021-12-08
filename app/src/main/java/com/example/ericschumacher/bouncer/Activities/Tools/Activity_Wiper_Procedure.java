@@ -76,7 +76,10 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
     // Base
     private void base() {
         if (oWipeprocedure == null) {
-
+            // create Fragment with Wipeprocedures if not already created - Update if created
+            work here
+        } else {
+            // create Fragment with WipeProcedures if not already created - Update if created
         }
     }
 
@@ -101,6 +104,15 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
         } else {
             oWipeprocedure.setcName(text);
         }
+    }
+
+
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // PUBLIC
+
+    public void setWipeprocedure(Wipeprocedure wipeprocedure) {
+        oWipeprocedure = wipeprocedure;
+        base();
     }
 
 
