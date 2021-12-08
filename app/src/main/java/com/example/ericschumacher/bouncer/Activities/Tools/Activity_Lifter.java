@@ -86,7 +86,7 @@ public class Activity_Lifter extends Activity_Device {
     @Override
     public void returnBooking(String cTag) {
         removeFragment(cTag);
-        reset();
+        hardReset();
     }
 
     // ClickListener & TextWatcher

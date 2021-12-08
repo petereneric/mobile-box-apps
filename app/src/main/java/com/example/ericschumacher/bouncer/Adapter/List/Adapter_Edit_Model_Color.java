@@ -108,7 +108,11 @@ public class Adapter_Edit_Model_Color extends RecyclerView.Adapter<RecyclerView.
             } else {
                 // Hex
                 vhModelColor.ivContent.setImageBitmap(null);
-                vhModelColor.ivContent.setBackgroundColor(android.graphics.Color.parseColor((oModelColor.getoColor()).getHexCode()));
+                try {
+                    vhModelColor.ivContent.setBackgroundColor(android.graphics.Color.parseColor((oModelColor.getoColor()).getHexCode()));
+                } catch (IllegalArgumentException e) {
+                    vhModelColor.ivContent.setBackgroundColor(android.graphics.Color.parseColor(("#ffffff")));
+                }
             }
 
             // Icons
