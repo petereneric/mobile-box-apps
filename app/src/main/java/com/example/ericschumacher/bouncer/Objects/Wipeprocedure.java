@@ -130,7 +130,13 @@ public class Wipeprocedure {
     }
 
     public static void readByName(Context context, Volley_Connection cVolley, String cName, Interface_Read_byName iRead) {
-        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_WIPEPROCEDURES_BY_NAME + cName, null, new Interface_VolleyResult() {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("cNamePart", cName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        cVolley.getResponse(Request.Method.POST, Urls.URL_GET_WIPEPROCEDURES_BY_NAME, json, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
                 ArrayList<Wipeprocedure> lWipeprocedures = new ArrayList<>();
@@ -152,6 +158,7 @@ public class Wipeprocedure {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        cVolley.execute(Request.Method.POST, Urls.URL_UPDATE_WIPEPROCEDURE, json);
     }
 
     public void delete() {

@@ -21,10 +21,12 @@ import com.example.ericschumacher.bouncer.Fragments.Result.Fragment_Result;
 import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record;
 import com.example.ericschumacher.bouncer.Fragments.Record.Fragment_Record_Bouncer;
 import com.example.ericschumacher.bouncer.Fragments.Result.Fragment_Result_Bouncer;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Backcover;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Objects.Additive.Shape;
 import com.example.ericschumacher.bouncer.Objects.Additive.Station;
+import com.example.ericschumacher.bouncer.Objects.Backcover;
 import com.example.ericschumacher.bouncer.Objects.Collection.Record;
 import com.example.ericschumacher.bouncer.Objects.Device;
 import com.example.ericschumacher.bouncer.Objects.Model;
@@ -38,7 +40,7 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-public class Activity_Bouncer extends Activity_Device implements Fragment_Record.Interface_Fragment_Record, Fragment_Result.Interface_Fragment_Result {
+public class Activity_Bouncer extends Activity_Device implements Fragment_Record.Interface_Fragment_Record, Fragment_Result.Interface_Fragment_Result, Interface_Backcover {
 
     // Menu
     Menu menu;
@@ -48,6 +50,9 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
 
     // Fragments
     Fragment_Record_Bouncer fRecord;
+
+    // Backcover
+    Backcover oBackcover;
 
 
     //---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -142,6 +147,7 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
     // Base & Reset
 
     public void base(Boolean bKeyboard) {
+        oBackcover = null;
         updateLayout();
         if (oRecord != null) {
             if (oDevice != null) {
@@ -255,8 +261,25 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                                                                                     }
                                                                                 }
                                                                             } else {
-                                                                                oDevice.settState(Constants_Intern.STATE_RECYCLING);
-                                                                                base(null);
+                                                                                if (oDevice.isBatteryContained() == null) {
+                                                                                    Log.i("Battery", "Contained");
+                                                                                    requestBatteryContained();
+                                                                                } else {
+                                                                                    if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() == null) {
+                                                                                        requestDeviceBattery();
+                                                                                    } else {
+                                                                                        if (oDevice.isBackcoverContained() == null) { // Backcover
+                                                                                            requestBackcoverContained();
+                                                                                        } else {
+                                                                                            if (oDevice.isBackcoverContained()) {
+                                                                                                oBackcover = new Backcover();
+                                                                                                oBackcover.settState(Constants_Intern.STATE_RECYCLING);
+                                                                                            }
+                                                                                            oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                                                                                            showResult();
+                                                                                        }
+                                                                                    }
+                                                                                }
                                                                             }
 
                                                                         }
@@ -651,5 +674,10 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                 fInfo.show(getSupportFragmentManager(), "FRAGMENT_DIALOG_INFO_BOUNCER");
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Backcover getBackcover() {
+        return oBackcover;
     }
 }

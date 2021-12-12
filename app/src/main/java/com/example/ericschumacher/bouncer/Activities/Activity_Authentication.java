@@ -1,8 +1,10 @@
 package com.example.ericschumacher.bouncer.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Authentication;
@@ -52,6 +54,16 @@ public class Activity_Authentication extends AppCompatActivity implements Interf
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Token
+        if (requestCode == Constants_Intern.REQUEST_CODE_TOKEN_AUTHENTICATION && resultCode == RESULT_OK) {
+            tAuthentication = data.getStringExtra(Constants_Intern.TOKEN_AUTHENTICATION);
+        }
+    }
+
+    @Override
     public JWT getJWT() {
         if (tAuthentication != null) {
             if (jwt == null) {
@@ -66,5 +78,9 @@ public class Activity_Authentication extends AppCompatActivity implements Interf
     @Override
     public void returnTokenAuthentication(String token) {
         tAuthentication = token;
+    }
+
+    public String getTokenAuthentication() {
+        return tAuthentication;
     }
 }

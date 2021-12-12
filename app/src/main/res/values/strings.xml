@@ -397,6 +397,11 @@
     <string name="roman_five">V</string>
     <string name="model_color">Model-Color</string>
     <string name="matches">Matches</string>
+    <string name="wiper">Wiper</string>
+    <string name="enter_wipeprocedure">Enter wipeprocedure</string>
+    <string name="wipeprocedures">Wipeprocedures</string>
+    <string name="no_matching_results">Not matching results</string>
+    <string name="wipe_procedures">Wipe-Procedures</string>
 
 
     // Not translated

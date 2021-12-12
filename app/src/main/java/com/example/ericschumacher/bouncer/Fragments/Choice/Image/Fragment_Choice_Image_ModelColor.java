@@ -35,5 +35,6 @@ public class Fragment_Choice_Image_ModelColor extends Fragment_Edit_Model_Color 
             iChoice.returnChoice(getTag(), oModelColor);
             return;
         }
+        super.onClick(position);
     }
 }

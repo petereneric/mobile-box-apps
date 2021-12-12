@@ -4,9 +4,19 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Backcover;
 import com.example.ericschumacher.bouncer.R;
 
 public class Fragment_Result_Bouncer extends Fragment_Result {
+
+    // Interface
+    Interface_Backcover iBackcover;
+
+    @Override
+    public void setInterface() {
+        super.setInterface();
+        iBackcover = (Interface_Backcover)getActivity();
+    }
 
     @Override
     public void setScreen() {
@@ -75,11 +85,18 @@ public class Fragment_Result_Bouncer extends Fragment_Result {
                                     tvRecyclingDevice.setVisibility(View.VISIBLE);
                                 }
                                 if (oDevice.getoModel().isBackcoverRemovable() && oDevice.isBackcoverContained()) {
-                                    llRecyclingObjects.setVisibility(View.VISIBLE);
-                                    llReuseObjects.setVisibility(View.VISIBLE);
-                                    llReuse.setVisibility(View.VISIBLE);
-                                    tvReuseBackcover.setVisibility(View.VISIBLE);
-                                    tvRecyclingDevice.setVisibility(View.VISIBLE);
+                                    if (iBackcover.getBackcover() != null && iBackcover.getBackcover().gettState() == Constants_Intern.STATE_RECYCLING) {
+                                        llRecyclingObjects.setVisibility(View.VISIBLE);
+                                        tvRecyclingBackcover.setVisibility(View.VISIBLE);
+                                        tvRecyclingDevice.setVisibility(View.VISIBLE);
+                                    } else {
+                                        llRecyclingObjects.setVisibility(View.VISIBLE);
+                                        llReuseObjects.setVisibility(View.VISIBLE);
+                                        llReuse.setVisibility(View.VISIBLE);
+                                        tvReuseBackcover.setVisibility(View.VISIBLE);
+                                        tvRecyclingDevice.setVisibility(View.VISIBLE);
+                                    }
+
                                 }
                                 break;
                             case Constants_Intern.STATE_DEFECT_REPAIR:

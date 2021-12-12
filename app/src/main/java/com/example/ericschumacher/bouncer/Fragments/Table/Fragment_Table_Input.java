@@ -34,7 +34,7 @@ public class Fragment_Table_Input extends Fragment_Table implements View.OnClick
 
         tvSearchType = vLayout.findViewById(R.id.tvSearchType);
         ivAction = vLayout.findViewById(R.id.ivAction);
-        vDividerRight = vLayout.findViewById(R.id.vDivicerRight);
+        vDividerRight = vLayout.findViewById(R.id.vDividerRight);
         etSearch = vLayout.findViewById(R.id.etSearch);
 
         // TextWatcher

@@ -49,14 +49,14 @@
         android:paddingRight="0dp"
         android:background="@color/color_grey"
         android:layout_toLeftOf="@id/ivAction"
-        android:id="@+id/vDivicerRight"/>
+        android:id="@+id/vDividerRight"/>
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/etSearch"
         android:layout_toRightOf="@id/vDivicerLeft"
-        android:layout_toLeftOf="@id/vDivicerRight"
+        android:layout_toLeftOf="@id/vDividerRight"
         android:hint="@string/hint_enter"
         android:textColorHint="@color/color_text_hint"
         android:textColor="@color/color_text_primary"

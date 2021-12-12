@@ -29,6 +29,7 @@ import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Checker;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Columba;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Juicer;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Lifter;
+import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Wiper;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Menu;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Authentication;
@@ -425,7 +426,7 @@ public class Activity_Menu extends AppCompatActivity implements Interface_Authen
 
     private void createMenuData() {
         lMenu.add(new Object_Menu(getString(R.string.checker), new Intent(this, Activity_Checker.class), R.color.color_choice_positive));
-
+        lMenu.add(new Object_Menu(getString(R.string.wiper), new Intent(this, Activity_Wiper.class), R.color.color_flush));
         lMenu.add(new Object_Menu(getString(R.string.activity_box_manager), new Intent(this, Activity_Box.class), R.color.color_orange));
         lMenu.add(new Object_Menu(getString(R.string.model_manager), new Intent(this, Activity_Model.class), R.color.color_defect_reuse));
         lMenu.add(new Object_Menu(getString(R.string.device_manager), new Intent(this, Activity_Device.class), R.color.color_intact_reuse));

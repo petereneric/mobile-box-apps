@@ -11,8 +11,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Wiper_Procedure;
-import com.example.ericschumacher.bouncer.Adapter.Adapter_List_Wipeprocedure;
+import com.example.ericschumacher.bouncer.Adapter.List.Adapter_List_Wipeprocedure;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Click;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Wipeprocedure;
 import com.example.ericschumacher.bouncer.Objects.Wipeprocedure;
 import com.example.ericschumacher.bouncer.R;
 
@@ -30,6 +31,9 @@ public class Fragment_List_Wipeprocedure extends Fragment {
     // Data
     ArrayList<Wipeprocedure> lWipeprocedure = new ArrayList<>();
 
+    // Interface
+    Interface_Wipeprocedure iWipeprocedure;
+
     // Adapter
     Adapter_List_Wipeprocedure mAdapter;
 
@@ -41,8 +45,14 @@ public class Fragment_List_Wipeprocedure extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
+        // Interface
+        iWipeprocedure = (Interface_Wipeprocedure)getActivity();
+
         // Layout
         setLayout(inflater, container);
+
+        // Data
+        update(iWipeprocedure.getlWipeprocedures());
 
         return vLayout;
     }
@@ -50,6 +60,7 @@ public class Fragment_List_Wipeprocedure extends Fragment {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // PRIVATE
 
+    // Layout
     private void setLayout(LayoutInflater inflater, ViewGroup container) {
         vLayout = inflater.inflate(R.layout.fragment_list_new, container, false);
 
@@ -66,8 +77,18 @@ public class Fragment_List_Wipeprocedure extends Fragment {
         rvData.setAdapter(mAdapter);
     }
 
+    // Update
+    private void updateLayout() {
+        if (lWipeprocedure.size() > 0) {
+            tvTitle.setText(getString(R.string.wipeprocedures));
+        } else {
+            tvTitle.setText(getString(R.string.no_matching_results));
+        }
+    }
+
     public void update(ArrayList<Wipeprocedure> lWipeprocedure) {
         this.lWipeprocedure = lWipeprocedure;
         mAdapter.update(lWipeprocedure);
+        updateLayout();
     }
 }

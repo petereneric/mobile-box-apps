@@ -514,7 +514,13 @@ public class Activity_Model extends Activity_Authentication implements View.OnCl
                                     updateLayout();
                                     getModel().connectTac(tac);
                                 } else {
-                                    cVolley.getResponse(Request.Method.PUT, Urls.URL_PUT_MODEL_ADD + cInput, null, new Interface_VolleyResult() {
+                                    JSONObject json = new JSONObject();
+                                    try {
+                                        json.put("cName", cInput);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    cVolley.getResponse(Request.Method.PUT, Urls.URL_PUT_MODEL_ADD, json, new Interface_VolleyResult() {
                                         @Override
                                         public void onResult(JSONObject oJson) throws JSONException {
                                             setModel(new Model(Activity_Model.this, oJson.getJSONObject(Constants_Extern.OBJECT_MODEL)));

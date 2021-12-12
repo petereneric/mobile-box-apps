@@ -10,11 +10,11 @@ public class Constants_Intern {
     public final static String ID_PRINTER_ONE_IP = "10.128.100.172";
     public final static String ID_PRINTER_TWO_IP = "6C:C3:74:E2:42:00";
     public final static String ID_PRINTER_THREE_IP = "90:E2:02:2B:6D:75";
-    public final static String ID_PRINTER_FOUR_IP = "10.128.100.117";
-    public static final String ID_PRINTER_FIVE_IP = "10.128.100.91";
-    public static final String ID_PRINTER_SIX_IP = "10.128.100.166";
+    public final static String ID_PRINTER_FOUR_IP = "10.128.200.4";
+    public static final String ID_PRINTER_FIVE_IP = "10.128.200.5";
+    public static final String ID_PRINTER_SIX_IP = "10.128.200.6";
     public static final String ID_PRINTER_SEVEN_IP = "C4:F3:12:17:D0:2E";
-    public static final String ID_PRINTER_EIGHT_IP = "10.128.200.59";
+    public static final String ID_PRINTER_EIGHT_IP = "10.128.200.8";
     public final static String SELECTED_PRINTER_BT = "SELECTED_PRINTER_BT";
     public final static String ID_PRINTER_ONE_BT = "00:07:4D:97:E3:04";
     public final static String ID_PRINTER_TWO_BT = "6C:C3:74:E2:42:00";
@@ -24,15 +24,15 @@ public class Constants_Intern {
     public static final String ID_PRINTER_SIX_BT = "00:07:4D:A4:1C:95";
     public static final String ID_PRINTER_SEVEN_BT = "C4:F3:12:17:D0:2E";
     public static final String ID_PRINTER_EIGHT_BT = "B4:BC:7C:1C:CA:47";
-    public final static String ID_PRINTER_NINE_IP = "10.128.200.59";
+    public final static String ID_PRINTER_NINE_IP = "10.128.200.9";
     public final static String ID_PRINTER_NINE_BT = "00:07:4D:64:4A:75";
-    public final static String ID_PRINTER_TEN_IP = "10.128.200.64";
+    public final static String ID_PRINTER_TEN_IP = "10.128.200.10";
     public final static String ID_PRINTER_TEN_BT = "00:07:4D:BD:17:9D";
-    public final static String ID_PRINTER_ELEVEN_IP = "10.128.200.66";
+    public final static String ID_PRINTER_ELEVEN_IP = "10.128.200.11";
     public final static String ID_PRINTER_ELEVEN_BT = "00:07:4D:98:73:95";
-    public final static String ID_PRINTER_TWELVE_IP = "10.128.100.136";
+    public final static String ID_PRINTER_TWELVE_IP = "10.128.200.12";
     public final static String ID_PRINTER_TWELVE_BT = "C4:F3:12:17:D8:13";
-    public final static String ID_PRINTER_THIRTEEN_IP = "10.128.100.191";
+    public final static String ID_PRINTER_THIRTEEN_IP = "10.128.200.13";
     public final static String ID_PRINTER_THIRTEEN_BT = "F0:B5:D1:5E:DA:FB";
     public final static String ID_PRINTER_FOURTEEN_IP = "192.168.254.254";
     public final static String ID_PRINTER_FOURTEEN_BT = "00:07:4D:8C:FE:6F";
@@ -425,4 +425,5 @@ public class Constants_Intern {
     public static final String WIDTH_LIST_MODEL_COLOR_BACKGROUND = "WIDTH_LIST_MODEL_COLOR_BACKGROUND";
     public static final String HEIGHT_LIST_MODEL_COLOR_BACKGROUND = "HEIGHT_LIST_MODEL_COLOR_BACKGROUND";
     public static final String FRAGMENT_CHOICE_IMAGE_MODEL_COLOR = "FRAGMENT_CHOICE_IMAGE_MODEL_COLOR";
+    public static final String FRAGMENT_LIST_WIPEPROCEDURE = "FRAGMENT_LIST_WIPEPROCEDURE";
 }

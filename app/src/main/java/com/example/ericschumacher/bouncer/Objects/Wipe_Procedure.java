@@ -40,7 +40,7 @@ public class Wipe_Procedure {
         try {
             id = json.getInt("id");
             kProcedure = json.getInt("kProcedure");
-            oWipe = new Wipe(json.getJSONObject("oWipe"));
+            oWipe = new Wipe(cVolley, json.getJSONObject("oWipe"));
             cDescription = json.getString("cDescription");
         } catch (JSONException e) {
             e.printStackTrace();

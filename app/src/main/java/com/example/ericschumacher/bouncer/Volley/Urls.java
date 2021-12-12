@@ -16,7 +16,7 @@ public class Urls {
     public final static String URL_UPDATE_MODEL_BATTERY = URL_REST_API+"model/battery/update";
     public final static String URL_GET_DEVICE_BY_ID = URL_REST_API+"device/id/";
     public final static String URL_GET_DEVICE_BY_IMEI = URL_REST_API+"device/imei/";
-    public final static String URL_PUT_MODEL_ADD = URL_REST_API+"model/add/";
+    public final static String URL_PUT_MODEL_ADD = URL_REST_API+"model/add";
     public final static String URL_GET_DEVICES = URL_REST_API+"devices";
     public final static String URL_GET_COLORS_MODEL = URL_REST_API+"colors/";
     public final static String URL_UPLOAD_IMAGE_MODEL_COLOR = URL_REST_API+"upload/images/device/";
@@ -126,7 +126,7 @@ public class Urls {
 
     // Wipeprocedure
     public static final String URL_GET_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure/";
-    public static final String URL_GET_WIPEPROCEDURES_BY_NAME = URL_REST_API+"team/wipeprocedures/";
+    public static final String URL_GET_WIPEPROCEDURES_BY_NAME = URL_REST_API+"team/wipeprocedures";
     public static final String URL_ADD_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure";
     public static final String URL_UPDATE_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure";
     public static final String URL_DELETE_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure/";
@@ -136,5 +136,10 @@ public class Urls {
     public static final String URL_ADD_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure/";
     public static final String URL_UPDATE_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure/";
     public static final String URL_DELETE_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure/";
+
+    // Wipe
+
+    public static final String URL_GET_WIPE_AVAILABLE_BY_WIPEPROCEDURE = URL_REST_API+"team/wipe/available/wipeprocedure/";
+
 
 }

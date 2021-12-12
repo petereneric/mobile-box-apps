@@ -1,8 +1,9 @@
-package com.example.ericschumacher.bouncer.Adapter;
+package com.example.ericschumacher.bouncer.Adapter.List;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.ericschumacher.bouncer.Adapter.List.ViewHolder.ViewHolder_List;
@@ -54,9 +55,13 @@ public class Adapter_List_Wipeprocedure extends RecyclerView.Adapter<RecyclerVie
         ViewHolder_List vhList = (ViewHolder_List)holder;
         Wipeprocedure oWipeprocedure = lWipeprocedure.get(position);
 
-        vhList.tvLeft.setText(oWipeprocedure.getoManufacturer().getName());
+        // Visibility
+        vhList.tvSubtitle.setVisibility(View.GONE);
+
+        // Data
+        vhList.tvLeft.setText(oWipeprocedure.getoManufacturer().getcShortcut());
         vhList.tvTitle.setText(oWipeprocedure.getcName());
-        vhList.tvRight.setText(oWipeprocedure.getlWipeProcedure().size());
+        vhList.tvRight.setText(Integer.toString(oWipeprocedure.getlWipeProcedure().size()));
     }
 
     @Override

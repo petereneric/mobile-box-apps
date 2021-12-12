@@ -10,13 +10,16 @@
         <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/drawable/background_solid_round_orange.xml" value="0.13055555555555556" />
         <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/activity_model.xml" value="0.2563048245614035" />
         <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/activity_wiper.xml" value="0.2563048245614035" />
-        <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/activity_wiper_procedure.xml" value="0.2563048245614035" />
+        <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/activity_wiper_procedure.xml" value="0.15184381778741865" />
+        <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/fragment_dialog_model_check.xml" value="0.1" />
+        <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/fragment_dialog_wipe_procedure.xml" value="0.1" />
         <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/fragment_list.xml" value="0.15570175438596492" />
         <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/fragment_list_new.xml" value="0.15570175438596492" />
         <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/layout_header.xml" value="0.15570175438596492" />
-        <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/layout_search_main.xml" value="0.16447368421052633" />
+        <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/layout_search_main.xml" value="0.291196388261851" />
         <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/layout/viewholder_model_color.xml" value="0.30612244897959184" />
         <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/menu/menu_activity_checker.xml" value="0.105859375" />
+        <entry key="..\:/Users/erics/AndroidStudioProjects/Mobile-Box Apps/app/src/main/res/menu/menu_activity_wiper.xml" value="0.1" />
       </map>
     </option>
   </component>

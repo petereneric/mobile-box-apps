@@ -28,6 +28,8 @@
         <activity android:name=".Activities.Tools.Activity_Article_Verify"></activity>
         <activity android:name=".Activities.Tools.Activity_Juicer"></activity>
         <activity android:name=".Activities.Tools.Activity_Checker"></activity>
+        <activity android:name=".Activities.Tools.Activity_Wiper"></activity>
+        <activity android:name=".Activities.Tools.Activity_Wiper_Procedure"></activity>
         <activity android:name=".Activities.Tools.Activity_Columba"></activity>
         <activity android:screenOrientation="portrait" android:name=".Activities.Tools.Activity_Bouncer"></activity>
         <activity android:name=".Activities.Manager.Activity_Box"></activity>
