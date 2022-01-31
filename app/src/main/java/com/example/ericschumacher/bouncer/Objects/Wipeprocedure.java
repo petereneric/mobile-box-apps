@@ -3,6 +3,8 @@ package com.example.ericschumacher.bouncer.Objects;
 import android.content.Context;
 
 import com.android.volley.Request;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Callback;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
 import com.example.ericschumacher.bouncer.Volley.Urls;
@@ -49,6 +51,7 @@ public class Wipeprocedure {
                     Wipe_Procedure wipeProcedure = new Wipe_Procedure(mContext, aJson.getJSONObject(i));
                     lWipeProcedure.add(wipeProcedure);
                 }
+                Wipe_Procedure.sortByPosition(lWipeProcedure);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -89,9 +92,20 @@ public class Wipeprocedure {
         return lWipeProcedure;
     }
 
-    public void addWipeProcedure(Wipe_Procedure wipeProcedure) {
-        lWipeProcedure.add(wipeProcedure);
-        cVolley.execute(Request.Method.POST, Urls.URL_ADD_WIPE_PROCEDURE+wipeProcedure.getoWipe().getId()+"/"+wipeProcedure.getkProcedure(), null);
+    public void addWipeProcedure(int kWipe, Interface_Callback iCallback) {
+        Wipe_Procedure.create(mContext, cVolley, kWipe, getId(), new Wipe_Procedure.Interface_Create() {
+            @Override
+            public void created(Wipe_Procedure wipeProcedure) {
+                getlWipeProcedure().add(wipeProcedure);
+                iCallback.callback();
+            }
+        });
+    }
+
+    public void unlinkWipeProcedure(int position) {
+        Wipe_Procedure wipeProcedure = getlWipeProcedure().get(position);
+        wipeProcedure.delete();
+        getlWipeProcedure().remove(wipeProcedure);
     }
 
 

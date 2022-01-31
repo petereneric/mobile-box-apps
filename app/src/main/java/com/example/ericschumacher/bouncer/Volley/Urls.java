@@ -133,13 +133,14 @@ public class Urls {
 
     // WipeProcedure
     public static final String URL_GET_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure/";
-    public static final String URL_ADD_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure/";
-    public static final String URL_UPDATE_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure/";
+    public static final String URL_ADD_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure";
+    public static final String URL_UPDATE_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure";
     public static final String URL_DELETE_WIPE_PROCEDURE = URL_REST_API+"team/wipe/procedure/";
 
     // Wipe
-
     public static final String URL_GET_WIPE_AVAILABLE_BY_WIPEPROCEDURE = URL_REST_API+"team/wipe/available/wipeprocedure/";
 
+    // Recycling
+    public static final String URL_CREATE_DEVICE_RECYCLING = URL_REST_API+"team/device/recycling";
 
 }

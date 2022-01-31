@@ -527,9 +527,19 @@ public class ManagerPrinter {
                     try {
                         ZebraPrinterLinkOs linkOsPrinter = ZebraPrinterFactory.createLinkOsPrinter(Printer);
                         PrinterStatus printerStatus = null;
-                        if (linkOsPrinter != null) {
-                            printerStatus = linkOsPrinter.getCurrentStatus();
+                        try {
+                            if (linkOsPrinter != null) {
+                                printerStatus = linkOsPrinter.getCurrentStatus();
+                            }
+                        } catch (NullPointerException e) {
+                            Log.i("Multiple print", "Wait 2 seconds");
+                            e.printStackTrace();
+                            DemoSleeper.sleep(2000);
+                            if (linkOsPrinter != null) {
+                                printerStatus = linkOsPrinter.getCurrentStatus();
+                            }
                         }
+
                         if (printerStatus != null) {
                             if (printerStatus.isReadyToPrint) {
                                 byte[] configLabel = label.getBytes();

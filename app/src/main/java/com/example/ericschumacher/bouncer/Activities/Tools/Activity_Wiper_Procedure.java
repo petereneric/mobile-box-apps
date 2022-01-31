@@ -26,6 +26,7 @@ import com.example.ericschumacher.bouncer.Activities.Activity_Authentication;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Fragment_Choice;
 import com.example.ericschumacher.bouncer.Fragments.Choice.Image.Fragment_Choice_Image_Manufacturer;
+import com.example.ericschumacher.bouncer.Fragments.List.Fragment_List_Wipe_Procedure;
 import com.example.ericschumacher.bouncer.Fragments.List.Fragment_List_Wipeprocedure;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Wipeprocedure;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
@@ -34,11 +35,12 @@ import com.example.ericschumacher.bouncer.R;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Image;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Keyboard;
 import com.example.ericschumacher.bouncer.Utilities.Utility_Layout;
+import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
 import java.util.ArrayList;
 
-public class Activity_Wiper_Procedure extends Activity_Authentication implements View.OnClickListener, TextWatcher, Interface_Wipeprocedure, Fragment_Choice.Interface_Choice, TextView.OnEditorActionListener {
+public class Activity_Wiper_Procedure extends Activity_Authentication implements View.OnClickListener, TextWatcher, Interface_Wipeprocedure, Fragment_Choice.Interface_Choice, TextView.OnEditorActionListener, View.OnFocusChangeListener {
 
     // VALUES & VARIABLES
 
@@ -116,6 +118,7 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
         etSearch.setHint(getString(R.string.enter_wipeprocedure));
         etSearch.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_WORDS);
         etSearch.setFilters(new InputFilter[]{new InputFilter.LengthFilter(100)});
+        etSearch.setOnFocusChangeListener(this);
 
         // Listener
         ivSearchAction.setOnClickListener(this);
@@ -126,19 +129,21 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
         // SupportActionBar
         setSupportActionBar(vToolbar);
         getSupportActionBar().setTitle(getString(R.string.wiper));
+        getSupportActionBar().setSubtitle(getString(R.string.wipeprocedures));
         vToolbar.setTitleTextColor(ResourcesCompat.getColor(getResources(), R.color.color_white, null));
+        vToolbar.setSubtitleTextColor(ResourcesCompat.getColor(getResources(), R.color.color_white, null));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     private void updateLayout() {
-
         ivSearchAction.setVisibility(View.VISIBLE);
         vDividerRight.setVisibility(View.VISIBLE);
         vFab.setVisibility(View.VISIBLE);
         tvSearchType.setText(getString(R.string.name));
         switch (getActionType()) {
             case WIPEPROCEDURE_NONE:
+                removeFragment(Constants_Intern.FRAGMENT_LIST_WIPE_PROCEDURE);
                 ivSearchAction.setVisibility(View.GONE);
                 vDividerRight.setVisibility(View.GONE);
                 vFab.setVisibility(View.GONE);
@@ -147,14 +152,16 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
                 updateFragmentWipeprocedure();
                 break;
             case WIPEPROCEDURE_LIST_EXIST:
+                removeFragment(Constants_Intern.FRAGMENT_LIST_WIPE_PROCEDURE);
                 Utility_Image.setImageResource(this, ivSearchAction, R.drawable.ic_add_24dp, R.color.color_divider);
                 updateFragmentWipeprocedure();
                 break;
             case WIPEPROCEDURE_SELECTED:
-                Utility_Image.setImageResource(this, ivSearchAction, R.drawable.ic_change, R.color.color_primary);
                 removeFragment(Constants_Intern.FRAGMENT_LIST_WIPEPROCEDURE);
+                Utility_Image.setImageResource(this, ivSearchAction, R.drawable.ic_change, R.color.color_primary);
                 tvSearchType.setText(oWipeprocedure.getoManufacturer().getName());
                 etSearch.setText(oWipeprocedure.getcName());
+                updateFragmentWipeProcedure();
                 break;
         }
     }
@@ -180,6 +187,15 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
         }
     }
 
+    private void updateFragmentWipeProcedure() {
+        if (mFragmentManager.findFragmentByTag(Constants_Intern.FRAGMENT_LIST_WIPE_PROCEDURE) != null) {
+            ((Fragment_List_Wipe_Procedure)mFragmentManager.findFragmentByTag(Constants_Intern.FRAGMENT_LIST_WIPE_PROCEDURE)).update();
+        } else {
+            Fragment_List_Wipe_Procedure fWipeProcedure = new Fragment_List_Wipe_Procedure();
+            mFragmentManager.beginTransaction().add(R.id.flInteraction, fWipeProcedure, Constants_Intern.FRAGMENT_LIST_WIPE_PROCEDURE).commit();
+        }
+    }
+
     private void removeFragment(String tag) {
         if (mFragmentManager.findFragmentByTag(tag) != null) {
             mFragmentManager.beginTransaction().remove(mFragmentManager.findFragmentByTag(tag)).commit();
@@ -189,6 +205,9 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
     private void removeFragments() {
         if (mFragmentManager.findFragmentByTag(Constants_Intern.FRAGMENT_LIST_WIPEPROCEDURE) != null) {
             mFragmentManager.beginTransaction().remove(mFragmentManager.findFragmentByTag(Constants_Intern.FRAGMENT_LIST_WIPEPROCEDURE)).commit();
+        }
+        if (mFragmentManager.findFragmentByTag(Constants_Intern.FRAGMENT_LIST_WIPE_PROCEDURE) != null) {
+            mFragmentManager.beginTransaction().remove(mFragmentManager.findFragmentByTag(Constants_Intern.FRAGMENT_LIST_WIPE_PROCEDURE)).commit();
         }
     }
 
@@ -204,6 +223,7 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
     }
 
     private void hardReset() {
+        removeFragments();
         resetData();
         etSearch.setText("");
     }
@@ -238,7 +258,7 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
                 showFragment(fManufacturer, Constants_Intern.FRAGMENT_CHOICE_IMAGE_MANUFACTURER);
                 break;
             case WIPEPROCEDURE_SELECTED:
-
+                Utility_Toast.show(this, R.string.model_list_not_implemented);
                 break;
         }
     }
@@ -271,8 +291,18 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
 
     public void setWipeprocedure(Wipeprocedure wipeprocedure) {
         resetData();
+        removeFragments();
         oWipeprocedure = wipeprocedure;
         updateLayout();
+    }
+
+    @Override
+    public void deleteWipeprocedure(int nPosition) {
+        Wipeprocedure wipeprocedure = lWipeprocedure.get(nPosition);
+        if (oWipeprocedure != null && wipeprocedure.getId() == oWipeprocedure.getId()) oWipeprocedure = null;
+
+        lWipeprocedure.remove(wipeprocedure);
+        wipeprocedure.delete();
     }
 
 
@@ -366,5 +396,10 @@ public class Activity_Wiper_Procedure extends Activity_Authentication implements
     @Override
     public void unknownChoice(String cTag) {
 
+    }
+
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        ((EditText)view).setSelection(((EditText)view).getText().length());
     }
 }

@@ -64,7 +64,8 @@
     <color name="color_unknown_dark">#A1535353</color>
     <color name="color_defect_reuse_dark">#9FFFEB3B</color>
     <color name="color_defect_reuse">#CCB82E</color>
-    <color name="color_defect_repair">#BFAC981A</color>
+    <color name="color_defect_repair">#AC981A</color>
+    <color name="color_defect_repair_light">#17AC981A</color>
     <color name="color_defect_repair_100">#AC981A</color>
     <color name="color_yes">#4CAF50</color>
     <color name="color_no">#F44336</color>

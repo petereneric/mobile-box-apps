@@ -41,6 +41,7 @@ public class Model implements Parcelable, Serializable {
     Boolean bBatteryRemovable = null;
     boolean bMultipleBatteries = false;
     Boolean bBackcoverRemovable = null;
+    boolean bMatch = false;
 
     ArrayList<Model_Battery> lModelBatteries = new ArrayList<>();
     Charger oCharger = null;
@@ -78,6 +79,7 @@ public class Model implements Parcelable, Serializable {
             } else {
                 tPhone = null;
             }
+            bMatch = oJson.getInt("bMatch") == 1;
             if (!oJson.isNull(Constants_Extern.BATTERY_REMOVABLE))
                 bBatteryRemovable = (oJson.getInt(Constants_Extern.BATTERY_REMOVABLE) == 1) ? true : false;
             if (!oJson.isNull(Constants_Extern.MULTIPLE_BATTERIES))
@@ -220,6 +222,10 @@ public class Model implements Parcelable, Serializable {
     public void settPhone(Integer tPhone) {
         this.tPhone = tPhone;
         update();
+    }
+
+    public boolean isbMatch() {
+        return bMatch;
     }
 
     public String gettPhoneName(Context context) {

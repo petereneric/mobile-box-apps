@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Wipe_Procedure {
 
@@ -19,9 +20,10 @@ public class Wipe_Procedure {
 
     // Object
     int id;
-    int kProcedure;
+    int kWipeprocedure;
     Wipe oWipe;
     String cDescription;
+    int nPosition;
 
     // Context
     Context mContext;
@@ -39,9 +41,10 @@ public class Wipe_Procedure {
 
         try {
             id = json.getInt("id");
-            kProcedure = json.getInt("kProcedure");
+            kWipeprocedure = json.getInt("kWipeprocedure");
             oWipe = new Wipe(cVolley, json.getJSONObject("oWipe"));
             cDescription = json.getString("cDescription");
+            nPosition = json.getInt("nPosition");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -51,6 +54,20 @@ public class Wipe_Procedure {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // PRIVATE
 
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // PUBLIC
+
+    public static void updatePosition(ArrayList<Wipe_Procedure> lWipeProcedures) {
+        for (Wipe_Procedure oWipeProcedure : lWipeProcedures) {
+            if (oWipeProcedure.getnPosition() != lWipeProcedures.indexOf(oWipeProcedure)) {
+                oWipeProcedure.setnPosition(lWipeProcedures.indexOf(oWipeProcedure));
+            }
+        }
+    }
+
+    public static void sortByPosition(ArrayList<Wipe_Procedure> lWipeProcedures) {
+        Collections.sort(lWipeProcedures, (o1, o2) -> o1.getnPosition() - o2.getnPosition());
+    }
 
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // GETTER & SETTER
@@ -59,8 +76,8 @@ public class Wipe_Procedure {
         return id;
     }
 
-    public int getkProcedure() {
-        return kProcedure;
+    public int getkWipeprocedure() {
+        return kWipeprocedure;
     }
 
     public Wipe getoWipe() {
@@ -76,12 +93,27 @@ public class Wipe_Procedure {
         update();
     }
 
+    public int getnPosition() {
+        return nPosition;
+    }
+
+    public void setnPosition(int nPosition) {
+        this.nPosition = nPosition;
+        update();
+    }
 
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // CRUD
 
-    public static void create(Context context, Volley_Connection cVolley, int kWipe, int kProcedure, Interface_Create iCreate) {
-        cVolley.getResponse(Request.Method.PUT, Urls.URL_ADD_WIPE_PROCEDURE+kWipe+"/"+kProcedure, null, new Interface_VolleyResult() {
+    public static void create(Context context, Volley_Connection cVolley, int kWipe, int kWipeprocedure, Interface_Create iCreate) {
+        JSONObject oJson = new JSONObject();
+        try {
+            oJson.put("kWipe", kWipe);
+            oJson.put("kWipeprocedure", kWipeprocedure);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        cVolley.getResponse(Request.Method.PUT, Urls.URL_ADD_WIPE_PROCEDURE, oJson, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
                 Wipe_Procedure.read(context, cVolley, oJson.getInt("id"), new Interface_Read() {
@@ -108,6 +140,7 @@ public class Wipe_Procedure {
         try {
             json.put("id", id);
             json.put("cDescription", cDescription);
+            json.put("nPosition", nPosition);
             cVolley.execute(Request.Method.POST, Urls.URL_UPDATE_WIPE_PROCEDURE, json);
         } catch (JSONException e) {
             e.printStackTrace();

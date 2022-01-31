@@ -235,53 +235,75 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                                                             if (oDevice.getoModel().isBackcoverRemovable() == null) {
                                                                 requestBackcoverRemovable();
                                                             } else {
-                                                                if (oDevice.getoModel().isBatteryRemovable() && (oDevice.isBatteryContained() != null && oDevice.isBatteryContained() == true) && oDevice.getoModel().getoBattery() == null) {
-                                                                    requestBattery();
-                                                                } else {
-                                                                    if (oDevice.getoShape() == null || (oDevice.getoShape().getId() == Constants_Intern.SHAPE_BROKEN && oDevice.gettState() == Constants_Intern.STATE_DEFECT_REUSE)) {
-                                                                        requestShape();
+                                                                if (!oDevice.getoModel().isbMatch() && (!(oDevice.isSelection() != null) || !oDevice.isSelection())) {
+                                                                    if (oDevice.isBatteryContained() == null) {
+                                                                        Log.i("Battery", "Contained");
+                                                                        requestBatteryContained();
                                                                     } else {
-                                                                        if (oDevice.getoModelColor() == null) {
-                                                                            Log.i("Color", "null");
-                                                                            requestColor();
+                                                                        if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() == null) {
+                                                                            requestDeviceBattery();
                                                                         } else {
-                                                                            if (((oDevice.getoModelColor().isbMatch() || oDevice.getoModelColor().gettExploitation() == Constants_Intern.EXPLOITATION_REUSE || (oDevice.getoModel().gettPhone() == Constants_Intern.TYPE_PHONE_SMARTPHONE && !oDevice.getoModel().isBatteryRemovable() && oDevice.getoModel().getoManufacturer().gettColorExploitation() == Constants_Intern.EXPLOITATION_REUSE)) && oDevice.getoModelColor().gettExploitation() != Constants_Intern.EXPLOITATION_RECYCLING) || oDevice.gettState() == Constants_Intern.STATE_DEFECT_REPAIR) {
-                                                                                if (oDevice.isBatteryContained() == null) {
-                                                                                    Log.i("Battery", "Contained");
-                                                                                    requestBatteryContained();
-                                                                                } else {
-                                                                                    if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() == null) {
-                                                                                        requestDeviceBattery();
-                                                                                    } else {
-                                                                                        if (oDevice.isBackcoverContained() == null) { // Backcover
-                                                                                            requestBackcoverContained();
-                                                                                        } else {
-                                                                                            showResult();
-                                                                                        }
-                                                                                    }
-                                                                                }
+                                                                            if (oDevice.isBackcoverContained() == null) { // Backcover
+                                                                                requestBackcoverContained();
                                                                             } else {
-                                                                                if (oDevice.isBatteryContained() == null) {
-                                                                                    Log.i("Battery", "Contained");
-                                                                                    requestBatteryContained();
-                                                                                } else {
-                                                                                    if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() == null) {
-                                                                                        requestDeviceBattery();
+                                                                                if (oDevice.isBackcoverContained()) {
+                                                                                    oBackcover = new Backcover();
+                                                                                    oBackcover.settState(Constants_Intern.STATE_RECYCLING);
+                                                                                }
+                                                                                oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                                                                                showResult();
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                } else {
+                                                                    if (oDevice.getoModel().isBatteryRemovable() && (oDevice.isBatteryContained() != null && oDevice.isBatteryContained() == true) && oDevice.getoModel().getoBattery() == null) {
+                                                                        requestBattery();
+                                                                    } else {
+                                                                        if (oDevice.getoShape() == null || (oDevice.getoShape().getId() == Constants_Intern.SHAPE_BROKEN && oDevice.gettState() == Constants_Intern.STATE_DEFECT_REUSE)) {
+                                                                            requestShape();
+                                                                        } else {
+                                                                            if (oDevice.getoModelColor() == null) {
+                                                                                Log.i("Color", "null");
+                                                                                requestColor();
+                                                                            } else {
+                                                                                if (((oDevice.getoModelColor().isbMatch() || oDevice.getoModelColor().gettExploitation() == Constants_Intern.EXPLOITATION_REUSE || (oDevice.getoModel().gettPhone() == Constants_Intern.TYPE_PHONE_SMARTPHONE && !oDevice.getoModel().isBatteryRemovable() && oDevice.getoModel().getoManufacturer().gettColorExploitation() == Constants_Intern.EXPLOITATION_REUSE)) && oDevice.getoModelColor().gettExploitation() != Constants_Intern.EXPLOITATION_RECYCLING) || oDevice.gettState() == Constants_Intern.STATE_DEFECT_REPAIR) {
+                                                                                    if (oDevice.isBatteryContained() == null) {
+                                                                                        Log.i("Battery", "Contained");
+                                                                                        requestBatteryContained();
                                                                                     } else {
-                                                                                        if (oDevice.isBackcoverContained() == null) { // Backcover
-                                                                                            requestBackcoverContained();
+                                                                                        if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() == null) {
+                                                                                            requestDeviceBattery();
                                                                                         } else {
-                                                                                            if (oDevice.isBackcoverContained()) {
-                                                                                                oBackcover = new Backcover();
-                                                                                                oBackcover.settState(Constants_Intern.STATE_RECYCLING);
+                                                                                            if (oDevice.isBackcoverContained() == null) { // Backcover
+                                                                                                requestBackcoverContained();
+                                                                                            } else {
+                                                                                                showResult();
                                                                                             }
-                                                                                            oDevice.settState(Constants_Intern.STATE_RECYCLING);
-                                                                                            showResult();
+                                                                                        }
+                                                                                    }
+                                                                                } else {
+                                                                                    if (oDevice.isBatteryContained() == null) {
+                                                                                        Log.i("Battery", "Contained");
+                                                                                        requestBatteryContained();
+                                                                                    } else {
+                                                                                        if (oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery() == null) {
+                                                                                            requestDeviceBattery();
+                                                                                        } else {
+                                                                                            if (oDevice.isBackcoverContained() == null) { // Backcover
+                                                                                                requestBackcoverContained();
+                                                                                            } else {
+                                                                                                if (oDevice.isBackcoverContained()) {
+                                                                                                    oBackcover = new Backcover();
+                                                                                                    oBackcover.settState(Constants_Intern.STATE_RECYCLING);
+                                                                                                }
+                                                                                                oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                                                                                                showResult();
+                                                                                            }
                                                                                         }
                                                                                     }
                                                                                 }
-                                                                            }
 
+                                                                            }
                                                                         }
                                                                     }
                                                                 }
@@ -452,10 +474,14 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                                         if (oJson.getString(Constants_Extern.RESULT).equals(Constants_Extern.SUCCESS)) {
                                             oDevice = new Device(oJson.getJSONObject(Constants_Extern.OBJECT_DEVICE), Activity_Bouncer.this);
                                             //if (oDevice.getnFutureStock() != null && oDevice.getnFutureStock() == 0) oDevice.setoStation(new Station(Constants_Intern.STATION_CHECK_ONE));
+                                            if (oDevice.getkArtikel() == null && !oDevice.isSelection()) {
+                                                oDevice.settState(Constants_Intern.STATE_RECYCLING);
+                                            } else {
+                                                mPrinter.printDeviceId(oDevice);
+                                            }
                                             Bundle bundle = new Bundle();
                                             bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);
                                             showFragment(new Fragment_Result_Bouncer(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
-                                            mPrinter.printDeviceId(oDevice);
                                         }
                                     } catch (JSONException e) {
                                         e.printStackTrace();
@@ -466,6 +492,19 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                     }
                 });
                 break;
+            case Constants_Intern.STATE_RECYCLING:
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("imei", oDevice.getIMEI() != null ? oDevice.getIMEI() : JSONObject.NULL);
+                    jsonObject.put("kUser", getJWT() != null ? getJWT().getkUser() : JSONObject.NULL);
+                    jsonObject.put("kModel", oDevice.getoModel().getkModel());
+                    jsonObject.put("kShape", oDevice.getoShape() != null ? oDevice.getoShape().getId() : JSONObject.NULL);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("JSON", jsonObject.toString());
+                cVolley.execute(Request.Method.PUT, Urls.URL_CREATE_DEVICE_RECYCLING, jsonObject);
+
             default:
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(Constants_Intern.OBJECT_DEVICE, oDevice);

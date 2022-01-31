@@ -7,13 +7,13 @@ package com.example.ericschumacher.bouncer.Constants;
 public class Constants_Intern {
     public final static String SHARED_PREFERENCES = "SHARED_PREFERENCES";
     public final static String SELECTED_PRINTER_IP = "SELECTED_PRINTER_IP";
-    public final static String ID_PRINTER_ONE_IP = "10.128.100.172";
-    public final static String ID_PRINTER_TWO_IP = "6C:C3:74:E2:42:00";
-    public final static String ID_PRINTER_THREE_IP = "90:E2:02:2B:6D:75";
+    public final static String ID_PRINTER_ONE_IP = "10.128.200.19";
+    public final static String ID_PRINTER_TWO_IP = "10.128.200.2";
+    public final static String ID_PRINTER_THREE_IP = "10.128.200.3";
     public final static String ID_PRINTER_FOUR_IP = "10.128.200.4";
     public static final String ID_PRINTER_FIVE_IP = "10.128.200.5";
     public static final String ID_PRINTER_SIX_IP = "10.128.200.6";
-    public static final String ID_PRINTER_SEVEN_IP = "C4:F3:12:17:D0:2E";
+    public static final String ID_PRINTER_SEVEN_IP = "10.128.200.7";
     public static final String ID_PRINTER_EIGHT_IP = "10.128.200.8";
     public final static String SELECTED_PRINTER_BT = "SELECTED_PRINTER_BT";
     public final static String ID_PRINTER_ONE_BT = "00:07:4D:97:E3:04";
@@ -34,9 +34,9 @@ public class Constants_Intern {
     public final static String ID_PRINTER_TWELVE_BT = "C4:F3:12:17:D8:13";
     public final static String ID_PRINTER_THIRTEEN_IP = "10.128.200.13";
     public final static String ID_PRINTER_THIRTEEN_BT = "F0:B5:D1:5E:DA:FB";
-    public final static String ID_PRINTER_FOURTEEN_IP = "192.168.254.254";
+    public final static String ID_PRINTER_FOURTEEN_IP = "10.128.200.14";
     public final static String ID_PRINTER_FOURTEEN_BT = "00:07:4D:8C:FE:6F";
-    public final static String ID_PRINTER_FIFTEEN_IP = "192.168.254.254";
+    public final static String ID_PRINTER_FIFTEEN_IP = "10.128.200.15";
     public final static String ID_PRINTER_FIFTEEN_BT = "00:07:4D:8C:FE:6F";
     public static final String ID_PRINTER_NONE = "ID_PRINTER_NONE";
 
@@ -426,4 +426,10 @@ public class Constants_Intern {
     public static final String HEIGHT_LIST_MODEL_COLOR_BACKGROUND = "HEIGHT_LIST_MODEL_COLOR_BACKGROUND";
     public static final String FRAGMENT_CHOICE_IMAGE_MODEL_COLOR = "FRAGMENT_CHOICE_IMAGE_MODEL_COLOR";
     public static final String FRAGMENT_LIST_WIPEPROCEDURE = "FRAGMENT_LIST_WIPEPROCEDURE";
+    public static final String FRAGMENT_LIST_WIPE_PROCEDURE = "FRAGMENT_LIST_WIPE_PROCEDURE";
+    public static final String FRAGMENT_DIALOG_WIPE_PROCEDURE = "FRAGMENT_DIALOG_WIPE_PROCEDURE";
+    public static final int TYPE_ACTION_NEUTRAL = 0;
+    public static final int TYPE_ACTION_POSITIVE = 1;
+    public static final int TYPE_ACTION_NEGATIVE = 2;
+    public static final String DIALOG_DELETE_WIPEPROCEDURE = "DIALOG_DELETE_WIPEPROCEDURE";
 }

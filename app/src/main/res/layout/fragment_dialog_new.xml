@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary"
+        android:gravity="center"
+        android:text="Wirklich löschen?"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/size_text_header_title"
+        app:layout_constraintBottom_toTopOf="@+id/tvSubtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_primary"
+        android:gravity="center_horizontal"
+        android:text="Löschverfahren"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/size_text_header_subtitle"
+        app:layout_constraintBottom_toTopOf="@+id/tvContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        android:paddingBottom="16dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"/>
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tvSubtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="text"
+        style="@style/tv_dialog_content"/>
+
+    <View
+        android:id="@+id/vDivider"
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        android:background="@color/color_divider"
+        app:layout_constraintTop_toBottomOf="@id/tvContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/clButtonsText"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vDivider">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clButtons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageButton
+                android:id="@+id/ibPositive"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/color_white"
+                android:tint="@color/color_green"
+                app:layout_constraintBottom_toBottomOf="@+id/clButtons"
+                app:layout_constraintEnd_toStartOf="@+id/ibNegative"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ibNeutral"
+                app:layout_constraintTop_toTopOf="@+id/clButtons"
+                app:srcCompat="@drawable/ic_done_white_24dp" />
+
+            <ImageButton
+                android:id="@+id/ibNeutral"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/color_white"
+                android:tint="@color/color_primary"
+                app:layout_constraintBottom_toBottomOf="@+id/clButtons"
+                app:layout_constraintEnd_toStartOf="@+id/ibPositive"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/clButtons"
+                app:srcCompat="@drawable/ic_back_left_white_24" />
+
+            <ImageButton
+                android:id="@+id/ibNegative"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/color_white"
+                android:tint="@color/color_red"
+                app:layout_constraintBottom_toBottomOf="@+id/clButtons"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ibPositive"
+                app:layout_constraintTop_toTopOf="@+id/clButtons"
+                app:srcCompat="@drawable/ic_delete_white_24dp" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/clText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tvPositive"
+                style="@style/tv_dialog_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/yes"
+                app:layout_constraintBottom_toBottomOf="@+id/clText"
+                app:layout_constraintEnd_toStartOf="@+id/tvNegative"
+                app:layout_constraintStart_toEndOf="@+id/tvNeutral"
+                app:layout_constraintTop_toTopOf="@+id/clText" />
+
+            <TextView
+                android:id="@+id/tvNeutral"
+                style="@style/tv_dialog_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/back"
+                app:layout_constraintBottom_toBottomOf="@+id/clText"
+                app:layout_constraintEnd_toStartOf="@+id/tvPositive"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/clText" />
+
+            <TextView
+                android:id="@+id/tvNegative"
+                style="@style/tv_dialog_button"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/no"
+                app:layout_constraintBottom_toBottomOf="@+id/clText"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvPositive"
+                app:layout_constraintTop_toTopOf="@+id/clText" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+
+
+
+</android.support.constraint.ConstraintLayout>

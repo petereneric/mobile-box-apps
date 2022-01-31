@@ -27,8 +27,10 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by Eric Schumacher on 21.05.2018.
@@ -44,6 +46,7 @@ public class Device implements Serializable {
     private Boolean bBatteryContained = null;
     private Boolean bBackcoverContained = null;
     private String cNotes = null;
+    private Double kArtikel = null;
     private Double nRpd = null;
     private Double nFutureStock = null;
     private Battery oBattery = null;
@@ -114,6 +117,8 @@ public class Device implements Serializable {
                 tState = oJson.getInt(Constants_Extern.TYPE_STATE);
             if (!oJson.isNull(Constants_Extern.BOOLEAN_SOFTWARE_INTACT))
                 bSoftwareIntact = oJson.getBoolean(Constants_Extern.BOOLEAN_SOFTWARE_INTACT);
+            if (!oJson.isNull("kArtikel"))
+                kArtikel = oJson.getDouble("kArtikel");
             if (!oJson.isNull(Constants_Extern.RPD))
                 nRpd = oJson.getDouble(Constants_Extern.RPD);
             if (!oJson.isNull(Constants_Extern.FUTURE_STOCK_SKU))
@@ -308,6 +313,10 @@ public class Device implements Serializable {
 
     public void settPhone(Integer tPhone) {
         this.tPhone = tPhone;
+    }
+
+    public Double getkArtikel() {
+        return kArtikel;
     }
 
     public Double getnRpd() {
@@ -512,5 +521,14 @@ public class Device implements Serializable {
                 }
             }
         });
+    }
+
+    public Boolean isSelection() {
+        if (oModel != null) {
+            List<Integer> lManufacturers =  Arrays.asList(2, 7, 8);
+            return (oModel.gettDefaultExploitation() > 1 && oModel.gettPhone() == 1 && !oModel.isBatteryRemovable() && lManufacturers.contains(oModel.getoManufacturer().getId()));
+        } else {
+            return null;
+        }
     }
 }

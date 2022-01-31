@@ -8,4 +8,5 @@ import java.util.ArrayList;
 public interface Interface_Wipeprocedure {
     public ArrayList<Wipeprocedure> getlWipeprocedures();
     public Wipeprocedure getWipeprocedure();
+    public void deleteWipeprocedure(int nPosition);
 }

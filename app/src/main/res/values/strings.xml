@@ -402,6 +402,13 @@
     <string name="wipeprocedures">Wipeprocedures</string>
     <string name="no_matching_results">Not matching results</string>
     <string name="wipe_procedures">Wipe-Procedures</string>
+    <string name="wipeprocedure">Wipeprocedure</string>
+    <string name="wipe">Wipe</string>
+    <string name="edit_wipe_procedure">Edit Wipe-Procedure</string>
+    <string name="model_list_not_implemented">Model-List (Not implemented yet)</string>
+    <string name="no_more_selection">No more selection</string>
+    <string name="save">Save</string>
+    <string name="really_delete_content">Do you really want to delete this content?</string>
 
 
     // Not translated

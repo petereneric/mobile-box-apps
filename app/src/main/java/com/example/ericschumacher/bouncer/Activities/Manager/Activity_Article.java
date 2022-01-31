@@ -271,7 +271,7 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
                             } else {
                                 Utility_Toast.show(Activity_Article.this, R.string.imei_unknown);
                                 removeFragments();
-                                reset();
+                                hardReset();
                             }
                         }
                     }
@@ -297,9 +297,9 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
     public void returnDisplay(String cTag) {
         switch (cTag) {
             case Constants_Intern.FRAGMENT_DISPLAY_EDIT_NEW_ARTICLE:
-                reset();
+                hardReset();
             case Constants_Intern.FRAGMENT_DISPLAY_ARTICLE_NOT_FOUND:
-                reset();
+                hardReset();
         }
     }
 
@@ -310,7 +310,7 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
             public void onResult(JSONObject oJson) throws JSONException {
                 if (Volley_Connection.successfulResponse(oJson)) {
                     if (bPrint) mPrinter.printDeviceSku(oArticle, oDevice);
-                    reset();
+                    hardReset();
                     removeFragment(cTag);
                     Utility_Toast.show(Activity_Article.this, R.string.booking_successful);
                 } else {
@@ -325,7 +325,7 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
         switch (tAction) {
             case Constants_Intern.TYPE_ACTION_MENU_PRINT:
                 mPrinter.printDeviceSku(oArticle, oDevice);
-                reset();
+                hardReset();
                 break;
         }
     }
@@ -338,7 +338,7 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
         switch (tError) {
             case Constants_Intern.TYPE_ERROR_RECLEAN:
             case Constants_Intern.TYPE_ERROR_DEFECT:
-                reset();
+                hardReset();
                 removeFragment(cTag);
                 break;
         }
@@ -372,7 +372,7 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
                                 SharedPreferences.edit().putInt(Constants_Intern.SEARCH_ARTICLE_TYPE, Constants_Intern.MAIN_SEARCH_ARTICLE_TYPE_IMEI).commit();
                                 break;
                         }
-                        reset();
+                        hardReset();
                     }
                 });
                 builder.create().show();
@@ -380,7 +380,7 @@ public class Activity_Article extends Activity_Device implements Fragment_Verify
             case R.id.etSearch:
                 break;
             case R.id.ivAction:
-                reset();
+                hardReset();
         }
     }
 

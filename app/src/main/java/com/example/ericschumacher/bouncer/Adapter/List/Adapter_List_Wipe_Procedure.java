@@ -51,6 +51,8 @@ public class Adapter_List_Wipe_Procedure extends RecyclerView.Adapter<RecyclerVi
         });
         vhList.tvRight.setVisibility(View.GONE);
         vhList.vDividerRight.setVisibility(View.GONE);
+        vhList.clBackground.setVisibility(View.GONE);
+
         return vhList;
     }
 
@@ -74,12 +76,12 @@ public class Adapter_List_Wipe_Procedure extends RecyclerView.Adapter<RecyclerVi
 
             // Left
             vhList.tvLeft.setVisibility(View.VISIBLE);
-            vhList.tvLeft.setText(Integer.toString(position+1)+".");
+            vhList.tvLeft.setText(Integer.toString(wipeProcedure.getnPosition()+1)+".");
             vhList.ivLeft.setVisibility(View.GONE);
             Utility_Layout.setBackgroundColor(mContext, vhList.vDividerLeft, R.color.color_divider);
 
             // Background
-            Utility_Layout.setBackgroundDrawable(mContext, vhList.clBackground, R.drawable.background_stroke_round_grey_secondary);
+            Utility_Layout.setBackgroundDrawable(mContext, vhList.clForeground, R.drawable.background_rounded_corners_grey_secondary);
         }
 
         // ADD
@@ -96,7 +98,7 @@ public class Adapter_List_Wipe_Procedure extends RecyclerView.Adapter<RecyclerVi
             Utility_Layout.setBackgroundColor(mContext, vhList.vDividerLeft, R.color.color_primary);
 
             // Background
-            Utility_Layout.setBackgroundDrawable(mContext, vhList.clBackground, R.drawable.background_stroke_round_color_primary);
+            Utility_Layout.setBackgroundDrawable(mContext, vhList.clForeground, R.drawable.background_stroke_round_color_primary);
         }
     }
 
