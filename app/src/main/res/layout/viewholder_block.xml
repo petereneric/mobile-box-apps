@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="160dp"
+    android:layout_height="160dp"
+    android:background="@drawable/background_rounded_corners_grey_secondary">
+
+
+    <android.support.constraint.Guideline
+        android:id="@+id/glViewHolderBlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="6310i"
+        app:layout_constraintBottom_toTopOf="@+id/tvSubtitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="bottom"
+        android:paddingBottom="2dp"
+        android:textSize="@dimen/size_text_title"/>
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="Nokia"
+        app:layout_constraintBottom_toBottomOf="@id/glViewHolderBlock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        android:paddingTop="2dp"
+        android:textSize="@dimen/size_text_subtitle"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tvTitleTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/glViewHolderBlock"
+        android:textSize="@dimen/size_text_header_title"
+        android:textColor="@color/color_primary"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1px"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/glViewHolderBlock"
+        android:background="@color/color_divider"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"/>
+
+
+</android.support.constraint.ConstraintLayout>

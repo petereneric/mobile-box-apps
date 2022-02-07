@@ -12,17 +12,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device;
 import com.example.ericschumacher.bouncer.Fragments.Table.Fragment_Table;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Checker;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Fragment_Diagnose_Container;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Update;
-import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Diagnose;
 import com.example.ericschumacher.bouncer.Objects.ModelCheck;
 import com.example.ericschumacher.bouncer.R;
-import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 
 import org.json.JSONException;
@@ -103,7 +100,7 @@ public class Fragment_Diagnose_Container extends Fragment implements Interface_U
     // Layout
 
     public void setLayout(LayoutInflater inflater, ViewGroup container) {
-        vLayout = inflater.inflate(R.layout.fragment_diagnose_container, container, false);
+        vLayout = inflater.inflate(R.layout.fragment_container, container, false);
         flContainer = vLayout.findViewById(R.id.flContainer);
     }
 

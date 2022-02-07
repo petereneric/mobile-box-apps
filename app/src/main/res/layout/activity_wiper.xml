@@ -17,6 +17,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <View
+        android:id="@+id/toolbar_shadow"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:background="@drawable/toolbar_dropshadow"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vToolbar"/>
+
     <include
         android:id="@+id/lSearch"
         layout="@layout/layout_search_main"
@@ -25,7 +34,50 @@
         android:layout_margin="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/vToolbar" />
+        app:layout_constraintTop_toBottomOf="@id/toolbar_shadow" />
+
+    <fragment
+        android:id="@+id/fModel"
+        android:name="com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Model"
+        android:layout_width="0dp"
+        android:tag="FRAGMENT_MODEL_NEW"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lSearch"/>
+
+
+    <fragment
+        android:id="@+id/fDevice"
+        android:name="com.example.ericschumacher.bouncer.Fragments.Object.Fragment_Device_Checker"
+        android:layout_width="0dp"
+        android:tag="FRAGMENT_DEVICE_NEW"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fModel"/>
+
+    <fragment
+        android:id="@+id/fBlockDevices"
+        android:name="com.example.ericschumacher.bouncer.Fragments.Block.Fragment_Block_Devices"
+        android:layout_width="0dp"
+        android:tag="FRAGMENT_BLOCK_DEVICES"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    <FrameLayout
+        android:id="@+id/flInteraction"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/fBlockDevices"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fDevice">
+
+    </FrameLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/vFab"
@@ -37,15 +89,5 @@
         app:srcCompat="@drawable/ic_clear_24dp"
         android:tint="@color/color_white"/>
 
-    <FrameLayout
-        android:id="@+id/flInteraction"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lSearch">
-
-    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -162,7 +162,7 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                                     bundle.putInt(Constants_Intern.ID_COLOR, oDevice.getoModelColor().getoColor().getId());
                                     showFragment(new Fragment_Choice_Image_Model(), bundle, Constants_Intern.FRAGMENT_CHOICE_IMAGE_MODEL, Constants_Intern.CLOSE_KEYBOARD);
                                 } else {
-                                    requestColor();
+                                    showResult();
                                 }
                             } else {
                                 requestPhoneType();
@@ -497,7 +497,7 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                 try {
                     jsonObject.put("imei", oDevice.getIMEI() != null ? oDevice.getIMEI() : JSONObject.NULL);
                     jsonObject.put("kUser", getJWT() != null ? getJWT().getkUser() : JSONObject.NULL);
-                    jsonObject.put("kModel", oDevice.getoModel().getkModel());
+                    jsonObject.put("kModel", oDevice.getoModel() != null ? oDevice.getoModel().getkModel() : JSONObject.NULL);
                     jsonObject.put("kShape", oDevice.getoShape() != null ? oDevice.getoShape().getId() : JSONObject.NULL);
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Article;
 import com.example.ericschumacher.bouncer.Activities.Manager.Activity_Box;
@@ -29,14 +28,13 @@ import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Checker;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Columba;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Juicer;
 import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Lifter;
-import com.example.ericschumacher.bouncer.Activities.Tools.Activity_Wiper;
+import com.example.ericschumacher.bouncer.Activities.Activity_Wiper.Activity_Wiper;
 import com.example.ericschumacher.bouncer.Adapter.List.Adapter_Menu;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Authentication;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_Authentication_Dialog;
 import com.example.ericschumacher.bouncer.Objects.Object_Menu;
 import com.example.ericschumacher.bouncer.R;
-import com.example.ericschumacher.bouncer.Utilities.Utility_Toast;
 import com.example.ericschumacher.bouncer.Volley.Volley_Authentication;
 import com.example.ericschumacher.bouncer.Zebra.ManagerPrinter;
 
