@@ -252,6 +252,9 @@ public class Constants_Intern {
     public static final int ITEM = 0;
     public static final int ADD = 1;
     public static final int SPECIAL = 2;
+    public static final int FINISH = 3;
+    public static final int ERROR = 4;
+
     public static final int TYPE_MODEL_BATTERY_PRIME = 1;
     public static final String TYPE_MODE = "TYPE_MODE";
     public static final String TYPE_INTERFACE = "TYPE_INTERFACE";

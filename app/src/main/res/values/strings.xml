@@ -409,6 +409,14 @@
     <string name="no_more_selection">No more selection</string>
     <string name="save">Save</string>
     <string name="really_delete_content">Do you really want to delete this content?</string>
+    <string name="devices">Devices</string>
+    <string name="protocol">Protocol</string>
+    <string name="edit_model_wipes">Edit Model-Wipes</string>
+    <string name="new_protocol">New protocol</string>
+    <string name="protocol_menu">Protocol menu</string>
+    <string name="finish_protocol_successfully">Finish protocol successfully</string>
+    <string name="finish_protocols_successfully">Finish all devices from model successfully</string>
+    <string name="abort_protocol_due_defect">Abort protocol due defect</string>
 
 
     // Not translated

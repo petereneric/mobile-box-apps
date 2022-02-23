@@ -48,7 +48,7 @@ public class Wipeprocedure {
             if (!json.isNull("lWipeProcedures")) {
                 JSONArray aJson = json.getJSONArray("lWipeProcedures");
                 for (int i = 0; i<aJson.length(); i++) {
-                    Wipe_Procedure wipeProcedure = new Wipe_Procedure(mContext, aJson.getJSONObject(i));
+                    Wipe_Procedure wipeProcedure = new Wipe_Procedure(cVolley, aJson.getJSONObject(i));
                     lWipeProcedure.add(wipeProcedure);
                 }
                 Wipe_Procedure.sortByPosition(lWipeProcedure);

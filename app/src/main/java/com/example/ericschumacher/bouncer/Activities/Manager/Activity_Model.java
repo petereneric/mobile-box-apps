@@ -64,7 +64,7 @@ import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Activity_Model extends Activity_Authentication implements View.OnClickListener, TextWatcher, Fragment_Choice.Interface_Choice, Fragment_Input.Interface_Input, Fragment_Select.Interface_Select, Fragment_Edit_Model_Battery.Interface_Edit_Model_Battery, Interface_Model_New_New, Fragment_Display.Interface_Display, TextView.OnEditorActionListener, Interface_Edit, Interface_Manager {
+public class Activity_Model extends  Activity_Authentication implements View.OnClickListener, TextWatcher, Fragment_Choice.Interface_Choice, Fragment_Input.Interface_Input, Fragment_Select.Interface_Select, Fragment_Edit_Model_Battery.Interface_Edit_Model_Battery, Interface_Model_New_New, Fragment_Display.Interface_Display, TextView.OnEditorActionListener, Interface_Edit, Interface_Manager {
 
     // Layout
     public Toolbar vToolbar;

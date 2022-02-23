@@ -2,9 +2,12 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="160dp"
-    android:layout_height="160dp"
-    android:background="@drawable/background_rounded_corners_grey_secondary">
+    android:layout_width="@dimen/height_layout_block"
+    android:layout_height="@dimen/height_layout_block"
+    android:background="@drawable/background_rounded_corners_grey_secondary"
+    android:id="@+id/clMain"
+    android:layout_marginLeft="8dp">
+    android:layout_marginRight="8dp">
 
 
     <android.support.constraint.Guideline
@@ -53,6 +56,7 @@
         android:textColor="@color/color_primary"/>
 
     <View
+        android:id="@+id/vDivider"
         android:layout_width="0dp"
         android:layout_height="1px"
         app:layout_constraintStart_toStartOf="parent"

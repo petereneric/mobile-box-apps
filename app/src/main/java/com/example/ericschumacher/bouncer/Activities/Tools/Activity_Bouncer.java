@@ -429,7 +429,13 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
         switch (oDevice.gettState()) {
             case Constants_Intern.STATE_DEFECT_REPAIR:
                 oDevice.setoStation(new Station(Constants_Intern.STATION_PRE_STOCK));
-                cVolley.getResponse(Request.Method.PUT, Urls.URL_ADD_DEVICE, oDevice.getJson(), new Interface_VolleyResult() {
+                JSONObject json = oDevice.getJson();
+                try {
+                    json.put("kUser", getJWT().getkUser());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                cVolley.getResponse(Request.Method.PUT, Urls.URL_ADD_DEVICE, json, new Interface_VolleyResult() {
                     @Override
                     public void onResult(JSONObject oJson) {
                         Log.i("Raus damit", oJson.toString());
@@ -466,7 +472,13 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                             showFragment(new Fragment_Result_Bouncer(), bundle, Constants_Intern.FRAGMENT_BOUNCER_RESULT, false);
                         } else {
                             oDevice.setoStation(new Station(Constants_Intern.STATION_PRE_STOCK));
-                            cVolley.getResponse(Request.Method.PUT, Urls.URL_ADD_DEVICE, oDevice.getJson(), new Interface_VolleyResult() {
+                            JSONObject json = oDevice.getJson();
+                            try {
+                                json.put("kUser", getJWT().getkUser());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            cVolley.getResponse(Request.Method.PUT, Urls.URL_ADD_DEVICE, json, new Interface_VolleyResult() {
                                 @Override
                                 public void onResult(JSONObject oJson) {
                                     Log.i("Raus damit", oJson.toString());
@@ -493,17 +505,6 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                 });
                 break;
             case Constants_Intern.STATE_RECYCLING:
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("imei", oDevice.getIMEI() != null ? oDevice.getIMEI() : JSONObject.NULL);
-                    jsonObject.put("kUser", getJWT() != null ? getJWT().getkUser() : JSONObject.NULL);
-                    jsonObject.put("kModel", oDevice.getoModel() != null ? oDevice.getoModel().getkModel() : JSONObject.NULL);
-                    jsonObject.put("kShape", oDevice.getoShape() != null ? oDevice.getoShape().getId() : JSONObject.NULL);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                Log.i("JSON", jsonObject.toString());
-                cVolley.execute(Request.Method.PUT, Urls.URL_CREATE_DEVICE_RECYCLING, jsonObject);
 
             default:
                 Bundle bundle = new Bundle();
@@ -603,6 +604,18 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                 if (oDevice.getoModel() != null && oDevice.getoModel().gettDefaultExploitation() != Constants_Intern.EXPLOITATION_RECYCLING && oDevice.getoModel().isBatteryRemovable() && oDevice.isBatteryContained() && oDevice.getoBattery().getlStock() < 2) {
                     mPrinter.printBattery(oDevice.getoBattery());
                 }
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("imei", oDevice.getIMEI() != null ? oDevice.getIMEI() : JSONObject.NULL);
+                    jsonObject.put("tExploitation", oDevice.getoModel().gettDefaultExploitation());
+                    jsonObject.put("kUser", getJWT() != null ? getJWT().getkUser() : JSONObject.NULL);
+                    jsonObject.put("kModel", oDevice.getoModel() != null ? oDevice.getoModel().getkModel() : JSONObject.NULL);
+                    jsonObject.put("kShape", oDevice.getoShape() != null ? oDevice.getoShape().getId() : JSONObject.NULL);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.i("JSON", jsonObject.toString());
+                cVolley.execute(Request.Method.PUT, Urls.URL_CREATE_DEVICE_RECYCLING, jsonObject);
                 break;
             case Constants_Intern.STATE_MODEL_UNKNOWN:
             case Constants_Intern.STATE_DEFECT_REPAIR:

@@ -22,10 +22,10 @@ public class Fragment_Edit extends Fragment implements View.OnClickListener {
     String cTitle;
 
     // vLayout
-    View vLayout;
+    public View vLayout;
     TextView tvTitle;
     public Button bCommit;
-    RecyclerView rvList;
+    public RecyclerView rvList;
 
     // Connection
     Volley_Connection cVolley;

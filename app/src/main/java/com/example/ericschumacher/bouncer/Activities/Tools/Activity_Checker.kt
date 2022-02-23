@@ -97,8 +97,6 @@ class Activity_Checker : Activity_Device(), Fragment_Result.Interface_Fragment_R
         fDevice.lMenu.visibility = GONE;
 
         // Visibility
-
-        // Visibility
         fModel.showAll(false)
         fDevice.showAll(false);
     }

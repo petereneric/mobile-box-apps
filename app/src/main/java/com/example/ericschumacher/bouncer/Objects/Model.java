@@ -8,6 +8,8 @@ import android.util.Log;
 import com.android.volley.Request;
 import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Callback;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Charger;
 import com.example.ericschumacher.bouncer.Objects.Additive.Manufacturer;
@@ -50,6 +52,8 @@ public class Model implements Parcelable, Serializable {
     Integer tClass = null;
 
     ArrayList<ModelColor> lModelColor = new ArrayList<>();
+
+    ArrayList<ModelWipe> lModelWipes = new ArrayList<>();
 
     // Connection
     Volley_Connection cVolley;
@@ -354,6 +358,14 @@ public class Model implements Parcelable, Serializable {
         update();
     }
 
+    public ArrayList<ModelWipe> getlModelWipes() {
+        return lModelWipes;
+    }
+
+    public void setlModelWipes(ArrayList<ModelWipe> lModelWipes) {
+        this.lModelWipes = lModelWipes;
+    }
+
     public JSONObject getJson() {
         JSONObject oJson = new JSONObject();
         try {
@@ -484,6 +496,25 @@ public class Model implements Parcelable, Serializable {
                 ", name='" + name + '\'' +
                 ", Exploitation='" + tDefaultExploitation + '\'' +
                 '}';
+    }
+
+    public void loadModelWipes(Interface_Callback iCallback) {
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_WIPES + kModel, null, new Interface_VolleyResult() {
+            @Override
+            public void onResult(JSONObject oJson) throws JSONException {
+                lModelWipes.clear();
+                if (oJson != null) {
+                    JSONArray aJson = oJson.getJSONArray("lModelWipes");
+                    for (int i = 0; i < aJson.length(); i++) {
+                        JSONObject jsonModelWipe = aJson.getJSONObject(i);
+                        ModelWipe modelWipe = new ModelWipe(cVolley, jsonModelWipe);
+                        lModelWipes.add(modelWipe);
+                    }
+                }
+                ModelWipe.sort(lModelWipes);
+                iCallback.callback();
+            }
+        });
     }
 
 }

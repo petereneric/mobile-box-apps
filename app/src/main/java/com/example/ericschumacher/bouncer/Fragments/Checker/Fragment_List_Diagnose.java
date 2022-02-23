@@ -45,6 +45,9 @@ import java.util.ArrayList;
 
 public class Fragment_List_Diagnose extends Fragment_List implements Adapter_List.Interface_Adapter_List, View.OnClickListener, Interface_Update, Fragment_Dialog.Interface_Fragment_Dialog {
 
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // VALUES & VARIABLES
+
     // Layout
     TextView tvTitle;
     TextView tvSubtitle;
@@ -57,8 +60,12 @@ public class Fragment_List_Diagnose extends Fragment_List implements Adapter_Lis
     Interface_Manager iManager;
     Interface_JWT iJWT;
 
-    // Data
+    // Adapter
     Adapter_List_Diagnose aDiagnose;
+
+
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // LIFE-CYCLE
 
     @Override
     public void onCreate(@Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {

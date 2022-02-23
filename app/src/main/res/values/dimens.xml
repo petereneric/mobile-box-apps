@@ -4,6 +4,7 @@
     <dimen name="height_layout_search">60dp</dimen>
     <dimen name="height_layout_footer">200dp</dimen>
     <dimen name="height_layout_menu">64dp</dimen>
+    <dimen name="height_layout_block">160dp</dimen>
 
     // Size - Text
     <dimen name="size_text_header_title">24sp</dimen>

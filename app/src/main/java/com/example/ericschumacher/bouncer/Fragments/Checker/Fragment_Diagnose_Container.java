@@ -89,8 +89,6 @@ public class Fragment_Diagnose_Container extends Fragment implements Interface_U
         iUpdateDiagnoseMenu = (Interface_Update)fMenu;
         iUpdateDiagnose = (Interface_Update)fDiagnose;
 
-
-
         Log.i("CRRREATION", "test2");
         setLayout(inflater, container);
         return vLayout;

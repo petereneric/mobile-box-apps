@@ -143,4 +143,14 @@ public class Urls {
     // Recycling
     public static final String URL_CREATE_DEVICE_RECYCLING = URL_REST_API+"team/device/recycling";
 
+    // Protocol
+    public static final String URL_GET_PROTOCOLS = URL_REST_API+"team/protocols/";
+    public static final String URL_GET_PROTOCOL = URL_REST_API+"team/protocols/";
+    public static final String URL_ADD_PROTOCOL = URL_REST_API+"team/protocol/";
+    public static final String URL_DELETE_PROTOCOL = URL_REST_API+"team/protocol/";
+
+    // ModelWipe
+    public static final String URL_GET_MODEL_WIPES = URL_REST_API+"team/model/wipe/all/";
+    public static final String URL_UPDATE_MODEL_WIPE = URL_REST_API+"team/model/wipe";
+
 }

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class Adapter_Pager extends FragmentPagerAdapter {
 
-    ArrayList<Fragment> lFragment = new ArrayList<>();
+    public ArrayList<Fragment> lFragment = new ArrayList<>();
     ArrayList<String> lTitle = new ArrayList<>();
     FragmentManager fragmentManager;
 

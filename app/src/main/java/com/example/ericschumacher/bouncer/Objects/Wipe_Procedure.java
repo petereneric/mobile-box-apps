@@ -25,9 +25,6 @@ public class Wipe_Procedure {
     String cDescription;
     int nPosition;
 
-    // Context
-    Context mContext;
-
     // Connection
     Volley_Connection cVolley;
 
@@ -35,9 +32,8 @@ public class Wipe_Procedure {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // CONSTRUCTOR
 
-    public Wipe_Procedure(Context context, JSONObject json) {
-        mContext = context;
-        cVolley = new Volley_Connection(mContext);
+    public Wipe_Procedure(Volley_Connection cVolley, JSONObject json) {
+        this.cVolley = cVolley;
 
         try {
             id = json.getInt("id");
@@ -130,7 +126,7 @@ public class Wipe_Procedure {
         cVolley.getResponse(Request.Method.GET, Urls.URL_GET_WIPE_PROCEDURE + id, null, new Interface_VolleyResult() {
             @Override
             public void onResult(JSONObject oJson) throws JSONException {
-                iRead.read(new Wipe_Procedure(context, oJson));
+                iRead.read(new Wipe_Procedure(cVolley, oJson));
             }
         });
     }

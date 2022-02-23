@@ -20,6 +20,7 @@ public class Wipe {
     // Object
     int id;
     String cName;
+    String cDescription;
 
     // Connection
     Volley_Connection cVolley;
@@ -32,6 +33,7 @@ public class Wipe {
         try {
             id = json.getInt("id");
             cName = json.getString("cName");
+            cDescription = json.getString("cDescription");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -49,6 +51,9 @@ public class Wipe {
         return cName;
     }
 
+    public String getcDescription() {
+        return cDescription;
+    }
 
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // CRUD

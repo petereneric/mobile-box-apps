@@ -262,7 +262,12 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
     }
 
     public Model getModel() {
-        return (oDevice != null) ? oDevice.getoModel() : null;
+        if (oDevice != null) {
+            return oDevice.getoModel();
+        } else {
+            return (oModel != null) ?  oModel: null;
+        }
+
     }
 
     public void setModel(Model oModel) {
@@ -686,6 +691,14 @@ public class Activity_Device extends Activity_Model implements Fragment_Edit_Dev
                     }
                     break;
             }
+        }
+    }
+
+    public Integer getSearchId() {
+        if (etSearch.getText().subSequence(etSearch.getText().length()-1, etSearch.getText().length()).toString().equals("e")) {
+            return Integer.parseInt(etSearch.getText().subSequence(0, etSearch.getText().length()-1).toString());
+        } else {
+            return null;
         }
     }
 }

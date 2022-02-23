@@ -11,6 +11,7 @@ import com.example.ericschumacher.bouncer.Constants.Constants_Extern;
 import com.example.ericschumacher.bouncer.Constants.Constants_Intern;
 import com.example.ericschumacher.bouncer.Exceptions.LocationException;
 import com.example.ericschumacher.bouncer.Fragments.Fragment_Dialog.Fragment_Dialog_Image;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_Callback;
 import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Objects.Additive.Battery;
 import com.example.ericschumacher.bouncer.Objects.Additive.Color;
@@ -69,17 +70,22 @@ public class Device implements Serializable {
     private Model oModel = null;
     private ModelColor oModelColor = null;
 
+    private ArrayList<Protocol> lProtocols = new ArrayList<>();
+
     Context Context;
+    Volley_Connection cVolley;
 
     public Device(Context context) {
         super();
         Context = context;
+        cVolley = new Volley_Connection(Context);
         IdDevice = Constants_Intern.ID_UNKNOWN;
         oModel = new Model();
     }
 
     public Device(Context context, String imei) {
         Context = context;
+        cVolley = new Volley_Connection(Context);
         IMEI = imei;
     }
 
@@ -89,6 +95,7 @@ public class Device implements Serializable {
 
     public Device(JSONObject oJson, Context context) {
         Context = context;
+        cVolley = new Volley_Connection(Context);
         vConnection = new Volley_Connection(context);
         try {
             IdDevice = oJson.getInt(Constants_Extern.ID_DEVICE);
@@ -531,4 +538,32 @@ public class Device implements Serializable {
             return null;
         }
     }
+
+    public ArrayList<Protocol> getlProtocols() {
+        return lProtocols;
+    }
+
+    public void setlProtocols(ArrayList<Protocol> lProtocols) {
+        this.lProtocols = lProtocols;
+    }
+
+    public void loadProtocols(Interface_Callback iCallback) {
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_PROTOCOLS + getIdDevice(), null, new Interface_VolleyResult() {
+            @Override
+            public void onResult(JSONObject oJson) throws JSONException {
+                if (oJson != null) {
+                    JSONArray jsonArray = oJson.getJSONArray("lProtocols");
+                    for (int i = 0; i <jsonArray.length(); i++) {
+                        JSONObject jsonProtocol = jsonArray.getJSONObject(i);
+                        Protocol oProtocol = new Protocol(cVolley, jsonProtocol);
+                        lProtocols.add(oProtocol);
+                    }
+                    Collections.sort(lProtocols);
+                }
+                iCallback.callback();
+            }
+        });
+    }
+
+
 }
