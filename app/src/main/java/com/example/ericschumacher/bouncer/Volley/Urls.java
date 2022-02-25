@@ -126,8 +126,10 @@ public class Urls {
 
     // Wipeprocedure
     public static final String URL_GET_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure/";
-    public static final String URL_GET_WIPEPROCEDURES_BY_NAME = URL_REST_API+"team/wipeprocedures";
+    public static final String URL_GET_WIPEPROCEDURES = URL_REST_API+"team/wipeprocedures";
+    public static final String URL_GET_WIPEPROCEDURES_BY_NAME = URL_REST_API+"team/wipeprocedures/name";
     public static final String URL_ADD_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure";
+    public static final String URL_ADD_WIPEPROCEDURE_MODEL = URL_REST_API+"team/wipeprocedure/model/";
     public static final String URL_UPDATE_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure";
     public static final String URL_DELETE_WIPEPROCEDURE = URL_REST_API+"team/wipeprocedure/";
 
@@ -150,7 +152,9 @@ public class Urls {
     public static final String URL_DELETE_PROTOCOL = URL_REST_API+"team/protocol/";
 
     // ModelWipe
+    public static final String URL_ADD_MODEL_WIPE = URL_REST_API+"team/model/wipe/";
     public static final String URL_GET_MODEL_WIPES = URL_REST_API+"team/model/wipe/all/";
     public static final String URL_UPDATE_MODEL_WIPE = URL_REST_API+"team/model/wipe";
+    public static final String URL_GET_MODEL_WIPE_AVAILABLE = URL_REST_API+"team/model/wipes/available/";
 
 }

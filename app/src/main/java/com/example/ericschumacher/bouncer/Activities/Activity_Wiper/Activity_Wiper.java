@@ -232,6 +232,7 @@ public class Activity_Wiper extends Activity_Device implements Interface_Devices
             Model model = oDevice.getoModel();
             oDevice = null;
             if (!modelContained(model)) {
+                Log.i("yes", "hereee!");
                 lModels.add(model);
                 model.loadModelWipes(new Interface_Callback() {
                     @Override

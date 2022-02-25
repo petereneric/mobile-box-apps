@@ -11,5 +11,6 @@ public interface Interface_Activity_Wiper {
     public ArrayList<ModelWipe> getModelWipes();
     public void finishAll();
     public Model getSelectedModel();
+    public void updateLayout();
 
 }

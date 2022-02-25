@@ -417,6 +417,8 @@
     <string name="finish_protocol_successfully">Finish protocol successfully</string>
     <string name="finish_protocols_successfully">Finish all devices from model successfully</string>
     <string name="abort_protocol_due_defect">Abort protocol due defect</string>
+    <string name="add_wipeprocedure">Add Wipeprocedure</string>
+    <string name="add_wipe">Wipe</string>
 
 
     // Not translated

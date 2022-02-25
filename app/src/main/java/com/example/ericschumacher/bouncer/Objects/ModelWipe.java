@@ -1,8 +1,10 @@
 package com.example.ericschumacher.bouncer.Objects;
 
+import android.content.Context;
 import android.view.View;
 
 import com.android.volley.Request;
+import com.example.ericschumacher.bouncer.Interfaces.Interface_VolleyResult;
 import com.example.ericschumacher.bouncer.Utilities.Utility_DateTime;
 import com.example.ericschumacher.bouncer.Volley.Urls;
 import com.example.ericschumacher.bouncer.Volley.Volley_Connection;
@@ -44,7 +46,7 @@ public class ModelWipe {
             nPosition = oJson.getInt("nPosition");
 
             oWipe = !oJson.isNull("oWipe") ? new Wipe(cVolley, oJson.getJSONObject("oWipe")) : null;
-            oWipeProcedure = !oJson.isNull("oWipeProcedure") ? new Wipe_Procedure(cVolley, oJson.getJSONObject("oWipe")) : null;
+            oWipeProcedure = !oJson.isNull("oWipeProcedure") ? new Wipe_Procedure(cVolley, oJson.getJSONObject("oWipeProcedure")) : null;
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -133,6 +135,29 @@ public class ModelWipe {
     // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     // CRUD
 
+    public static void create(Volley_Connection cVolley, int kModel, int kWipe, Interface_Create iCreate) {
+        cVolley.getResponse(Request.Method.PUT, Urls.URL_ADD_MODEL_WIPE+kModel+"/"+kWipe, null, new Interface_VolleyResult() {
+            @Override
+            public void onResult(JSONObject oJson) throws JSONException {
+                iCreate.created(new ModelWipe(cVolley, oJson));
+            }
+        });
+    }
+
+    public static void readWipesAvailable(Volley_Connection cVolley, int kModel, Interface_Read_WipesAvailable iRead) {
+        cVolley.getResponse(Request.Method.GET, Urls.URL_GET_MODEL_WIPE_AVAILABLE + kModel, null, new Interface_VolleyResult() {
+            @Override
+            public void onResult(JSONObject oJson) throws JSONException {
+                ArrayList<Wipe> lWipesAvailable = new ArrayList<>();
+                JSONArray aJson = oJson.getJSONArray("lWipes");
+                for (int i = 0; i<aJson.length(); i++) {
+                    lWipesAvailable.add(new Wipe(cVolley, aJson.getJSONObject(i)));
+                }
+                iRead.read(lWipesAvailable);
+            }
+        });
+    }
+
     private void update() {
         JSONObject json = new JSONObject();
         try {
@@ -143,5 +168,17 @@ public class ModelWipe {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+
+    // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Interfaces
+
+    public interface Interface_Create {
+        void created(ModelWipe modelWipe);
+    }
+
+    public interface Interface_Read_WipesAvailable {
+        void read(ArrayList<Wipe> lWipesAvailable);
     }
 }

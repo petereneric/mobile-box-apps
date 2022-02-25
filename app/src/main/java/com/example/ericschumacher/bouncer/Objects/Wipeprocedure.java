@@ -143,6 +143,26 @@ public class Wipeprocedure {
         });
     }
 
+    public static void readAll(Context context, Volley_Connection cVolley, Integer kManufacturer, Interface_Read_All iRead) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("kManufacturer", kManufacturer);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        cVolley.getResponse(Request.Method.POST, Urls.URL_GET_WIPEPROCEDURES, json, new Interface_VolleyResult() {
+            @Override
+            public void onResult(JSONObject oJson) throws JSONException {
+                ArrayList<Wipeprocedure> lWipeprocedures = new ArrayList<>();
+                JSONArray aJson = oJson.getJSONArray("lWipeprocedures");
+                for (int i = 0; i<aJson.length(); i++) {
+                    lWipeprocedures.add(new Wipeprocedure(context, aJson.getJSONObject(i)));
+                }
+                iRead.read(lWipeprocedures);
+            }
+        });
+    }
+
     public static void readByName(Context context, Volley_Connection cVolley, String cName, Interface_Read_byName iRead) {
         JSONObject json = new JSONObject();
         try {
@@ -192,6 +212,10 @@ public class Wipeprocedure {
     }
 
     public interface Interface_Read_byName {
+        void read(ArrayList<Wipeprocedure> lWipeprocedure);
+    }
+
+    public interface Interface_Read_All {
         void read(ArrayList<Wipeprocedure> lWipeprocedure);
     }
 }
