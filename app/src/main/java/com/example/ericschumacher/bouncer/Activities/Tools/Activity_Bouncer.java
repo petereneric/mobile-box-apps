@@ -607,7 +607,7 @@ public class Activity_Bouncer extends Activity_Device implements Fragment_Record
                 JSONObject jsonObject = new JSONObject();
                 try {
                     jsonObject.put("imei", oDevice.getIMEI() != null ? oDevice.getIMEI() : JSONObject.NULL);
-                    jsonObject.put("tExploitation", oDevice.getoModel().gettDefaultExploitation());
+                    jsonObject.put("tExploitation", oDevice.getoModel() != null ? oDevice.getoModel().gettDefaultExploitation() : JSONObject.NULL);
                     jsonObject.put("kUser", getJWT() != null ? getJWT().getkUser() : JSONObject.NULL);
                     jsonObject.put("kModel", oDevice.getoModel() != null ? oDevice.getoModel().getkModel() : JSONObject.NULL);
                     jsonObject.put("kShape", oDevice.getoShape() != null ? oDevice.getoShape().getId() : JSONObject.NULL);
